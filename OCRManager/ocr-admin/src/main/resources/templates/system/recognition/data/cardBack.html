@@ -26,10 +26,10 @@
                     <h4 class="box-title">身份证反面识别信息：</h4>
                 </div>
                 <div class="form-content">
-                    有效开始日期：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardBack.getStartDate()}}"/>
+                    有效开始日期：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardBack.getStartDate()} == null) ? '' : @{${idCardBack.getStartDate()}}"/>
                 </div>
                 <div class="form-content">
-                    有效结束日期：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardBack.getEndDate()}}"/>
+                    有效结束日期：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardBack.getEndDate()} == null) ? '' : @{${idCardBack.getEndDate()}}"/>
                 </div>
             </div>
         </div>

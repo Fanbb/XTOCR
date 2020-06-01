@@ -29,13 +29,13 @@
                     姓名：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardFront.getName()} == null) ? '' : @{${idCardFront.getName()}}"/>
                 </div>
                 <div class="form-content">
-                    性别：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getSex()}}"/>
+                    性别：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardFront.getSex()} == null) ? '' : @{${idCardFront.getSex()}}"/>
                 </div>
                 <div class="form-content">
-                    民族：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getNation()}}"/>
+                    民族：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardFront.getNation()} == null) ? '' : @{${idCardFront.getNation()}}"/>
                 </div>
                 <div class="form-content">
-                    地址：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getAddress()}}"/>
+                    地址：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardFront.getAddress()} == null) ? '' : @{${idCardFront.getAddress()}}"/>
                 </div>
                 <div class="form-content">
                     身份证号：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardFront.getIdCardNo()} == null) ? '' : @{${idCardFront.getIdCardNo()}}"/>

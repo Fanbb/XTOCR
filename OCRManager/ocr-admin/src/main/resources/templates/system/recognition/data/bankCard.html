@@ -26,7 +26,7 @@
                     <h4 class="box-title">银行卡识别信息：</h4>
                 </div>
                 <div class="form-content">
-                    卡号：<input type="text" readonly="true" disabled="disabled" th:value="@{${bankCard.getBankCardNo()}}"/>
+                    卡号：<input type="text" readonly="true" disabled="disabled" th:value="(${bankCard.getBankCardNo()} == null) ? '' : @{${bankCard.getBankCardNo()}}"/>
                 </div>
 
             </div>

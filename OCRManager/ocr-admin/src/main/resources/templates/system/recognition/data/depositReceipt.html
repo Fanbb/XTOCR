@@ -26,16 +26,19 @@
                     <h4 class="box-title">存单识别信息：</h4>
                 </div>
                 <div class="form-content">
-                    户名：<input type="text" readonly="true" disabled="disabled" th:value="@{${depositReceipt.getName()}}"/>
+                    户名：<input type="text" readonly="true" disabled="disabled" th:value="(${depositReceipt.getName()} == null) ? '' : @{${depositReceipt.getName()}}"/>
                 </div>
                 <div class="form-content">
-                    账号：<input type="text" readonly="true" disabled="disabled" th:value="@{${depositReceipt.getAccNo()}}"/>
+                    账号：<input type="text" readonly="true" disabled="disabled" th:value="(${depositReceipt.getAccNo()} == null) ? '' : @{${depositReceipt.getAccNo()}}"/>
                 </div>
                 <div class="form-content">
-                    金额：<input type="text" readonly="true" disabled="disabled" th:value="@{${depositReceipt.getAmt()}}"/>
+                    存单号：<input type="text" readonly="true" disabled="disabled" th:value="(${depositReceipt.depositNo()} == null) ? '' : @{${depositReceipt.depositNo()}}"/>
                 </div>
                 <div class="form-content">
-                    金额大写：<input type="text" readonly="true" disabled="disabled" th:value="@{${depositReceipt.getAmtCapital()}}"/>
+                    金额：<input type="text" readonly="true" disabled="disabled" th:value="(${depositReceipt.getAmt()} == null) ? '' : @{${depositReceipt.getAmt()}}"/>
+                </div>
+                <div class="form-content">
+                    金额大写：<input type="text" readonly="true" disabled="disabled" th:value="(${depositReceipt.getAmtCapital()} == null) ? '' : @{${depositReceipt.getAmtCapital()}}"/>
                 </div>
             </div>
         </div>
