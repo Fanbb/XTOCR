@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocr.system.mapper.OcrImageMapper">
+    
+    <resultMap type="OcrImage" id="OcrImageResult">
+        <result property="id"    column="id"    />
+        <result property="compTradeId"    column="comp_trade_id"    />
+        <result property="compTxnSeq"    column="comp_txn_seq"    />
+        <result property="ocrDate"    column="ocr_date"    />
+        <result property="ocrTime"    column="ocr_time"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="ocrResult"    column="ocr_result"    />
+        <result property="localPath"    column="local_path"    />
+        <result property="type"    column="type"    />
+        <result property="typeName"    column="type_name"    />
+    </resultMap>
+	
+	<sql id="selectOcrImageVo">
+        select id, comp_trade_id, comp_txn_seq, ocr_date,ocr_time, parent_id, ocr_result, local_path, type, type_name from ocr_image
+    </sql>
+	
+    <select id="selectOcrImageList" parameterType="OcrImage" resultMap="OcrImageResult">
+        <include refid="selectOcrImageVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="compTradeId != null  and compTradeId != '' "> and comp_trade_id = #{compTradeId}</if>
+             <if test="compTxnSeq != null  and compTxnSeq != '' "> and comp_txn_seq = #{compTxnSeq}</if>
+             <if test="ocrDate != null "> and ocr_date = #{ocrDate}</if>
+             <if test="ocrTime != null "> and ocr_time = #{ocrTime}</if>
+             <if test="parentId != null  and parentId != '' "> and parent_id = #{parentId}</if>
+             <if test="ocrResult != null  and ocrResult != '' "> and ocr_result = #{ocrResult}</if>
+             <if test="localPath != null  and localPath != '' "> and local_path = #{localPath}</if>
+             <if test="type != null  and type != '' "> and type = #{type}</if>
+             <if test="typeName != null  and typeName != '' "> and type_name = #{typeName}</if>
+         </where>
+    </select>
+    
+    <select id="selectOcrImageById" parameterType="String" resultMap="OcrImageResult">
+        <include refid="selectOcrImageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOcrImage" parameterType="OcrImage">
+        insert into ocr_image
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="compTradeId != null  and compTradeId != ''  ">comp_trade_id,</if>
+			<if test="compTxnSeq != null  and compTxnSeq != ''  ">comp_txn_seq,</if>
+			<if test="ocrDate != null  ">ocr_date,</if>
+            <if test="ocrTime != null ">ocr_time,</if>
+			<if test="parentId != null  and parentId != ''  ">parent_id,</if>
+			<if test="ocrResult != null  and ocrResult != ''  ">ocr_result,</if>
+			<if test="localPath != null  and localPath != ''  ">local_path,</if>
+			<if test="type != null  and type != ''  ">type,</if>
+			<if test="typeName != null  and typeName != ''  ">type_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="compTradeId != null  and compTradeId != ''  ">#{compTradeId},</if>
+			<if test="compTxnSeq != null  and compTxnSeq != ''  ">#{compTxnSeq},</if>
+			<if test="ocrDate != null  ">#{ocrDate},</if>
+			<if test="ocrTime != null  ">#{ocrTime},</if>
+			<if test="parentId != null  and parentId != ''  ">#{parentId},</if>
+			<if test="ocrResult != null  and ocrResult != ''  ">#{ocrResult},</if>
+			<if test="localPath != null  and localPath != ''  ">#{localPath},</if>
+			<if test="type != null  and type != ''  ">#{type},</if>
+			<if test="typeName != null  and typeName != ''  ">#{typeName},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateOcrImage" parameterType="OcrImage">
+        update ocr_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="compTradeId != null  and compTradeId != ''  ">comp_trade_id = #{compTradeId},</if>
+            <if test="compTxnSeq != null  and compTxnSeq != ''  ">comp_txn_seq = #{compTxnSeq},</if>
+            <if test="ocrDate != null  ">ocr_date = #{ocrDate},</if>
+            <if test="ocrTime != null  ">ocr_time = #{ocrTime},</if>
+            <if test="parentId != null  and parentId != ''  ">parent_id = #{parentId},</if>
+            <if test="ocrResult != null  and ocrResult != ''  ">ocr_result = #{ocrResult},</if>
+            <if test="localPath != null  and localPath != ''  ">local_path = #{localPath},</if>
+            <if test="type != null  and type != ''  ">type = #{type},</if>
+            <if test="typeName != null  and typeName != ''  ">type_name = #{typeName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteOcrImageById" parameterType="String">
+        delete from ocr_image where id = #{id}
+    </delete>
+	
+    <delete id="deleteOcrImageByIds" parameterType="String">
+        delete from ocr_image where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

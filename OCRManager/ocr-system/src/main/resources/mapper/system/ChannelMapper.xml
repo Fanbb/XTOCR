@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocr.system.mapper.ChannelMapper">
+    
+    <resultMap type="Channel" id="ChannelResult">
+        <result property="id"    column="id"    />
+        <result property="channelCode"    column="channel_code"    />
+        <result property="channelName"    column="channel_name"    />
+        <result property="channelNm"    column="channel_nm"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+	
+	<sql id="selectChannelVo">
+        select id, channel_code, channel_name, channel_nm, status from sys_channel
+    </sql>
+	
+    <select id="selectChannelList" parameterType="Channel" resultMap="ChannelResult">
+        <include refid="selectChannelVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="channelCode != null  and channelCode != '' "> and channel_code = #{channelCode}</if>
+             <if test="channelName != null  and channelName != '' "> and channel_name = #{channelName}</if>
+             <if test="channelNm != null  and channelNm != '' "> and channel_nm = #{channelNm}</if>
+             <if test="status != null  and status != '' "> and status = #{status}</if>
+         </where>
+    </select>
+    
+    <select id="selectChannelById" parameterType="String" resultMap="ChannelResult">
+        <include refid="selectChannelVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectChannelByCode" parameterType="String" resultMap="ChannelResult">
+        <include refid="selectChannelVo"/>
+        where channel_nm = #{channelCode}
+    </select>
+        
+    <insert id="insertChannel" parameterType="Channel">
+        insert into sys_channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="channelCode != null  and channelCode != ''  ">channel_code,</if>
+			<if test="channelName != null  and channelName != ''  ">channel_name,</if>
+			<if test="channelNm != null  and channelNm != ''  ">channel_nm,</if>
+			<if test="status != null  and status != ''  ">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="channelCode != null  and channelCode != ''  ">#{channelCode},</if>
+			<if test="channelName != null  and channelName != ''  ">#{channelName},</if>
+			<if test="channelNm != null  and channelNm != ''  ">#{channelNm},</if>
+			<if test="status != null  and status != ''  ">#{status},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateChannel" parameterType="Channel">
+        update sys_channel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="channelCode != null  and channelCode != ''  ">channel_code = #{channelCode},</if>
+            <if test="channelName != null  and channelName != ''  ">channel_name = #{channelName},</if>
+            <if test="channelNm != null  and channelNm != ''  ">channel_nm = #{channelNm},</if>
+            <if test="status != null  and status != ''  ">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteChannelById" parameterType="String">
+        delete from sys_channel where id = #{id}
+    </delete>
+	
+    <delete id="deleteChannelByIds" parameterType="String">
+        delete from sys_channel where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocr.system.mapper.OcrTradeMapper">
+
+    <resultMap type="OcrTrade" id="OcrTradeResult">
+        <result property="id" column="id"/>
+        <result property="ocrDate" column="ocr_date"/>
+        <result property="ocrTime" column="ocr_time"/>
+        <result property="channel" column="channel"/>
+        <result property="ocrSeq" column="ocr_seq"/>
+        <result property="ocrStatus" column="ocr_status"/>
+        <result property="ocrPoint" column="ocr_point"/>
+        <result property="imageId" column="image_id"/>
+        <result property="imageType" column="image_type"/>
+        <result property="imageName" column="image_name"/>
+        <result property="ocrTeller" column="ocr_teller"/>
+        <result property="ocrOrgan" column="ocr_organ"/>
+        <result property="remark1" column="remark1"/>
+        <result property="remark2" column="remark2"/>
+        <result property="remark3" column="remark3"/>
+    </resultMap>
+
+    <sql id="selectOcrTradeVo">
+        select id, ocr_date, ocr_time, channel, ocr_seq, ocr_status, ocr_point, image_id, image_type, image_name, ocr_teller, ocr_organ, remark1, remark2, remark3 from ocr_trade
+    </sql>
+
+    <select id="selectOcrTradeList" parameterType="OcrTrade" resultMap="OcrTradeResult">
+        <include refid="selectOcrTradeVo"/>
+        <where>
+            <if test="id != null  and id != '' ">and id = #{id}</if>
+            <if test="ocrDate != null ">and ocr_date = #{ocrDate}</if>
+            <if test="ocrTime != null ">and ocr_time = #{ocrTime}</if>
+            <if test="channel != null  and channel != '' ">and channel = #{channel}</if>
+            <if test="ocrSeq != null  and ocrSeq != '' ">and ocr_seq = #{ocrSeq}</if>
+            <if test="ocrStatus != null  and ocrStatus != '' ">and ocr_status = #{ocrStatus}</if>
+            <if test="ocrPoint != null  and ocrPoint != '' ">and ocr_point = #{ocrPoint}</if>
+            <if test="imageId != null  and imageId != '' ">and image_id = #{imageId}</if>
+            <if test="imageType != null  and imageType != '' ">and image_type = #{imageType}</if>
+            <if test="imageName != null  and imageName != '' ">and image_name = #{imageName}</if>
+            <if test="ocrTeller != null  and ocrTeller != '' ">and ocr_teller = #{ocrTeller}</if>
+            <if test="ocrOrgan != null  and ocrOrgan != '' ">and ocr_organ = #{ocrOrgan}</if>
+            <if test="remark1 != null  and remark1 != '' ">and remark1 = #{remark1}</if>
+            <if test="remark2 != null  and remark2 != '' ">and remark2 = #{remark2}</if>
+            <if test="remark3 != null  and remark3 != '' ">and remark3 = #{remark3}</if>
+
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND ocr_date &gt;= to_date(#{params.beginTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND ocr_date &lt;= to_date(#{params.endTime},'yyyy-MM-dd HH24:mi:ss')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectOcrTradeById" parameterType="String" resultMap="OcrTradeResult">
+        <include refid="selectOcrTradeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOcrTrade" parameterType="OcrTrade">
+        insert into ocr_trade
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''  ">id,</if>
+            <if test="ocrDate != null  ">ocr_date,</if>
+            <if test="ocrTime != null ">ocr_time,</if>
+            <if test="channel != null  and channel != ''  ">channel,</if>
+            <if test="ocrSeq != null  and ocrSeq != ''  ">ocr_seq,</if>
+            <if test="ocrStatus != null  and ocrStatus != ''  ">ocr_status,</if>
+            <if test="ocrPoint != null  and ocrPoint != ''  ">ocr_point,</if>
+            <if test="imageId != null  and imageId != ''  ">image_id,</if>
+            <if test="imageType != null  and imageType != ''  ">image_type,</if>
+            <if test="imageName != null  and imageName != ''  ">image_name,</if>
+            <if test="ocrTeller != null  and ocrTeller != ''  ">ocr_teller,</if>
+            <if test="ocrOrgan != null  and ocrOrgan != ''  ">ocr_organ,</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1,</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2,</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''  ">#{id},</if>
+            <if test="ocrDate != null  ">#{ocrDate},</if>
+            <if test="ocrTime != null  ">#{ocrTime},</if>
+            <if test="channel != null  and channel != ''  ">#{channel},</if>
+            <if test="ocrSeq != null  and ocrSeq != ''  ">#{ocrSeq},</if>
+            <if test="ocrStatus != null  and ocrStatus != ''  ">#{ocrStatus},</if>
+            <if test="ocrPoint != null  and ocrPoint != ''  ">#{ocrPoint},</if>
+            <if test="imageId != null  and imageId != ''  ">#{imageId},</if>
+            <if test="imageType != null  and imageType != ''  ">#{imageType},</if>
+            <if test="imageName != null  and imageName != ''  ">#{imageName},</if>
+            <if test="ocrTeller != null  and ocrTeller != ''  ">#{ocrTeller},</if>
+            <if test="ocrOrgan != null  and ocrOrgan != ''  ">#{ocrOrgan},</if>
+            <if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+        </trim>
+    </insert>
+
+    <update id="updateOcrTrade" parameterType="OcrTrade">
+        update ocr_trade
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ocrDate != null  ">ocr_date = #{ocrDate},</if>
+            <if test="ocrTime != null  ">ocr_time = #{ocrTime},</if>
+            <if test="channel != null  and channel != ''  ">channel = #{channel},</if>
+            <if test="ocrSeq != null  and ocrSeq != ''  ">ocr_seq = #{ocrSeq},</if>
+            <if test="ocrStatus != null  and ocrStatus != ''  ">ocr_status = #{ocrStatus},</if>
+            <if test="ocrPoint != null  and ocrPoint != ''  ">ocr_point = #{ocrPoint},</if>
+            <if test="imageId != null  and imageId != ''  ">image_id = #{imageId},</if>
+            <if test="imageType != null  and imageType != ''  ">image_type = #{imageType},</if>
+            <if test="imageName != null  and imageName != ''  ">image_name = #{imageName},</if>
+            <if test="ocrTeller != null  and ocrTeller != ''  ">ocr_teller = #{ocrTeller},</if>
+            <if test="ocrOrgan != null  and ocrOrgan != ''  ">ocr_organ = #{ocrOrgan},</if>
+            <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
+            <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
+            <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOcrTradeById" parameterType="String">
+        delete from ocr_trade where id = #{id}
+    </delete>
+
+    <delete id="deleteOcrTradeByIds" parameterType="String">
+        delete from ocr_trade where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

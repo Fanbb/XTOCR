@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('身份证正面识别结果')"/>
+</head>
+<body class="gray-bg">
+<div id="detail_modal-body" class="modal-body">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="box box-primary" style="height: 700px">
+                <div class="box-header with-border">
+                    <i class="fa fa-photo"></i>
+                    <h4 class="box-title">影像图片</h4>
+                </div>
+                <div class="box-body" id="imageBody">
+                    <div class="imageBox" id="imageBox" style="height:0px;padding-bottom:57%;">
+                        <img th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}" width="800px" height="500px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="box box-primary" style="height: 700px">
+                <div class="box-header with-border">
+                    <i class="fa fa-list-ol" ></i>
+                    <h4 class="box-title">身份证正面识别信息：</h4>
+                </div>
+                <div class="form-content">
+                    姓名：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardFront.getName()} == null) ? '' : @{${idCardFront.getName()}}"/>
+                </div>
+                <div class="form-content">
+                    性别：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getSex()}}"/>
+                </div>
+                <div class="form-content">
+                    民族：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getNation()}}"/>
+                </div>
+                <div class="form-content">
+                    地址：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getAddress()}}"/>
+                </div>
+                <div class="form-content">
+                    身份证号：<input type="text" readonly="true" disabled="disabled" th:value="(${idCardFront.getIdCardNo()} == null) ? '' : @{${idCardFront.getIdCardNo()}}"/>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+</body>
+</html>

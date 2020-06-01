@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('银行卡识别结果')"/>
+</head>
+<body class="gray-bg">
+<div id="detail_modal-body" class="modal-body">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <i class="fa fa-photo"></i>
+                    <h4 class="box-title">影像图片</h4>
+                </div>
+                <div class="box-body" id="imageBody">
+                    <div class="imageBox" id="imageBox" style="height:0px;padding-bottom:57%;">
+                        <img th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}" width="900px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <i class="fa fa-list-ol" ></i>
+                    <h4 class="box-title">银行卡识别信息：</h4>
+                </div>
+                <div class="form-content">
+                    卡号：<input type="text" readonly="true" disabled="disabled" th:value="@{${bankCard.getBankCardNo()}}"/>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var prefix = ctx + "system/dict/data";
+
+
+
+</script>
+</body>
+</html>
