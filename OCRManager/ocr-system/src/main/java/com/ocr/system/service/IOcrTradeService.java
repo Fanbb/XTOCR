@@ -93,5 +93,5 @@ public interface IOcrTradeService
 	public String insertDeposit(DepositReceipt depositReceipt,String channelCode, String imgId);
 
 
-	
+	public String[] selectImagePath(String[] tradeIds);
 }

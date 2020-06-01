@@ -23,9 +23,7 @@ public class LogFilesServiceImpl implements LogFilesService {
         for (String tableName : tableNames) {
             try {
                 // 添加到zip
-
                 byte[] buffer = ImageBase64.getByte(new File(logFilePath+"/"+tableName));
-                System.out.println(new String(buffer));
 
                 zip.putNextEntry(new ZipEntry(tableName));
                 IOUtils.write(new String(buffer), zip, Constants.UTF8);

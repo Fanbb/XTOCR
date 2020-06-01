@@ -58,5 +58,13 @@ public interface OcrTradeMapper
      * @return 结果
      */
 	public int deleteOcrTradeByIds(String[] ids);
+
+
+	/**
+	 * 根据流水id获取影像地址
+	 * @param id
+	 * @return
+	 */
+	public String[] selectImagePath(String[] ids);
 	
 }

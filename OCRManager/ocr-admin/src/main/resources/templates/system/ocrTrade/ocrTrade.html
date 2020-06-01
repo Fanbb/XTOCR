@@ -76,6 +76,9 @@
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTrade:export">
                 <i class="fa fa-download"></i> 导出
             </a>
+            <a class="btn btn-warning" onclick="javascript:batchDownload()" shiro:hasPermission="system:ocrTrade:downloadImages">
+                <i class="fa fa-download"></i> 影像下载
+            </a>
         </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
@@ -167,6 +170,19 @@
     function detail(id) {
         var url = prefix + '/detail/' + id;
         $.modal.openTab("流水识别", url);
+    }
+
+    //批量影像文件导出
+    function batchDownload() {
+        var rows = $.table.selectColumns("id");
+        if (rows.length == 0) {
+            $.modal.alertWarning("请选择要生成的数据");
+            return;
+        }
+        $.modal.confirm("确认要生成选中的" + rows.length + "条数据吗?", function() {
+            location.href = prefix + "/downloadImages?ids=" + rows;
+            layer.msg('执行成功,正在生成代码请稍后…', { icon: 1 });
+        });
     }
 </script>
 </body>
