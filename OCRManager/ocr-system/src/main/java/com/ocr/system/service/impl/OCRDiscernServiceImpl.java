@@ -42,6 +42,14 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     @Value("${ocr.profile}")
     private String imgUploadPath;
 
+    @Value("${ocr.serverProfile}")
+    private String serverProfile;
+
+    @Value("${ocr.ocrUrl}")
+    private String ocrUrl;
+
+
+
 
     @Override
     public ResultData runMore(String channelCode, String url, String str) {
@@ -195,8 +203,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         image.setLocalPath(path);
         image.setParentId(fileName);
         iOcrImageService.insertOcrImage(image);
-        String data = "{\"image_type\" :\"1\",\"path\":\"http://192.168.119.26:8080/profile/IMAGE/"+dateStr+"\",\"read_image_way\":\"3\"}";
-        String request = HttpUtils.sendPost2("http://192.168.119.31:10002/mask", data);
+        String data = "{\"image_type\" :\""+imgType+"\",\"path\":\""+serverProfile+dateStr+"\",\"read_image_way\":\"3\"}";
+        String request = HttpUtils.sendPost2(ocrUrl, data);
         String idCardJson1=request.substring(1,request.length()-1);
 
 //        if (imgType.equals("0")) {

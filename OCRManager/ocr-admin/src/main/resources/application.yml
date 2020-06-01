@@ -10,9 +10,12 @@ ocr:
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ocr/uploadPath，Linux配置 /u02）
   profile: D:/ocr/uploadPath
-
+  # 项目日志地址  （Windows配置D:/home/ocr/logs，Linux配置 /home/ocr/logs）
   logFilePath: D:/home/ocr/logs
-
+  # 本机服务器图片地址路径  （项目部署IP）
+  serverProfile: http://192.168.119.26:8080/profile/IMAGE/
+  # ocr服务器接口访问地址 （ocr服务器IP路径）
+  ocrUrl: http://192.168.119.31:10002/mask
 
   # 获取ip地址开关
   addressEnabled: true
