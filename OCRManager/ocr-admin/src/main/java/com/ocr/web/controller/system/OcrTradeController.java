@@ -160,10 +160,8 @@ public class OcrTradeController extends BaseController {
             zos.flush();
             zos.close();
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

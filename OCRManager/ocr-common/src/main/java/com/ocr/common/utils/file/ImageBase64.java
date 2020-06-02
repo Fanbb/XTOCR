@@ -95,7 +95,7 @@ public class ImageBase64 {
             int length = (int) file.length();
             if(length>Integer.MAX_VALUE)   //当文件的长度超过了int的最大值
             {
-                System.out.println("this file is max ");
+                log.error("this file is max ");
                 return null;
             }
             bytes = new byte[length];
@@ -108,7 +108,7 @@ public class ImageBase64 {
             //如果得到的字节长度和file实际的长度不一致就可能出错了
             if(offset<bytes.length)
             {
-                System.out.println("file length is error");
+                log.error("file length is error");
                 return null;
             }
             is.close();
