@@ -107,6 +107,17 @@ public class OcrTradeController extends BaseController {
         return toAjax(ocrTradeService.insertOcrTrade(ocrTrade));
     }
 
+
+
+    @RequiresPermissions("system:ocrTrade:blend")
+    @Log(title = "流水勾兑", businessType = BusinessType.UPDATE)
+    @PostMapping("/blend")
+    @ResponseBody
+    public AjaxResult blend(OcrTrade ocrTrade) {
+        ocrTrade.setOcrPoint("1");
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
     /**
      * 修改识别流水
      */
@@ -186,6 +197,7 @@ public class OcrTradeController extends BaseController {
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") String id, ModelMap mmap) {
         OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(id);
+        mmap.addAttribute("ocrTrade", ocrTrade);
         OcrImage ocrImage = iOcrImageService.selectOcrImageById(ocrTrade.getImageId());
         String imgUrl = ocrImage.getLocalPath();
         if (ocrImage.getLocalPath().indexOf(imgUploadPath) == 0) {

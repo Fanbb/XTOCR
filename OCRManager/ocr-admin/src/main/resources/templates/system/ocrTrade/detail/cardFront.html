@@ -20,11 +20,12 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="box box-primary">
+            <div class="box box-primary" th:object="${ocrTrade}">
                 <div class="box-header with-border">
-                    <i class="fa fa-list-ol" ></i>
+                    <i class="fa fa-list-ol"></i>
                     <h4 class="box-title">身份证正面识别信息：</h4>
                 </div>
+                <input type="text" name="id" th:field="*{id}"/>
                 <div class="form-content">
                     姓名：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getName()}}"/>
                 </div>
@@ -35,16 +36,58 @@
                     民族：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getNation()}}"/>
                 </div>
                 <div class="form-content">
-                    地址：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getAddress()}}"/>
+                    地址：<input type="text" readonly="true" disabled="disabled"
+                              th:value="@{${idCardFront.getAddress()}}"/>
                 </div>
                 <div class="form-content">
-                    身份证号：<input type="text" readonly="true" disabled="disabled" th:value="@{${idCardFront.getIdCardNo()}}"/>
+                    身份证号：<input type="text" readonly="true" disabled="disabled"
+                                th:value="@{${idCardFront.getIdCardNo()}}"/>
                 </div>
-
+                <div class="form-content">
+                    <label>识别勾兑：</label>
+                    <div class="form-content">
+                        <div class="radio-box" th:each="dict : ${@dict.getType('ocr_trade_status')}">
+                            <input type="radio" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus" th:value="${dict.dictValue}" th:field="*{ocrStatus}">
+                            <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="submit2()">提交</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <th:block th:include="include :: footer"/>
+<script>
+    var prefix = ctx + "system/ocrTrade";
+    function submit2(){
+        $.ajax({
+            url: prefix + "/blend",
+            type: "post",
+            data: {
+                "id": function() {
+                    return $("input[name='id']").val();
+                },
+                "ocrStatus" : function() {
+                    return $("input[name='ocrStatus']:checked").val();
+                }
+            },
+            success: function(result) {
+                if (result.code == 0) {
+                    layer.msg("保存成功,正在刷新数据请稍后……", {
+                        icon: 1,
+                        time: 500,
+                        shade: [0.1, '#8F8F8F']
+                    },function() {
+                        location.reload();
+                    });
+                } else {
+                    alert(result.msg);
+                }
+            }
+        })
+    }
+</script>
+
 </body>
 </html>

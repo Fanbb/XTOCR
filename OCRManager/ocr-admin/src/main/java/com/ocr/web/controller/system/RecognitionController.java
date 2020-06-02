@@ -1,13 +1,11 @@
 package com.ocr.web.controller.system;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.ocr.common.annotation.Log;
 import com.ocr.common.core.controller.BaseController;
 import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.enums.BusinessType;
-import com.ocr.common.json.JSONObject;
 import com.ocr.common.utils.DateUtils;
 import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.http.HttpUtils;
@@ -27,13 +25,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
- * 渠道 信息操作处理
+ * 平台影像上传处理
  *
  * @author ocr
  * @date 2020-05-19
@@ -98,9 +96,14 @@ public class RecognitionController extends BaseController {
         File newFile = new File(filePath);
         file.transferTo(newFile);
         //调取接口进行识别 返回流水号
-        String data = "{\"image_type\" :\"1\",\"path\":\"http://192.168.119.26:8080/profile/IMAGE/"+dateStr+"/" + fileName + sName+"\",\"read_image_way\":\"3\"}";
+        String data = "{\"image_type\" :\"1\",\"path\":\"http://192.168.119.26:8080/profile/IMAGE/" + dateStr + "/" + fileName + sName + "\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2("http://192.168.119.31:10002/mask", data);
         String json = JSON.parseArray(request).toString();
+
+//        List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
+//        for (RequestModel model:models) {
+//
+//        }
         RequestModel model = JSONArray.parseObject(json.substring(1, json.length() - 1), RequestModel.class);
         String tradeId = "";
         switch (model.getClass_name()) {

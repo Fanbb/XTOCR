@@ -195,7 +195,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             }
         }
 
-
         OcrImage image = new OcrImage();
         image.setId(fileName);
         image.setOcrDate(new Date());
@@ -203,8 +202,10 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         image.setLocalPath(path);
         image.setParentId(fileName);
         iOcrImageService.insertOcrImage(image);
+
         String data = "{\"image_type\" :\""+imgType+"\",\"path\":\""+serverProfile+dateStr+"\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2(ocrUrl, data);
+
         String idCardJson1=request.substring(1,request.length()-1);
 
 //        if (imgType.equals("0")) {
@@ -221,8 +222,12 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 //            }
 //        }
 
-
         RequestModel model = JSONArray.parseObject(idCardJson1, RequestModel.class);
+        if (null==model.getClass_name()){
+            resultData.setMsg("OCR识别结果为空！");
+            resultData.setType("0");
+            return resultData;
+        }
         if (model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardFront")) {
             if (!imgType.equals("1")&&!imgType.equals("0")) {
                 resultData.setMsg("无身份证识别类型权限！");

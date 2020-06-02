@@ -25,28 +25,7 @@
                     <i class="fa fa-list-ol" ></i>
                     <h4 class="box-title">识别结果信息：</h4>
                 </div>
-                <div class="form-content">
-                    <span th:value="@{${ocrTrade.getId()}}"></span>
-                    流水ID：<input type="text" readonly="true" disabled="disabled" th:value="@{${ocrTrade.getId()}}"/>
-                </div>
-                <div class="form-content">
-                    平台号：<input type="text" readonly="true" disabled="disabled" th:value="@{${ocrTrade.getId()}}"/>
-                </div>
-                <div class="form-content">
-                    影像类型：<input type="text" readonly="true" disabled="disabled" th:value="@{${ocrTrade.getImageType()}}"/>
-                </div>
-                <div class="form-content">
-                    影像名称：<input type="text" readonly="true" disabled="disabled" th:value="@{${ocrTrade.getImageName()}}"/>
-                </div>
-                <div class="form-content">
-                    识别时间：<input type="text" readonly="true" disabled="disabled" th:value="@{${#dates.format(ocrTrade.getOcrDate(), 'yyyy-MM-dd')}}"/>
-                </div>
-                <div class="form-content">
-                    唯一识别号：<input type="text" readonly="true" disabled="disabled" th:value="@{${ocrTrade.getOcrSeq()}}"/>
-                </div>
-                <div class="form-content">
-                    识别结果状态：<input type="text" readonly="true" disabled="disabled" th:value="(${ocrTrade.getOcrStatus()} == '0') ? '成功' :'失败'"/>
-                </div>
+
                 <div class="form-content">
                     识别结果：<input type="text" readonly="true" disabled="disabled" th:value="@{${ocrTrade.getRemark1()}}"/>
                 </div>

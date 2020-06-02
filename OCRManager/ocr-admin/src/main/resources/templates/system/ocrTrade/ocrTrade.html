@@ -34,6 +34,16 @@
                             识别号码：<input type="text" name="ocrSeq"/>
                         </li>
 
+
+
+                        <li>
+                            影像类型：<select name="imageType" th:with="type=${@dict.getType('ocr_model_type')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+
                         <li>
                             结果状态：<select name="ocrStatus" th:with="type=${@dict.getType('ocr_trade_status')}">
                             <option value="">所有</option>
@@ -43,7 +53,15 @@
                         </li>
 
                         <li>
-                            影像类型：<select name="imageType" th:with="type=${@dict.getType('ocr_model_type')}">
+                            勾兑状态：<select name="ocrPoint" th:with="type=${@dict.getType('ocr_blend_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            导出状态：<select name="remark2" th:with="type=${@dict.getType('ocr_trade_status')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -94,6 +112,7 @@
     var tradeData = [[${@dict.getType('ocr_trade_status')}]];
     var typeData = [[${@dict.getType('ocr_model_type')}]];
     var channelData = [[${@dict.getType('ocr_channel_name')}]];
+    var pointData = [[${@dict.getType('ocr_blend_status')}]];
 
     $(function () {
         var options = {
@@ -113,8 +132,18 @@
                     visible: false
                 },
                 {
+                    field: 'id',
+                    title: '流水ID',
+                    sortable: true
+                },
+                {
                     field: 'ocrDate',
                     title: '识别日期',
+                    sortable: true
+                },
+                {
+                    field: 'ocrTime',
+                    title: '识别时间',
                     sortable: true
                 },
                 {
@@ -131,14 +160,6 @@
                     sortable: true
                 },
                 {
-                    field: 'ocrStatus',
-                    title: '识别结果',
-                    align: "left",
-                    formatter: function (value, item, index) {
-                        return $.table.selectDictLabel(tradeData, item.ocrStatus);
-                    }
-                },
-                {
                     field: 'imageId',
                     title: '影像id',
                     sortable: true
@@ -150,6 +171,27 @@
                     formatter: function (value, item, index) {
                         return $.table.selectDictLabel(typeData, item.imageType);
                     }
+                },
+                {
+                    field: 'ocrStatus',
+                    title: '识别结果',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(tradeData, item.ocrStatus);
+                    }
+                },
+                {
+                    field: 'ocrPoint',
+                    title: '勾兑状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(pointData, item.ocrPoint);
+                    }
+                },
+                {
+                    field: 'remark2',
+                    title: '导出状态',
+                    align: "left",
                 },
                 {
                     title: '操作',

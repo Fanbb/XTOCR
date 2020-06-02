@@ -95,23 +95,23 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
 
     @Override
     public String insertIDCardFront(IDCardFront idCardFront, String channelCode, String imgId) {
-        return getString(channelCode, imgId, idCardFront.getImgType(), JSON.toJSONString(idCardFront));
+        return getString(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront));
 
     }
 
     @Override
     public String insertIDCardBack(IDCardBack idCardBack, String channelCode, String imgId) {
-        return getString(channelCode, imgId, idCardBack.getImgType(), JSON.toJSONString(idCardBack));
+        return getString(channelCode, imgId, idCardBack.getImgType(), null, JSON.toJSONString(idCardBack));
     }
 
     @Override
     public String insertBankCard(BankCard bankCard, String channelCode, String imgId) {
-        return getString(channelCode, imgId, bankCard.getImgType(), JSON.toJSONString(bankCard));
+        return getString(channelCode, imgId, bankCard.getImgType(), bankCard.getBankCardNo(), JSON.toJSONString(bankCard));
     }
 
     @Override
     public String insertDeposit(DepositReceipt depositReceipt, String channelCode, String imgId) {
-        return getString(channelCode, imgId, depositReceipt.getImgType(), JSON.toJSONString(depositReceipt));
+        return getString(channelCode, imgId, depositReceipt.getImgType(), depositReceipt.getDepositNo(), JSON.toJSONString(depositReceipt));
     }
 
     @Override
@@ -120,14 +120,16 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
 
-    private String getString(String channelCode, String imgId, String imgType, String json) {
+    private String getString(String channelCode, String imgId, String imgType, String ocrSeq, String json) {
         OcrTrade ocrTrade = new OcrTrade();
         String id = System.currentTimeMillis() + "";
         ocrTrade.setId(id);
         ocrTrade.setChannel(channelCode);
+        ocrTrade.setOcrSeq(ocrSeq);
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
         ocrTrade.setOcrStatus("0");
+        ocrTrade.setOcrPoint("0");
         ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
         ocrTrade.setOcrTime(DateUtils.getTimeShort());
         ocrTrade.setRemark1(json);
