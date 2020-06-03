@@ -245,7 +245,7 @@ public class OcrTradeController extends BaseController {
             mmap.put("depositReceipt", depositReceipt);
             return prefix + "/detail/depositReceipt";
         } else {
-            return "";
+            return prefix + "/detail/data";
         }
 
     }

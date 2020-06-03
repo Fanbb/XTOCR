@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('流水查询详情')"/>
+</head>
+<body class="gray-bg">
+<div id="detail_modal-body" class="modal-body">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <div class="box box-primary" style="height:800px">
+                <div class="box-header with-border">
+                    <div class="box-header with-border">
+                        <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
+                    </div>
+                    <div class="box-body" id="imageBody" style="width:1050px;height:750px;overflow-y:auto">
+                        <div class="imageBox" id="imageBox" style="margin-left: 10px">
+                            <img class="span" style="width: 1000px"
+                                 th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-content" style="height:800px">
+                <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
+                    <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var prefix = ctx + "system/ocrTrade";
+
+    function submit2() {
+        $.ajax({
+            url: prefix + "/blend",
+            type: "post",
+            data: {
+                "id": function () {
+                    return $("input[name='id']").val();
+                },
+                "ocrStatus": function () {
+                    return $("input[name='ocrStatus']:checked").val();
+                }
+            },
+            success: function (result) {
+                if (result.code == 0) {
+                    layer.msg("保存成功,正在刷新数据请稍后……", {
+                        icon: 1,
+                        time: 500,
+                        shade: [0.1, '#8F8F8F']
+                    }, function () {
+                        location.reload();
+                    });
+                } else {
+                    alert(result.msg);
+                }
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

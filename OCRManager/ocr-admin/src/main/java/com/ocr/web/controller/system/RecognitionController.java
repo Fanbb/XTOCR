@@ -115,21 +115,31 @@ public class RecognitionController extends BaseController {
         ocrImage.setId(fileName+"");
         ocrImage.setOcrResult(json);
 
-
         List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
+        if (models.size()==0){
+            OcrTrade ocrTrade = new OcrTrade();
+            String id = System.currentTimeMillis() + "";
+            ocrTrade.setId(id);
+            ocrTrade.setChannel("system");
+            ocrTrade.setImageId(fileName+"");
+            ocrTrade.setImageType("0");
+            ocrTrade.setOcrStatus("1");
+            ocrTrade.setOcrPoint("1");
+            ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+            ocrTrade.setOcrTime(DateUtils.getTimeShort());
+            iOcrTradeService.insertOcrTrade(ocrTrade);
+            log.info("OCR识别结果为空");
+        }
         for (RequestModel model:models) {
             switch (model.getClass_name()) {
                 case "IDCardFront":
                     IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
-//                if (StringUtils.isNotEmpty(idCardFront.getIdCardNo())) {
                     idCardFront.setImgType(model.getClass_name());
                     /**
                      * 调用流水存储 返回流水id
                      */
                     iOcrTradeService.insertIDCardFront(idCardFront, "system", fileName + "");
-//                }
                     break;
-
                 case "IDCardBack":
                     IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
                     if (StringUtils.isNotEmpty(idCardBack.getStartDate())) {

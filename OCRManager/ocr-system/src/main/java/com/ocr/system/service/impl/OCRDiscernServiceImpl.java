@@ -6,13 +6,17 @@ import com.ocr.common.utils.DateUtils;
 import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.file.ImageBase64;
 import com.ocr.common.utils.http.HttpUtils;
+import com.ocr.common.utils.security.Md5Utils;
 import com.ocr.system.domain.ChannelType;
 import com.ocr.system.domain.OcrImage;
+import com.ocr.system.domain.OcrTrade;
 import com.ocr.system.model.*;
 import com.ocr.system.service.IChannelTypeService;
 import com.ocr.system.service.IOcrImageService;
 import com.ocr.system.service.IOcrTradeService;
 import com.ocr.system.service.OCRDiscernService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +34,8 @@ import java.util.List;
  */
 @Service
 public class OCRDiscernServiceImpl implements OCRDiscernService {
+
+    private static final Logger log = LoggerFactory.getLogger(OCRDiscernServiceImpl.class);
 
     @Autowired
     IOcrTradeService iOcrTradeService;
@@ -202,6 +208,24 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         iOcrImageService.insertOcrImage(image);
 
         List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
+        if (models.size()==0){
+            log.info("OCR识别结果为空");
+            OcrTrade ocrTrade = new OcrTrade();
+            String id = System.currentTimeMillis() + "";
+            ocrTrade.setId(id);
+            ocrTrade.setChannel(channelCode);
+            ocrTrade.setImageId(fileName);
+            ocrTrade.setImageType(imgType);
+            ocrTrade.setOcrStatus("1");
+            ocrTrade.setOcrPoint("1");
+            ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+            ocrTrade.setOcrTime(DateUtils.getTimeShort());
+            iOcrTradeService.insertOcrTrade(ocrTrade);
+
+            resultData.setMsg("OCR识别结果为空！");
+            resultData.setType("0");
+            return resultData;
+        }
         List list = new ArrayList();
         for (RequestModel model : models) {
             if (null == model.getClass_name()) {
@@ -266,7 +290,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     break;
                 case "Deposit":
                     DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
-                    if (StringUtils.isNotEmpty(deposit.getAccNo())) {
+                    if (StringUtils.isNotEmpty(deposit.getDepositNo())) {
                         deposit.setImgType(model.getClass_name());
                         list.add(deposit);
                         /**
