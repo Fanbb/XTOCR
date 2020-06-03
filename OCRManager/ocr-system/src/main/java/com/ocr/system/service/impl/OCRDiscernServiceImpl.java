@@ -1,5 +1,6 @@
 package com.ocr.system.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.ocr.common.utils.DateUtils;
 import com.ocr.common.utils.StringUtils;
@@ -49,8 +50,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     private String ocrUrl;
 
 
-
-
     @Override
     public ResultData runMore(String channelCode, String url, String str) {
         /**
@@ -87,7 +86,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         image.setType("");
         image.setParentId(fileName);
         iOcrImageService.insertOcrImage(image);
-
 
         String idCardJson1 = "[{'class_name':'IDCardFront','ocr_result':{'idCardNo':'412823155648775659','birthday':'1994年3月23日','sex':'男','nation':'汉','name':'张三','address':'河南省郑州市'}},{'class_name':'IDCardFront','ocr_result':{'idCardNo':'412823155648775659','birthday':'1994年3月13日','sex':'男','nation':'汉','name':'张三','address':'河南省郑州市'}}]";
         List<RequestModel> models = JSONArray.parseArray(idCardJson1, RequestModel.class);
@@ -142,11 +140,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
          * 流水ids
          */
         if (tradeIds.length() > 5) {
-            image.setCompTradeId(tradeIds.subSequence(0, tradeIds.length() - 1).toString());
-            /**
-             * 更新影像数据
-             */
-            iOcrImageService.updateOcrImage(image);
             resultData.setData(list);
             resultData.setMsg("识别成功！");
             resultData.setType("1");
@@ -187,7 +180,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             ImageBase64.base64StringToImageSave(str, path);
         }
         ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
-        if (!imgType.equals("0")){
+        if (!imgType.equals("0")) {
             if (null == channelType || !imgType.equals(channelType.getOcrType())) {
                 resultData.setMsg("无识别类型权限！");
                 resultData.setType("0");
@@ -195,128 +188,105 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             }
         }
 
+        String data = "{\"image_type\" :\"" + imgType + "\",\"path\":\"" + serverProfile + dateStr + "\",\"read_image_way\":\"3\"}";
+        String request = HttpUtils.sendPost2(ocrUrl, data);
+        String json = JSON.parseArray(request).toString();
+
         OcrImage image = new OcrImage();
         image.setId(fileName);
         image.setOcrDate(new Date());
         image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
         image.setLocalPath(path);
         image.setParentId(fileName);
+        image.setOcrResult(json);
         iOcrImageService.insertOcrImage(image);
 
-        String data = "{\"image_type\" :\""+imgType+"\",\"path\":\""+serverProfile+dateStr+"\",\"read_image_way\":\"3\"}";
-        String request = HttpUtils.sendPost2(ocrUrl, data);
-
-        String idCardJson1=request.substring(1,request.length()-1);
-
-//        if (imgType.equals("0")) {
-//            //调用通用识别模板接口
-//            request= HttpUtils.sendPost2(ocrUrl+imgType,null);
-//        } else {
-//            //调用类型模板接口
-//            if (imgType.equals("1")) {
-//                idCardJson1 = "{'class_name':'IDCardFront','ocr_result':{'idCardNo':'412823155648775659','birthday':'1994年3月23日','sex':'男','nation':'汉','name':'张三','address':'河南省郑州市'}}";
-//            } else if (imgType.equals("2")) {
-//                idCardJson1 = "{'class_name':'BankCard','ocr_result':{'bankCardNo':'5233695648755694122'}}";
-//            } else if (imgType.equals("3")) {
-//                idCardJson1 = "{'class_name':'Deposit','ocr_result':{'name':'妹妹','accNo':'55694122','amt':'8000','amtCapital':'捌仟元整','depositNo':'52336956487'}}";
-//            }
-//        }
-
-        RequestModel model = JSONArray.parseObject(idCardJson1, RequestModel.class);
-        if (null==model.getClass_name()){
-            resultData.setMsg("OCR识别结果为空！");
-            resultData.setType("0");
-            return resultData;
-        }
-        if (model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardFront")) {
-            if (!imgType.equals("1")&&!imgType.equals("0")) {
-                resultData.setMsg("无身份证识别类型权限！");
+        List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
+        List list = new ArrayList();
+        for (RequestModel model : models) {
+            if (null == model.getClass_name()) {
+                resultData.setMsg("OCR识别结果为空！");
                 resultData.setType("0");
                 return resultData;
             }
-        }
-        if (model.getClass_name().equals("BankCard")) {
-            if (!imgType.equals("2")&&!imgType.equals("0")){
-                resultData.setMsg("无银行卡识别类型权限！");
-                resultData.setType("0");
-                return resultData;
+            if (model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardFront")) {
+                if (!imgType.equals("1") && !imgType.equals("0")) {
+                    resultData.setMsg("无身份证识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("BankCard")) {
+                if (!imgType.equals("2") && !imgType.equals("0")) {
+                    resultData.setMsg("无银行卡识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+
+            }
+            if (model.getClass_name().equals("Deposit")) {
+                if (!imgType.equals("3") && !imgType.equals("0")) {
+                    resultData.setMsg("无存单识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
             }
 
-        }
-        if (model.getClass_name().equals("Deposit")) {
-            if (!imgType.equals("3")&&!imgType.equals("0")){
-                resultData.setMsg("无存单识别类型权限！");
-                resultData.setType("0");
-                return resultData;
-            }
-        }
-
-
-        String tradeId = "";
-
-        switch (model.getClass_name()) {
-            case "IDCardFront":
-                IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
-//                if (StringUtils.isNotEmpty(idCardFront.getIdCardNo())) {
+            switch (model.getClass_name()) {
+                case "IDCardFront":
+                    IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
                     idCardFront.setImgType(model.getClass_name());
-                    resultData.setData(idCardFront);
+                    list.add(idCardFront);
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, fileName);
-//                }
-                break;
-
-            case "IDCardBack":
-                IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
-                if (StringUtils.isNotEmpty(idCardBack.getStartDate())) {
-                    idCardBack.setImgType(model.getClass_name());
-                    resultData.setData(idCardBack);
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, fileName);
-                }
-                break;
-            case "BankCard":
-                BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
-                if (StringUtils.isNotEmpty(bankCard.getBankCardNo())) {
-                    bankCard.setImgType(model.getClass_name());
-                    resultData.setData(bankCard);
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, fileName);
-                }
-                break;
-            case "Deposit":
-                DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
-                if (StringUtils.isNotEmpty(deposit.getAccNo())) {
-                    deposit.setImgType(model.getClass_name());
-                    resultData.setData(deposit);
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, fileName);
-                }
-                break;
+                    iOcrTradeService.insertIDCardFront(idCardFront, channelCode, fileName);
+                    break;
+                case "IDCardBack":
+                    IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
+                    if (StringUtils.isNotEmpty(idCardBack.getStartDate())) {
+                        idCardBack.setImgType(model.getClass_name());
+                        list.add(idCardBack);
+                        /**
+                         * 调用流水存储 返回流水id
+                         */
+                        iOcrTradeService.insertIDCardBack(idCardBack, channelCode, fileName);
+                    }
+                    break;
+                case "BankCard":
+                    BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
+                    if (StringUtils.isNotEmpty(bankCard.getBankCardNo())) {
+                        bankCard.setImgType(model.getClass_name());
+                        list.add(bankCard);
+                        /**
+                         * 调用流水存储 返回流水id
+                         */
+                        iOcrTradeService.insertBankCard(bankCard, channelCode, fileName);
+                    }
+                    break;
+                case "Deposit":
+                    DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
+                    if (StringUtils.isNotEmpty(deposit.getAccNo())) {
+                        deposit.setImgType(model.getClass_name());
+                        list.add(deposit);
+                        /**
+                         * 调用流水存储 返回流水id
+                         */
+                        iOcrTradeService.insertDeposit(deposit, channelCode, fileName);
+                    }
+                    break;
+            }
         }
-
+        resultData.setData(list);
         /**
          * 流水ids
          */
-        if (tradeId.length() > 3) {
-            /**
-             * 更新影像数据
-             */
-            image.setCompTradeId(tradeId);
-            iOcrImageService.updateOcrImage(image);
+        if (list.size() > 0) {
             resultData.setMsg("识别成功！");
             resultData.setType("1");
         } else {
             resultData.setMsg("识别失败！");
             resultData.setType("0");
-
         }
         return resultData;
     }

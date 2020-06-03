@@ -47,6 +47,12 @@ public class RecognitionController extends BaseController {
     @Value("${ocr.profile}")
     private String imgUploadPath;
 
+    @Value("${ocr.serverProfile}")
+    private String serverProfile;
+
+    @Value("${ocr.ocrUrl}")
+    private String ocrUrl;
+
     @Autowired
     IOcrImageService iOcrImageService;
 
@@ -84,111 +90,93 @@ public class RecognitionController extends BaseController {
 
         String path = imgUploadPath + "/IMAGE/" + dateStr;
         File pathFile = new File(path);
-        log.info("上传路径:" + path);
         if (!pathFile.exists()) {
             pathFile.mkdirs();
         }
         String filePath = path + "/" + fileName + sName;
         //存入影像信息 返回结果msg
         String msg = iOcrImageService.insertOcrImage(fileName, filePath);
-        log.info(msg);
+        log.info("影像存储信息"+msg);
 
         File newFile = new File(filePath);
         file.transferTo(newFile);
         //调取接口进行识别 返回流水号
-        String data = "{\"image_type\" :\"1\",\"path\":\"http://192.168.119.26:8080/profile/IMAGE/" + dateStr + "/" + fileName + sName + "\",\"read_image_way\":\"3\"}";
-        String request = HttpUtils.sendPost2("http://192.168.119.31:10002/mask", data);
+
+        String data = "{\"image_type\" :\"1\",\"path\":\""+serverProfile+dateStr+ "/" + fileName + sName + "\",\"read_image_way\":\"3\"}";
+        String request = HttpUtils.sendPost2(ocrUrl, data);
+        log.info("**data****"+data);
+        log.info("**request****"+request);
+
         String json = JSON.parseArray(request).toString();
+        /**
+         * 识别请求结果更新
+         */
+        OcrImage ocrImage = new OcrImage();
+        ocrImage.setId(fileName+"");
+        ocrImage.setOcrResult(json);
 
-//        List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
-//        for (RequestModel model:models) {
-//
-//        }
-        RequestModel model = JSONArray.parseObject(json.substring(1, json.length() - 1), RequestModel.class);
-        String tradeId = "";
-        switch (model.getClass_name()) {
-            case "IDCardFront":
-                IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
+
+        List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
+        for (RequestModel model:models) {
+            switch (model.getClass_name()) {
+                case "IDCardFront":
+                    IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
 //                if (StringUtils.isNotEmpty(idCardFront.getIdCardNo())) {
-                idCardFront.setImgType(model.getClass_name());
-                /**
-                 * 调用流水存储 返回流水id
-                 */
-                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, "system", fileName + "");
+                    idCardFront.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertIDCardFront(idCardFront, "system", fileName + "");
 //                }
-                break;
+                    break;
 
-            case "IDCardBack":
-                IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
-                if (StringUtils.isNotEmpty(idCardBack.getStartDate())) {
-                    idCardBack.setImgType(model.getClass_name());
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeId = iOcrTradeService.insertIDCardBack(idCardBack, "system", fileName + "");
-                }
-                break;
-            case "BankCard":
-                BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
-                if (StringUtils.isNotEmpty(bankCard.getBankCardNo())) {
-                    bankCard.setImgType(model.getClass_name());
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeId = iOcrTradeService.insertBankCard(bankCard, "system", fileName + "");
-                }
-                break;
-            case "Deposit":
-                DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
-                if (StringUtils.isNotEmpty(deposit.getAccNo())) {
-                    deposit.setImgType(model.getClass_name());
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeId = iOcrTradeService.insertDeposit(deposit, "system", fileName + "");
-                }
-                break;
+                case "IDCardBack":
+                    IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
+                    if (StringUtils.isNotEmpty(idCardBack.getStartDate())) {
+                        idCardBack.setImgType(model.getClass_name());
+                        /**
+                         * 调用流水存储 返回流水id
+                         */
+                        iOcrTradeService.insertIDCardBack(idCardBack, "system", fileName + "");
+                    }
+                    break;
+                case "BankCard":
+                    BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
+                    if (StringUtils.isNotEmpty(bankCard.getBankCardNo())) {
+                        bankCard.setImgType(model.getClass_name());
+                        /**
+                         * 调用流水存储 返回流水id
+                         */
+                        iOcrTradeService.insertBankCard(bankCard, "system", fileName + "");
+                    }
+                    break;
+                case "Deposit":
+                    DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
+                    if (StringUtils.isNotEmpty(deposit.getAccNo())) {
+                        deposit.setImgType(model.getClass_name());
+                        /**
+                         * 调用流水存储 返回流水id
+                         */
+                        iOcrTradeService.insertDeposit(deposit, "system", fileName + "");
+                    }
+                    break;
+            }
         }
 
-        //上传成功后，需要把文件的名字保存到数据库
-        mmap.put("urlImg", filePath);
-        mmap.put("ocrTradeId", tradeId);
-
+        mmap.put("imgId", fileName);
         return AjaxResult.success(mmap);
     }
 
     /**
      * 查询字典详细
      */
-    @GetMapping("/data/{tradeId}")
-    public String detail(@PathVariable("tradeId") String tradeId, ModelMap model) {
-        OcrTrade ocrTrade = iOcrTradeService.selectOcrTradeById(tradeId);
-
-        OcrImage ocrImage = iOcrImageService.selectOcrImageById(ocrTrade.getImageId());
-
+    @GetMapping("/data/{imgId}")
+    public String detail(@PathVariable("imgId") String imgId, ModelMap model) {
+        OcrImage ocrImage = iOcrImageService.selectOcrImageById(imgId);
         String imgUrl = ocrImage.getLocalPath().replace(imgUploadPath, "/profile/");
         model.addAttribute("imgUrl", imgUrl);
-
-
-        if (ocrTrade.getImageType().equals("IDCardFront")) {
-            IDCardFront idCardFront = JSON.parseObject(ocrTrade.getRemark1(), IDCardFront.class);
-            model.put("idCardFront", idCardFront);
-            return prefix + "/data/cardFront";
-        } else if (ocrTrade.getImageType().equals("IDCardBack")) {
-            IDCardBack idCardBack = JSON.parseObject(ocrTrade.getRemark1(), IDCardBack.class);
-            model.put("idCardBack", idCardBack);
-            return prefix + "/data/cardBack";
-        } else if (ocrTrade.getImageType().equals("BankCard")) {
-            BankCard bankCard = JSON.parseObject(ocrTrade.getRemark1(), BankCard.class);
-            model.put("bankCard", bankCard);
-            return prefix + "/data/bankCard";
-        } else if (ocrTrade.getImageType().equals("Deposit")) {
-            DepositReceipt depositReceipt = JSON.parseObject(ocrTrade.getRemark1(), DepositReceipt.class);
-            model.put("depositReceipt", depositReceipt);
-            return prefix + "/data/depositReceipt";
-        } else {
-            return "";
-        }
+        model.addAttribute("imgId", imgId);
+        return prefix + "/data/data";
 
     }
 

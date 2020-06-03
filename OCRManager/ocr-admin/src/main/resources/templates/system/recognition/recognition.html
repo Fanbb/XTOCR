@@ -39,8 +39,8 @@
         }).on("fileuploaded", function(event, data, previewId, index) {
             var result =data.response.data;
             if (result!=null){
-                var ocrTradeId= result.ocrTradeId;
-                var url = prefix + '/data/'+ocrTradeId;
+                var imgId= result.imgId;
+                var url = prefix + '/data/'+imgId;
                 console.info(url);
                 createMenuItem(url, "识别结果详情");
             }

@@ -66,5 +66,5 @@ public interface OcrTradeMapper
 	 * @return
 	 */
 	public String[] selectImagePath(String[] ids);
-	
+
 }

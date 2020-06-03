@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import com.alibaba.fastjson.JSON;
 import com.ocr.common.core.text.Convert;
+import com.ocr.common.json.JSONObject;
 import com.ocr.common.utils.file.FileUtils;
 import com.ocr.system.domain.OcrImage;
 import com.ocr.system.model.BankCard;
@@ -66,6 +68,17 @@ public class OcrTradeController extends BaseController {
     /**
      * 查询识别流水列表
      */
+    @PostMapping("/listByImgId")
+    @ResponseBody
+    public TableDataInfo listByImgId(OcrTrade ocrTrade) {
+        startPage();
+        List<OcrTrade> list = ocrTradeService.selectOcrTradeList(ocrTrade);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询识别流水列表
+     */
     @RequiresPermissions("system:ocrTrade:list")
     @PostMapping("/list")
     @ResponseBody
@@ -106,8 +119,6 @@ public class OcrTradeController extends BaseController {
     public AjaxResult addSave(OcrTrade ocrTrade) {
         return toAjax(ocrTradeService.insertOcrTrade(ocrTrade));
     }
-
-
 
     @RequiresPermissions("system:ocrTrade:blend")
     @Log(title = "流水勾兑", businessType = BusinessType.UPDATE)
@@ -177,8 +188,6 @@ public class OcrTradeController extends BaseController {
         }
     }
 
-
-
     /**
      * 删除识别流水
      */
@@ -192,7 +201,10 @@ public class OcrTradeController extends BaseController {
 
 
     /**
-     * 修改识别流水
+     * 流水详情跳转
+     * @param id
+     * @param mmap
+     * @return
      */
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") String id, ModelMap mmap) {
@@ -209,13 +221,8 @@ public class OcrTradeController extends BaseController {
 
 
         if (ocrTrade.getImageType().equals("IDCardFront")) {
-            IDCardFront idCardFront = new IDCardFront();
+            IDCardFront idCardFront = JSON.parseObject(ocrTrade.getRemark1(),IDCardFront.class);
 
-            idCardFront.setName("张三");
-            idCardFront.setNation("汉");
-            idCardFront.setSex("男");
-            idCardFront.setAddress("威海市统一路39号");
-            idCardFront.setIdCardNo("411823199117211112");
             mmap.put("idCardFront", idCardFront);
             return prefix + "/detail/cardFront";
         } else if (ocrTrade.getImageType().equals("IDCardBack")) {
