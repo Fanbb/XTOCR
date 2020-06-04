@@ -4,7 +4,7 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: oracle.jdbc.driver.OracleDriver
         druid:
-            # 主库数据源
+            # 主库数据源 生产数据库8.8.91.59:1521:whpaea   192.168.119.27:1521:ocrdb测试数据库
             master:
                 url: jdbc:oracle:thin:@192.168.119.27:1521:ocrdb
                 username: OCR
