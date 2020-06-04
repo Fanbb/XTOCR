@@ -3,6 +3,7 @@ package com.ocr.system.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.ocr.common.utils.DateUtils;
+import com.ocr.common.utils.FileTypeUtils;
 import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.file.ImageBase64;
 import com.ocr.common.utils.http.HttpUtils;
@@ -69,7 +70,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         ResultData resultData = new ResultData();
         String fileName = System.currentTimeMillis() + "";
         String dateStr = DateUtils.datePath();
-        String path = imgUploadPath + "/IMAGE/" + dateStr + "/" + fileName + ".jpg";
+        String path = imgUploadPath + "/IMAGE/" + dateStr + "/" + fileName;
         if (StringUtils.isNotEmpty(url)) {
             /**
              * 图片url不为空
@@ -171,19 +172,23 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
          */
         ResultData resultData = new ResultData();
         String fileName = System.currentTimeMillis() + "";
-        String dateStr = DateUtils.datePath() + "/" + fileName + ".jpg";
-        String path = imgUploadPath + "/IMAGE/" + dateStr;
+        String sName="";
+        String dateStr = DateUtils.datePath() + "/" + fileName;
+
+        String path= imgUploadPath + "/IMAGE/" + dateStr;
         if (StringUtils.isNotEmpty(url)) {
             /**
              * 图片url不为空
              */
+            sName = url.substring(url.lastIndexOf("."));
             str = ImageBase64.imageToBase64ByUrl(url);
-            ImageBase64.base64StringToImageSave(str, path);
+            ImageBase64.base64StringToImageSave(str, path+sName);
         } else if (StringUtils.isNotEmpty(str)) {
             /**
              * 图片base64不为空
              */
-            ImageBase64.base64StringToImageSave(str, path);
+            sName = FileTypeUtils.getFromBASE64(str);
+            ImageBase64.base64StringToImageSave(str, path+sName);
         }
         ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
         if (!imgType.equals("0")) {
@@ -193,8 +198,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 return resultData;
             }
         }
+        String relativePath = serverProfile+ dateStr+ "/" + fileName;
 
-        String data = "{\"image_type\" :\"" + imgType + "\",\"path\":\"" + serverProfile + dateStr + "\",\"read_image_way\":\"3\"}";
+        String data = "{\"image_type\" :\"" + imgType + "\",\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2(ocrUrl, data);
         String json = JSON.parseArray(request).toString();
 
@@ -202,13 +208,13 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         image.setId(fileName);
         image.setOcrDate(new Date());
         image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-        image.setLocalPath(path);
+        image.setLocalPath(relativePath+sName);
         image.setParentId(fileName);
         image.setOcrResult(json);
         iOcrImageService.insertOcrImage(image);
 
         List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
-        if (models.size()==0){
+        if (models.size() == 0) {
             log.info("OCR识别结果为空");
             OcrTrade ocrTrade = new OcrTrade();
             String id = System.currentTimeMillis() + "";

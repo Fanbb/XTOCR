@@ -94,15 +94,16 @@ public class RecognitionController extends BaseController {
             pathFile.mkdirs();
         }
         String filePath = path + "/" + fileName + sName;
+        String relativePath = serverProfile+ dateStr+ "/" + fileName + sName;
         //存入影像信息 返回结果msg
-        String msg = iOcrImageService.insertOcrImage(fileName, filePath);
+        String msg = iOcrImageService.insertOcrImage(fileName, relativePath);
         log.info("影像存储信息"+msg);
 
         File newFile = new File(filePath);
         file.transferTo(newFile);
         //调取接口进行识别 返回流水号
 
-        String data = "{\"image_type\" :\"1\",\"path\":\""+serverProfile+dateStr+ "/" + fileName + sName + "\",\"read_image_way\":\"3\"}";
+        String data = "{\"image_type\" :\"1\",\"path\":\""+relativePath+ "\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2(ocrUrl, data);
         log.info("**data****"+data);
         log.info("**request****"+request);
@@ -179,7 +180,7 @@ public class RecognitionController extends BaseController {
     }
 
     /**
-     * 查询字典详细
+     * 图片识别结果返回
      */
     @GetMapping("/data/{imgId}")
     public String detail(@PathVariable("imgId") String imgId, ModelMap model) {
