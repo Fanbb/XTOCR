@@ -13,106 +13,214 @@
 </head>
 
 <body class="gray-bg">
-<div class="row  border-bottom white-bg dashboard-header">
-    <div class="col-sm-12">
-        <blockquote class="text-warning" style="font-size:14px">
-
-        </blockquote>
-
-        <hr>
-    </div>
-    <div class="col-sm-3">
-        <h2>Hello,Guest</h2>
-        <small>移动设备访问请扫描以下二维码：</small>
-        <br>
-    </div>
-    <div class="col-sm-5">
-        <h2>OCRManage后台管理框架</h2>
-        <p>
-            一直想做一款后台管理系统，看了很多优秀的开源项目但是发现没有合适自己的。于是利用空闲休息时间开始自己写一套后台系统。如此有了OCRManage管理系统。，她可以用于所有的Web应用程序，如<b>网站管理后台</b>，<b>网站会员中心</b>，<b>CMS</b>，<b>CRM</b>，<b>OA</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。同时支持移动客户端访问。系统会陆续更新一些实用功能。
-        </p>
-        <p>
-            <b>当前版本：</b><span>v[[${version}]]</span>
-        </p>
-
-    </div>
-    <div class="col-sm-4">
-        <h4>技术选型：</h4>
-
-    </div>
 
 </div>
-<div class="wrapper wrapper-content">
+<div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-sm-4">
-
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>联系信息</h5>
-
+        <div class="col-sm-12" >
+            <div class="ibox float-e-margins" style="height: 400px">
+                <div class="ibox-title"style="height: 50px">
+                    <h5>月/日流水折线图</h5>
                 </div>
-                <div class="ibox-content">
-                    <p><i class="fa fa-send-o"></i> 官网：<a href="http://www.ocr.vip"
-                                                          target="_blank">http://www.ocr.vip</a>
-                    </p>
-                    <p><i class="fa fa-qq"></i> QQ群：<s>满1389287</s> <s>满1679294</s> <s>满1529866</s> <s>满1772718</s> <s>满1366522</s>
-                        <a href="https://jq.qq.com/?_wv=1027&k=5Ofd4Pb" target="_blank">1382251</a>
-                    </p>
-                    <p><i class="fa fa-weixin"></i> 微信：<a href="javascript:;">/ *OCRManage</a>
-                    </p>
-                    <p><i class="fa fa-credit-card"></i> 支付宝：<a href="javascript:;" class="支付宝信息">/ *OCRManage</a>
-                    </p>
+                <div class="ibox-content" >
+                    <div class="echarts" id="echarts-line-chart" style="height: 300px"></div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>更新日志</h5>
-                </div>
-                <div class="ibox-content no-padding">
-                    <div class="panel-body">
-                        <div class="panel-group" id="version">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h5 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#version" href="#v34">v3.4.0</a><code
-                                            class="pull-right">2019.06.03</code>
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+                    <h5>饼状图</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="graph_flot.html#">选项1</a>
+                            </li>
+                            <li><a href="graph_flot.html#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
                     </div>
                 </div>
+                <div class="ibox-content">
+                    <div class="echarts" id="echarts-pie-chart"></div>
+                </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>捐赠</h5>
+                    <h5>饼状图</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="graph_flot.html#">选项1</a>
+                            </li>
+                            <li><a href="graph_flot.html#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="ibox-content">
-
-
+                    <div class="echarts" id="echarts-pie1-chart"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: echarts-js"/>
 <script type="text/javascript">
-    $('#pay-qrcode').click(function () {
-        var html = $(this).html();
-        parent.layer.open({
-            title: false,
-            type: 1,
-            closeBtn: false,
-            shadeClose: true,
-            area: ['600px', 'auto'],
-            content: html
-        });
+    $(function () {
+        var lineChart = echarts.init(document.getElementById("echarts-line-chart"));
+        var data=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11', '12', '13', '14', '15', '16', '17', '18', '19', '20','21', '22', '23', '24', '25', '26', '27', '28', '29', '30','31'];
+        var lineoption = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['本月日流水数', '上月日流水数']
+            },
+            grid: {
+                x: 40,
+                x2: 40,
+                y2: 24
+            },
+            calculable: true,
+            xAxis: [
+                {
+
+                    type: 'category',
+                    boundaryGap: false,
+                    data: data
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value}'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '本月日流水数',
+                    type: 'line',
+                    data: [1111, 2222, 2332, 5455, 3343, 2123, 9342,1123, 23242, 2123, 5324, 3234, 2342, 2349,3451, 4562, 4562, 2345, 2343, 232, 2349,1234, 2234, 2234, 2345, 2343, 2342, 2349,1234, 2234,1290],
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: '最大值'},
+                            {type: 'min', name: '最小值'}
+                        ]
+                    }
+                },
+                {
+                    name: '上月日流水数',
+                    type: 'line',
+                    data: [1, 2, 2, 5, 3, 2, 9,1, 2, 2, 5, 3, 2, 9,1, 2, 2, 5, 3, 2, 9,1, 2, 2, 5, 3, 2, 9,1, 2,12900],
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: '最大值'},
+                            {type: 'min', name: '最小值'}
+                        ]
+                    }
+                }
+            ]
+        };
+        lineChart.setOption(lineoption);
+        $(window).resize(lineChart.resize);
+
+
+        var pieChart = echarts.init(document.getElementById("echarts-pie-chart"));
+        var pieoption = {
+            title: {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: 335, name: '直接访问'},
+                        {value: 310, name: '邮件营销'},
+                        {value: 234, name: '联盟广告'},
+                        {value: 135, name: '视频广告'},
+                        {value: 1548, name: '搜索引擎'}
+                    ]
+                }
+            ]
+        };
+        pieChart.setOption(pieoption);
+        $(window).resize(pieChart.resize);
+
+        var pieChart1 = echarts.init(document.getElementById("echarts-pie1-chart"));
+        var pieoption1 = {
+            title: {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: 335, name: '直接访问'},
+                        {value: 310, name: '邮件营销'},
+                        {value: 234, name: '联盟广告'},
+                        {value: 135, name: '视频广告'},
+                        {value: 1548, name: '搜索引擎'}
+                    ]
+                }
+            ]
+        };
+        pieChart1.setOption(pieoption1);
+        $(window).resize(pieChart.resize);
+
     });
 </script>
 </body>
