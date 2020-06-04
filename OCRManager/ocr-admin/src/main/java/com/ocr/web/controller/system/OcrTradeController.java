@@ -222,26 +222,18 @@ public class OcrTradeController extends BaseController {
 
         if (ocrTrade.getImageType().equals("IDCardFront")) {
             IDCardFront idCardFront = JSON.parseObject(ocrTrade.getRemark1(),IDCardFront.class);
-
             mmap.put("idCardFront", idCardFront);
             return prefix + "/detail/cardFront";
         } else if (ocrTrade.getImageType().equals("IDCardBack")) {
-            IDCardBack idCardBack = new IDCardBack();
-            idCardBack.setEndDate("2020-05-23");
-            idCardBack.setStartDate("1999-05-23");
+            IDCardBack idCardBack = JSON.parseObject(ocrTrade.getRemark1(),IDCardBack.class);
             mmap.put("idCardBack", idCardBack);
             return prefix + "/detail/cardBack";
         } else if (ocrTrade.getImageType().equals("BankCard")) {
-            BankCard bankCard = new BankCard();
-            bankCard.setBankCardNo("623058000026511659");
+            BankCard bankCard = JSON.parseObject(ocrTrade.getRemark1(),BankCard.class);
             mmap.put("bankCard", bankCard);
             return prefix + "/detail/bankCard";
         } else if (ocrTrade.getImageType().equals("Deposit")) {
-            DepositReceipt depositReceipt = new DepositReceipt();
-            depositReceipt.setAccNo("994562556354556");
-            depositReceipt.setAmt("CNY.500000");
-            depositReceipt.setAmtCapital("伍拾万圆整");
-            depositReceipt.setName("妹妹");
+            DepositReceipt depositReceipt = JSON.parseObject(ocrTrade.getRemark1(),DepositReceipt.class);
             mmap.put("depositReceipt", depositReceipt);
             return prefix + "/detail/depositReceipt";
         } else {

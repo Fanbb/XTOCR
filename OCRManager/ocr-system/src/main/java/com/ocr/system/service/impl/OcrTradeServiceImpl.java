@@ -130,6 +130,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setImageType(imgType);
         ocrTrade.setOcrStatus("0");
         ocrTrade.setOcrPoint("0");
+        ocrTrade.setRemark2("0");
         ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
         ocrTrade.setOcrTime(DateUtils.getTimeShort());
         ocrTrade.setRemark1(json);
