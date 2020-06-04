@@ -35,7 +35,6 @@
                         </li>
 
 
-
                         <li>
                             影像类型：<select name="imageType" th:with="type=${@dict.getType('ocr_model_type')}">
                             <option value="">所有</option>
@@ -61,7 +60,7 @@
                         </li>
 
                         <li>
-                            导出状态：<select name="remark2" th:with="type=${@dict.getType('ocr_trade_status')}">
+                            导出状态：<select name="remark2" th:with="type=${@dict.getType('ocr_export_status')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -94,7 +93,8 @@
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTrade:export">
                 <i class="fa fa-download"></i> 导出
             </a>
-            <a class="btn btn-warning" onclick="javascript:batchDownload()" shiro:hasPermission="system:ocrTrade:downloadImages">
+            <a class="btn btn-warning" onclick="javascript:batchDownload()"
+               shiro:hasPermission="system:ocrTrade:downloadImages">
                 <i class="fa fa-download"></i> 影像下载
             </a>
         </div>
@@ -113,6 +113,7 @@
     var typeData = [[${@dict.getType('ocr_model_type')}]];
     var channelData = [[${@dict.getType('ocr_channel_name')}]];
     var pointData = [[${@dict.getType('ocr_blend_status')}]];
+    var exportData = [[${@dict.getType('ocr_export_status')}]];
 
     $(function () {
         var options = {
@@ -191,6 +192,9 @@
                     field: 'remark2',
                     title: '导出状态',
                     align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(exportData, item.remark2);
+                    }
                 },
                 {
                     title: '操作',
@@ -220,9 +224,9 @@
             $.modal.alertWarning("请选择要生成的数据");
             return;
         }
-        $.modal.confirm("确认要生成选中的" + rows.length + "条数据吗?", function() {
+        $.modal.confirm("确认要生成选中的" + rows.length + "条数据吗?", function () {
             location.href = prefix + "/downloadImages?ids=" + rows;
-            layer.msg('执行成功,正在生成代码请稍后…', { icon: 1 });
+            layer.msg('执行成功,正在生成代码请稍后…', {icon: 1});
         });
     }
 </script>
