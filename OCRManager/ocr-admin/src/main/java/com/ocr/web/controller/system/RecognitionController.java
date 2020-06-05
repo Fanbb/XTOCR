@@ -115,6 +115,7 @@ public class RecognitionController extends BaseController {
         OcrImage ocrImage = new OcrImage();
         ocrImage.setId(fileName+"");
         ocrImage.setOcrResult(json);
+        iOcrImageService.updateOcrImage(ocrImage);
 
         List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
         if (models.size()==0){

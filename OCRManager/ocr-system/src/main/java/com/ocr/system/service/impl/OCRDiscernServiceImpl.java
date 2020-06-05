@@ -187,7 +187,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             /**
              * 图片base64不为空
              */
-            sName = FileTypeUtils.getFromBASE64(str);
+            sName = "."+FileTypeUtils.getFromBASE64(str);
             ImageBase64.base64StringToImageSave(str, path+sName);
         }
         ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
@@ -198,7 +198,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 return resultData;
             }
         }
-        String relativePath = serverProfile+ dateStr+ "/" + fileName;
+        String relativePath = serverProfile+ dateStr;
 
         String data = "{\"image_type\" :\"" + imgType + "\",\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2(ocrUrl, data);
