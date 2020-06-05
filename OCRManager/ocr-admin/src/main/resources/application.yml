@@ -15,7 +15,7 @@ ocr:
   # 本机服务器图片地址路径  （项目部署IP）  生产ip：192.168.110.214/213 测试IP192.168.119.26
   serverProfile: http://192.168.119.26:8080/profile/IMAGE/
   # ocr服务器接口访问地址 （ocr服务器IP路径）
-  ocrUrl: http://192.168.119.31:10002/mask
+  ocrUrl: http://192.168.119.213:10002/mask
 
   # 获取ip地址开关
   addressEnabled: true

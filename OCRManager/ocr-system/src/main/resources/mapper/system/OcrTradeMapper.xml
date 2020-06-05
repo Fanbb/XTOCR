@@ -130,7 +130,7 @@
     </delete>
 
     <select id="selectImagePath" parameterType="String" resultType="String">
-        SELECT oi.local_path FROM Ocr_Trade ot  LEFT JOIN ocr_image oi  ON ot.image_id = oi.ID
+        SELECT distinct(oi.local_path) FROM Ocr_Trade ot  LEFT JOIN ocr_image oi  ON ot.image_id = oi.ID
         where ot.id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}

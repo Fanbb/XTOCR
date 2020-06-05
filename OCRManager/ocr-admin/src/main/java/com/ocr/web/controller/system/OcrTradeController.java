@@ -1,9 +1,12 @@
 package com.ocr.web.controller.system;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -11,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.ocr.common.core.text.Convert;
 import com.ocr.common.json.JSONObject;
 import com.ocr.common.utils.file.FileUtils;
+import com.ocr.common.utils.file.ImageBase64;
 import com.ocr.system.domain.OcrImage;
 import com.ocr.system.model.BankCard;
 import com.ocr.system.model.DepositReceipt;
@@ -36,6 +40,7 @@ import com.ocr.common.core.controller.BaseController;
 import com.ocr.common.core.page.TableDataInfo;
 import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.utils.poi.ExcelUtil;
+import oshi.util.FileUtil;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -170,8 +175,9 @@ public class OcrTradeController extends BaseController {
                 //查询img path 获取路径名称
                 String imgPath = files[i];
                 String fileName = imgPath.substring(imgPath.lastIndexOf("/")+1);
+                File file=getFileByUrl(imgPath,fileName.substring(fileName.lastIndexOf(".")));
                 zos.putNextEntry(new ZipEntry(fileName));
-                FileInputStream fis = new FileInputStream(new File(imgPath));
+                FileInputStream fis = new FileInputStream(file);
                 byte[] buffer = new byte[1024];
                 int r = 0;
                 while ((r = fis.read(buffer)) != -1) {
@@ -187,6 +193,45 @@ public class OcrTradeController extends BaseController {
             e.printStackTrace();
         }
     }
+
+    //url转file
+    private File getFileByUrl(String fileUrl, String suffix) {
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        BufferedOutputStream stream = null;
+        InputStream inputStream = null;
+        File file = null;
+        try {
+            // 创建URL
+            URL url = new URL(fileUrl);
+            // 创建链接
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5000);
+            inputStream = conn.getInputStream();
+
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = inputStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, len);
+            }
+            file = File.createTempFile("file", suffix,new File(imgUploadPath));
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            stream = new BufferedOutputStream(fileOutputStream);
+            stream.write(outStream.toByteArray());
+        } catch (Exception e) {
+        } finally {
+            try {
+                if (inputStream != null)
+                    inputStream.close();
+                if (stream != null)
+                    stream.close();
+                outStream.close();
+            } catch (Exception e) {
+            }
+        }
+        return file;
+    }
+
 
     /**
      * 删除识别流水
