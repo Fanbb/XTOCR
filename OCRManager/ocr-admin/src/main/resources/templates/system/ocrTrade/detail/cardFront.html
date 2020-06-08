@@ -63,7 +63,18 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>地址：</label>
+                            <label class="col-sm-3 control-label"></span>出生年月：</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" readonly="true" th:size="40"
+                                           disabled="disabled" th:value="@{${idCardFront.getBirthday()}}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"></span>住址：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <textarea style="width: 336px;height: 60px;font-size: 15px" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
@@ -73,7 +84,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>身份证号：</label>
+                            <label class="col-sm-3 control-label"></span>公民身份号码：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" readonly="true" th:size="40" th:high="48"

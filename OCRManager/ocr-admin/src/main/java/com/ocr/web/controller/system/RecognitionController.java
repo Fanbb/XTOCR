@@ -123,7 +123,7 @@ public class RecognitionController extends BaseController {
             ocrTrade.setOcrTime(DateUtils.getTimeShort());
             iOcrTradeService.insertOcrTrade(ocrTrade);
             log.info("OCR识别结果为空");
-            mmap.put("imgId", fileName);
+            mmap.put("imgId", imgId);
             return AjaxResult.success(mmap);
         }
         String json = JSON.parseArray(request).toString();
@@ -182,7 +182,7 @@ public class RecognitionController extends BaseController {
             }
         }
 
-        mmap.put("imgId", fileName);
+        mmap.put("imgId", imgId);
         return AjaxResult.success(mmap);
     }
 
@@ -192,8 +192,7 @@ public class RecognitionController extends BaseController {
     @GetMapping("/data/{imgId}")
     public String detail(@PathVariable("imgId") String imgId, ModelMap model) {
         OcrImage ocrImage = iOcrImageService.selectOcrImageById(imgId);
-        String imgUrl = ocrImage.getLocalPath().replace(imgUploadPath, "/profile/");
-        model.addAttribute("imgUrl", imgUrl);
+        model.addAttribute("imgUrl", ocrImage.getLocalPath());
         model.addAttribute("imgId", imgId);
         return prefix + "/data/data";
 
