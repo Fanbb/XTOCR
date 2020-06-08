@@ -103,7 +103,7 @@ public class RecognitionController extends BaseController {
         file.transferTo(newFile);
         //调取接口进行识别 返回流水号
 
-        String data = "{\"image_type\" :\"1\",\"path\":\""+relativePath+ "\",\"read_image_way\":\"3\"}";
+        String data = "{\"path\":\""+relativePath+ "\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2(ocrUrl, data);
         log.info("**data****"+data);
         log.info("**request****"+request);
