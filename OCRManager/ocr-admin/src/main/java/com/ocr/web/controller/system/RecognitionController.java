@@ -133,7 +133,7 @@ public class RecognitionController extends BaseController {
          * 识别请求结果更新
          */
         OcrImage ocrImage = new OcrImage();
-        ocrImage.setId(fileName+"");
+        ocrImage.setId(imgId);
         ocrImage.setOcrResult(json);
         iOcrImageService.updateOcrImage(ocrImage);
 
