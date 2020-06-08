@@ -5,7 +5,6 @@ import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.core.page.TableDataInfo;
 import com.ocr.common.utils.poi.ExcelUtil;
 import com.ocr.system.domain.OcrTradeView;
-import com.ocr.system.service.IOcrImageService;
 import com.ocr.system.service.IOcrTradeViewService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
