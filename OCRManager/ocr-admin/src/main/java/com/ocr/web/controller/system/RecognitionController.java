@@ -107,18 +107,14 @@ public class RecognitionController extends BaseController {
         String request = HttpUtils.sendPost2(ocrUrl, data);
         log.info("**data****"+data);
         log.info("**request****"+request);
+        if (StringUtils.isEmpty(request)){
+            /**
+             * 识别请求结果更新
+             */
+            OcrImage ocrImage = new OcrImage();
+            ocrImage.setId(fileName+"");
+            iOcrImageService.updateOcrImage(ocrImage);
 
-        String json = JSON.parseArray(request).toString();
-        /**
-         * 识别请求结果更新
-         */
-        OcrImage ocrImage = new OcrImage();
-        ocrImage.setId(fileName+"");
-        ocrImage.setOcrResult(json);
-        iOcrImageService.updateOcrImage(ocrImage);
-
-        List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
-        if (models.size()==0){
             OcrTrade ocrTrade = new OcrTrade();
             String id = System.currentTimeMillis() + "";
             ocrTrade.setId(id);
@@ -132,7 +128,21 @@ public class RecognitionController extends BaseController {
             ocrTrade.setOcrTime(DateUtils.getTimeShort());
             iOcrTradeService.insertOcrTrade(ocrTrade);
             log.info("OCR识别结果为空");
+            return AjaxResult.error("OCR识别结果为空");
         }
+        String json = JSON.parseArray(request).toString();
+
+
+        /**
+         * 识别请求结果更新
+         */
+        OcrImage ocrImage = new OcrImage();
+        ocrImage.setId(fileName+"");
+        ocrImage.setOcrResult(json);
+        iOcrImageService.updateOcrImage(ocrImage);
+
+        List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
+
         for (RequestModel model:models) {
             switch (model.getClass_name()) {
                 case "IDCardFront":

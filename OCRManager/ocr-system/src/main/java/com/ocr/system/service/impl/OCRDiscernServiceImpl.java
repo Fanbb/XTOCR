@@ -200,9 +200,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         }
         String relativePath = serverProfile+ dateStr;
         String data = "{\"image_type\" :\"" + imgType + "\",\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
-        if(imgType.equals("0")){
-            data = "{\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
-        }
+//        if(imgType.equals("0")){
+//            data = "{\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
+//        }
 
         String request = HttpUtils.sendPost2(ocrUrl, data);
         String json = JSON.parseArray(request).toString();
