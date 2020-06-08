@@ -1,33 +1,19 @@
 package com.ocr.system.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Date;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.ocr.common.constant.Constants;
+import com.ocr.common.core.text.Convert;
 import com.ocr.common.utils.DateUtils;
-import com.ocr.common.utils.StringUtils;
-import com.ocr.common.utils.file.FileUtils;
-import com.ocr.common.utils.file.ImageBase64;
+import com.ocr.system.domain.OcrTrade;
+import com.ocr.system.mapper.OcrTradeMapper;
 import com.ocr.system.model.BankCard;
 import com.ocr.system.model.DepositReceipt;
 import com.ocr.system.model.IDCardBack;
 import com.ocr.system.model.IDCardFront;
-import org.apache.commons.io.IOUtils;
+import com.ocr.system.service.IOcrTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ocr.system.mapper.OcrTradeMapper;
-import com.ocr.system.domain.OcrTrade;
-import com.ocr.system.service.IOcrTradeService;
-import com.ocr.common.core.text.Convert;
 
-import javax.imageio.stream.FileImageInputStream;
+import java.util.List;
 
 /**
  * 识别流水 服务层实现

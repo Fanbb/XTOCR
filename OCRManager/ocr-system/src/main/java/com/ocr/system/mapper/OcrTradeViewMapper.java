@@ -12,14 +12,7 @@ import java.util.List;
  */
 public interface OcrTradeViewMapper
 {
-	/**
-     * 查询识别流水信息
-     * 
-     * @param id 识别流水ID
-     * @return 识别流水信息
-     */
-	public OcrTradeView selectOcrTradeById(String id);
-	
+
 	/**
      * 查询识别流水列表
      * 

@@ -17,7 +17,7 @@
     </sql>
 
     <select id="selectOcrTradeViewList" parameterType="OcrTradeView" resultMap="OcrTradeViewResult">
-        <include refid="selectOcrTradeVo"/>
+        <include refid="selectOcrTradeViewVo"/>
         <where>
             <if test="ocrDate != null ">and ocr_date = #{ocrDate}</if>
             <if test="channel != null  and channel != '' ">and channel = #{channel}</if>

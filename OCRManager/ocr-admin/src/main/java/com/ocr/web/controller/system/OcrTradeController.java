@@ -1,48 +1,35 @@
 package com.ocr.web.controller.system;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
 import com.alibaba.fastjson.JSON;
+import com.ocr.common.annotation.Log;
+import com.ocr.common.core.controller.BaseController;
+import com.ocr.common.core.domain.AjaxResult;
+import com.ocr.common.core.page.TableDataInfo;
 import com.ocr.common.core.text.Convert;
-import com.ocr.common.json.JSONObject;
-import com.ocr.common.utils.file.FileUtils;
-import com.ocr.common.utils.file.ImageBase64;
+import com.ocr.common.enums.BusinessType;
+import com.ocr.common.utils.poi.ExcelUtil;
 import com.ocr.system.domain.OcrImage;
+import com.ocr.system.domain.OcrTrade;
 import com.ocr.system.model.BankCard;
 import com.ocr.system.model.DepositReceipt;
 import com.ocr.system.model.IDCardBack;
 import com.ocr.system.model.IDCardFront;
 import com.ocr.system.service.IOcrImageService;
-import org.apache.commons.io.IOUtils;
+import com.ocr.system.service.IOcrTradeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import com.ocr.common.annotation.Log;
-import com.ocr.common.enums.BusinessType;
-import com.ocr.system.domain.OcrTrade;
-import com.ocr.system.service.IOcrTradeService;
-import com.ocr.common.core.controller.BaseController;
-import com.ocr.common.core.page.TableDataInfo;
-import com.ocr.common.core.domain.AjaxResult;
-import com.ocr.common.utils.poi.ExcelUtil;
-import oshi.util.FileUtil;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * 识别流水 信息操作处理

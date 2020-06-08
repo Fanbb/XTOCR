@@ -7,7 +7,6 @@ import com.ocr.common.utils.FileTypeUtils;
 import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.file.ImageBase64;
 import com.ocr.common.utils.http.HttpUtils;
-import com.ocr.common.utils.security.Md5Utils;
 import com.ocr.system.domain.ChannelType;
 import com.ocr.system.domain.OcrImage;
 import com.ocr.system.domain.OcrTrade;
