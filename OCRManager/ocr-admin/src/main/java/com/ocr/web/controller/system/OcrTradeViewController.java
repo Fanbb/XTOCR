@@ -31,16 +31,11 @@ public class OcrTradeViewController extends BaseController {
     @Autowired
     private IOcrTradeViewService iOcrTradeViewService;
 
-    @Autowired
-    private IOcrImageService iOcrImageService;
-
-    @RequiresPermissions("system:ocrTrade:view")
+    @RequiresPermissions("system:ocrTradeView:view")
     @GetMapping()
     public String ocrTrade() {
-        return prefix + "/ocrTrade";
+        return prefix + "/ocrTradeView";
     }
-
-
 
     /**
      * 查询识别流水列表
@@ -54,17 +49,16 @@ public class OcrTradeViewController extends BaseController {
         return getDataTable(list);
     }
 
-
     /**
      * 导出识别流水列表
      */
-    @RequiresPermissions("system:ocrTrade:export")
+    @RequiresPermissions("system:ocrTradeView:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(OcrTradeView ocrTradeView) {
         List<OcrTradeView> list = iOcrTradeViewService.selectOcrTradeViewList(ocrTradeView);
         ExcelUtil<OcrTradeView> util = new ExcelUtil<OcrTradeView>(OcrTradeView.class);
-        return util.exportExcel(list, "ocrTrade");
+        return util.exportExcel(list, "ocrTradeView");
     }
 
 }

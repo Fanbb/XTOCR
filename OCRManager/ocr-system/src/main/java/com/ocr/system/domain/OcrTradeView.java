@@ -6,6 +6,7 @@ import com.ocr.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
  * @author ocr
  * @date 2020-05-20
  */
-public class OcrTradeView extends BaseEntity {
+public class OcrTradeView  extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -26,13 +27,13 @@ public class OcrTradeView extends BaseEntity {
     /**
      * 渠道
      */
-    @Excel(name = "识别渠道", prompt = "识别渠道")
+    @Excel(name = "识别渠道号", prompt = "识别渠道")
     private String channel;
     /**
      * 影像类型
      */
-    @Excel(name = "影像类型", readConverterExp = "idCard=身份证,2=bankCard,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据")
-    private String imageType;
+    @Excel(name = "影像类型", readConverterExp = "1=身份证,2=银行卡,3=存单")
+    private String imageName;
     /**
      * 识别总量
      */
@@ -60,12 +61,12 @@ public class OcrTradeView extends BaseEntity {
         this.channel = channel;
     }
 
-    public String getImageType() {
-        return imageType;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImageType(String imageType) {
-        this.imageType = imageType;
+    public void setImageName(String imageType) {
+        this.imageName = imageType;
     }
 
     public Integer getTradeTotal() {
@@ -84,10 +85,10 @@ public class OcrTradeView extends BaseEntity {
         this.ocrRate = ocrRate;
     }
 
-    public OcrTradeView(Date ocrDate, String channel, String imageType, Integer tradeTotal, String ocrRate) {
+    public OcrTradeView(Date ocrDate, String channel, String imageName, Integer tradeTotal, String ocrRate) {
         this.ocrDate = ocrDate;
         this.channel = channel;
-        this.imageType = imageType;
+        this.imageName = imageName;
         this.tradeTotal = tradeTotal;
         this.ocrRate = ocrRate;
     }
@@ -95,14 +96,12 @@ public class OcrTradeView extends BaseEntity {
     public OcrTradeView() {
     }
 
-    @Override
     public String toString() {
-        return "OcrTradeView{" +
-                "ocrDate=" + ocrDate +
-                ", channel='" + channel + '\'' +
-                ", imageType='" + imageType + '\'' +
-                ", tradeTotal=" + tradeTotal +
-                ", ocrRate='" + ocrRate + '\'' +
-                '}';
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("ocrDate", getOcrDate())
+                .append("channel", getChannel())
+                .append("imageName", getImageName())
+                .append("tradeTotal", getOcrRate())
+                .toString();
     }
 }

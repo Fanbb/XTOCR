@@ -19,6 +19,6 @@ public interface OcrTradeViewMapper
      * @param ocrTrade 识别流水信息
      * @return 识别流水集合
      */
-	public List<OcrTradeView> selectOcrTradeViewList(OcrTradeView ocrTrade);
+	public List<OcrTradeView> selectOcrTradeViewList(OcrTradeView ocrTradeView);
 
 }
