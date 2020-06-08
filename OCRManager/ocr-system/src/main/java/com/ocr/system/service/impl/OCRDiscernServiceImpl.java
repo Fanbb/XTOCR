@@ -214,6 +214,18 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             image.setLocalPath(relativePath+sName);
             image.setParentId(fileName);
             iOcrImageService.insertOcrImage(image);
+            String imgName="";
+            switch (imgType) {
+                case "1":
+                    imgName="IDCardFront";
+                    break;
+                case "2":
+                    imgName="BankCard";
+                    break;
+                case "3":
+                    imgName="Deposit";
+                    break;
+            }
 
             log.info("OCR识别结果为空");
             OcrTrade ocrTrade = new OcrTrade();
@@ -221,7 +233,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             ocrTrade.setId(id);
             ocrTrade.setChannel(channelCode);
             ocrTrade.setImageId(fileName);
-            ocrTrade.setImageType(imgType);
+            ocrTrade.setImageType(imgName);
+            ocrTrade.setImageName(imgType);
             ocrTrade.setOcrStatus("1");
             ocrTrade.setOcrPoint("1");
             ocrTrade.setRemark2("0");

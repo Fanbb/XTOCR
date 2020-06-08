@@ -9,8 +9,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.ocr.common.constant.Constants;
 import com.ocr.common.utils.DateUtils;
+import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.file.FileUtils;
 import com.ocr.common.utils.file.ImageBase64;
 import com.ocr.system.model.BankCard;
@@ -128,6 +130,19 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setOcrSeq(ocrSeq);
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
+        switch (imgType){
+            case "IDCardFront":
+            case "IDCardBack":
+                ocrTrade.setImageName("1");
+                break;
+            case "BankCard":
+                ocrTrade.setImageName("2");
+                break;
+            case "Deposit":
+                ocrTrade.setImageName("3");
+                break;
+        }
+
         ocrTrade.setOcrStatus("0");
         ocrTrade.setOcrPoint("0");
         ocrTrade.setRemark2("0");

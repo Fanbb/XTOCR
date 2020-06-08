@@ -1,6 +1,7 @@
 package com.ocr.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ocr.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ocr.common.core.domain.BaseEntity;
@@ -19,6 +20,7 @@ public class OcrTrade extends BaseEntity
 	/** id */
 	private String id;
 	/** 识别日期 */
+	@Excel(name = "识别日期", prompt = "识别日期")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date ocrDate;
 	/** 识别时间 */
