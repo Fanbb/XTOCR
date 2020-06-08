@@ -205,19 +205,16 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 //        }
 
         String request = HttpUtils.sendPost2(ocrUrl, data);
-        String json = JSON.parseArray(request).toString();
 
-        OcrImage image = new OcrImage();
-        image.setId(fileName);
-        image.setOcrDate(new Date());
-        image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-        image.setLocalPath(relativePath+sName);
-        image.setParentId(fileName);
-        image.setOcrResult(json);
-        iOcrImageService.insertOcrImage(image);
+        if (StringUtils.isEmpty(request)||request.equals("[]")) {
+            OcrImage image = new OcrImage();
+            image.setId(fileName);
+            image.setOcrDate(new Date());
+            image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+            image.setLocalPath(relativePath+sName);
+            image.setParentId(fileName);
+            iOcrImageService.insertOcrImage(image);
 
-        List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
-        if (models.size() == 0) {
             log.info("OCR识别结果为空");
             OcrTrade ocrTrade = new OcrTrade();
             String id = System.currentTimeMillis() + "";
@@ -236,6 +233,19 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             resultData.setType("0");
             return resultData;
         }
+        String json = JSON.parseArray(request).toString();
+
+        OcrImage image = new OcrImage();
+        image.setId(fileName);
+        image.setOcrDate(new Date());
+        image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+        image.setLocalPath(relativePath+sName);
+        image.setParentId(fileName);
+        image.setOcrResult(json);
+        iOcrImageService.insertOcrImage(image);
+
+        List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
+
         List list = new ArrayList();
         for (RequestModel model : models) {
             if (null == model.getClass_name()) {

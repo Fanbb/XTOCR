@@ -107,14 +107,7 @@ public class RecognitionController extends BaseController {
         String request = HttpUtils.sendPost2(ocrUrl, data);
         log.info("**data****"+data);
         log.info("**request****"+request);
-        if (StringUtils.isEmpty(request)){
-            /**
-             * 识别请求结果更新
-             */
-            OcrImage ocrImage = new OcrImage();
-            ocrImage.setId(fileName+"");
-            iOcrImageService.updateOcrImage(ocrImage);
-
+        if (StringUtils.isEmpty(request)||request.equals("[]")){
             OcrTrade ocrTrade = new OcrTrade();
             String id = System.currentTimeMillis() + "";
             ocrTrade.setId(id);
@@ -128,7 +121,8 @@ public class RecognitionController extends BaseController {
             ocrTrade.setOcrTime(DateUtils.getTimeShort());
             iOcrTradeService.insertOcrTrade(ocrTrade);
             log.info("OCR识别结果为空");
-            return AjaxResult.error("OCR识别结果为空");
+            mmap.put("imgId", fileName);
+            return AjaxResult.success(mmap);
         }
         String json = JSON.parseArray(request).toString();
 
