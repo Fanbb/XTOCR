@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 平台影像上传处理
@@ -84,6 +85,7 @@ public class RecognitionController extends BaseController {
     @Log(title = "影像上传识别", businessType = BusinessType.OTHER)
     public AjaxResult fileUpload(@RequestParam("file") MultipartFile file, Map mmap) throws IOException {
         String dateStr = DateUtils.datePath();
+        String imgId = UUID.randomUUID().toString();
         String oldFileName = file.getOriginalFilename();
         String sName = oldFileName.substring(oldFileName.lastIndexOf("."));
         Long fileName = System.currentTimeMillis();
@@ -96,7 +98,7 @@ public class RecognitionController extends BaseController {
         String filePath = path + "/" + fileName + sName;
         String relativePath = serverProfile+ dateStr+ "/" + fileName + sName;
         //存入影像信息 返回结果msg
-        String msg = iOcrImageService.insertOcrImage(fileName, relativePath);
+        String msg = iOcrImageService.insertOcrImage(imgId, relativePath);
         log.info("影像存储信息"+msg);
 
         File newFile = new File(filePath);
@@ -105,12 +107,12 @@ public class RecognitionController extends BaseController {
 
         String data = "{\"path\":\""+relativePath+ "\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2(ocrUrl, data);
+
         log.info("**data****"+data);
         log.info("**request****"+request);
         if (StringUtils.isEmpty(request)||request.equals("[]")){
             OcrTrade ocrTrade = new OcrTrade();
-            String id = System.currentTimeMillis() + "";
-            ocrTrade.setId(id);
+            ocrTrade.setId(imgId);
             ocrTrade.setChannel("system");
             ocrTrade.setImageId(fileName+"");
             ocrTrade.setImageType("0");
@@ -145,7 +147,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertIDCardFront(idCardFront, "system", fileName + "");
+                    iOcrTradeService.insertIDCardFront(idCardFront, "system", imgId);
                     break;
                 case "IDCardBack":
                     IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
@@ -154,7 +156,7 @@ public class RecognitionController extends BaseController {
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertIDCardBack(idCardBack, "system", fileName + "");
+                        iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId);
                     }
                     break;
                 case "BankCard":
@@ -164,7 +166,7 @@ public class RecognitionController extends BaseController {
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertBankCard(bankCard, "system", fileName + "");
+                        iOcrTradeService.insertBankCard(bankCard, "system", imgId);
                     }
                     break;
                 case "Deposit":
@@ -174,7 +176,7 @@ public class RecognitionController extends BaseController {
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertDeposit(deposit, "system", fileName + "");
+                        iOcrTradeService.insertDeposit(deposit, "system", imgId);
                     }
                     break;
             }

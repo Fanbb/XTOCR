@@ -145,7 +145,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         /**
          * 流水ids
          */
-        if (tradeIds.length() > 5) {
+        if (tradeIds.length() > 2) {
             resultData.setData(list);
             resultData.setMsg("识别成功！");
             resultData.setType("1");

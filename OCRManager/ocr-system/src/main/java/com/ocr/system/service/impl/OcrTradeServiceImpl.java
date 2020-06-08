@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 识别流水 服务层实现
@@ -110,7 +111,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
 
     private String getString(String channelCode, String imgId, String imgType, String ocrSeq, String json) {
         OcrTrade ocrTrade = new OcrTrade();
-        String id = System.currentTimeMillis() + "";
+        String id =UUID.randomUUID().toString();
         ocrTrade.setId(id);
         ocrTrade.setChannel(channelCode);
         ocrTrade.setOcrSeq(ocrSeq);

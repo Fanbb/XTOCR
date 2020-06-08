@@ -41,7 +41,7 @@ public interface IOcrImageService
 	 * @param filePath 图片路径
 	 * @return
 	 */
-	public String insertOcrImage(Long fileName,String filePath);
+	public String insertOcrImage(String imgId,String filePath);
 	
 	/**
      * 修改识别影像

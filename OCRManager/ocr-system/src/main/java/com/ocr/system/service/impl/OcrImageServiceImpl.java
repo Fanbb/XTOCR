@@ -60,12 +60,12 @@ public class OcrImageServiceImpl implements IOcrImageService
 	}
 
     @Override
-    public String insertOcrImage(Long fileName, String filePath) {
+    public String insertOcrImage(String imgId, String filePath) {
 		OcrImage ocrImage = new OcrImage();
-		ocrImage.setId(fileName+"");
-		ocrImage.setOcrDate(new Date(fileName));
+		ocrImage.setId(imgId+"");
+		ocrImage.setOcrDate(new Date());
 		ocrImage.setOcrTime(DateUtils.dateTime( "yyyy-MM-dd",DateUtils.getDate()));
-		ocrImage.setParentId(fileName+"");
+		ocrImage.setParentId(imgId);
 		ocrImage.setLocalPath(filePath);
 		int result = ocrImageMapper.insertOcrImage(ocrImage);
 		if (result>0){
