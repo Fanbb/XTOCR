@@ -7,6 +7,10 @@ package com.ocr.system.model;
  */
 public class IDCardBack {
     /**
+     * 签发机关
+     */
+    private String authority;
+    /**
      * 有效开始日期
      */
     private String startDate;
@@ -44,7 +48,16 @@ public class IDCardBack {
         this.imgType = imgType;
     }
 
-    public IDCardBack(String startDate, String endDate, String imgType) {
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public IDCardBack(String authority, String startDate, String endDate, String imgType) {
+        this.authority = authority;
         this.startDate = startDate;
         this.endDate = endDate;
         this.imgType = imgType;
@@ -56,7 +69,8 @@ public class IDCardBack {
     @Override
     public String toString() {
         return "IDCardBack{" +
-                "startDate='" + startDate + '\'' +
+                "authority='" + authority + '\'' +
+                ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", imgType='" + imgType + '\'' +
                 '}';
