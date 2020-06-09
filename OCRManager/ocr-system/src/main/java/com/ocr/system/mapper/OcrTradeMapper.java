@@ -67,4 +67,13 @@ public interface OcrTradeMapper
 	 */
 	public String[] selectImagePath(String[] ids);
 
+	public List<String> selectPointTotalList();
+
+	List<String> selectNameToTypeTotal();
+
+	List<String> selectValueToTypeTotal();
+
+	List<String> selectNameToDataTotal();
+
+	List<String> selectValueToDataTotal();
 }

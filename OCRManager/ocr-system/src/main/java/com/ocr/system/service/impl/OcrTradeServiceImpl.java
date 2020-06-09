@@ -13,7 +13,9 @@ import com.ocr.system.service.IOcrTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -108,6 +110,46 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         return ocrTradeMapper.selectImagePath(tradeIds);
     }
 
+    @Override
+    public List<String>  selectMapToPointTotal() {
+        List<String> list= ocrTradeMapper.selectPointTotalList();
+        return list;
+    }
+
+    @Override
+    public List<String> selectNameToTypeTotal() {
+        List<String> list = ocrTradeMapper.selectNameToTypeTotal();
+        List<String> values = new ArrayList<>();
+        for (String value:list) {
+            switch (value){
+                case "1":
+                    values.add("身份证");
+                    break;
+                case "2":
+                    values.add("银行卡");
+                    break;
+                case "3":
+                    values.add("存单");
+                    break;
+            }
+        }
+        return values;
+    }
+
+    @Override
+    public List<String> selectValueToTypeTotal() {
+        return ocrTradeMapper.selectValueToTypeTotal();
+    }
+
+    @Override
+    public List<String> selectNameToDataTotal() {
+        return ocrTradeMapper.selectNameToDataTotal();
+    }
+
+    @Override
+    public List<String> selectValueToDataTotal() {
+        return ocrTradeMapper.selectValueToDataTotal();
+    }
 
     private String getString(String channelCode, String imgId, String imgType, String ocrSeq, String json) {
         OcrTrade ocrTrade = new OcrTrade();

@@ -26,14 +26,14 @@
                 <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
                     <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
                     <div class="row">
-                        <h4 class="box-title" th:align="center">身份证正面识别信息：</h4>
+                        <h2 class="box-title" th:align="center" style="font-weight:bold">身份证正面识别信息：</h2>
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>姓名：</label>
+                            <label class="col-sm-3 control-label" style="font-weight:bold"></span>姓名：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="40"
+                                    <input type="text" class="form-control" readonly="true" th:size="27" style="font-size: 20px"
                                            disabled="disabled" th:value="@{${idCardFront.getName()}}"/>
                                 </div>
                             </div>
@@ -41,10 +41,10 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>性别：</label>
+                            <label class="col-sm-3 control-label" style="font-weight:bold"></span>性别：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="40"
+                                    <input type="text" class="form-control" readonly="true" th:size="27" style="font-size: 20px"
                                            disabled="disabled" th:value="@{${idCardFront.getSex()}}"/>
                                 </div>
                             </div>
@@ -52,10 +52,10 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>民族：</label>
+                            <label class="col-sm-3 control-label" style="font-weight:bold"></span>民族：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="40"
+                                    <input type="text" class="form-control" readonly="true" th:size="27" style="font-size: 20px"
                                            disabled="disabled" th:value="@{${idCardFront.getNation()}}"/>
                                 </div>
                             </div>
@@ -63,10 +63,10 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>出生年月：</label>
+                            <label class="col-sm-3 control-label" style="font-weight:bold" ></span>出生年月：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="40"
+                                    <input type="text" class="form-control" readonly="true" th:size="27" style="font-size: 20px"
                                            disabled="disabled" th:value="@{${idCardFront.getBirthday()}}"/>
                                 </div>
                             </div>
@@ -74,38 +74,44 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>住址：</label>
+                            <label class="col-sm-3 control-label" style="font-weight:bold"></span>住址：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <textarea style="width: 336px;height: 60px;font-size: 15px" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
+                                    <textarea style="width: 336px;height: 60px;font-size: 20px" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>公民身份号码：</label>
+                            <label class="col-sm-3 control-label" style="font-weight:bold"></span>公民身份号码：</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="40" th:high="48"
+                                    <input type="text" class="form-control" style="font-size: 20px" readonly="true" th:size="27" th:high="48"
                                            disabled="disabled" th:value="@{${idCardFront.getIdCardNo()}}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-3 control-label"></span>识别勾兑：</label>
+                        <label class="col-sm-3 control-label" style="font-weight:bold"></span>识别勾兑：</label>
                         <div class="col-sm-9">
-                            <div class="radio-box" th:each="dict : ${@dict.getType('ocr_trade_status')}">
-                                <input type="radio" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus"
+                            <div class="radio-box" style="font-size: 20px" th:each="dict : ${@dict.getType('ocr_trade_status')}">
+                                <input type="radio" style="font-size: 20px" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus"
                                        th:value="${dict.dictValue}" th:field="*{ocrStatus}">
-                                <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                <label style="font-size: 20px" th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-3 control-label"></label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-5 control-label"></label>
+                        <div class="col-sm-7">
+                            <label style="font-size: 20px">&nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-5 control-label"></label>
+                        <div class="col-sm-7">
                             <button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">提交
                             </button>
                         </div>

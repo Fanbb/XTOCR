@@ -7,6 +7,7 @@ import com.ocr.system.model.IDCardBack;
 import com.ocr.system.model.IDCardFront;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 识别流水 服务层
@@ -94,4 +95,15 @@ public interface IOcrTradeService
 
 
 	public String[] selectImagePath(String[] tradeIds);
+
+	public List<String> selectMapToPointTotal();
+
+
+	List<String> selectNameToTypeTotal();
+
+	List<String> selectValueToTypeTotal();
+
+	List<String> selectNameToDataTotal();
+
+	List<String> selectValueToDataTotal();
 }
