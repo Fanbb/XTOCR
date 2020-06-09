@@ -28,7 +28,7 @@
                         </select>
                         </li>
                         <li>
-                            影像类型：<select name="imageType" th:with="type=${@dict.getType('ocr_model_type')}">
+                            影像类型：<select name="imageName" th:with="type=${@dict.getType('ocr_model_view_type')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -59,6 +59,7 @@
 <script th:inline="javascript">
     var prefix = ctx + "system/ocrTradeView";
     var channelData = [[${@dict.getType('ocr_channel_name')}]];
+    var imgData = [[${@dict.getType('ocr_model_view_type')}]];
 
     $(function () {
         var options = {
@@ -92,9 +93,12 @@
                     }
                 },
                 {
-                    field: 'imageType',
+                    field: 'cc',
                     title: '影像类型',
-                    sortable: true
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(imgData, item.imageName);
+                    }
                 },
                 {
                     field: 'tradeTotal',
