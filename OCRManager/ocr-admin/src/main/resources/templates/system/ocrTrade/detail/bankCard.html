@@ -26,32 +26,34 @@
                 <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
                     <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
                     <div class="row">
-                        <h4 class="box-title" th:align="center">银行卡识别信息：</h4>
+                        <h2 class="box-title" th:align="center">银行卡识别信息：</h2>
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label"></span>银行卡号：</label>
-                            <div class="col-sm-9">
+                            <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>银行卡号：</label>
+                            <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="40"
+                                    <input type="text" class="form-control" readonly="true" th:size="22" th:high="48" style="font-size: 20px"
                                            disabled="disabled" th:value="@{${bankCard.getBankCardNo()}}"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-3 control-label"></span>识别勾兑：</label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>识别勾兑：</label>
+                        <div class="col-sm-8" style="font-size: 20px">
                             <div class="radio-box" th:each="dict : ${@dict.getType('ocr_trade_status')}">
-                                <input type="radio" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus"
-                                       th:value="${dict.dictValue}" th:field="*{ocrStatus}">
-                                <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                                <input type="radio" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus" th:value="${dict.dictValue}" th:field="*{ocrStatus}">
+                                <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-3 control-label"></label>
-                        <div class="col-sm-9">
+                        <label class="col-sm-12 control-label" style="height:20px;"></label>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-5 control-label"></label>
+                        <div class="col-sm-7">
                             <button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">提交
                             </button>
                         </div>
