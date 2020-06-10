@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -204,14 +205,14 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 //        }
 
         String request = HttpUtils.sendPost2(ocrUrl, data);
-
+        String imgId = UUID.randomUUID().toString();
         if (StringUtils.isEmpty(request)||request.equals("[]")) {
             OcrImage image = new OcrImage();
-            image.setId(fileName);
+            image.setId(imgId);
             image.setOcrDate(new Date());
             image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
             image.setLocalPath(relativePath+sName);
-            image.setParentId(fileName);
+            image.setParentId(imgId);
             iOcrImageService.insertOcrImage(image);
             String imgName="";
             switch (imgType) {
@@ -231,7 +232,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             String id = System.currentTimeMillis() + "";
             ocrTrade.setId(id);
             ocrTrade.setChannel(channelCode);
-            ocrTrade.setImageId(fileName);
+            ocrTrade.setImageId(imgId);
             ocrTrade.setImageType(imgName);
             ocrTrade.setImageName(imgType);
             ocrTrade.setOcrStatus("1");
@@ -248,11 +249,11 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         String json = JSON.parseArray(request).toString();
 
         OcrImage image = new OcrImage();
-        image.setId(fileName);
+        image.setId(imgId);
         image.setOcrDate(new Date());
         image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
         image.setLocalPath(relativePath+sName);
-        image.setParentId(fileName);
+        image.setParentId(imgId);
         image.setOcrResult(json);
         iOcrImageService.insertOcrImage(image);
 
@@ -296,7 +297,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertIDCardFront(idCardFront, channelCode, fileName);
+                    iOcrTradeService.insertIDCardFront(idCardFront, channelCode, imgId);
                     break;
                 case "IDCardBack":
                     IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
@@ -306,7 +307,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertIDCardBack(idCardBack, channelCode, fileName);
+                        iOcrTradeService.insertIDCardBack(idCardBack, channelCode, imgId);
                     }
                     break;
                 case "BankCard":
@@ -317,7 +318,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertBankCard(bankCard, channelCode, fileName);
+                        iOcrTradeService.insertBankCard(bankCard, channelCode, imgId);
                     }
                     break;
                 case "Deposit":
@@ -328,7 +329,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertDeposit(deposit, channelCode, fileName);
+                        iOcrTradeService.insertDeposit(deposit, channelCode, imgId);
                     }
                     break;
             }
