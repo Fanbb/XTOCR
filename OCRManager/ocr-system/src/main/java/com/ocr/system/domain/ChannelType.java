@@ -1,5 +1,6 @@
 package com.ocr.system.domain;
 
+import com.ocr.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ocr.common.core.domain.BaseEntity;
@@ -20,22 +21,27 @@ public class ChannelType extends BaseEntity {
     /**
      * 渠道编号
      */
+    @Excel(name = "渠道编号", prompt = "渠道编号")
     private String channelCode;
     /**
      * 渠道名称
      */
+    @Excel(name = "渠道名称", prompt = "渠道名称")
     private String channelName;
     /**
      * 渠道英文简称
      */
+    @Excel(name = "渠道英文简称", prompt = "渠道英文简称")
     private String channelNm;
     /**
      * 识别类型
      */
+    @Excel(name = "识别类型", prompt = "识别类型")
     private String ocrType;
     /**
      * 识别类型名称
      */
+    @Excel(name = "识别类型名称", prompt = "识别类型名称")
     private String ocrTypeNm;
 
     public void setId(String id) {

@@ -1,5 +1,7 @@
 package com.ocr.system.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ocr.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ocr.common.core.domain.BaseEntity;
@@ -17,12 +19,16 @@ public class Channel extends BaseEntity
 	/** id */
 	private String id;
 	/** 渠道编号 */
+	@Excel(name = "渠道编号", prompt = "渠道编号")
 	private String channelCode;
 	/** 渠道名称 */
+	@Excel(name = "渠道名称", prompt = "渠道名称")
 	private String channelName;
 	/** 渠道英文缩写 */
+	@Excel(name = "渠道英文缩写", prompt = "渠道英文缩写")
 	private String channelNm;
 	/** 渠道状态（0：在用  1：停用） */
+	@Excel(name = "渠道状态", readConverterExp = "0=在用,1=停用")
 	private String status;
 
 	public void setId(String id) 
