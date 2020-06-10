@@ -9,18 +9,6 @@
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
-        <div class="col-sm-12 search-collapse">
-            <form id="formId">
-                <div class="select-list">
-                    <ul>
-                        <li>
-                            日志文件名：<input type="text" name="channelCode"/>
-                        </li>
-                    </ul>
-                </div>
-            </form>
-        </div>
-
         <div class="btn-group-sm" id="toolbar" role="group">
             <a class="btn btn-success" onclick="javascript:batchGenCode()" shiro:hasPermission="tool:gen:code">
                 <i class="fa fa-download"></i> 日志导出
@@ -41,6 +29,13 @@
             createUrl: prefix + "/add",
             modalName: "日志文件",
             showExport: false,
+            pageSize: 1000,
+            pageList: [1000],
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            search: false,
             columns: [{
                 checkbox: true
             },
