@@ -121,6 +121,9 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         List<String> values = new ArrayList<>();
         for (String value:list) {
             switch (value){
+                case "0":
+                    values.add("无效类型");
+                    break;
                 case "1":
                     values.add("身份证");
                     break;
