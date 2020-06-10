@@ -106,4 +106,6 @@ public interface IOcrTradeService
 	List<String> selectNameToDataTotal();
 
 	List<String> selectValueToDataTotal();
+
+    void updateRemark2ByIds(String[] ids);
 }

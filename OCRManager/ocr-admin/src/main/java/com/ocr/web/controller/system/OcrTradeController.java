@@ -180,6 +180,7 @@ public class OcrTradeController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ocrTradeService.updateRemark2ByIds(Convert.toStrArray(ids));
     }
 
     /**

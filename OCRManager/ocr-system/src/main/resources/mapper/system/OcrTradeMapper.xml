@@ -137,6 +137,14 @@
         </foreach>
     </select>
 
+    <update id="updateRemark2ByIds" parameterType="String">
+        update Ocr_Trade ot set ot.remark2 = '1'
+        where ot.id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
 
     <select id="selectPointTotalList" resultType="String">
 		SELECT COUNT(*) DAY_TOTAL FROM OCR_TRADE T GROUP BY T.OCR_POINT ORDER BY T.OCR_POINT ASC

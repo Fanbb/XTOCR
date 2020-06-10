@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -149,6 +148,11 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     @Override
     public List<String> selectValueToDataTotal() {
         return ocrTradeMapper.selectValueToDataTotal();
+    }
+
+    @Override
+    public void updateRemark2ByIds(String[] ids) {
+        ocrTradeMapper.updateRemark2ByIds(ids);
     }
 
     private String getString(String channelCode, String imgId, String imgType, String ocrSeq, String json) {
