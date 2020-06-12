@@ -65,4 +65,5 @@ public interface ChannelMapper
 	 * @return
 	 */
 	public Channel selectChannelByCode(String channelCode);
+
 }

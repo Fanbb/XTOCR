@@ -84,6 +84,13 @@ public class ChannelController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Channel channel) {
+        /**
+         * 添加前判断该渠道是否已经存在
+         */
+        Channel channel1 = channelService.selectChannelByChannelCode(channel.getChannelCode());
+        if (null!=channel1){
+            return AjaxResult.error("该渠道编号已经存在！");
+        }
         channel.setId(UUID.randomUUID().toString());
         return toAjax(channelService.insertChannel(channel));
     }

@@ -1,15 +1,14 @@
 package com.ocr.system.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ocr.common.annotation.Excel;
+import com.ocr.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ocr.common.core.domain.BaseEntity;
 
 /**
  * 渠道表 sys_channel
  * 
- * @author ocr
+ * @author ocrs
  * @date 2020-05-19
  */
 public class Channel extends BaseEntity
