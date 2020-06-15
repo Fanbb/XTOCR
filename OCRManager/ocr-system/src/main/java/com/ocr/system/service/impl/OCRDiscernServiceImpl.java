@@ -298,14 +298,15 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 }
             }
 
+            String tradeId;
             switch (model.getClass_name()) {
                 case "IDCardFront":
                     IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
+                    idCardFront.setImgType(model.getClass_name());
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    idCardFront.setImgType(model.getClass_name());
-                    String tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, imgId);
+                    tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, imgId);
                     idCardFront.setTradeId(tradeId);
                     list.add(idCardFront);
                     break;
@@ -313,33 +314,36 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
                     if (StringUtils.isNotEmpty(idCardBack.getStartDate())) {
                         idCardBack.setImgType(model.getClass_name());
-                        list.add(idCardBack);
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertIDCardBack(idCardBack, channelCode, imgId);
+                        tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, imgId);
+                        idCardBack.setTradeId(tradeId);
+                        list.add(idCardBack);
                     }
                     break;
                 case "BankCard":
                     BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
                     if (StringUtils.isNotEmpty(bankCard.getBankCardNo())) {
                         bankCard.setImgType(model.getClass_name());
-                        list.add(bankCard);
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertBankCard(bankCard, channelCode, imgId);
+                        tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, imgId);
+                        bankCard.setTradeId(tradeId);
+                        list.add(bankCard);
                     }
                     break;
                 case "Deposit":
                     DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
                     if (StringUtils.isNotEmpty(deposit.getDepositNo())) {
                         deposit.setImgType(model.getClass_name());
-                        list.add(deposit);
                         /**
                          * 调用流水存储 返回流水id
                          */
-                        iOcrTradeService.insertDeposit(deposit, channelCode, imgId);
+                        tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, imgId);
+                        deposit.setTradeId(tradeId);
+                        list.add(deposit);
                     }
                     break;
             }
