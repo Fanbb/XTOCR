@@ -52,7 +52,15 @@
                         </li>
 
                         <li>
-                            人工勾对状态：<select name="ocrPoint" th:with="type=${@dict.getType('ocr_blend_status')}">
+                            人工勾对状态：<select name="tickStatus" th:with="type=${@dict.getType('ocr_blend_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            前端勾对状态：<select name="platStatus" th:with="type=${@dict.getType('plat_status')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -112,8 +120,9 @@
     var tradeData = [[${@dict.getType('ocr_trade_status')}]];
     var typeData = [[${@dict.getType('ocr_model_type')}]];
     var channelData = [[${@dict.getType('ocr_channel_name')}]];
-    var pointData = [[${@dict.getType('ocr_blend_status')}]];
+    var tickStatus = [[${@dict.getType('ocr_blend_status')}]];
     var exportData = [[${@dict.getType('ocr_export_status')}]];
+    var platStatus = [[${@dict.getType('plat_status')}]];
 
     $(function () {
         var options = {
@@ -190,7 +199,7 @@
                     title: '人工勾对状态',
                     align: "left",
                     formatter: function (value, item, index) {
-                        return $.table.selectDictLabel(pointData, item.tickStatus);
+                        return $.table.selectDictLabel(tickStatus, item.tickStatus);
                     }
                 },
                 {
@@ -198,7 +207,7 @@
                     title: '前端勾对状态',
                     align: "left",
                     formatter: function (value, item, index) {
-                        return $.table.selectDictLabel(pointData, item.platStatus);
+                        return $.table.selectDictLabel(platStatus, item.platStatus);
                     }
                 },
                 {
