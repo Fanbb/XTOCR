@@ -44,7 +44,7 @@
                         </li>
 
                         <li>
-                            结果状态：<select name="ocrStatus" th:with="type=${@dict.getType('ocr_trade_status')}">
+                            OCR识别状态：<select name="ocrStatus" th:with="type=${@dict.getType('ocr_trade_status')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -52,7 +52,7 @@
                         </li>
 
                         <li>
-                            勾兑状态：<select name="ocrPoint" th:with="type=${@dict.getType('ocr_blend_status')}">
+                            人工勾对状态：<select name="ocrPoint" th:with="type=${@dict.getType('ocr_blend_status')}">
                             <option value="">所有</option>
                             <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
                                     th:value="${dict.dictValue}"></option>
@@ -179,18 +179,26 @@
                 },
                 {
                     field: 'ocrStatus',
-                    title: '识别结果',
+                    title: 'OCR识别状态',
                     align: "left",
                     formatter: function (value, item, index) {
                         return $.table.selectDictLabel(tradeData, item.ocrStatus);
                     }
                 },
                 {
-                    field: 'ocrPoint',
-                    title: '勾兑状态',
+                    field: 'tickStatus',
+                    title: '人工勾对状态',
                     align: "left",
                     formatter: function (value, item, index) {
-                        return $.table.selectDictLabel(pointData, item.ocrPoint);
+                        return $.table.selectDictLabel(pointData, item.tickStatus);
+                    }
+                },
+                {
+                    field: 'platStatus',
+                    title: '前端勾对状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(pointData, item.platStatus);
                     }
                 },
                 {

@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>识别勾兑：</label>
+                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>识别勾对：</label>
                         <div class="col-sm-8" style="font-size: 20px">
                             <div class="radio-box" th:each="dict : ${@dict.getType('ocr_trade_status')}">
                                 <input type="radio" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus" th:value="${dict.dictValue}" th:field="*{ocrStatus}">

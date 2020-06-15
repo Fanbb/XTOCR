@@ -114,7 +114,7 @@ public class OcrTradeController extends BaseController {
     }
 
     @RequiresPermissions("system:ocrTrade:blend")
-    @Log(title = "流水勾兑", businessType = BusinessType.UPDATE)
+    @Log(title = "流水勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/blend")
     @ResponseBody
     public AjaxResult blend(OcrTrade ocrTrade) {
