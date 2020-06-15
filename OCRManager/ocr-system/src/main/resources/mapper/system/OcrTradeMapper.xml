@@ -147,7 +147,7 @@
 
 
     <select id="selectPointTotalList" resultType="String">
-		SELECT COUNT(*) DAY_TOTAL FROM OCR_TRADE T GROUP BY T.OCR_POINT ORDER BY T.OCR_POINT ASC
+		SELECT COUNT(*) DAY_TOTAL FROM OCR_TRADE T GROUP BY T.TICK_STATUS ORDER BY T.TICK_STATUS ASC
 	</select>
 
     <select id="selectNameToTypeTotal" resultType="String">
@@ -166,5 +166,9 @@
         SELECT COUNT(*) DAY_TOTAL FROM OCR_TRADE T WHERE TO_CHAR(T.OCR_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM') GROUP BY T.OCR_DATE ORDER BY T.OCR_DATE ASC
 	</select>
 
+
+    <select id="selectCountByTrickStatus" resultType="String" parameterType="String">
+        SELECT COUNT(*) FROM OCR_TRADE T WHERE T.TICK_STATUS = #{tickStatus} GROUP BY T.TICK_STATUS ORDER BY T.TICK_STATUS ASC
+	</select>
 
 </mapper>

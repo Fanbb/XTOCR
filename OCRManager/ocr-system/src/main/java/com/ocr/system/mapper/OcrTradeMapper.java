@@ -78,4 +78,7 @@ public interface OcrTradeMapper
 	List<String> selectValueToDataTotal();
 
 	void updateRemark2ByIds(String[] ids);
+
+	String selectCountByTrickStatus(String tickStatus);
+
 }

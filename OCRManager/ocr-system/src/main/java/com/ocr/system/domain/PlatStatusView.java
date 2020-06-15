@@ -9,12 +9,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.util.Date;
 
 /**
- * 识别统计视图 ocr_trade_view
+ * 人工勾兑流水视图 plat_status_view
  *
  * @author ocr
  * @date 2020-05-20
  */
-public class OcrTradeView  extends BaseEntity {
+public class PlatStatusView extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -36,8 +36,8 @@ public class OcrTradeView  extends BaseEntity {
     /**
      * OCR识别成功数量
      */
-    @Excel(name = "OCR识别成功数量", prompt = "OCR识别成功数量")
-    private Integer ocrTotal;
+    @Excel(name = "勾对成功数量", prompt = "勾对成功数量")
+    private Integer platTotal;
     /**
      * 识别总量
      */
@@ -89,16 +89,16 @@ public class OcrTradeView  extends BaseEntity {
         this.ocrRate = ocrRate;
     }
 
-    public OcrTradeView(Date ocrDate, String channel, String imageName, Integer ocrTotal, Integer tradeTotal, String ocrRate) {
+    public PlatStatusView(Date ocrDate, String channel, String imageName, Integer platTotal, Integer tradeTotal, String ocrRate) {
         this.ocrDate = ocrDate;
         this.channel = channel;
         this.imageName = imageName;
-        this.ocrTotal = ocrTotal;
+        this.platTotal = platTotal;
         this.tradeTotal = tradeTotal;
         this.ocrRate = ocrRate;
     }
 
-    public OcrTradeView() {
+    public PlatStatusView() {
     }
 
     public String toString() {
@@ -106,16 +106,16 @@ public class OcrTradeView  extends BaseEntity {
                 .append("ocrDate", getOcrDate())
                 .append("channel", getChannel())
                 .append("imageName", getImageName())
-                .append("ocrTotal", getOcrTotal())
+                .append("platTotal", getPlatTotal())
                 .append("tradeTotal", getOcrRate())
                 .toString();
     }
 
-    public Integer getOcrTotal() {
-        return ocrTotal;
+    public Integer getPlatTotal() {
+        return platTotal;
     }
 
-    public void setOcrTotal(Integer ocrTotal) {
-        this.ocrTotal = ocrTotal;
+    public void setPlatTotal(Integer platTotal) {
+        this.platTotal = platTotal;
     }
 }

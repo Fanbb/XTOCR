@@ -96,8 +96,7 @@ public interface IOcrTradeService
 
 	public String[] selectImagePath(String[] tradeIds);
 
-	public List<String> selectMapToPointTotal();
-
+	public String selectCountByTrickStatus(String tickStatus);
 
 	List<String> selectNameToTypeTotal();
 

@@ -110,9 +110,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
     @Override
-    public List<String>  selectMapToPointTotal() {
-        List<String> list= ocrTradeMapper.selectPointTotalList();
-        return list;
+    public String selectCountByTrickStatus(String tickStatus) {
+        return ocrTradeMapper.selectCountByTrickStatus(tickStatus);
     }
 
     @Override

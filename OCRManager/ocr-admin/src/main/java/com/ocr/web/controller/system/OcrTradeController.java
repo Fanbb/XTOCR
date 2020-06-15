@@ -284,13 +284,12 @@ public class OcrTradeController extends BaseController {
     @PostMapping("/pointTotal")
     @ResponseBody
     public Map pointTotal() {
-        List<String> list = ocrTradeService.selectMapToPointTotal();
         List<String> listType = new ArrayList<>();
-        listType.add("未勾选状态");
-        listType.add("已勾选状态");
+        listType.add("勾对成功状态");
+        listType.add("勾对失败状态");
         List<EchartsEntity> EnchantsEntity = new ArrayList<>();
-        EnchantsEntity.add(new EchartsEntity("未勾选状态", list.get(0)));
-        EnchantsEntity.add(new EchartsEntity("已勾选状态", list.get(1)));
+        EnchantsEntity.add(new EchartsEntity("勾对成功状态", ocrTradeService.selectCountByTrickStatus("1")));
+        EnchantsEntity.add(new EchartsEntity("勾对失败状态", ocrTradeService.selectCountByTrickStatus("2")));
         Map map = new HashMap();
         map.put("name", listType);
         map.put("data", EnchantsEntity);
