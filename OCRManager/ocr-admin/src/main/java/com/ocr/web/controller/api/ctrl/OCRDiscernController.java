@@ -5,11 +5,10 @@ import com.ocr.common.core.controller.BaseController;
 import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.enums.BusinessType;
 import com.ocr.common.utils.StringUtils;
-import com.ocr.system.model.IDCardFront;
 import com.ocr.system.model.ResultData;
 import com.ocr.system.service.IChannelService;
-import com.ocr.system.service.IChannelTypeService;
 import com.ocr.system.service.OCRDiscernService;
+import com.ocr.web.controller.api.model.ModifyResult;
 import com.ocr.web.controller.api.model.OCRDiscernEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,9 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Api("OCR内网识别非加密接口")
 @RestController
@@ -60,12 +56,16 @@ public class OCRDiscernController extends BaseController {
     }
 
 
-    @Log(title = "OCR内网调用api接口调用", businessType = BusinessType.OTHER)
-    @ApiOperation("OCR内网调用api接口")
-    @ApiImplicitParam(name = "ocrDiscernEntity", value = "OCR内网调用接口参数", dataType = "OCRDiscernEntity")
+    @Log(title = "前端更改识别结果状态调用api接口", businessType = BusinessType.OTHER)
+    @ApiOperation("前端更改识别结果状态调用api接口")
+    @ApiImplicitParam(name = "modifyResult", value = "前端更改识别结果状态接口参数", dataType = "ModifyResult")
     @PostMapping("/modifyResult")
-    public AjaxResult modifyResult(OCRDiscernEntity ocrDiscernEntity) {
-        return null;
+    public AjaxResult modifyResult(ModifyResult modifyResult) {
+        int result = ocrDiscernService.modifyResult(modifyResult.getTradeId());
+        if (result>0){
+            return success();
+        }
+        return error();
     }
 
 

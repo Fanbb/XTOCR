@@ -2,9 +2,9 @@ package com.ocr.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.ocr.common.annotation.Excel;
+import com.ocr.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ocr.common.core.domain.BaseEntity;
 
 import java.util.Date;
 
@@ -40,7 +40,7 @@ public class OcrTrade extends BaseEntity {
      */
     private String ocrSeq;
     /**
-     * 成功标示（0 成功  1 失败）
+     * OCR识别状态（0 成功  1 失败）
      */
     private String ocrStatus;
     /**

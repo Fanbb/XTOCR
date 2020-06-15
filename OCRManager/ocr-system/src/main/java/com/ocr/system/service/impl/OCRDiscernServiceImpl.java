@@ -161,6 +161,14 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     }
 
     @Override
+    public int modifyResult(String tradeId) {
+        OcrTrade ocrTrade = new OcrTrade();
+        ocrTrade.setId(tradeId);
+        ocrTrade.setPlatStatus("1");
+        return iOcrTradeService.updateOcrTrade(ocrTrade);
+    }
+
+    @Override
     public ResultData runOne(String channelCode, String url, String str, String imgType) {
         /**
          * 1.获取存储影像 录入数据库影像信息
@@ -172,23 +180,23 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
          */
         ResultData resultData = new ResultData();
         String fileName = System.currentTimeMillis() + "";
-        String sName="";
+        String sName = "";
         String dateStr = DateUtils.datePath() + "/" + fileName;
 
-        String path= imgUploadPath + "/IMAGE/" + dateStr;
+        String path = imgUploadPath + "/IMAGE/" + dateStr;
         if (StringUtils.isNotEmpty(url)) {
             /**
              * 图片url不为空
              */
             sName = url.substring(url.lastIndexOf("."));
             str = ImageBase64.imageToBase64ByUrl(url);
-            ImageBase64.base64StringToImageSave(str, path+sName);
+            ImageBase64.base64StringToImageSave(str, path + sName);
         } else if (StringUtils.isNotEmpty(str)) {
             /**
              * 图片base64不为空
              */
-            sName = "."+FileTypeUtils.getFromBASE64(str);
-            ImageBase64.base64StringToImageSave(str, path+sName);
+            sName = "." + FileTypeUtils.getFromBASE64(str);
+            ImageBase64.base64StringToImageSave(str, path + sName);
         }
         ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
         if (!imgType.equals("0")) {
@@ -198,7 +206,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 return resultData;
             }
         }
-        String relativePath = serverProfile+ dateStr;
+        String relativePath = serverProfile + dateStr;
         String data = "{\"image_type\" :\"" + imgType + "\",\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
 //        if(imgType.equals("0")){
 //            data = "{\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
@@ -206,24 +214,24 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
         String request = HttpUtils.sendPost2(ocrUrl, data);
         String imgId = UUID.randomUUID().toString();
-        if (StringUtils.isEmpty(request)||request.equals("[]")) {
+        if (StringUtils.isEmpty(request) || request.equals("[]")) {
             OcrImage image = new OcrImage();
             image.setId(imgId);
             image.setOcrDate(new Date());
             image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-            image.setLocalPath(relativePath+sName);
+            image.setLocalPath(relativePath + sName);
             image.setParentId(imgId);
             iOcrImageService.insertOcrImage(image);
-            String imgName="";
+            String imgName = "";
             switch (imgType) {
                 case "1":
-                    imgName="IDCardFront";
+                    imgName = "IDCardFront";
                     break;
                 case "2":
-                    imgName="BankCard";
+                    imgName = "BankCard";
                     break;
                 case "3":
-                    imgName="Deposit";
+                    imgName = "Deposit";
                     break;
             }
 
@@ -253,7 +261,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         image.setId(imgId);
         image.setOcrDate(new Date());
         image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-        image.setLocalPath(relativePath+sName);
+        image.setLocalPath(relativePath + sName);
         image.setParentId(imgId);
         image.setOcrResult(json);
         iOcrImageService.insertOcrImage(image);
