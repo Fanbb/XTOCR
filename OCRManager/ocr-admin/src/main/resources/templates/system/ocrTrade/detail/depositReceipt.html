@@ -84,16 +84,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>识别勾对：</label>
-                        <div class="col-sm-8">
-                            <div class="radio-box" style="font-size: 20px" th:each="dict : ${@dict.getType('ocr_trade_status')}">
-                                <input type="radio" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus"
-                                       th:value="${dict.dictValue}" th:field="*{ocrStatus}">
-                                <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>人工勾对：</label>
                         <div class="col-sm-8" style="font-size: 20px">
                             <div class="radio-box" th:each="dict : ${@dict.getType('blend_status')}">
