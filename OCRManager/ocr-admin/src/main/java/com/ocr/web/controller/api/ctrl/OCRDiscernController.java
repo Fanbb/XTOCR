@@ -60,6 +60,15 @@ public class OCRDiscernController extends BaseController {
     }
 
 
+    @Log(title = "OCR内网调用api接口调用", businessType = BusinessType.OTHER)
+    @ApiOperation("OCR内网调用api接口")
+    @ApiImplicitParam(name = "ocrDiscernEntity", value = "OCR内网调用接口参数", dataType = "OCRDiscernEntity")
+    @PostMapping("/modifyResult")
+    public AjaxResult modifyResult(OCRDiscernEntity ocrDiscernEntity) {
+        return null;
+    }
+
+
 }
 
 

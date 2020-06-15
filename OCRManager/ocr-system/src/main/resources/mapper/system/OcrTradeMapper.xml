@@ -11,11 +11,11 @@
         <result property="channel" column="channel"/>
         <result property="ocrSeq" column="ocr_seq"/>
         <result property="ocrStatus" column="ocr_status"/>
-        <result property="ocrPoint" column="ocr_point"/>
+        <result property="tickStatus" column="tick_status"/>
         <result property="imageId" column="image_id"/>
         <result property="imageType" column="image_type"/>
         <result property="imageName" column="image_name"/>
-        <result property="ocrTeller" column="ocr_teller"/>
+        <result property="platStatus" column="plat_status"/>
         <result property="ocrOrgan" column="ocr_organ"/>
         <result property="remark1" column="remark1"/>
         <result property="remark2" column="remark2"/>
@@ -23,7 +23,7 @@
     </resultMap>
 
     <sql id="selectOcrTradeVo">
-        select id, ocr_date, ocr_time, channel, ocr_seq, ocr_status, ocr_point, image_id, image_type, image_name, ocr_teller, ocr_organ, remark1, remark2, remark3 from ocr_trade
+        select id, ocr_date, ocr_time, channel, ocr_seq, ocr_status, tick_status, image_id, image_type, image_name, plat_status, ocr_organ, remark1, remark2, remark3 from ocr_trade
     </sql>
 
     <select id="selectOcrTradeList" parameterType="OcrTrade" resultMap="OcrTradeResult">
@@ -35,11 +35,11 @@
             <if test="channel != null  and channel != '' ">and channel = #{channel}</if>
             <if test="ocrSeq != null  and ocrSeq != '' ">and ocr_seq = #{ocrSeq}</if>
             <if test="ocrStatus != null  and ocrStatus != '' ">and ocr_status = #{ocrStatus}</if>
-            <if test="ocrPoint != null  and ocrPoint != '' ">and ocr_point = #{ocrPoint}</if>
+            <if test="tickStatus != null  and tickStatus != '' ">and tick_status = #{tickStatus}</if>
             <if test="imageId != null  and imageId != '' ">and image_id = #{imageId}</if>
             <if test="imageType != null  and imageType != '' ">and image_type = #{imageType}</if>
             <if test="imageName != null  and imageName != '' ">and image_name = #{imageName}</if>
-            <if test="ocrTeller != null  and ocrTeller != '' ">and ocr_teller = #{ocrTeller}</if>
+            <if test="platStatus != null  and platStatus != '' ">and plat_status = #{platStatus}</if>
             <if test="ocrOrgan != null  and ocrOrgan != '' ">and ocr_organ = #{ocrOrgan}</if>
             <if test="remark1 != null  and remark1 != '' ">and remark1 = #{remark1}</if>
             <if test="remark2 != null  and remark2 != '' ">and remark2 = #{remark2}</if>
@@ -68,11 +68,11 @@
             <if test="channel != null  and channel != ''  ">channel,</if>
             <if test="ocrSeq != null  and ocrSeq != ''  ">ocr_seq,</if>
             <if test="ocrStatus != null  and ocrStatus != ''  ">ocr_status,</if>
-            <if test="ocrPoint != null  and ocrPoint != ''  ">ocr_point,</if>
+            <if test="tickStatus != null  and tickStatus != ''  ">tick_status,</if>
             <if test="imageId != null  and imageId != ''  ">image_id,</if>
             <if test="imageType != null  and imageType != ''  ">image_type,</if>
             <if test="imageName != null  and imageName != ''  ">image_name,</if>
-            <if test="ocrTeller != null  and ocrTeller != ''  ">ocr_teller,</if>
+            <if test="platStatus != null  and platStatus != ''  ">plat_status,</if>
             <if test="ocrOrgan != null  and ocrOrgan != ''  ">ocr_organ,</if>
             <if test="remark1 != null  and remark1 != ''  ">remark1,</if>
             <if test="remark2 != null  and remark2 != ''  ">remark2,</if>
@@ -85,11 +85,11 @@
             <if test="channel != null  and channel != ''  ">#{channel},</if>
             <if test="ocrSeq != null  and ocrSeq != ''  ">#{ocrSeq},</if>
             <if test="ocrStatus != null  and ocrStatus != ''  ">#{ocrStatus},</if>
-            <if test="ocrPoint != null  and ocrPoint != ''  ">#{ocrPoint},</if>
+            <if test="tickStatus != null  and tickStatus != ''  ">#{tickStatus},</if>
             <if test="imageId != null  and imageId != ''  ">#{imageId},</if>
             <if test="imageType != null  and imageType != ''  ">#{imageType},</if>
             <if test="imageName != null  and imageName != ''  ">#{imageName},</if>
-            <if test="ocrTeller != null  and ocrTeller != ''  ">#{ocrTeller},</if>
+            <if test="platStatus != null  and platStatus != ''  ">#{platStatus},</if>
             <if test="ocrOrgan != null  and ocrOrgan != ''  ">#{ocrOrgan},</if>
             <if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
             <if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
@@ -105,11 +105,11 @@
             <if test="channel != null  and channel != ''  ">channel = #{channel},</if>
             <if test="ocrSeq != null  and ocrSeq != ''  ">ocr_seq = #{ocrSeq},</if>
             <if test="ocrStatus != null  and ocrStatus != ''  ">ocr_status = #{ocrStatus},</if>
-            <if test="ocrPoint != null  and ocrPoint != ''  ">ocr_point = #{ocrPoint},</if>
+            <if test="tickStatus != null  and tickStatus != ''  ">tick_status = #{tickStatus},</if>
             <if test="imageId != null  and imageId != ''  ">image_id = #{imageId},</if>
             <if test="imageType != null  and imageType != ''  ">image_type = #{imageType},</if>
             <if test="imageName != null  and imageName != ''  ">image_name = #{imageName},</if>
-            <if test="ocrTeller != null  and ocrTeller != ''  ">ocr_teller = #{ocrTeller},</if>
+            <if test="platStatus != null  and platStatus != ''  ">plat_status = #{platStatus},</if>
             <if test="ocrOrgan != null  and ocrOrgan != ''  ">ocr_organ = #{ocrOrgan},</if>
             <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
             <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>

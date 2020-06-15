@@ -235,8 +235,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             ocrTrade.setImageId(imgId);
             ocrTrade.setImageType(imgName);
             ocrTrade.setImageName(imgType);
+            ocrTrade.setTickStatus("0");
             ocrTrade.setOcrStatus("1");
-            ocrTrade.setOcrPoint("1");
+            ocrTrade.setPlatStatus("0");
             ocrTrade.setRemark2("0");
             ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
             ocrTrade.setOcrTime(DateUtils.getTimeShort());
@@ -292,12 +293,13 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             switch (model.getClass_name()) {
                 case "IDCardFront":
                     IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
-                    idCardFront.setImgType(model.getClass_name());
-                    list.add(idCardFront);
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertIDCardFront(idCardFront, channelCode, imgId);
+                    idCardFront.setImgType(model.getClass_name());
+                    String tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, imgId);
+                    idCardFront.setTradeId(tradeId);
+                    list.add(idCardFront);
                     break;
                 case "IDCardBack":
                     IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);

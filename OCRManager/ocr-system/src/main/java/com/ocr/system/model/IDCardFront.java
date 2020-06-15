@@ -6,6 +6,11 @@ package com.ocr.system.model;
  * @date 2020/5/25
  */
 public class IDCardFront {
+
+    /**
+     * 流水ID
+     */
+    private String tradeId;
     /**
      * 姓名
      */
@@ -35,6 +40,13 @@ public class IDCardFront {
      */
     private String imgType;
 
+    public String getTradeId() {
+        return tradeId;
+    }
+
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
+    }
 
     public String getName() {
         return name;
@@ -84,7 +96,8 @@ public class IDCardFront {
         this.imgType = imgType;
     }
 
-    public IDCardFront(String name, String sex, String nation, String address, String idCardNo,String birthday, String imgType) {
+    public IDCardFront(String tradeId, String name, String sex, String nation, String address, String idCardNo,String birthday, String imgType) {
+        this.tradeId = tradeId;
         this.name = name;
         this.sex = sex;
         this.nation = nation;
@@ -97,10 +110,19 @@ public class IDCardFront {
     public IDCardFront() {
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public String toString() {
         return "IDCardFront{" +
-                "name='" + name + '\'' +
+                "tradeId='" + tradeId + '\'' +
+                ", name='" + name + '\'' +
                 ", sex='" + sex + '\'' +
                 ", nation='" + nation + '\'' +
                 ", address='" + address + '\'' +
@@ -108,13 +130,5 @@ public class IDCardFront {
                 ", birthday='" + birthday + '\'' +
                 ", imgType='" + imgType + '\'' +
                 '}';
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
     }
 }
