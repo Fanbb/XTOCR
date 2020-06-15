@@ -7,6 +7,10 @@ package com.ocr.system.model;
  */
 public class BankCard {
     /**
+     * 流水ID
+     */
+    private String tradeId;
+    /**
      * 银行卡号
      */
     private String bankCardNo;
@@ -31,7 +35,8 @@ public class BankCard {
         this.imgType = imgType;
     }
 
-    public BankCard(String bankCardNo, String imgType) {
+    public BankCard(String tradeId,String bankCardNo, String imgType) {
+        this.tradeId = tradeId;
         this.bankCardNo = bankCardNo;
         this.imgType = imgType;
     }
@@ -42,8 +47,17 @@ public class BankCard {
     @Override
     public String toString() {
         return "BankCard{" +
-                "bankCardNo='" + bankCardNo + '\'' +
+                "tradeId='" + tradeId + '\'' +
+                ", bankCardNo='" + bankCardNo + '\'' +
                 ", imgType='" + imgType + '\'' +
                 '}';
+    }
+
+    public String getTradeId() {
+        return tradeId;
+    }
+
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 }

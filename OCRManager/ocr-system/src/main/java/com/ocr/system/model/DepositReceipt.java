@@ -7,6 +7,10 @@ package com.ocr.system.model;
  */
 public class DepositReceipt {
     /**
+     * 流水ID
+     */
+    private String tradeId;
+    /**
      * 户名
      */
     private String name;
@@ -72,7 +76,8 @@ public class DepositReceipt {
         this.imgType = imgType;
     }
 
-    public DepositReceipt(String name, String accNo, String amt, String amtCapital,String depositNo, String imgType) {
+    public DepositReceipt(String tradeId,String name, String accNo, String amt, String amtCapital,String depositNo, String imgType) {
+        this.tradeId = tradeId;
         this.name = name;
         this.accNo = accNo;
         this.amt = amt;
@@ -87,7 +92,8 @@ public class DepositReceipt {
     @Override
     public String toString() {
         return "DepositReceipt{" +
-                "name='" + name + '\'' +
+                "tradeId='" + tradeId + '\'' +
+                ", name='" + name + '\'' +
                 ", accNo='" + accNo + '\'' +
                 ", amt='" + amt + '\'' +
                 ", amtCapital='" + amtCapital + '\'' +
@@ -102,5 +108,13 @@ public class DepositReceipt {
 
     public void setDepositNo(String depositNo) {
         this.depositNo = depositNo;
+    }
+
+    public String getTradeId() {
+        return tradeId;
+    }
+
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 }

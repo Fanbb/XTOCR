@@ -7,6 +7,10 @@ package com.ocr.system.model;
  */
 public class IDCardBack {
     /**
+     * 流水ID
+     */
+    private String tradeId;
+    /**
      * 签发机关
      */
     private String authority;
@@ -56,7 +60,8 @@ public class IDCardBack {
         this.authority = authority;
     }
 
-    public IDCardBack(String authority, String startDate, String endDate, String imgType) {
+    public IDCardBack(String tradeId,String authority, String startDate, String endDate, String imgType) {
+        this.tradeId = tradeId;
         this.authority = authority;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -69,10 +74,19 @@ public class IDCardBack {
     @Override
     public String toString() {
         return "IDCardBack{" +
-                "authority='" + authority + '\'' +
+                "tradeId='" + tradeId + '\'' +
+                ", authority='" + authority + '\'' +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", imgType='" + imgType + '\'' +
                 '}';
+    }
+
+    public String getTradeId() {
+        return tradeId;
+    }
+
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 }
