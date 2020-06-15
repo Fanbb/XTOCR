@@ -118,7 +118,6 @@ public class OcrTradeController extends BaseController {
     @PostMapping("/blend")
     @ResponseBody
     public AjaxResult blend(OcrTrade ocrTrade) {
-        ocrTrade.setTickStatus("1");
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
 

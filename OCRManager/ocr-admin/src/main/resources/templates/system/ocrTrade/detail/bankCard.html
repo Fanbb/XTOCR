@@ -40,10 +40,10 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>识别勾对：</label>
+                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>人工勾对：</label>
                         <div class="col-sm-8" style="font-size: 20px">
-                            <div class="radio-box" th:each="dict : ${@dict.getType('ocr_trade_status')}">
-                                <input type="radio" th:id="${dict.dictCode}" id="ocrStatus" name="ocrStatus" th:value="${dict.dictValue}" th:field="*{ocrStatus}">
+                            <div class="radio-box" th:each="dict : ${@dict.getType('blend_status')}">
+                                <input type="radio" th:id="${dict.dictCode}" id="tickStatus" name="tickStatus" th:value="${dict.dictValue}" th:field="*{tickStatus}">
                                 <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                             </div>
                         </div>
@@ -75,8 +75,8 @@
                 "id": function () {
                     return $("input[name='id']").val();
                 },
-                "ocrStatus": function () {
-                    return $("input[name='ocrStatus']:checked").val();
+                "tickStatus": function () {
+                    return $("input[name='tickStatus']:checked").val();
                 }
             },
             success: function (result) {
