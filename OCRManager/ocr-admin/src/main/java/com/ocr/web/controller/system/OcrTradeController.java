@@ -290,10 +290,10 @@ public class OcrTradeController extends BaseController {
         listType.add("未勾选状态");
         listType.add("已勾选状态");
         List<EchartsEntity> EnchantsEntity = new ArrayList<>();
-        EnchantsEntity.add(new EchartsEntity("未勾选状态",list.get(0)));
-        EnchantsEntity.add(new EchartsEntity("已勾选状态",list.get(1)));
+        EnchantsEntity.add(new EchartsEntity("未勾选状态", list.get(0)));
+        EnchantsEntity.add(new EchartsEntity("已勾选状态", list.get(1)));
         Map map = new HashMap();
-        map.put("name",listType);
+        map.put("name", listType);
         map.put("data", EnchantsEntity);
         return map;
     }
@@ -304,11 +304,11 @@ public class OcrTradeController extends BaseController {
         List<String> listName = ocrTradeService.selectNameToTypeTotal();
         List<String> listCount = ocrTradeService.selectValueToTypeTotal();
         List<EchartsEntity> EnchantsEntity = new ArrayList<>();
-        for (int i=0;i<listName.size();i++) {
-            EnchantsEntity.add(new EchartsEntity(listName.get(i),listCount.get(i)));
+        for (int i = 0; i < listName.size(); i++) {
+            EnchantsEntity.add(new EchartsEntity(listName.get(i), listCount.get(i)));
         }
         Map map = new HashMap();
-        map.put("name",listName);
+        map.put("name", listName);
         map.put("data", EnchantsEntity);
         return map;
     }
@@ -319,11 +319,11 @@ public class OcrTradeController extends BaseController {
         List<String> listName = ocrTradeService.selectNameToDataTotal();
         List<String> listCount = ocrTradeService.selectValueToDataTotal();
         List<EchartsEntity> EnchantsEntity = new ArrayList<>();
-        for (int i=0;i<listName.size();i++) {
-            EnchantsEntity.add(new EchartsEntity(listName.get(i),listCount.get(i)));
+        for (int i = 0; i < listName.size(); i++) {
+            EnchantsEntity.add(new EchartsEntity(listName.get(i), listCount.get(i)));
         }
         Map map = new HashMap();
-        map.put("name",listName);
+        map.put("name", listName);
         map.put("data", EnchantsEntity);
         return map;
     }
