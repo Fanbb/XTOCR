@@ -114,7 +114,7 @@ public class RecognitionController extends BaseController {
             OcrTrade ocrTrade = new OcrTrade();
             ocrTrade.setId(imgId);
             ocrTrade.setChannel("system");
-            ocrTrade.setImageId(fileName+"");
+            ocrTrade.setImageId(imgId);
             ocrTrade.setImageType("None");
             ocrTrade.setImageName("0");
             ocrTrade.setOcrStatus("1");
