@@ -46,7 +46,7 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTradeView:export">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:platStatusView:export">
                 <i class="fa fa-download"></i> 导出
             </a>
         </div>
@@ -57,7 +57,7 @@
 </div>
 <div th:include="include :: footer"></div>
 <script th:inline="javascript">
-    var prefix = ctx + "system/ocrTradeView";
+    var prefix = ctx + "system/platStatusView";
     var channelData = [[${@dict.getType('ocr_channel_name')}]];
     var imgData = [[${@dict.getType('ocr_model_view_type')}]];
 
@@ -65,7 +65,7 @@
         var options = {
             url: prefix + "/list",
             exportUrl: prefix + "/export",
-            modalName: "OCR识别流水",
+            modalName: "勾对识别流水",
             showSearch: true,
             showRefresh: false,
             showToggle: false,
@@ -93,7 +93,7 @@
                     }
                 },
                 {
-                    field: 'imageName',
+                    field: 'imageType',
                     title: '影像类型',
                     align: "left",
                     formatter: function (value, item, index) {
@@ -101,13 +101,13 @@
                     }
                 },
                 {
-                    field: 'ocrTotal',
-                    title: 'OCR识别数量',
+                    field: 'platTotal',
+                    title: '勾对数量',
                     sortable: true
                 },
                 {
                     field: 'tradeTotal',
-                    title: '识别数量',
+                    title: '识别总量',
                     sortable: true
                 },
                 {

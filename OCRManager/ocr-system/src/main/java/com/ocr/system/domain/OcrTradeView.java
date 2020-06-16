@@ -6,6 +6,7 @@ import com.ocr.common.core.domain.BaseEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -106,7 +107,7 @@ public class OcrTradeView  extends BaseEntity {
                 .append("ocrDate", getOcrDate())
                 .append("channel", getChannel())
                 .append("imageName", getImageName())
-                .append("ocrTotal", getOcrTotal())
+                .append("ocrTotal", getOcrRate())
                 .append("tradeTotal", getOcrRate())
                 .toString();
     }

@@ -2,27 +2,27 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ocr.system.mapper.OcrTradeViewMapper">
-    <resultMap type="OcrTradeView" id="OcrTradeViewResult">
+<mapper namespace="com.ocr.system.mapper.PlatStatusViewMapper">
+    <resultMap type="PlatStatusView" id="PlatStatusViewResult">
         <result property="ocrDate" column="ocr_date"/>
         <result property="channel" column="channel"/>
         <result property="imageName" column="image_name"/>
-        <result property="ocrTotal" column="ocr_total"/>
+        <result property="platTotal" column="plat_total"/>
         <result property="tradeTotal" column="trade_total"/>
         <result property="ocrRate" column="ocr_rate"/>
     </resultMap>
 
-    <sql id="selectOcrTradeViewVo">
-        select ocr_date,channel,image_name,ocr_total,trade_total,ocr_rate from ocr_trade_view
+    <sql id="selectPlatStatusViewVo">
+        select ocr_date,channel,image_name,plat_total,trade_total,ocr_rate from plat_status_view
     </sql>
 
-    <select id="selectOcrTradeViewList" parameterType="OcrTradeView" resultMap="OcrTradeViewResult">
-        <include refid="selectOcrTradeViewVo"/>
+    <select id="selectPlatStatusViewList" parameterType="PlatStatusView" resultMap="PlatStatusViewResult">
+        <include refid="selectPlatStatusViewVo"/>
         <where>
             <if test="ocrDate != null ">and ocr_date = #{ocrDate}</if>
             <if test="channel != null  and channel != '' ">and channel = #{channel}</if>
             <if test="imageName != null  and imageName != '' ">and image_name = #{imageName}</if>
-            <if test="ocrTotal != null  and ocrTotal != '' ">and ocr_total = #{ocrTotal}</if>
+            <if test="platTotal != null  and platTotal != '' ">and plat_total = #{platTotal}</if>
             <if test="tradeTotal != null  and tradeTotal != '' ">and trade_total = #{tradeTotal}</if>
             <if test="ocrRate != null  and ocrRate != '' ">and ocr_rate = #{ocrRate}</if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
