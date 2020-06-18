@@ -93,6 +93,14 @@ public interface IOcrTradeService
 	 */
 	public String insertDeposit(DepositReceipt depositReceipt,String channelCode, String imgId);
 
+	/**
+	 * 存入
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	public String insertNoneTrade(String result,String channelCode, String imgId);
+
 
 	public String[] selectImagePath(String[] tradeIds);
 

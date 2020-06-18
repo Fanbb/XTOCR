@@ -118,7 +118,7 @@ public class RecognitionController extends BaseController {
             ocrTrade.setImageType("None");
             ocrTrade.setImageName("0");
             ocrTrade.setOcrStatus("1");
-            ocrTrade.setTickStatus("0");
+            ocrTrade.setTickStatus("2");
             ocrTrade.setPlatStatus("0");
             ocrTrade.setRemark2("0");
             ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
@@ -153,48 +153,30 @@ public class RecognitionController extends BaseController {
                     break;
                 case "IDCardBack":
                     IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
-                    if (StringUtils.isNotEmpty(idCardBack.getStartDate())) {
-                        idCardBack.setImgType(model.getClass_name());
-                        /**
-                         * 调用流水存储 返回流水id
-                         */
-                        iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId);
-                    }
+                    idCardBack.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId);
                     break;
                 case "BankCard":
                     BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
-                    if (StringUtils.isNotEmpty(bankCard.getBankCardNo())) {
-                        bankCard.setImgType(model.getClass_name());
-                        /**
-                         * 调用流水存储 返回流水id
-                         */
-                        iOcrTradeService.insertBankCard(bankCard, "system", imgId);
-                    }
+                    bankCard.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertBankCard(bankCard, "system", imgId);
                     break;
                 case "Deposit":
                     DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
-                    if (StringUtils.isNotEmpty(deposit.getAccNo())) {
-                        deposit.setImgType(model.getClass_name());
-                        /**
-                         * 调用流水存储 返回流水id
-                         */
-                        iOcrTradeService.insertDeposit(deposit, "system", imgId);
-                    }
+                    deposit.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertDeposit(deposit, "system", imgId);
                     break;
                 default:
-                    OcrTrade ocrTrade = new OcrTrade();
-                    ocrTrade.setId(UUID.randomUUID().toString());
-                    ocrTrade.setChannel("system");
-                    ocrTrade.setImageId(imgId);
-                    ocrTrade.setImageType("None");
-                    ocrTrade.setImageName("0");
-                    ocrTrade.setOcrStatus("1");
-                    ocrTrade.setTickStatus("0");
-                    ocrTrade.setPlatStatus("0");
-                    ocrTrade.setRemark2("0");
-                    ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-                    ocrTrade.setOcrTime(DateUtils.getTimeShort());
-                    iOcrTradeService.insertOcrTrade(ocrTrade);
+                    iOcrTradeService.insertNoneTrade(model.getOcr_result(),"system", imgId);
                     break;
             }
         }

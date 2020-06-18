@@ -208,9 +208,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         }
         String relativePath = serverProfile + dateStr;
         String data = "{\"image_type\" :\"" + imgType + "\",\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
-//        if(imgType.equals("0")){
-//            data = "{\"path\":\"" + relativePath + sName + "\",\"read_image_way\":\"3\"}";
-//        }
 
         String request = HttpUtils.sendPost2(ocrUrl, data);
         String imgId = UUID.randomUUID().toString();
@@ -243,7 +240,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             ocrTrade.setImageId(imgId);
             ocrTrade.setImageType(imgName);
             ocrTrade.setImageName(imgType);
-            ocrTrade.setTickStatus("0");
+            ocrTrade.setTickStatus("2");
             ocrTrade.setOcrStatus("1");
             ocrTrade.setPlatStatus("0");
             ocrTrade.setRemark2("0");
@@ -341,19 +338,11 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     list.add(deposit);
                     break;
                 default:
-                    OcrTrade ocrTrade = new OcrTrade();
-                    ocrTrade.setId(UUID.randomUUID().toString());
-                    ocrTrade.setChannel("system");
-                    ocrTrade.setImageId(imgId);
-                    ocrTrade.setImageType("None");
-                    ocrTrade.setImageName("0");
-                    ocrTrade.setOcrStatus("1");
-                    ocrTrade.setTickStatus("0");
-                    ocrTrade.setPlatStatus("0");
-                    ocrTrade.setRemark2("0");
-                    ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-                    ocrTrade.setOcrTime(DateUtils.getTimeShort());
-                    iOcrTradeService.insertOcrTrade(ocrTrade);
+                    tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(),channelCode, imgId);
+                    NoneEnty noneEnty = new NoneEnty();
+                    noneEnty.setImgType("None");
+                    noneEnty.setTradeId(tradeId);
+                    list.add(noneEnty);
                     break;
             }
         }

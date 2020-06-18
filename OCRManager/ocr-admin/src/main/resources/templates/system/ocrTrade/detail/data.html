@@ -24,11 +24,26 @@
         <div class="col-md-4">
             <div class="form-content" style="height:800px">
                 <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
+                    <h1 align="center">无效识别类型结果</h1>
                     <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
-                </form>
+                    <div class="row">
+                        <label class="col-sm-12 control-label" style="height:20px;"></label>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-12 control-label" style="height:20px;"></label>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>
+                            默认结果：</label>
+                        <div class="col-sm-8" style="font-size: 20px">
+                            失败
+                        </div>
+                    </div>
             </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">

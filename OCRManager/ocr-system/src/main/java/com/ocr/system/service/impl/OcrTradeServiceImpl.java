@@ -105,6 +105,26 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
     @Override
+    public String insertNoneTrade(String result, String channelCode, String imgId) {
+        String tradeId = UUID.randomUUID().toString();
+        OcrTrade ocrTrade = new OcrTrade();
+        ocrTrade.setId(tradeId);
+        ocrTrade.setChannel(channelCode);
+        ocrTrade.setImageId(imgId);
+        ocrTrade.setImageType("None");
+        ocrTrade.setImageName("0");
+        ocrTrade.setOcrStatus("1");
+        ocrTrade.setTickStatus("2");
+        ocrTrade.setPlatStatus("0");
+        ocrTrade.setRemark2("0");
+        ocrTrade.setRemark1(result);
+        ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+        ocrTrade.setOcrTime(DateUtils.getTimeShort());
+        ocrTradeMapper.insertOcrTrade(ocrTrade);
+        return tradeId;
+    }
+
+    @Override
     public String[] selectImagePath(String[] tradeIds) {
         return ocrTradeMapper.selectImagePath(tradeIds);
     }
