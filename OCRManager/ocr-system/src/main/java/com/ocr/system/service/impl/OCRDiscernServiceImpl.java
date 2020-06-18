@@ -340,6 +340,21 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     deposit.setTradeId(tradeId);
                     list.add(deposit);
                     break;
+                default:
+                    OcrTrade ocrTrade = new OcrTrade();
+                    ocrTrade.setId(UUID.randomUUID().toString());
+                    ocrTrade.setChannel("system");
+                    ocrTrade.setImageId(imgId);
+                    ocrTrade.setImageType("None");
+                    ocrTrade.setImageName("0");
+                    ocrTrade.setOcrStatus("1");
+                    ocrTrade.setTickStatus("0");
+                    ocrTrade.setPlatStatus("0");
+                    ocrTrade.setRemark2("0");
+                    ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+                    ocrTrade.setOcrTime(DateUtils.getTimeShort());
+                    iOcrTradeService.insertOcrTrade(ocrTrade);
+                    break;
             }
         }
         resultData.setData(list);

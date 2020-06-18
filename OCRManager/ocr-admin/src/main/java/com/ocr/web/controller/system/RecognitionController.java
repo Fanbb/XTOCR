@@ -96,23 +96,23 @@ public class RecognitionController extends BaseController {
             pathFile.mkdirs();
         }
         String filePath = path + "/" + fileName + sName;
-        String relativePath = serverProfile+ dateStr+ "/" + fileName + sName;
+        String relativePath = serverProfile + dateStr + "/" + fileName + sName;
         //存入影像信息 返回结果msg
         String msg = iOcrImageService.insertOcrImage(imgId, relativePath);
-        log.info("影像存储信息"+msg);
+        log.info("影像存储信息" + msg);
 
         File newFile = new File(filePath);
         file.transferTo(newFile);
         //调取接口进行识别 返回流水号
 
-        String data = "{\"image_type\":\"0\",\"path\":\""+relativePath+ "\",\"read_image_way\":\"3\"}";
+        String data = "{\"image_type\":\"0\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"}";
         String request = HttpUtils.sendPost2(ocrUrl, data);
 
-        log.info("**data****"+data);
-        log.info("**request****"+request);
-        if (StringUtils.isEmpty(request)||request.equals("[]")){
+        log.info("**data****" + data);
+        log.info("**request****" + request);
+        if (StringUtils.isEmpty(request) || request.equals("[]")) {
             OcrTrade ocrTrade = new OcrTrade();
-            ocrTrade.setId(imgId);
+            ocrTrade.setId(UUID.randomUUID().toString());
             ocrTrade.setChannel("system");
             ocrTrade.setImageId(imgId);
             ocrTrade.setImageType("None");
@@ -139,9 +139,9 @@ public class RecognitionController extends BaseController {
         ocrImage.setOcrResult(json);
         iOcrImageService.updateOcrImage(ocrImage);
 
-        List<RequestModel> models = JSONArray.parseArray(json,RequestModel.class);
+        List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
 
-        for (RequestModel model:models) {
+        for (RequestModel model : models) {
             switch (model.getClass_name()) {
                 case "IDCardFront":
                     IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -180,6 +180,21 @@ public class RecognitionController extends BaseController {
                          */
                         iOcrTradeService.insertDeposit(deposit, "system", imgId);
                     }
+                    break;
+                default:
+                    OcrTrade ocrTrade = new OcrTrade();
+                    ocrTrade.setId(UUID.randomUUID().toString());
+                    ocrTrade.setChannel("system");
+                    ocrTrade.setImageId(imgId);
+                    ocrTrade.setImageType("None");
+                    ocrTrade.setImageName("0");
+                    ocrTrade.setOcrStatus("1");
+                    ocrTrade.setTickStatus("0");
+                    ocrTrade.setPlatStatus("0");
+                    ocrTrade.setRemark2("0");
+                    ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+                    ocrTrade.setOcrTime(DateUtils.getTimeShort());
+                    iOcrTradeService.insertOcrTrade(ocrTrade);
                     break;
             }
         }
