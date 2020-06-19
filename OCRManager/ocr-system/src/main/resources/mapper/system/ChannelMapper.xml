@@ -26,6 +26,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="status != null  and status != '' "> and status = #{status}</if>
          </where>
     </select>
+
+    <select id="selectChannelAll" parameterType="Channel" resultMap="ChannelResult">
+        <include refid="selectChannelVo"/>
+    </select>
+
+    <select id="selectChannelByUserId" parameterType="java.lang.Long" resultMap="ChannelResult">
+        <include refid="selectChannelVo"/>
+        where channel_code in (select channel_code from sys_user_channel where user_id =#{userId})
+    </select>
+
     
     <select id="selectChannelById" parameterType="String" resultMap="ChannelResult">
         <include refid="selectChannelVo"/>

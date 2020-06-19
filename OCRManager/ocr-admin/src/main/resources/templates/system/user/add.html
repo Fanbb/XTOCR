@@ -90,17 +90,28 @@
                 </div>
             </div>
             <div class="row">
-            	<div class="col-sm-12">
+            	<div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-xs-2 control-label">岗位：</label>
-                        <div class="col-xs-4">
+                        <label class="col-sm-4 control-label">岗位：</label>
+                        <div class="col-sm-8">
                             <select id="post" class="form-control select2-multiple" multiple>
 								<option th:each="post:${posts}" th:value="${post.postId}" th:text="${post.postName}" th:disabled="${post.status == '1'}"></option>
 							</select>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">渠道：</label>
+                        <div class="col-sm-8">
+                            <select id="channel" class="form-control select2-multiple" multiple>
+                                <option th:each="channel:${channels}" th:value="${channel.channelCode}" th:text="${channel.channelName}" th:disabled="${channel.status == '1'}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div class="row">
             	<div class="col-sm-12">
                     <div class="form-group">
@@ -126,7 +137,7 @@
             </div>
         </form>
     </div>
-      
+
     <div class="row">
         <div class="col-sm-offset-5 col-sm-10">
             <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
@@ -137,7 +148,7 @@
 	<th:block th:include="include :: select2-js" />
 	<script>
 	    var prefix = ctx + "system/user";
-	
+
         $("#form-user-add").validate({
         	onkeyup: false,
         	rules:{
@@ -208,20 +219,22 @@
             },
             focusCleanup: true
         });
-        
+
         function submitHandler() {
 	        if ($.validate.form()) {
 	        	var data = $("#form-user-add").serializeArray();
 	        	var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
 	        	var roleIds = $.form.selectCheckeds("role");
+	        	var channelCodes = $.form.selectSelects("channel");
 	        	var postIds = $.form.selectSelects("post");
 	        	data.push({"name": "status", "value": status});
 	        	data.push({"name": "roleIds", "value": roleIds});
+	        	data.push({"name": "channelCodes", "value": channelCodes});
 	        	data.push({"name": "postIds", "value": postIds});
 	        	$.operate.saveTab(prefix + "/add", data);
 	        }
 	    }
-         
+
         /*用户管理-新增-选择部门树*/
         function selectDeptTree() {
         	var treeId = $("#treeId").val();
@@ -235,7 +248,7 @@
 			};
 			$.modal.openOptions(options);
 		}
-		
+
 		function doSubmit(index, layero){
 			var tree = layero.find("iframe")[0].contentWindow.$._tree;
 			if ($.tree.notAllowParents(tree)) {
@@ -245,6 +258,15 @@
     			layer.close(index);
 			}
 		}
+
+
+        $(function() {
+            $('#channel').select2({
+                placeholder:"请选择渠道",
+                allowClear: true
+            });
+        })
+
 
 		$(function() {
             $('#post').select2({

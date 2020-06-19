@@ -99,14 +99,25 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-xs-2 control-label">角色：</label>
-                    <div class="col-xs-10">
+                    <label class="col-sm-4 control-label">角色：</label>
+                    <div class="col-sm-8">
                         <label th:each="role:${roles}" class="check-box">
                             <input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}"
                                    th:checked="${role.flag}" th:disabled="${role.status == '1'}">
                         </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">渠道：</label>
+                    <div class="col-sm-8">
+                        <select id="channel" class="form-control select2-multiple" multiple>
+                            <option th:each="channel:${channels}" th:value="${channel.channelCode}" th:text="${channel.channelName}"
+                                    th:selected="${channel.flag}" th:disabled="${channel.status == '1'}"></option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -196,8 +207,10 @@
             var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
             var roleIds = $.form.selectCheckeds("role");
             var postIds = $.form.selectSelects("post");
+            var channelCodes = $.form.selectSelects("channel");
             data.push({"name": "status", "value": status});
             data.push({"name": "roleIds", "value": roleIds});
+            data.push({"name": "channelCodes", "value": channelCodes});
             data.push({"name": "postIds", "value": postIds});
             $.operate.saveTab(prefix + "/edit", data);
         }
@@ -229,6 +242,13 @@
     $(function () {
         $('#post').select2({
             placeholder: "请选择岗位",
+            allowClear: true
+        });
+    })
+
+    $(function() {
+        $('#channel').select2({
+            placeholder:"请选择岗位",
             allowClear: true
         });
     })

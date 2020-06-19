@@ -68,94 +68,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
          * 4.返回结果
          */
         ResultData resultData = new ResultData();
-        String fileName = System.currentTimeMillis() + "";
-        String dateStr = DateUtils.datePath();
-        String path = imgUploadPath + "/IMAGE/" + dateStr + "/" + fileName;
-        if (StringUtils.isNotEmpty(url)) {
-            /**
-             * 图片url不为空
-             */
-            str = ImageBase64.imageToBase64ByUrl(url);
-            ImageBase64.base64StringToImageSave(str, path);
-
-        } else if (StringUtils.isNotEmpty(str)) {
-            /**
-             * 图片base64不为空
-             */
-            ImageBase64.base64StringToImageSave(str, path);
-
-        }
-        OcrImage image = new OcrImage();
-        image.setId(fileName);
-        image.setOcrDate(new Date());
-        image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-        image.setLocalPath(path);
-        image.setType("");
-        image.setParentId(fileName);
-        iOcrImageService.insertOcrImage(image);
-
-        String idCardJson1 = "[{'class_name':'IDCardFront','ocr_result':{'idCardNo':'412823155648775659','birthday':'1994年3月23日','sex':'男','nation':'汉','name':'张三','address':'河南省郑州市'}},{'class_name':'IDCardFront','ocr_result':{'idCardNo':'412823155648775659','birthday':'1994年3月13日','sex':'男','nation':'汉','name':'张三','address':'河南省郑州市'}}]";
-        List<RequestModel> models = JSONArray.parseArray(idCardJson1, RequestModel.class);
-
-        StringBuffer tradeIds = new StringBuffer();
-
-        List list = new ArrayList();
-        for (RequestModel model : models) {
-            switch (model.getClass_name()) {
-                case "IDCardFront":
-                    IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
-                    idCardFront.setImgType(model.getClass_name());
-                    list.add(idCardFront);
-
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeIds.append(iOcrTradeService.insertIDCardFront(idCardFront, channelCode, fileName) + ",");
-                    break;
-
-                case "IDCardBack":
-                    IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
-                    idCardBack.setImgType(model.getClass_name());
-                    list.add(idCardBack);
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeIds.append(iOcrTradeService.insertIDCardBack(idCardBack, channelCode, fileName) + ",");
-                    break;
-                case "BankCard":
-                    BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
-                    bankCard.setImgType(model.getClass_name());
-                    list.add(bankCard);
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeIds.append(iOcrTradeService.insertBankCard(bankCard, channelCode, fileName) + ",");
-                    break;
-                case "Deposit":
-                    DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
-                    deposit.setImgType(model.getClass_name());
-                    list.add(deposit);
-                    /**
-                     * 调用流水存储 返回流水id
-                     */
-                    tradeIds.append(iOcrTradeService.insertDeposit(deposit, channelCode, fileName) + ",");
-                    break;
-            }
-        }
-
-        /**
-         * 流水ids
-         */
-        if (tradeIds.length() > 2) {
-            resultData.setData(list);
-            resultData.setMsg("识别成功！");
-            resultData.setType("1");
-        } else {
-            resultData.setData(list);
-            resultData.setMsg("识别失败！");
-            resultData.setType("0");
-
-        }
 
         return resultData;
     }
@@ -234,8 +146,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
             log.info("OCR识别结果为空");
             OcrTrade ocrTrade = new OcrTrade();
-            String id = System.currentTimeMillis() + "";
-            ocrTrade.setId(id);
+            ocrTrade.setId(UUID.randomUUID().toString());
             ocrTrade.setChannel(channelCode);
             ocrTrade.setImageId(imgId);
             ocrTrade.setImageType(imgName);

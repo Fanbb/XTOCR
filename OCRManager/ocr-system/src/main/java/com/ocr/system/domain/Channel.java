@@ -30,6 +30,9 @@ public class Channel extends BaseEntity
 	@Excel(name = "渠道状态", readConverterExp = "0=在用,1=停用")
 	private String status;
 
+	/** 用户是否存在此角色标识 默认不存在 */
+	private boolean flag = false;
+
 	public void setId(String id) 
 	{
 		this.id = id;
@@ -85,4 +88,12 @@ public class Channel extends BaseEntity
             .append("status", getStatus())
             .toString();
     }
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 }

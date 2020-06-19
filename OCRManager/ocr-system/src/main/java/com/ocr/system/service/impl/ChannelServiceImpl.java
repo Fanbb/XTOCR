@@ -89,4 +89,24 @@ public class ChannelServiceImpl implements IChannelService {
         return channelMapper.selectChannelByCode(channelCode);
     }
 
+    @Override
+    public List<Channel> selectChannelByUserId(Long userId) {
+        List<Channel> userRoles = channelMapper.selectChannelByUserId(userId);
+        List<Channel> roles = selectChannelAll();
+        for (Channel role : roles) {
+            for (Channel userRole : userRoles) {
+                if (role.getChannelName().equals(userRole.getChannelName())) {
+                    role.setFlag(true);
+                    break;
+                }
+            }
+        }
+        return roles;
+    }
+
+    @Override
+    public List<Channel> selectChannelAll() {
+        return channelMapper.selectChannelAll();
+    }
+
 }

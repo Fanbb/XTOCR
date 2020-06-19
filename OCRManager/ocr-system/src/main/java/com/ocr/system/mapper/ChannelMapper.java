@@ -1,7 +1,9 @@
 package com.ocr.system.mapper;
 
 import com.ocr.system.domain.Channel;
-import java.util.List;	
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 渠道 数据层
@@ -66,4 +68,7 @@ public interface ChannelMapper
 	 */
 	public Channel selectChannelByCode(String channelCode);
 
+    List<Channel> selectChannelAll();
+
+    List<Channel> selectChannelByUserId(@Param("userId") Long userId);
 }

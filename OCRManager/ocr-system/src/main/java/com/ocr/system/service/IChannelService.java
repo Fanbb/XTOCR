@@ -66,4 +66,8 @@ public interface IChannelService {
      * @return
      */
     Channel selectChannelByChannelCode(String channelCode);
+
+    List<Channel> selectChannelAll();
+
+    List<Channel> selectChannelByUserId(Long userId);
 }

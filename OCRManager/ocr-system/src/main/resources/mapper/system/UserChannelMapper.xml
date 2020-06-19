@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocr.system.mapper.UserChannelMapper">
+    
+    <resultMap type="SysUserChannel" id="UserChannelResult">
+        <result property="userId"    column="user_id"    />
+        <result property="channelCode"    column="channel_code"    />
+    </resultMap>
+	
+	<sql id="selectUserChannelVo">
+        select user_id, channel_code from sys_user_channel
+    </sql>
+	
+    <select id="selectUserChannelList" parameterType="SysUserChannel" resultMap="UserChannelResult">
+        <include refid="selectUserChannelVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+             <if test="channelCode != null  and channelCode != '' "> and channel_code = #{channelCode}</if>
+         </where>
+    </select>
+    
+    <select id="selectUserChannelById" parameterType="Integer" resultMap="UserChannelResult">
+        <include refid="selectUserChannelVo"/>
+        where user_id = #{userId}
+    </select>
+        
+    <insert id="insertUserChannel" parameterType="SysUserChannel">
+        insert into sys_user_channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null  ">user_id,</if>
+			<if test="channelCode != null  and channelCode != ''  ">channel_code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null  ">#{userId},</if>
+			<if test="channelCode != null  and channelCode != ''  ">#{channelCode},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchUserChannel" useGeneratedKeys="false">
+        insert all
+        <foreach item="item" index="index" collection="list">
+            into sys_user_channel(user_id, channel_code) values (#{item.userId},#{item.channelCode})
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+	 
+    <update id="updateUserChannel" parameterType="SysUserChannel">
+        update sys_user_channel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="channelCode != null  and channelCode != ''  ">channel_code = #{channelCode},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+	<delete id="deleteUserChannelById" parameterType="Integer">
+        delete from sys_user_channel where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteUserChannelsById" parameterType="Long">
+        delete from sys_user_channel where user_id = #{userId}
+    </delete>
+	
+    <delete id="deleteUserChannelByIds" parameterType="String">
+        delete from sys_user_channel where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+    
+</mapper>

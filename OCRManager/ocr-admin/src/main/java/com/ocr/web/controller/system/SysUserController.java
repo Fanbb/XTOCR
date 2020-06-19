@@ -1,6 +1,9 @@
 package com.ocr.web.controller.system;
 
 import java.util.List;
+
+import com.ocr.system.service.IChannelService;
+import com.ocr.system.service.impl.ChannelServiceImpl;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +49,9 @@ public class SysUserController extends BaseController
 
     @Autowired
     private ISysPostService postService;
+
+    @Autowired
+    private IChannelService channelService;
 
     @Autowired
     private SysPasswordService passwordService;
@@ -107,6 +113,7 @@ public class SysUserController extends BaseController
     public String add(ModelMap mmap)
     {
         mmap.put("roles", roleService.selectRoleAll());
+        mmap.put("channels", channelService.selectChannelAll());
         mmap.put("posts", postService.selectPostAll());
         return prefix + "/add";
     }
@@ -146,6 +153,7 @@ public class SysUserController extends BaseController
     {
         mmap.put("user", userService.selectUserById(userId));
         mmap.put("roles", roleService.selectRolesByUserId(userId));
+        mmap.put("channels", channelService.selectChannelByUserId(userId));
         mmap.put("posts", postService.selectPostsByUserId(userId));
         return prefix + "/edit";
     }

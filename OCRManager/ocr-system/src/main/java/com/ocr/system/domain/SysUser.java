@@ -90,6 +90,9 @@ public class SysUser extends BaseEntity
     /** 角色组 */
     private Long[] roleIds;
 
+    /** 渠道号组 */
+    private String[] channelCodes;
+
     /** 岗位组 */
     private Long[] postIds;
 
@@ -344,5 +347,13 @@ public class SysUser extends BaseEntity
             .append("remark", getRemark())
             .append("dept", getDept())
             .toString();
+    }
+
+    public String[] getChannelCodes() {
+        return channelCodes;
+    }
+
+    public void setChannelCodes(String[] channelCodes) {
+        this.channelCodes = channelCodes;
     }
 }
