@@ -125,6 +125,11 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
     @Override
+    public List<OcrTrade> selectOcrTradeListByIds(String tradeIds) {
+        return ocrTradeMapper.selectOcrTradeListByIds(Convert.toStrArray(tradeIds));
+    }
+
+    @Override
     public String[] selectImagePath(String[] tradeIds) {
         return ocrTradeMapper.selectImagePath(tradeIds);
     }

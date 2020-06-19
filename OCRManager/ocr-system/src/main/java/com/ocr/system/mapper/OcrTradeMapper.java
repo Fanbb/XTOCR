@@ -81,4 +81,5 @@ public interface OcrTradeMapper
 
 	String selectCountByTrickStatus(String tickStatus);
 
+	List<OcrTrade> selectOcrTradeListByIds(String[] ids);
 }

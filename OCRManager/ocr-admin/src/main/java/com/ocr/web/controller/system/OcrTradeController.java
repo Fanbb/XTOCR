@@ -72,6 +72,17 @@ public class OcrTradeController extends BaseController {
     /**
      * 查询识别流水列表
      */
+    @PostMapping("/getTradeListByIds")
+    @ResponseBody
+    public TableDataInfo getTradeListByIds(String tradeIds) {
+        startPage();
+        List<OcrTrade> list = ocrTradeService.selectOcrTradeListByIds(tradeIds);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询识别流水列表
+     */
     @RequiresPermissions("system:ocrTrade:list")
     @PostMapping("/list")
     @ResponseBody

@@ -115,4 +115,6 @@ public interface IOcrTradeService
 	List<String> selectValueToDataTotal();
 
     void updateRemark2ByIds(String[] ids);
+
+    List<OcrTrade> selectOcrTradeListByIds(String tradeIds);
 }

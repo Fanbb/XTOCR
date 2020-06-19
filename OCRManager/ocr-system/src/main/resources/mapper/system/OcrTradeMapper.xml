@@ -145,6 +145,14 @@
         </foreach>
     </update>
 
+    <select id="selectOcrTradeListByIds" parameterType="OcrTrade" resultMap="OcrTradeResult">
+        <include refid="selectOcrTradeVo"/>
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 
     <select id="selectPointTotalList" resultType="String">
 		SELECT COUNT(*) DAY_TOTAL FROM OCR_TRADE T GROUP BY T.TICK_STATUS ORDER BY T.TICK_STATUS ASC
