@@ -142,6 +142,7 @@ public class SysUserController extends BaseController
         user.setSalt(ShiroUtils.randomSalt());
         user.setPassword(passwordService.encryptPassword(user.getLoginName(), user.getPassword(), user.getSalt()));
         user.setCreateBy(ShiroUtils.getLoginName());
+        user.setRemark("");
         for (Long roleId:user.getRoleIds()) {
             if (roleId==120){
                 user.setRemark("渠道业务员");
@@ -185,6 +186,7 @@ public class SysUserController extends BaseController
             return error("修改用户'" + user.getLoginName() + "'失败，邮箱账号已存在");
         }
         user.setUpdateBy(ShiroUtils.getLoginName());
+        user.setRemark("");
         for (Long roleId:user.getRoleIds()) {
             if (roleId==120){
                 user.setRemark("渠道业务员");
