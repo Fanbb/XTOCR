@@ -71,4 +71,6 @@ public interface ChannelMapper
     List<Channel> selectChannelAll();
 
     List<Channel> selectChannelByUserId(@Param("userId") Long userId);
+
+    List<Channel> selectChannelsByUserId(@Param("userId") Long userId);
 }

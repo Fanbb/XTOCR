@@ -70,4 +70,6 @@ public interface IChannelService {
     List<Channel> selectChannelAll();
 
     List<Channel> selectChannelByUserId(Long userId);
+
+    List<Channel> selectChannelsByUserId(Long userId);
 }

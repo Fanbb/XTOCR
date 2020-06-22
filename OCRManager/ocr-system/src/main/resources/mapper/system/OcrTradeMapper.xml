@@ -44,7 +44,9 @@
             <if test="remark1 != null  and remark1 != '' ">and remark1 = #{remark1}</if>
             <if test="remark2 != null  and remark2 != '' ">and remark2 = #{remark2}</if>
             <if test="remark3 != null  and remark3 != '' ">and remark3 = #{remark3}</if>
-
+            <if test="userId != null">
+                and channel in (select channel_code from sys_user_channel where user_id =#{userId})
+            </if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND ocr_date &gt;= to_date(#{params.beginTime},'yyyy-MM-dd HH24:mi:ss')
             </if>

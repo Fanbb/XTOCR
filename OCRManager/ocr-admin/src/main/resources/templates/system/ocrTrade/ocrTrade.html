@@ -23,10 +23,10 @@
                         </li>
 
                         <li>
-                            渠道：<select name="channel" th:with="type=${@dict.getType('ocr_channel_name')}">
+                            渠道：<select id="channel" name="channel">
                             <option value="">所有</option>
-                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-                                    th:value="${dict.dictValue}"></option>
+                            <option th:each="channel:${channels}" th:value="${channel.channelCode}"
+                                    th:text="${channel.channelName}"></option>
                         </select>
                         </li>
 
@@ -238,6 +238,13 @@
         var url = prefix + '/detail/' + id;
         $.modal.openTab("流水识别", url);
     }
+
+    $(function() {
+        $('#channel').select({
+            placeholder:"请选择渠道",
+            allowClear: true
+        });
+    })
 
     //批量影像文件导出
     function batchDownload() {

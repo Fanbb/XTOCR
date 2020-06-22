@@ -80,6 +80,13 @@ public class OcrTrade extends BaseEntity {
      */
     private String remark3;
 
+    /**
+     * 渠道
+     */
+    private String[] channelCodes;
+
+    private Long userId;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -218,5 +225,21 @@ public class OcrTrade extends BaseEntity {
 
     public void setOcrTime(String ocrTime) {
         this.ocrTime = ocrTime;
+    }
+
+    public String[] getChannelCodes() {
+        return channelCodes;
+    }
+
+    public void setChannelCodes(String[] channelCodes) {
+        this.channelCodes = channelCodes;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

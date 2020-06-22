@@ -105,6 +105,11 @@ public class ChannelServiceImpl implements IChannelService {
     }
 
     @Override
+    public List<Channel> selectChannelsByUserId(Long userId) {
+        return channelMapper.selectChannelsByUserId(userId);
+    }
+
+    @Override
     public List<Channel> selectChannelAll() {
         return channelMapper.selectChannelAll();
     }

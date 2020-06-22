@@ -8,9 +8,12 @@ import com.ocr.common.core.page.TableDataInfo;
 import com.ocr.common.core.text.Convert;
 import com.ocr.common.enums.BusinessType;
 import com.ocr.common.utils.poi.ExcelUtil;
+import com.ocr.framework.util.ShiroUtils;
 import com.ocr.system.domain.OcrImage;
 import com.ocr.system.domain.OcrTrade;
+import com.ocr.system.domain.SysRole;
 import com.ocr.system.model.*;
+import com.ocr.system.service.IChannelService;
 import com.ocr.system.service.IOcrImageService;
 import com.ocr.system.service.IOcrTradeService;
 import oracle.jdbc.proxy.annotation.Post;
@@ -49,12 +52,20 @@ public class OcrTradeController extends BaseController {
     @Autowired
     private IOcrImageService iOcrImageService;
 
+    @Autowired
+    private IChannelService channelService;
+
     @Value("${ocr.profile}")
     private String imgUploadPath;
 
-    @RequiresPermissions("system:ocrTrade:view")
+//    @RequiresPermissions("system:ocrTrade:view")
     @GetMapping()
-    public String ocrTrade() {
+    public String ocrTrade(ModelMap mmap) {
+        if (ShiroUtils.getSysUser().getRemark().equals("渠道业务员")){
+            mmap.addAttribute("channels",channelService.selectChannelsByUserId(ShiroUtils.getSysUser().getUserId()));
+        }else {
+            mmap.addAttribute("channels",channelService.selectChannelAll());
+        }
         return prefix + "/ocrTrade";
     }
 
@@ -83,11 +94,13 @@ public class OcrTradeController extends BaseController {
     /**
      * 查询识别流水列表
      */
-    @RequiresPermissions("system:ocrTrade:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(OcrTrade ocrTrade) {
         startPage();
+        if (ShiroUtils.getSysUser().getRemark().equals("渠道业务员")){
+            ocrTrade.setUserId(ShiroUtils.getSysUser().getUserId());
+        }
         List<OcrTrade> list = ocrTradeService.selectOcrTradeList(ocrTrade);
         return getDataTable(list);
     }
@@ -96,7 +109,7 @@ public class OcrTradeController extends BaseController {
     /**
      * 导出识别流水列表
      */
-    @RequiresPermissions("system:ocrTrade:export")
+//    @RequiresPermissions("system:ocrTrade:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(OcrTrade ocrTrade) {
@@ -124,7 +137,7 @@ public class OcrTradeController extends BaseController {
         return toAjax(ocrTradeService.insertOcrTrade(ocrTrade));
     }
 
-    @RequiresPermissions("system:ocrTrade:blend")
+//    @RequiresPermissions("system:ocrTrade:blend")
     @Log(title = "流水勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/blend")
     @ResponseBody
@@ -160,7 +173,7 @@ public class OcrTradeController extends BaseController {
      * @return
      */
     @Log(title = "批量下载图片", businessType = BusinessType.EXPORT)
-    @RequiresPermissions("system:ocrTrade:downloadImages")
+//    @RequiresPermissions("system:ocrTrade:downloadImages")
     @GetMapping("/downloadImages")
     @ResponseBody
     public void downloadImages(HttpServletResponse response, String ids) throws IOException {
