@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-content" style="height:800px">
+            <div class="form-content" id="idv2">
                 <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
                     <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
                     <div class="row">
@@ -88,6 +88,17 @@
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
     var prefix = ctx + "system/ocrTrade";
+    window.onload = function () {
+        var myDiv = document.getElementById("imageBody");
+        var myDiv2 = document.getElementById("div2");
+        if (window.screen.height == 768) {
+            myDiv.style.height = "500px";
+            myDiv2.style.height = "523px";
+        } else if (window.screen.height == 1080) {
+            myDiv.style.height = "800px";
+            myDiv2.style.height = "825px";
+        }
+    }
 
     function submit2() {
         $.ajax({

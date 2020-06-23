@@ -4,114 +4,92 @@
     <th:block th:include="include :: header('流水查询详情')"/>
 </head>
 <body class="gray-bg">
-<div id="detail_modal-body" class="modal-body">
+<div style="padding:5px;overflow-y:auto">
     <div class="col-md-12">
-        <div class="col-md-8">
-            <div class="box box-primary" style="height:800px">
+        <div class="col-sm-8">
+            <div class="box box-primary" style="height: auto">
                 <div class="box-header with-border">
                     <div class="box-header with-border">
                         <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
                     </div>
-                    <div class="box-body" id="imageBody" style="width:1050px;height:750px;overflow-y:auto">
-                        <div class="imageBox" id="imageBox" style="margin-left: 10px">
-                            <img class="span" style="width: 1000px"
+                    <div class="box-body" id="imageBody" style="width:100%;overflow-y:auto">
+                        <div class="imageBox" id="imageBox" style="margin:0px 10px">
+                            <img class="span" style="width:98%"
                                  th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-content" style="height:800px">
-                <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
+        <div class="col-sm-4">
+            <div class="form-content" id="div2">
+                <form style="width: 100%" id="form-user-edit" th:object="${ocrTrade}">
                     <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
                     <div class="row">
                         <h2 class="box-title" th:align="center" style="font-weight:bold">身份证正面识别信息：</h2>
                     </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>姓名：</label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="22" th:high="48" style="font-size: 20px"
-                                           disabled="disabled" th:value="@{${idCardFront.getName()}}"/>
+                    <table style="font-size: 15px">
+                        <tr style="height: 50px">
+                            <td width="30%" align="right">姓名：</td>
+                            <td style="width: 70%"><input type="text" class="form-control" readonly="true"
+                                                          style="font-size: 19px"
+                                                          disabled="disabled" th:value="@{${idCardFront.getName()}}"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="30%" align="right">性别：</td>
+                            <td width="70%"><input type="text" class="form-control" readonly="true" th:size="22"
+                                                   th:high="48"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${idCardFront.getSex()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="30%" align="right">民族：</td>
+                            <td width="70%"><input type="text" class="form-control" readonly="true" th:size="22"
+                                                   th:high="48"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${idCardFront.getNation()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="30%" align="right">出生年月：</td>
+                            <td width="70%"><input type="text" class="form-control" readonly="true" th:size="22"
+                                                   th:high="48"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${idCardFront.getBirthday()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="30%" align="right">住址：</td>
+                            <td width="70%"><textarea style="font-size:18px" th:size="22" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="25%" align="right">公民身份号码：</td>
+                            <td width="75%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   th:high="48"
+                                                   disabled="disabled" th:value="@{${idCardFront.getIdCardNo()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="30%" align="right">人工勾对：</td>
+                            <td width="70%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('blend_status')}">
+                                    <input type="radio" id="tickStatus" name="tickStatus" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{tickStatus}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>性别：</label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="22" th:high="48" style="font-size: 20px"
-                                           disabled="disabled" th:value="@{${idCardFront.getSex()}}"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td></td>
+                            <td align="center" colspan="2">
+                                <div class="col-sm-7">
+                                    <button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">
+                                        提交
+                                    </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>民族：</label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="22" th:high="48"  style="font-size: 20px"
-                                           disabled="disabled" th:value="@{${idCardFront.getNation()}}"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>出生年月：</label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" readonly="true" th:size="22" th:high="48" style="font-size: 20px"
-                                           disabled="disabled" th:value="@{${idCardFront.getBirthday()}}"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>住址：</label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <textarea style="width: 286px;height: 60px;font-size: 18px" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>公民身份号码：</label>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" style="font-size: 20px" readonly="true" th:size="22" th:high="48"
-                                           disabled="disabled" th:value="@{${idCardFront.getIdCardNo()}}"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>人工勾对：</label>
-                        <div class="col-sm-8" style="font-size: 20px">
-                            <div class="radio-box" th:each="dict : ${@dict.getType('blend_status')}">
-                                <input type="radio" th:id="${dict.dictCode}" id="tickStatus" name="tickStatus" th:value="${dict.dictValue}" th:field="*{tickStatus}">
-                                <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label class="col-sm-12 control-label" style="height:20px;"></label>
-                    </div>
-                    <div class="row">
-                        <label class="col-sm-5 control-label"></label>
-                        <div class="col-sm-7">
-                            <button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">提交
-                            </button>
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                    </table>
                 </form>
             </div>
         </div>
@@ -120,6 +98,18 @@
 <th:block th:include="include :: footer"/>
 <script>
     var prefix = ctx + "system/ocrTrade";
+    window.onload = function () {
+        var myDiv = document.getElementById("imageBody");
+        var myDiv2 = document.getElementById("div2");
+        if (window.screen.height == 768) {
+            myDiv.style.height = "500px";
+            myDiv2.style.height = "523px";
+        } else if (window.screen.height == 1080) {
+            myDiv.style.height = "800px";
+            myDiv2.style.height = "825px";
+        }
+    }
+
 
     function submit2() {
         $.ajax({

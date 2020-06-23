@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-content" style="height:800px">
+            <div class="form-content" id="idv2">
                 <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
                     <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
                     <div class="row">
@@ -87,7 +87,7 @@
                         <label class="col-sm-4 control-label" style="font-weight:bold;font-size: 14px"></span>人工勾对：</label>
                         <div class="col-sm-8" style="font-size: 20px">
                             <div class="radio-box" th:each="dict : ${@dict.getType('blend_status')}">
-                                <input type="radio" th:id="${dict.dictCode}" id="tickStatus" name="tickStatus" th:value="${dict.dictValue}" th:field="*{tickStatus}">
+                                <input type="radio" id="tickStatus" name="tickStatus" th:id="${dict.dictCode}"  th:value="${dict.dictValue}" th:field="*{tickStatus}">
                                 <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                             </div>
                         </div>
@@ -110,6 +110,17 @@
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
     var prefix = ctx + "system/ocrTrade";
+    window.onload = function () {
+        var myDiv = document.getElementById("imageBody");
+        var myDiv2 = document.getElementById("div2");
+        if (window.screen.height == 768) {
+            myDiv.style.height = "500px";
+            myDiv2.style.height = "523px";
+        } else if (window.screen.height == 1080) {
+            myDiv.style.height = "800px";
+            myDiv2.style.height = "825px";
+        }
+    }
 
     function submit2() {
         $.ajax({

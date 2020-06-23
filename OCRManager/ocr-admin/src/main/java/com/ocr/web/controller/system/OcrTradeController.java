@@ -11,12 +11,10 @@ import com.ocr.common.utils.poi.ExcelUtil;
 import com.ocr.framework.util.ShiroUtils;
 import com.ocr.system.domain.OcrImage;
 import com.ocr.system.domain.OcrTrade;
-import com.ocr.system.domain.SysRole;
 import com.ocr.system.model.*;
 import com.ocr.system.service.IChannelService;
 import com.ocr.system.service.IOcrImageService;
 import com.ocr.system.service.IOcrTradeService;
-import oracle.jdbc.proxy.annotation.Post;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,7 +56,7 @@ public class OcrTradeController extends BaseController {
     @Value("${ocr.profile}")
     private String imgUploadPath;
 
-//    @RequiresPermissions("system:ocrTrade:view")
+    @RequiresPermissions("system:ocrTrade:view")
     @GetMapping()
     public String ocrTrade(ModelMap mmap) {
         if (ShiroUtils.getSysUser().getRemark().equals("渠道业务员")){
@@ -109,7 +107,7 @@ public class OcrTradeController extends BaseController {
     /**
      * 导出识别流水列表
      */
-//    @RequiresPermissions("system:ocrTrade:export")
+    @RequiresPermissions("system:ocrTrade:export")
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(OcrTrade ocrTrade) {
@@ -137,7 +135,7 @@ public class OcrTradeController extends BaseController {
         return toAjax(ocrTradeService.insertOcrTrade(ocrTrade));
     }
 
-//    @RequiresPermissions("system:ocrTrade:blend")
+    @RequiresPermissions("system:ocrTrade:blend")
     @Log(title = "流水勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/blend")
     @ResponseBody
@@ -173,7 +171,7 @@ public class OcrTradeController extends BaseController {
      * @return
      */
     @Log(title = "批量下载图片", businessType = BusinessType.EXPORT)
-//    @RequiresPermissions("system:ocrTrade:downloadImages")
+    @RequiresPermissions("system:ocrTrade:downloadImages")
     @GetMapping("/downloadImages")
     @ResponseBody
     public void downloadImages(HttpServletResponse response, String ids) throws IOException {
