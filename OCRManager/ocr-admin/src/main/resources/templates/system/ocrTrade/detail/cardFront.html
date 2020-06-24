@@ -38,35 +38,31 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="30%" align="right">性别：</td>
-                            <td width="70%"><input type="text" class="form-control" readonly="true" th:size="22"
-                                                   th:high="48"
+                            <td width="70%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${idCardFront.getSex()}}"/></td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="30%" align="right">民族：</td>
-                            <td width="70%"><input type="text" class="form-control" readonly="true" th:size="22"
-                                                   th:high="48"
+                            <td width="70%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${idCardFront.getNation()}}"/></td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="30%" align="right">出生年月：</td>
-                            <td width="70%"><input type="text" class="form-control" readonly="true" th:size="22"
-                                                   th:high="48"
+                            <td width="70%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${idCardFront.getBirthday()}}"/></td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="30%" align="right">住址：</td>
-                            <td width="70%"><textarea style="font-size:18px" th:size="22" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
+                            <td width="70%"><textarea style="font-size:19px" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
                             </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="25%" align="right">公民身份号码：</td>
                             <td width="75%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
-                                                   th:high="48"
                                                    disabled="disabled" th:value="@{${idCardFront.getIdCardNo()}}"/></td>
                         </tr>
                         <tr style="height: 50px">
@@ -106,7 +102,7 @@
             myDiv2.style.height = "523px";
         } else if (window.screen.height == 1080) {
             myDiv.style.height = "800px";
-            myDiv2.style.height = "825px";
+            myDiv2.style.height = "820px";
         }
     }
 
