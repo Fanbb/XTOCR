@@ -2,6 +2,8 @@ package com.ocr.web.controller.system;
 
 import java.util.List;
 
+import com.ocr.system.domain.Channel;
+import com.ocr.system.service.IChannelService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,9 @@ public class ChannelTypeController extends BaseController {
 
     @Autowired
     private IChannelTypeService channelTypeService;
+
+    @Autowired
+    private IChannelService channelService;
 
     @RequiresPermissions("system:channelType:view")
     @GetMapping()
@@ -85,8 +90,23 @@ public class ChannelTypeController extends BaseController {
          * 插入前进行判断
          */
         ChannelType channelType1 = channelTypeService.selectByNoAndType(channelType.getChannelCode(), channelType.getOcrType());
-        if (null==channelType1){
+        if (null!=channelType1){
             return error("该渠道的ocr识别类型已经添加");
+        }else{
+            Channel channel = channelService.selectChannelByChannelCode(channelType.getChannelCode());
+            channelType.setChannelName(channel.getChannelName());
+            channelType.setChannelNm(channel.getChannelNm());
+            switch (channelType.getOcrType()){
+                case "1":
+                    channelType.setOcrTypeNm("身份证");
+                    break;
+                case "2":
+                    channelType.setOcrTypeNm("银行卡");
+                    break;
+                case "3":
+                    channelType.setOcrTypeNm("存单");
+                    break;
+            }
         }
         return toAjax(channelTypeService.insertChannelType(channelType));
     }
@@ -109,6 +129,20 @@ public class ChannelTypeController extends BaseController {
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(ChannelType channelType) {
+        Channel channel = channelService.selectChannelByChannelCode(channelType.getChannelCode());
+        channelType.setChannelName(channel.getChannelName());
+        channelType.setChannelNm(channel.getChannelNm());
+        switch (channelType.getOcrType()){
+            case "1":
+                channelType.setOcrTypeNm("身份证");
+                break;
+            case "2":
+                channelType.setOcrTypeNm("银行卡");
+                break;
+            case "3":
+                channelType.setOcrTypeNm("存单");
+                break;
+        }
         return toAjax(channelTypeService.updateChannelType(channelType));
     }
 
