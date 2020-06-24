@@ -30,22 +30,27 @@ public class OcrTrade extends BaseEntity {
     /**
      * 识别时间
      */
+    @Excel(name = "识别时间", prompt = "识别时间")
     private String ocrTime;
     /**
      * 渠道
      */
+    @Excel(name = "渠道", readConverterExp = "system=系统管理平台,ocr001_ydyxpt=移动营销平台")
     private String channel;
     /**
      * 唯一识别号码（身份证号、存单号）
      */
+    @Excel(name = "唯一识别号码", prompt = "唯一识别号码")
     private String ocrSeq;
     /**
      * OCR识别状态（0 成功  1 失败）
      */
+    @Excel(name = "OCR识别状态", readConverterExp = "0=成功,1=失败")
     private String ocrStatus;
     /**
      * 勾对状态（0未勾对  1 已勾对成功 2已勾对失败）
      */
+    @Excel(name = "勾对状态", readConverterExp = "0=未勾对,1=勾对成功,2=勾对失败")
     private String tickStatus;
     /**
      * 影像id
@@ -54,14 +59,16 @@ public class OcrTrade extends BaseEntity {
     /**
      * 影像类型
      */
+    @Excel(name = "影像类型",readConverterExp = "Deposit=存单,BankCard=银行卡,None=无效识别类型,IDCardFront=身份证正面,IDCardBack=身份证反面")
     private String imageType;
     /**
      * 影像类型名称
      */
     private String imageName;
     /**
-     * 平台勾对状态 （0未返回默认成功 1返回更改失败）
+     * 前端勾对状态 （0未返回默认成功 1返回更改失败）
      */
+    @Excel(name = "前端勾对状态", readConverterExp = "0=成功,1=失败")
     private String platStatus;
     /**
      * 机构号
@@ -74,6 +81,7 @@ public class OcrTrade extends BaseEntity {
     /**
      * 预留字段2
      */
+    @Excel(name = "影像导出状态", readConverterExp = "0=未导出,1=已导出")
     private String remark2;
     /**
      * 预留字段3

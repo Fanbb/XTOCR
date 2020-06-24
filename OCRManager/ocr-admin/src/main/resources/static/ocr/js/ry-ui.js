@@ -281,6 +281,29 @@
 	    			});
     			});
     		},
+			// 导出数据2
+			// exportExcel2: function() {
+			// 	var rows = $.common.isEmpty($.table._option.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns($.table._option.uniqueId);
+			// 	if (rows.length == 0) {
+			// 		$.modal.alertWarning("请至少选择一条记录");
+			// 		return;
+			// 	}
+			// 	$.modal.confirm("确认要导出选中的" + rows.length + "条数据吗?", function() {
+			// 		$.modal.loading("正在导出数据，请稍后...");
+			// 		var data = { "ids": rows.join() };
+			// 		$.post($.table._option.exportUrl, data, function(result) {
+			// 			if (result.code == web_status.SUCCESS) {
+			// 				window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+			// 			} else if (result.code == web_status.WARNING) {
+			// 				$.modal.alertWarning(result.msg)
+			// 			} else {
+			// 				$.modal.alertError(result.msg);
+			// 			}
+			// 			$.modal.closeLoading();
+			// 		});
+			// 	});
+			// },
+
     		// 下载模板
     		importTemplate: function() {
     			$.get($.table._option.importTemplateUrl, function(result) {
@@ -809,6 +832,7 @@
             },
             // 删除信息
             remove: function(id) {
+        		debugger;
             	$.modal.confirm("确定删除该条" + $.table._option.modalName + "信息吗？", function() {
                     var url = $.common.isEmpty(id) ? $.table._option.removeUrl : $.table._option.removeUrl.replace("{id}", id);
                     if($.table._option.type == table_type.bootstrapTreeTable) {

@@ -12,9 +12,9 @@
                     <div class="box-header with-border">
                         <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
                     </div>
-                    <div class="box-body" id="imageBody" style="width:1050px;height:750px;overflow-y:auto">
-                        <div class="imageBox" id="imageBox" style="margin-left: 10px">
-                            <img class="span" style="width: 1000px"
+                    <div class="box-body" id="imageBody" style="width:100%;overflow-y:auto">
+                        <div class="imageBox" id="imageBox" style="margin:0px 10px">
+                            <img class="span" style="width:98%"
                                  th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
                         </div>
                     </div>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-content" id="idv2">
+            <div class="form-content" id="div2">
                 <form class="form-horizontal" id="form-user-edit" th:object="${ocrTrade}">
                     <h1 align="center">无效识别类型结果</h1>
                     <input type="text" hidden="hidden" name="id" th:field="*{id}"/>

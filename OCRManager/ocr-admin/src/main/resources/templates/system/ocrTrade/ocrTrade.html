@@ -9,7 +9,7 @@
 <div class="container-div">
     <div class="row">
         <div class="col-sm-12 search-collapse">
-            <form id="formId">
+            <form id="formId" name="formId">
                 <div class="select-list">
                     <ul>
 
@@ -87,20 +87,9 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-<!--            <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:ocrTrade:add">-->
-<!--                <i class="fa fa-plus"></i> 添加-->
-<!--            </a>-->
-<!--            <a class="btn btn-primary single disabled" onclick="$.operate.edit()"-->
-<!--               shiro:hasPermission="system:ocrTrade:edit">-->
-<!--                <i class="fa fa-edit"></i> 修改-->
-<!--            </a>-->
-<!--            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()"-->
-<!--               shiro:hasPermission="system:ocrTrade:remove">-->
-<!--                <i class="fa fa-remove"></i> 删除-->
-<!--            </a>-->
-<!--            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTrade:export">-->
-<!--                <i class="fa fa-download"></i> 导出-->
-<!--            </a>-->
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTrade:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
             <a class="btn btn-warning" onclick="javascript:batchDownload()"
                shiro:hasPermission="system:ocrTrade:downloadImages">
                 <i class="fa fa-download"></i> 影像下载
@@ -143,11 +132,6 @@
                 {
                     field: 'id',
                     title: 'id',
-                    visible: false
-                },
-                {
-                    field: 'id',
-                    title: '流水ID',
                     visible: false
                 },
                 {

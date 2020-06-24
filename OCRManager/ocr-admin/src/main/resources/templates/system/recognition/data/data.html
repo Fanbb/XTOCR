@@ -14,9 +14,9 @@
                         <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
                     </div>
                 </div>
-                <div class="box-body" id="imageBody" style="width:1050px;height:750px;overflow-y:auto">
-                    <div class="imageBox" id="imageBox" style="margin-left: 10px">
-                        <img class="span" style="width: 1000px"
+                <div class="box-body" id="imageBody" style="width:100%;overflow-y:auto">
+                    <div class="imageBox" id="imageBox" style="margin:0px 10px">
+                        <img class="span" style="width:98%"
                              th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
                     </div>
                 </div>
