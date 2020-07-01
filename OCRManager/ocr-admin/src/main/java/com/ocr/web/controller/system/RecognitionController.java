@@ -191,10 +191,16 @@ public class RecognitionController extends BaseController {
     @GetMapping("/data/{imgId}")
     public String detail(@PathVariable("imgId") String imgId, ModelMap model) {
         OcrImage ocrImage = iOcrImageService.selectOcrImageById(imgId);
-        model.addAttribute("imgUrl", ocrImage.getLocalPath());
+        String urlImg = ocrImage.getLocalPath();
+        String imgUrl=urlImg;
+        if (urlImg.contains("122")){
+            imgUrl = urlImg.replace("122","155");
+        }else if (urlImg.contains("123")){
+            imgUrl = urlImg.replace("123","155");
+        }
+        model.addAttribute("imgUrl", imgUrl);
         model.addAttribute("imgId", imgId);
         return prefix + "/data/data";
-
     }
 
 
