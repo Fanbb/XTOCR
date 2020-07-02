@@ -81,6 +81,96 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     }
 
     @Override
+    public ResultData videoPlatformDiscern(String batchNumber, String channelCode, String identificationCode, String imgType) {
+        ResultData resultData = new ResultData();
+        String[] split = identificationCode.split(",");
+        List<Object> objects = new ArrayList<>();
+        if (split.length > 1) {
+            for (String identification : split) {
+                DiscernResultData discernResult = new DiscernResultData();
+                discernResult.setBatchNumber(batchNumber);
+                discernResult.setIdentificationCode(identification);
+                switch (imgType) {
+                    case "1":
+                        List list = new ArrayList();
+                        list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
+                        list.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
+                        discernResult.setResultData(list);
+                        objects.add(discernResult);
+                        break;
+                    case "2":
+                        List list2 = new ArrayList();
+                        list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
+                        discernResult.setResultData(list2);
+                        objects.add(discernResult);
+                        break;
+                    case "3":
+                        List list3 = new ArrayList();
+                        list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
+                        discernResult.setResultData(list3);
+                        objects.add(discernResult);
+                        break;
+                    default:
+                        //通用识别
+                        List list4 = new ArrayList();
+                        list4.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
+                        list4.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
+                        list4.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
+                        list4.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
+                        discernResult.setResultData(list4);
+                        objects.add(discernResult);
+                        break;
+                }
+            }
+        }else {
+                DiscernResultData discernResult = new DiscernResultData();
+                discernResult.setBatchNumber(batchNumber);
+                discernResult.setIdentificationCode(split[0]);
+                switch (imgType) {
+                    case "1":
+                        List list = new ArrayList();
+                        list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
+                        list.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
+                        discernResult.setResultData(list);
+                        objects.add(discernResult);
+                        break;
+                    case "2":
+                        List list2 = new ArrayList();
+                        list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
+                        discernResult.setResultData(list2);
+                        objects.add(discernResult);
+                        break;
+                    case "3":
+                        List list3 = new ArrayList();
+                        list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
+                        discernResult.setResultData(list3);
+                        objects.add(discernResult);
+                        break;
+                    default:
+                        //通用识别
+                        List list4 = new ArrayList();
+                        list4.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
+                        list4.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
+                        list4.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
+                        list4.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
+                        discernResult.setResultData(list4);
+                        objects.add(discernResult);
+                        break;
+                }
+        }
+        if (batchNumber.equals("500")){
+            resultData.setType("0");
+            resultData.setMsg("错误！");
+        }else {
+            resultData.setType("1");
+            resultData.setMsg("识别成功！");
+            resultData.setData(objects);
+        }
+
+        return resultData;
+    }
+
+    @Override
     public ResultData runOne(String channelCode, String url, String str, String imgType) {
         /**
          * 1.获取存储影像 录入数据库影像信息
@@ -249,7 +339,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     list.add(deposit);
                     break;
                 default:
-                    tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(),channelCode, imgId);
+                    tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, imgId);
                     NoneEnty noneEnty = new NoneEnty();
                     noneEnty.setImgType("None");
                     noneEnty.setTradeId(tradeId);

@@ -8,6 +8,7 @@ import com.ocr.common.utils.StringUtils;
 import com.ocr.system.model.ResultData;
 import com.ocr.system.service.IChannelService;
 import com.ocr.system.service.OCRDiscernService;
+import com.ocr.web.controller.api.model.DiscernResult;
 import com.ocr.web.controller.api.model.ModifyResult;
 import com.ocr.web.controller.api.model.OCRDiscernEntity;
 import io.swagger.annotations.Api;
@@ -30,7 +31,7 @@ public class OCRDiscernController extends BaseController {
     private IChannelService iChannelService;
 
 
-    @Log(title = "OCR内网调用api接口调用", businessType = BusinessType.OTHER)
+    @Log(title = "OCR内网调用api接口调用", businessType = BusinessType.API)
     @ApiOperation("OCR内网调用api接口")
     @ApiImplicitParam(name = "ocrDiscernEntity", value = "OCR内网调用接口参数", dataType = "OCRDiscernEntity")
     @PostMapping("/outUrlDiscern")
@@ -56,7 +57,7 @@ public class OCRDiscernController extends BaseController {
     }
 
 
-    @Log(title = "前端更改识别结果状态调用api接口", businessType = BusinessType.OTHER)
+    @Log(title = "前端更改识别结果状态调用api接口", businessType = BusinessType.API)
     @ApiOperation("前端更改识别结果状态调用api接口")
     @ApiImplicitParam(name = "modifyResult", value = "前端更改识别结果状态接口参数", dataType = "ModifyResult")
     @PostMapping("/modifyResult")
@@ -66,6 +67,30 @@ public class OCRDiscernController extends BaseController {
             return success();
         }
         return error();
+    }
+
+
+    @Log(title = "api接口影像平台影像识别", businessType = BusinessType.API)
+    @ApiOperation("对影像平台影像识别")
+    @ApiImplicitParam(name = "discernResult", value = "影像平台影像识别参数", dataType = "DiscernResult")
+    @PostMapping("/videoPlatformDiscern")
+    public AjaxResult videoPlatformDiscern(DiscernResult discernResult) {
+        if (StringUtils.isEmpty(discernResult.getBatchNumber())){
+            return error("批次号为空！");
+        }else if (StringUtils.isEmpty(discernResult.getChannelCode())){
+            return error("渠道号为空！");
+        }else if (StringUtils.isEmpty(discernResult.getIdentificationCode())){
+            return error("唯一标识为空！");
+        }else if (StringUtils.isEmpty(discernResult.getImgType())){
+            return error("影像类型为空！");
+        }else {
+            ResultData resultData = ocrDiscernService.videoPlatformDiscern(discernResult.getBatchNumber(),discernResult.getChannelCode(),discernResult.getIdentificationCode(),discernResult.getImgType());
+            if (resultData.getType().equals("1")) {
+                return AjaxResult.success(resultData.getMsg(), resultData.getData());
+            } else {
+                return AjaxResult.error(resultData.getMsg());
+            }
+        }
     }
 
 

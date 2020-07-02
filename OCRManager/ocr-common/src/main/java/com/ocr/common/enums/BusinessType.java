@@ -61,4 +61,9 @@ public enum BusinessType
      * 导出日志文件
      */
     EXPORTLOGFILES,
+
+    /**
+     * API接口调用
+     */
+    API,
 }
