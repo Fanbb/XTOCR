@@ -48,7 +48,7 @@
 
     <select id="selectChannelByCode" parameterType="String" resultMap="ChannelResult">
         <include refid="selectChannelVo"/>
-        where channel_nm = #{channelCode}
+        where channel_code = #{channelCode}
     </select>
 
     <insert id="insertChannel" parameterType="Channel">

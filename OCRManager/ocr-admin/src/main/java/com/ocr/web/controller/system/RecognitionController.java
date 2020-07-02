@@ -176,7 +176,7 @@ public class RecognitionController extends BaseController {
                     iOcrTradeService.insertDeposit(deposit, "system", imgId);
                     break;
                 default:
-                    iOcrTradeService.insertNoneTrade(model.getOcr_result(),"system", imgId);
+                    iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", imgId);
                     break;
             }
         }
@@ -191,14 +191,7 @@ public class RecognitionController extends BaseController {
     @GetMapping("/data/{imgId}")
     public String detail(@PathVariable("imgId") String imgId, ModelMap model) {
         OcrImage ocrImage = iOcrImageService.selectOcrImageById(imgId);
-        String urlImg = ocrImage.getLocalPath();
-        String imgUrl=urlImg;
-        if (urlImg.contains("122")){
-            imgUrl = urlImg.replace("122","155");
-        }else if (urlImg.contains("123")){
-            imgUrl = urlImg.replace("123","155");
-        }
-        model.addAttribute("imgUrl", imgUrl);
+        model.addAttribute("imgUrl", ocrImage.getLocalPath());
         model.addAttribute("imgId", imgId);
         return prefix + "/data/data";
     }

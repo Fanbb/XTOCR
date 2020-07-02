@@ -273,14 +273,7 @@ public class OcrTradeController extends BaseController {
         OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(id);
         mmap.addAttribute("ocrTrade", ocrTrade);
         OcrImage ocrImage = iOcrImageService.selectOcrImageById(ocrTrade.getImageId());
-        String urlImg = ocrImage.getLocalPath();
-        String imgUrl=urlImg;
-        if (urlImg.contains("122")){
-            imgUrl = urlImg.replace("122","155");
-        }else if (urlImg.contains("123")){
-            imgUrl = urlImg.replace("123","155");
-        }
-        mmap.addAttribute("imgUrl", imgUrl);
+        mmap.addAttribute("imgUrl", ocrImage.getLocalPath());
 
         if (ocrTrade.getImageType().equals("IDCardFront")) {
             IDCardFront idCardFront = JSON.parseObject(ocrTrade.getRemark1(), IDCardFront.class);
