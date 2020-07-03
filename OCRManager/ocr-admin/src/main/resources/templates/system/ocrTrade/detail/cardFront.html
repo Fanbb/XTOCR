@@ -131,6 +131,11 @@
                 } else {
                     alert(result.msg);
                 }
+
+                if (typeof callback == "function") {
+                    callback(result);
+                }
+                $.operate.successTabCallback(result);
             }
         })
     }

@@ -62,4 +62,6 @@ public interface ChannelTypeMapper
 	public int deleteChannelTypeByIds(String[] ids);
 
 	public ChannelType selectByNoAndType(@Param("channelCode")String channelCode, @Param("ocrType")String ocrType);
+
+    void deleteChannelTypeByChannelCode(String channelCode);
 }

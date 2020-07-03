@@ -59,4 +59,5 @@ public interface IChannelTypeService {
      */
     public int deleteChannelTypeByIds(String ids);
 
+    void deleteChannelTypeByChannelCode(String channelCode);
 }

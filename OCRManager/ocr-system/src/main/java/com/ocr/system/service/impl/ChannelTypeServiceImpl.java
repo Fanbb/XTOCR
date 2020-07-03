@@ -81,4 +81,9 @@ public class ChannelTypeServiceImpl implements IChannelTypeService {
         return channelTypeMapper.deleteChannelTypeByIds(Convert.toStrArray(ids));
     }
 
+    @Override
+    public void deleteChannelTypeByChannelCode(String channelCode) {
+        channelTypeMapper.deleteChannelTypeByChannelCode(channelCode);
+    }
+
 }

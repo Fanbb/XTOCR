@@ -74,6 +74,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteChannelTypeById" parameterType="String">
         delete from sys_channel_type where id = #{id}
     </delete>
+
+    <delete id="deleteChannelTypeByChannelCode" parameterType="String">
+        delete from sys_channel_type where channel_code = #{channelCode}
+    </delete>
 	
     <delete id="deleteChannelTypeByIds" parameterType="String">
         delete from sys_channel_type where id in 

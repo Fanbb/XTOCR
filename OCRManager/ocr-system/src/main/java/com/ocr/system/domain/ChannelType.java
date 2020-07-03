@@ -44,6 +44,17 @@ public class ChannelType extends BaseEntity {
     @Excel(name = "识别类型名称", prompt = "识别类型名称")
     private String ocrTypeNm;
 
+    public String[] getOcrTypes() {
+        return ocrTypes;
+    }
+
+    public void setOcrTypes(String[] ocrTypes) {
+        this.ocrTypes = ocrTypes;
+    }
+
+    /** 类型组 */
+    private String[] ocrTypes;
+
     public void setId(String id) {
         this.id = id;
     }
