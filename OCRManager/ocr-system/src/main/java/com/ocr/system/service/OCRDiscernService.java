@@ -33,7 +33,7 @@ public interface OCRDiscernService {
     public int modifyResult(String tradeId);
 
     /**
-     * 影像平台接口识别
+     * 影像平台接口识别 挡板实现
      * @param batchNumber
      * @param channelCode
      * @param identificationCode
@@ -41,4 +41,14 @@ public interface OCRDiscernService {
      * @return
      */
     public ResultData videoPlatformDiscern(String batchNumber, String channelCode, String identificationCode, String imgType);
+
+    /**
+     * 影像平台接口识别 真实业务逻辑处理
+     * @param batchNumber
+     * @param channelCode
+     * @param identificationCode
+     * @param imgType
+     * @return
+     */
+    public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType);
 }
