@@ -3,13 +3,10 @@ package com.ocr.web.controller.api.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotBlank;
-
 @ApiModel("更改识别结果参数实体")
 public class DiscernResult {
     @ApiModelProperty("渠道号")
     private String channelCode;
-    @NotBlank(message = "批次号不能为空")
     @ApiModelProperty("批次号")
     private String batchNumber;
     @ApiModelProperty("唯一标识(多个以逗号分隔)")
@@ -24,6 +21,8 @@ public class DiscernResult {
     private String modelCode;
     @ApiModelProperty("影像创建日期")
     private String createDate;
+    @ApiModelProperty("文档部名")
+    private String filePartName;
 
     public String getChannelCode() {
         return channelCode;
@@ -93,7 +92,7 @@ public class DiscernResult {
         this.createDate = createDate;
     }
 
-    public DiscernResult(String channelCode, String batchNumber, String identificationCode, String imgType, String userName, String passWord, String modelCode, String createDate) {
+    public DiscernResult(String channelCode, String batchNumber, String identificationCode, String imgType, String userName, String passWord, String modelCode, String createDate, String filePartName) {
         this.channelCode = channelCode;
         this.batchNumber = batchNumber;
         this.identificationCode = identificationCode;
@@ -102,5 +101,14 @@ public class DiscernResult {
         this.passWord = passWord;
         this.modelCode = modelCode;
         this.createDate = createDate;
+        this.filePartName = filePartName;
+    }
+
+    public String getFilePartName() {
+        return filePartName;
+    }
+
+    public void setFilePartName(String filePartName) {
+        this.filePartName = filePartName;
     }
 }

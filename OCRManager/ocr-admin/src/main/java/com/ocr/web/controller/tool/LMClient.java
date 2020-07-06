@@ -396,19 +396,19 @@ public class LMClient {
 	}
 
 
-	public static void main(String[] args) {
-		LMClient client = new LMClient();
-		//更新接口
-//		client.updateExample(contentID);
-		// 上传接口
-//		 client.uploadExample();
-		// 高级查询接口
-//		 client.heightQueryExample();
-		//详细查询接口
-		 client.queryExample("20200703_404_988_A25E671E-4965-C178-143C-BD884B69A001-21");
-		//影像下载接口
-//		 client.queryAndDownload(contentID);
-
-	}
+//	public static void main(String[] args) {
+//		LMClient client = new LMClient();
+//		//更新接口
+////		client.updateExample(contentID);
+//		// 上传接口
+////		 client.uploadExample();
+//		// 高级查询接口
+////		 client.heightQueryExample();
+//		//详细查询接口
+//		 client.queryExample("20200703_404_988_A25E671E-4965-C178-143C-BD884B69A001-21");
+//		//影像下载接口
+////		 client.queryAndDownload(contentID);
+//
+//	}
 
 }
