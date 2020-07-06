@@ -87,16 +87,19 @@ public class ChannelTypeController extends BaseController {
     @ResponseBody
     public AjaxResult addSave(ChannelType channelType) {
         /**
-         * 插入前进行判断
+         * 整体进行变动 直接先进行根据channelCode删除所有该渠道所有类型 根据ocrTyps循环进行添加
          */
-        ChannelType channelType1 = channelTypeService.selectByNoAndType(channelType.getChannelCode(), channelType.getOcrType());
-        if (null!=channelType1){
-            return error("该渠道的ocr识别类型已经添加");
-        }else{
+        channelTypeService.deleteChannelTypeByChannelCode(channelType.getChannelCode());
+        int a=0;
+        for (String ocrType : channelType.getOcrTypes()) {
             Channel channel = channelService.selectChannelByChannelCode(channelType.getChannelCode());
             channelType.setChannelName(channel.getChannelName());
             channelType.setChannelNm(channel.getChannelNm());
-            switch (channelType.getOcrType()){
+            channelType.setOcrType(ocrType);
+            switch (ocrType) {
+                case "0":
+                    channelType.setOcrTypeNm("通用识别类型");
+                    break;
                 case "1":
                     channelType.setOcrTypeNm("身份证");
                     break;
@@ -106,9 +109,36 @@ public class ChannelTypeController extends BaseController {
                 case "3":
                     channelType.setOcrTypeNm("存单");
                     break;
+                default:
+                    break;
             }
+            a=channelTypeService.insertChannelType(channelType);
         }
-        return toAjax(channelTypeService.insertChannelType(channelType));
+
+
+//        /**
+//         * 插入前进行判断
+//         */
+//        ChannelType channelType1 = channelTypeService.selectByNoAndType(channelType.getChannelCode(), channelType.getOcrType());
+//        if (null!=channelType1){
+//            return error("该渠道的ocr识别类型已经添加");
+//        }else{
+//            Channel channel = channelService.selectChannelByChannelCode(channelType.getChannelCode());
+//            channelType.setChannelName(channel.getChannelName());
+//            channelType.setChannelNm(channel.getChannelNm());
+//            switch (channelType.getOcrType()){
+//                case "1":
+//                    channelType.setOcrTypeNm("身份证");
+//                    break;
+//                case "2":
+//                    channelType.setOcrTypeNm("银行卡");
+//                    break;
+//                case "3":
+//                    channelType.setOcrTypeNm("存单");
+//                    break;
+//            }
+//        }
+        return toAjax(a);
     }
 
     /**
@@ -132,7 +162,7 @@ public class ChannelTypeController extends BaseController {
         Channel channel = channelService.selectChannelByChannelCode(channelType.getChannelCode());
         channelType.setChannelName(channel.getChannelName());
         channelType.setChannelNm(channel.getChannelNm());
-        switch (channelType.getOcrType()){
+        switch (channelType.getOcrType()) {
             case "1":
                 channelType.setOcrTypeNm("身份证");
                 break;

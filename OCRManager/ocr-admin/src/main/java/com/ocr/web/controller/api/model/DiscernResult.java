@@ -7,18 +7,23 @@ import javax.validation.constraints.NotBlank;
 
 @ApiModel("更改识别结果参数实体")
 public class DiscernResult {
-    @NotBlank(message = "渠道号")
     @ApiModelProperty("渠道号")
     private String channelCode;
     @NotBlank(message = "批次号不能为空")
     @ApiModelProperty("批次号")
     private String batchNumber;
-    @NotBlank(message = "唯一标识不能为空")
     @ApiModelProperty("唯一标识(多个以逗号分隔)")
     private String identificationCode;
-    @NotBlank(message = "图片类型不能为空")
     @ApiModelProperty("图片类型")
     private String imgType;
+    @ApiModelProperty("用户名")
+    private String userName;
+    @ApiModelProperty("密码")
+    private String passWord;
+    @ApiModelProperty("影像渠道")
+    private String modelCode;
+    @ApiModelProperty("影像创建日期")
+    private String createDate;
 
     public String getChannelCode() {
         return channelCode;
@@ -55,10 +60,47 @@ public class DiscernResult {
     public DiscernResult() {
     }
 
-    public DiscernResult(@NotBlank(message = "渠道号") String channelCode, @NotBlank(message = "批次号不能为空") String batchNumber, @NotBlank(message = "唯一标识不能为空") String identificationCode, @NotBlank(message = "图片类型不能为空") String imgType) {
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
+    }
+
+    public String getModelCode() {
+        return modelCode;
+    }
+
+    public void setModelCode(String modelCode) {
+        this.modelCode = modelCode;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public DiscernResult(String channelCode, String batchNumber, String identificationCode, String imgType, String userName, String passWord, String modelCode, String createDate) {
         this.channelCode = channelCode;
         this.batchNumber = batchNumber;
         this.identificationCode = identificationCode;
         this.imgType = imgType;
+        this.userName = userName;
+        this.passWord = passWord;
+        this.modelCode = modelCode;
+        this.createDate = createDate;
     }
 }
