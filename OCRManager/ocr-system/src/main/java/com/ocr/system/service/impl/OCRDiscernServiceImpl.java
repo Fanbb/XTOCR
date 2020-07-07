@@ -110,14 +110,21 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         discernResult.setResultData(list3);
                         objects.add(discernResult);
                         break;
+                    case "4":
+                        List list4 = new ArrayList();
+                        list4.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四","817810101101281795", "城市住宅/商住", "威海市统一路29号","2000平方米", "136平方米","国有土地使用权","三室一厅", "PremisesPermit"));
+                        discernResult.setResultData(list4);
+                        objects.add(discernResult);
+                        break;
                     default:
                         //通用识别
-                        List list4 = new ArrayList();
-                        list4.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
-                        list4.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
-                        list4.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
-                        list4.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
-                        discernResult.setResultData(list4);
+                        List list5 = new ArrayList();
+                        list5.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
+                        list5.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
+                        list5.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
+                        list5.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四","817810101101281795", "城市住宅/商住", "威海市统一路29号","2000平方米", "136平方米","国有土地使用权","三室一厅", "PremisesPermit"));
+                        list5.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
+                        discernResult.setResultData(list5);
                         objects.add(discernResult);
                         break;
                 }
@@ -146,14 +153,21 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         discernResult.setResultData(list3);
                         objects.add(discernResult);
                         break;
+                    case "4":
+                        List list4 = new ArrayList();
+                        list4.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四","817810101101281795", "城市住宅/商住", "威海市统一路29号","2000平方米", "136平方米","国有土地使用权","三室一厅", "PremisesPermit"));
+                        discernResult.setResultData(list4);
+                        objects.add(discernResult);
+                        break;
                     default:
                         //通用识别
-                        List list4 = new ArrayList();
-                        list4.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
-                        list4.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
-                        list4.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
-                        list4.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
-                        discernResult.setResultData(list4);
+                        List list5 = new ArrayList();
+                        list5.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront"));
+                        list5.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四","817810101101281795", "城市住宅/商住", "威海市统一路29号","2000平方米", "136平方米","国有土地使用权","三室一厅", "PremisesPermit"));
+                        list5.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack"));
+                        list5.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449",  "BankCard"));
+                        list5.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹","817810101101281795", "CNY300.00", "叁佰圆整","000000000", "Deposit"));
+                        discernResult.setResultData(list5);
                         objects.add(discernResult);
                         break;
                 }
