@@ -123,7 +123,7 @@ public class RecognitionFilesController extends BaseController {
                             ocrTrade.setImageName("0");
                             ocrTrade.setOcrStatus("1");
                             ocrTrade.setTickStatus("2");
-                            ocrTrade.setPlatStatus("0");
+                            ocrTrade.setPlatStatus("1");
                             ocrTrade.setRemark2("0");
                             ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
                             ocrTrade.setOcrTime(DateUtils.getTimeShort());
