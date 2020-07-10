@@ -58,8 +58,12 @@ public class OcrTrade extends BaseEntity {
     private String imageId;
     /**
      * 影像类型
+     * <p>
+     * ResidenceBooklet	户口本
+     * <p>
+     *  
      */
-    @Excel(name = "影像类型",readConverterExp = "Deposit=存单,BankCard=银行卡,None=无效识别类型,IDCardFront=身份证正面,IDCardBack=身份证反面")
+    @Excel(name = "影像类型", readConverterExp = "Deposit=存单,BankCard=银行卡,None=无效识别类型,IDCardFront=身份证正面,IDCardBack=身份证反面,ResidenceBooklet=户口本,MarriageLicense=结婚证,DrivingLicense=行驶证,DriversLicense=驾驶证,PremisesPermit=房本,Bankbook=存折,PlateNumber=车牌号,BusinessLicense=营业执照")
     private String imageType;
     /**
      * 影像类型名称
