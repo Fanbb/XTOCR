@@ -18,6 +18,10 @@ public class BankCard {
      * 图片类型
      */
     private String imgType;
+    /**
+     * 识别结果
+     */
+    private String flag;
 
     public String getBankCardNo() {
         return bankCardNo;
@@ -35,10 +39,11 @@ public class BankCard {
         this.imgType = imgType;
     }
 
-    public BankCard(String tradeId,String bankCardNo, String imgType) {
+    public BankCard(String tradeId,String bankCardNo, String imgType,String flag) {
         this.tradeId = tradeId;
         this.bankCardNo = bankCardNo;
         this.imgType = imgType;
+        this.flag = flag;
     }
 
     public BankCard() {
@@ -50,6 +55,7 @@ public class BankCard {
                 "tradeId='" + tradeId + '\'' +
                 ", bankCardNo='" + bankCardNo + '\'' +
                 ", imgType='" + imgType + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
     }
 
@@ -59,5 +65,13 @@ public class BankCard {
 
     public void setTradeId(String tradeId) {
         this.tradeId = tradeId;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

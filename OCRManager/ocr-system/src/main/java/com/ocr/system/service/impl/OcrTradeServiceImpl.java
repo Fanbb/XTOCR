@@ -86,7 +86,6 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     @Override
     public String insertIDCardFront(IDCardFront idCardFront, String channelCode, String imgId) {
         return getString(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront));
-
     }
 
     @Override
@@ -127,6 +126,68 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     @Override
     public List<OcrTrade> selectOcrTradeListByIds(String tradeIds) {
         return ocrTradeMapper.selectOcrTradeListByIds(Convert.toStrArray(tradeIds));
+    }
+
+    @Override
+    public String insertIDCardFrontFlag(IDCardFront idCardFront, String channelCode, String imgId, Boolean flag) {
+        return getStringFlag(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront), flag);
+    }
+
+    private String getStringFlag(String channelCode, String imgId, String imgType, String ocrSeq, String toJSONString, Boolean flag) {
+        OcrTrade ocrTrade = new OcrTrade();
+        String id =UUID.randomUUID().toString();
+        ocrTrade.setId(id);
+        ocrTrade.setChannel(channelCode);
+        ocrTrade.setOcrSeq(ocrSeq);
+        ocrTrade.setImageId(imgId);
+        ocrTrade.setImageType(imgType);
+        switch (imgType){
+            case "IDCardFront":
+            case "IDCardBack":
+                ocrTrade.setImageName("1");
+                break;
+            case "BankCard":
+                ocrTrade.setImageName("2");
+                break;
+            case "Deposit":
+                ocrTrade.setImageName("3");
+                break;
+        }
+        if (flag){
+            ocrTrade.setOcrStatus("0");
+            ocrTrade.setTickStatus("0");
+            ocrTrade.setPlatStatus("0");
+        }else {
+            ocrTrade.setOcrStatus("1");
+            ocrTrade.setTickStatus("2");
+            ocrTrade.setPlatStatus("1");
+        }
+        ocrTrade.setRemark2("0");
+        ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+        ocrTrade.setOcrTime(DateUtils.getTimeShort());
+        ocrTrade.setRemark1(toJSONString);
+        if (ocrTradeMapper.insertOcrTrade(ocrTrade) > 0) {
+            return id;
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public String insertIDCardBackFlag(IDCardBack idCardBack, String channelCode, String imgId, Boolean flag) {
+        return getStringFlag(channelCode, imgId, idCardBack.getImgType(), null, JSON.toJSONString(idCardBack),flag);
+
+    }
+
+    @Override
+    public String insertBankCardFlag(BankCard bankCard, String channelCode, String imgId, Boolean flag) {
+        return getStringFlag(channelCode, imgId, bankCard.getImgType(), bankCard.getBankCardNo(), JSON.toJSONString(bankCard),flag);
+
+    }
+
+    @Override
+    public String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag) {
+        return getStringFlag(channelCode, imgId, deposit.getImgType(), deposit.getDepositNo(), JSON.toJSONString(deposit),flag);
     }
 
     @Override

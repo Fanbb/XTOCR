@@ -117,4 +117,12 @@ public interface IOcrTradeService
     void updateRemark2ByIds(String[] ids);
 
     List<OcrTrade> selectOcrTradeListByIds(String tradeIds);
+
+	String insertIDCardFrontFlag(IDCardFront idCardFront, String channelCode, String imgId, Boolean flag);
+
+	String insertIDCardBackFlag(IDCardBack idCardBack, String channelCode, String imgId, Boolean flag);
+
+	String insertBankCardFlag(BankCard bankCard, String channelCode, String imgId, Boolean flag);
+
+	String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag);
 }

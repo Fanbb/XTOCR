@@ -26,6 +26,10 @@ public class IDCardBack {
      * 图片类型
      */
     private String imgType;
+    /**
+     * 识别结果
+     */
+    private String flag;
 
 
     public String getStartDate() {
@@ -60,12 +64,13 @@ public class IDCardBack {
         this.authority = authority;
     }
 
-    public IDCardBack(String tradeId,String authority, String startDate, String endDate, String imgType) {
+    public IDCardBack(String tradeId,String authority, String startDate, String endDate, String imgType,String flag) {
         this.tradeId = tradeId;
         this.authority = authority;
         this.startDate = startDate;
         this.endDate = endDate;
         this.imgType = imgType;
+        this.flag = flag;
     }
 
     public IDCardBack() {
@@ -79,6 +84,7 @@ public class IDCardBack {
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", imgType='" + imgType + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
     }
 
@@ -88,5 +94,13 @@ public class IDCardBack {
 
     public void setTradeId(String tradeId) {
         this.tradeId = tradeId;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

@@ -51,4 +51,6 @@ public interface OCRDiscernService {
      * @return
      */
     public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType);
+
+    ResultData runOneAgain(String channelCode, String imgUrl, String imgStr, String imgType);
 }

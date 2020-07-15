@@ -34,6 +34,10 @@ public class DepositReceipt {
      * 图片类型
      */
     private String imgType;
+    /**
+     * 识别结果
+     */
+    private String flag;
 
 
     public String getName() {
@@ -76,7 +80,7 @@ public class DepositReceipt {
         this.imgType = imgType;
     }
 
-    public DepositReceipt(String tradeId,String name, String accNo, String amt, String amtCapital,String depositNo, String imgType) {
+    public DepositReceipt(String tradeId,String name, String accNo, String amt, String amtCapital,String depositNo, String imgType,String flag) {
         this.tradeId = tradeId;
         this.name = name;
         this.accNo = accNo;
@@ -84,6 +88,7 @@ public class DepositReceipt {
         this.amtCapital = amtCapital;
         this.depositNo = depositNo;
         this.imgType = imgType;
+        this.flag = flag;
     }
 
     public DepositReceipt() {
@@ -99,6 +104,7 @@ public class DepositReceipt {
                 ", amtCapital='" + amtCapital + '\'' +
                 ", depositNo='" + depositNo + '\'' +
                 ", imgType='" + imgType + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
     }
 
@@ -116,5 +122,13 @@ public class DepositReceipt {
 
     public void setTradeId(String tradeId) {
         this.tradeId = tradeId;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

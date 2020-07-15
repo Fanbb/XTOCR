@@ -47,6 +47,10 @@ public class PremisesPermit {
      * 影像类型
      */
     private String imgType;
+    /**
+     * 识别结果
+     */
+    private String flag;
 
     public String getName() {
         return name;
@@ -115,7 +119,7 @@ public class PremisesPermit {
     public PremisesPermit() {
     }
 
-    public PremisesPermit(String tradeId, String name, String certificateNo, String purpose, String location, String builtArea, String floorArea, String landUse, String structure, String imgType) {
+    public PremisesPermit(String tradeId, String name, String certificateNo, String purpose, String location, String builtArea, String floorArea, String landUse, String structure, String imgType,String flag) {
         this.tradeId = tradeId;
         this.name = name;
         this.certificateNo = certificateNo;
@@ -126,6 +130,7 @@ public class PremisesPermit {
         this.landUse = landUse;
         this.structure = structure;
         this.imgType = imgType;
+        this.flag = flag;
     }
 
     @Override
@@ -141,6 +146,7 @@ public class PremisesPermit {
                 ", landUse='" + landUse + '\'' +
                 ", structure='" + structure + '\'' +
                 ", imgType='" + imgType + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
     }
 
@@ -158,5 +164,13 @@ public class PremisesPermit {
 
     public void setImgType(String imgType) {
         this.imgType = imgType;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

@@ -46,7 +46,8 @@ public class OCRDiscernController extends BaseController {
                 return error("渠道停用状态，无权限访问OCR平台！");
             }
 
-            ResultData resultData = ocrDiscernService.runOne(ocrDiscernEntity.getChannelCode(), ocrDiscernEntity.getImgUrl(), ocrDiscernEntity.getImgStr(),ocrDiscernEntity.getImgType());
+            ResultData resultData = ocrDiscernService.runOneAgain(ocrDiscernEntity.getChannelCode(), ocrDiscernEntity.getImgUrl(), ocrDiscernEntity.getImgStr(),ocrDiscernEntity.getImgType());
+//            ResultData resultData = ocrDiscernService.runOne(ocrDiscernEntity.getChannelCode(), ocrDiscernEntity.getImgUrl(), ocrDiscernEntity.getImgStr(),ocrDiscernEntity.getImgType());
 
             if (resultData.getType().equals("1")) {
                 return AjaxResult.success(resultData.getMsg(), resultData.getData());

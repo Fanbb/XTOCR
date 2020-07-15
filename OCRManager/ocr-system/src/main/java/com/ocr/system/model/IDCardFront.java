@@ -2,6 +2,7 @@ package com.ocr.system.model;
 
 /**
  * 身份证正面
+ *
  * @author Jocker
  * @date 2020/5/25
  */
@@ -39,6 +40,10 @@ public class IDCardFront {
      * 图片类型
      */
     private String imgType;
+    /**
+     * 识别结果
+     */
+    private String flag;
 
     public String getTradeId() {
         return tradeId;
@@ -96,7 +101,7 @@ public class IDCardFront {
         this.imgType = imgType;
     }
 
-    public IDCardFront(String tradeId, String name, String sex, String nation, String address, String idCardNo,String birthday, String imgType) {
+    public IDCardFront(String tradeId, String name, String sex, String nation, String address, String idCardNo, String birthday, String imgType, String flag) {
         this.tradeId = tradeId;
         this.name = name;
         this.sex = sex;
@@ -105,6 +110,7 @@ public class IDCardFront {
         this.idCardNo = idCardNo;
         this.birthday = birthday;
         this.imgType = imgType;
+        this.flag = flag;
     }
 
     public IDCardFront() {
@@ -129,6 +135,15 @@ public class IDCardFront {
                 ", idCardNo='" + idCardNo + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", imgType='" + imgType + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }
