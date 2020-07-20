@@ -60,39 +60,6 @@
         }
     }
 
-    function submit2() {
-        $.ajax({
-            url: prefix + "/blend",
-            type: "post",
-            data: {
-                "id": function () {
-                    return $("input[name='id']").val();
-                },
-                "ocrStatus": function () {
-                    return $("input[name='ocrStatus']:checked").val();
-                }
-            },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("保存成功,正在刷新数据请稍后……", {
-                        icon: 1,
-                        time: 500,
-                        shade: [0.1, '#8F8F8F']
-                    }, function () {
-                        location.reload();
-                    });
-                } else {
-                    alert(result.msg);
-                }
-
-                if (typeof callback == "function") {
-                    callback(result);
-                }
-                $.operate.successTabCallback(result);
-            }
-        })
-    }
-
 </script>
 </body>
 </html>

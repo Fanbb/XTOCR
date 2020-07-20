@@ -78,6 +78,10 @@
     }
 
     function submit2() {
+        var tickStatus = $("input[name='tickStatus']:checked").val();
+        if ( tickStatus == ''||tickStatus == null) {
+            return alert("请选择勾对！");
+        }
         $.ajax({
             url: prefix + "/blend",
             type: "post",
@@ -86,7 +90,7 @@
                     return $("input[name='id']").val();
                 },
                 "tickStatus": function () {
-                    return $("input[name='tickStatus']:checked").val();
+                    return tickStatus;
                 }
             },
             success: function (result) {
