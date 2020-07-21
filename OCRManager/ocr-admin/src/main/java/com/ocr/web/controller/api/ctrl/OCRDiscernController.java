@@ -84,6 +84,16 @@ public class OCRDiscernController extends BaseController {
             return error("唯一标识为空！");
         }else if (StringUtils.isEmpty(discernResult.getImgType())){
             return error("影像类型为空！");
+        }else if (StringUtils.isEmpty(discernResult.getCreateDate())){
+            return error("影像创建日期为空！");
+        }else if (StringUtils.isEmpty(discernResult.getFilePartName())){
+            return error("文档部件名为空！");
+        }else if (StringUtils.isEmpty(discernResult.getModelCode())){
+            return error("影像渠道为空！");
+        }else if (StringUtils.isEmpty(discernResult.getPassWord())){
+            return error("密码为空！");
+        }else if (StringUtils.isEmpty(discernResult.getUserName())){
+            return error("用户名为空！");
         }else {
             ResultData resultData = ocrDiscernService.videoPlatformDiscern(discernResult.getBatchNumber(),discernResult.getChannelCode(),discernResult.getIdentificationCode(),discernResult.getImgType());
             if (resultData.getType().equals("1")) {

@@ -15,12 +15,22 @@ import com.ocr.system.service.IChannelTypeService;
 import com.ocr.system.service.IOcrImageService;
 import com.ocr.system.service.IOcrTradeService;
 import com.ocr.system.service.OCRDiscernService;
+import com.sunyard.client.SunEcmClientApi;
+import com.sunyard.client.bean.ClientBatchBean;
+import com.sunyard.client.impl.SunEcmClientSocketApiImpl;
+import com.sunyard.ecm.server.bean.BatchBean;
+import com.sunyard.ecm.server.bean.BatchFileBean;
+import com.sunyard.ecm.server.bean.FileBean;
+import com.sunyard.util.TransOptionKey;
+import com.sunyard.ws.utils.XMLUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +65,19 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
     @Value("${ocr.ocrUrl}")
     private String ocrUrl;
+
+    String ip = "192.168.111.91";
+    int socketPort = 8021;
+    String groupName = "WHGroup"; // 内容存储服务器组名
+    SunEcmClientApi clientApi = new SunEcmClientSocketApiImpl(ip, socketPort);
+    String BEGIN_COLUMN = "CREATEDATE";
+    static String BEGIN_VALUE = "20160126";
+    // 下载文件的路径
+    String DOWN_LOAD_FILE_PATH = imgUploadPath + "/IMAGE/" + DateUtils.datePath() + "/";
+    // =========================批次信息设定=========================
+//    String modelCode = "WD_1001"; // 内容模型代码
+//    String userName = "xdadmin";
+//    String passWord = "xdadmin";
 
 
     @Override
@@ -185,81 +208,19 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     }
 
     @Override
-    public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType) {
+    public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName) {
         //批量影像下载 返回唯一标识对应相应的imgUrl
+
 
         List<FileNamesAndPoint> fileNamesAndPoints = new ArrayList<>();
         //进行影像数据录入生成对应影像ID和相关url返回值
 
 
         ResultData resultData = new ResultData();
-        String[] split = identificationCode.split(",");
+        String[] split = identificationCode.split(",");//批次内文件名
+
         List<Object> objects = new ArrayList<>();
-        if (split.length > 1) {
-            for (String identification : split) {
-                DiscernResultData discernResult = new DiscernResultData();
-                discernResult.setBatchNumber(batchNumber);
-                discernResult.setIdentificationCode(identification);
-                switch (imgType) {
-                    case "1":
-                        List list = new ArrayList();
-                        list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                        discernResult.setResultData(list);
-                        objects.add(discernResult);
-                        break;
-                    case "2":
-                        List list2 = new ArrayList();
-                        list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard","true"));
-                        discernResult.setResultData(list2);
-                        objects.add(discernResult);
-                        break;
-                    case "3":
-                        List list3 = new ArrayList();
-                        list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit","true"));
-                        discernResult.setResultData(list3);
-                        objects.add(discernResult);
-                        break;
-                    default:
-                        //通用识别
-                        List list4 = new ArrayList();
-                        list4.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                        discernResult.setResultData(list4);
-                        objects.add(discernResult);
-                        break;
-                }
-            }
-        } else {
-            DiscernResultData discernResult = new DiscernResultData();
-            discernResult.setBatchNumber(batchNumber);
-            discernResult.setIdentificationCode(split[0]);
-            switch (imgType) {
-                case "1":
-                    List list = new ArrayList();
-                    list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                    discernResult.setResultData(list);
-                    objects.add(discernResult);
-                    break;
-                case "2":
-                    List list2 = new ArrayList();
-                    list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard","true"));
-                    discernResult.setResultData(list2);
-                    objects.add(discernResult);
-                    break;
-                case "3":
-                    List list3 = new ArrayList();
-                    list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit","true"));
-                    discernResult.setResultData(list3);
-                    objects.add(discernResult);
-                    break;
-                default:
-                    //通用识别
-                    List list4 = new ArrayList();
-                    list4.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                    discernResult.setResultData(list4);
-                    objects.add(discernResult);
-                    break;
-            }
-        }
+
         if (batchNumber.equals("500")) {
             resultData.setType("0");
             resultData.setMsg("错误！");
@@ -665,5 +626,91 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             resultData.setType("0");
         }
         return resultData;
+    }
+
+    /**
+     * 查询影像并将影像下载到DOWN_LOAD_FILE_PATH目录下
+     */
+    public void queryAndDownload(String batchNumber,String modelCode,String userName,String passWord,String createDate,String filePartName) {
+        ClientBatchBean clientBatchBean = new ClientBatchBean();
+        clientBatchBean.setModelCode(modelCode);
+        clientBatchBean.setUser(userName);
+        clientBatchBean.setPassWord(passWord);
+        clientBatchBean.getIndex_Object().setContentID(batchNumber);
+        clientBatchBean.getIndex_Object().addCustomMap("CREATEDATE", createDate);
+        clientBatchBean.setDownLoad(true);
+        try {
+            String resultMsg = clientApi.queryBatch(clientBatchBean, groupName);
+            log.info("#######查询批次返回的信息[" + resultMsg + "]#######");
+
+            String batchStr = resultMsg.split(TransOptionKey.SPLITSYM)[1];
+
+            List<BatchBean> batchBeans = XMLUtil.xml2list(XMLUtil.removeHeadRoot(batchStr), BatchBean.class);
+            for (BatchBean batchBean : batchBeans) {
+                List<BatchFileBean> fileBeans = batchBean.getDocument_Objects();
+                for (BatchFileBean batchFileBean : fileBeans) {
+                    List<FileBean> files = batchFileBean.getFiles();
+                    for (FileBean fileBean : files) {
+                        String urlStr = fileBean.getUrl();
+                        String fileName = fileBean.getFileNO() + "-" + Thread.currentThread().getId() + "." + fileBean.getFileFormat();
+                        log.debug("#######文件访问链接为[" + urlStr + "], 文件名为[" + fileName + "]#######");
+                        // 调用下载文件方法
+                        receiveFileByURL(urlStr, fileName, batchNumber);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 将文件下载到DOWN_LOAD_FILE_PATH路径下
+     *
+     * @param urlStr
+     * @param fileName
+     * @param contentID
+     *            批次号
+     */
+    private void receiveFileByURL(String urlStr, String fileName, String contentID) {
+        String path = DOWN_LOAD_FILE_PATH + "/" + contentID + "/";
+        File file = new File(path + fileName);
+        File pareFile = file.getParentFile();
+        if (pareFile == null || !pareFile.exists()) {
+            log.info("no parefile ,begin to create mkdir,path=" + pareFile.getPath());
+            pareFile.mkdirs();
+        }
+
+        URL url;
+        InputStream in = null;
+        FileOutputStream fos=null;
+        try {
+            url = new URL(urlStr);
+            in = url.openStream();
+            fos = new FileOutputStream(file);
+            if (in != null) {
+                byte[] b = new byte[1024];
+                int len = 0;
+                while ((len = in.read(b)) != -1) {
+                    fos.write(b, 0, len);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            log.error("unitedaccess http -- GetFileServer: " + e.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                log.error("unitedaccess http -- GetFileServer: " + e.toString());
+            }
+        }
     }
 }

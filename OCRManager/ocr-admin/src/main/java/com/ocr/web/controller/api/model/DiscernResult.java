@@ -3,7 +3,7 @@ package com.ocr.web.controller.api.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel("更改识别结果参数实体")
+@ApiModel("影像平台接口访问参数实体")
 public class DiscernResult {
     @ApiModelProperty("渠道号")
     private String channelCode;

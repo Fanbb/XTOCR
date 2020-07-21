@@ -143,53 +143,57 @@ public class RecognitionFilesController extends BaseController {
                         ocrImage.setOcrResult(json);
                         iOcrImageService.updateOcrImage(ocrImage);
 
-                        List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
+                        List<RequestModel2> model2s = JSONArray.parseArray(json, RequestModel2.class);
                         String tradeId = "";
+                        for (RequestModel2 model2 : model2s) {
+                            List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
 
-                        for (RequestModel model : models) {
-                            switch (model.getClass_name()) {
-                                case "IDCardFront":
-                                    IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
-                                    idCardFront.setImgType(model.getClass_name());
-                                    /**
-                                     * 调用流水存储 返回流水id
-                                     */
-                                    tradeId = iOcrTradeService.insertIDCardFront(idCardFront, "system", imgId);
-                                    tradeIds.append(tradeId+",");
-                                    break;
-                                case "IDCardBack":
-                                    IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
-                                    idCardBack.setImgType(model.getClass_name());
-                                    /**
-                                     * 调用流水存储 返回流水id
-                                     */
-                                    tradeId = iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId);
-                                    tradeIds.append(tradeId+",");
-                                    break;
-                                case "BankCard":
-                                    BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
-                                    bankCard.setImgType(model.getClass_name());
-                                    /**
-                                     * 调用流水存储 返回流水id
-                                     */
-                                    tradeId = iOcrTradeService.insertBankCard(bankCard, "system", imgId);
-                                    tradeIds.append(tradeId+",");
-                                    break;
-                                case "Deposit":
-                                    DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
-                                    deposit.setImgType(model.getClass_name());
-                                    /**
-                                     * 调用流水存储 返回流水id
-                                     */
-                                    tradeId = iOcrTradeService.insertDeposit(deposit, "system", imgId);
-                                    tradeIds.append(tradeId+",");
-                                    break;
-                                default:
-                                    tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", imgId);
-                                    tradeIds.append(tradeId+",");
-                                    break;
+                            for (RequestModel model : models) {
+                                switch (model.getClass_name()) {
+                                    case "IDCardFront":
+                                        IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
+                                        idCardFront.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertIDCardFront(idCardFront, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "IDCardBack":
+                                        IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
+                                        idCardBack.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "BankCard":
+                                        BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
+                                        bankCard.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertBankCard(bankCard, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "Deposit":
+                                        DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
+                                        deposit.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertDeposit(deposit, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    default:
+                                        tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                }
                             }
                         }
+
                     }
                 }
             } catch (Exception e) {
@@ -199,7 +203,7 @@ public class RecognitionFilesController extends BaseController {
             return AjaxResult.error("文件为空");
         }
 
-        mmap.put("tradeIds", tradeIds.deleteCharAt(tradeIds.length()-1).toString());
+        mmap.put("tradeIds", tradeIds.deleteCharAt(tradeIds.length() - 1).toString());
         return AjaxResult.success(mmap);
     }
 

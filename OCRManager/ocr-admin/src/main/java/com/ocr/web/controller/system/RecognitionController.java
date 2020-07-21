@@ -130,7 +130,6 @@ public class RecognitionController extends BaseController {
         }
         String json = JSON.parseArray(request).toString();
 
-
         /**
          * 识别请求结果更新
          */
@@ -139,7 +138,9 @@ public class RecognitionController extends BaseController {
         ocrImage.setOcrResult(json);
         iOcrImageService.updateOcrImage(ocrImage);
 
-        List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
+        List<RequestModel2> model2s = JSONArray.parseArray(json, RequestModel2.class);
+        RequestModel2 model2 = model2s.get(0);
+        List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
 
         for (RequestModel model : models) {
             switch (model.getClass_name()) {

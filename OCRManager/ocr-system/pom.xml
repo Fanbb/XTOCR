@@ -29,6 +29,64 @@
             <groupId>com.ocr</groupId>
             <artifactId>ocr-common</artifactId>
         </dependency>
+
+        <!-- 引入本地jar包 -->
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>commons.codec</artifactId>
+            <version>1.3</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/commons-codec-1.3.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>commons.collections</artifactId>
+            <version>3.2.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/commons-collections-3.2.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.13</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/log4j-1.2.13.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>sun-ws-allV</artifactId>
+            <version>3.2.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/sun-ws-allV3.2.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>SunECMClientV</artifactId>
+            <version>3.2.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/SunECMClientV3.2.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>xmlpull</artifactId>
+            <version>1.1.3.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/xmlpull-1.1.3.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>xpp3_min</artifactId>
+            <version>1.1.4c</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/xpp3_min-1.1.4c.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>ecm</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.10</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/xstream-1.4.10.jar</systemPath>
+        </dependency>
         
     </dependencies>
 	

@@ -1,7 +1,21 @@
 package com.ocr.web.controller.tool;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.sunyard.client.SunEcmClientApi;
-import com.sunyard.client.bean.*;
+import com.sunyard.client.bean.ClientBatchBean;
+import com.sunyard.client.bean.ClientBatchFileBean;
+import com.sunyard.client.bean.ClientBatchIndexBean;
+import com.sunyard.client.bean.ClientFileBean;
+import com.sunyard.client.bean.ClientHeightQuery;
 import com.sunyard.client.impl.SunEcmClientSocketApiImpl;
 import com.sunyard.ecm.server.bean.BatchBean;
 import com.sunyard.ecm.server.bean.BatchFileBean;
@@ -9,38 +23,31 @@ import com.sunyard.ecm.server.bean.FileBean;
 import com.sunyard.util.OptionKey;
 import com.sunyard.util.TransOptionKey;
 import com.sunyard.ws.utils.XMLUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.*;
-import java.net.URL;
-import java.util.List;
 
 /**
  * 客户端使用示例
- *
+ * 
  * @author Warren
- *
+ * 
  */
-public class LMClient {
-	private final static Logger log = LoggerFactory.getLogger(LMClient.class);
+public class Demo {
+	private final static  Logger log = Logger.getLogger(Demo.class);
 
 	String ip = "192.168.111.91";
-	int socketPort = 8022;
+	int socketPort = 8021;
 	String groupName = "WHGroup"; // 内容存储服务器组名
 	SunEcmClientApi clientApi = new SunEcmClientSocketApiImpl(ip, socketPort);
 	String BEGIN_COLUMN = "CREATEDATE";
-	static String BEGIN_VALUE = "20200511";
+	static String BEGIN_VALUE = "20160126";
 	// 下载文件的路径
 	static String DOWN_LOAD_FILE_PATH = "D://image/queryFromOffline/" + BEGIN_VALUE + "/";
 	// =========================批次信息设定=========================
-	String modelCode = "TEST"; // 内容模型代码
-	String filePartName = "TEST_PART"; // 文档部件模型代码
-	String userName = "admin";
-	static String contentID = "2016_749_0FBD9A6E-5968-B0A8-5701-402E863967E4-22"; // 8位日期+随机路径+36位GUID+内容存储服务器ID
-	static String contentID2 = "20200703_404_988_A25E671E-4965-C178-143C-BD884B69A001-21"; // 8位日期+随机路径+36位GUID+内容存储服务器ID
+	String modelCode = "WD_1001"; // 内容模型代码
+	String filePartName = "WD_1001_PART"; // 文档部件模型代码
+	String userName = "xdadmin";
+	static String contentID = "20200603_402_881CEB8A-3BC1-FCF2-7428-9A0F2CEE8CF1-21"; // 8位日期+随机路径+36位GUID+内容存储服务器ID
 	String fileNO1 = "FF1C004F-08FD-88C2-6C8D-2706EC878EAF";
-	String passWord = "111";
+	String passWord = "xdadmin";
 	String fileNO2s = "";
 	String fileNO3 = "381CA442-A7DC-1D11-59C0-9B493C997167";
 
@@ -71,7 +78,7 @@ public class LMClient {
 		// =========================设置索引对象信息开始=========================
 		ClientBatchIndexBean clientBatchIndexBean = new ClientBatchIndexBean();
 		// 索引自定义属性
-		//clientBatchIndexBean.addCustomMap("BUSI_SERIAL_NO", "2014040120");
+		clientBatchIndexBean.addCustomMap("BUSI_SERIAL_NO", "20140401202");
 		clientBatchIndexBean.addCustomMap(BEGIN_COLUMN, BEGIN_VALUE);
 
 		// clientBatchIndexBean.addCustomMap("STARTDATE", STARTDATE);
@@ -99,13 +106,13 @@ public class LMClient {
 		// =========================添加文件=========================
 
 		//for (int i = 0; i < 2; i++) {
-		ClientFileBean fileBean1 = new ClientFileBean();
-		// fileBean1.setFileName("E:\\image\\"+i+".jpg");
-		fileBean1.setFileName("D:\\image\\1.jpg");
-		fileBean1.setFileFormat("jpg");
+			ClientFileBean fileBean1 = new ClientFileBean();
+			// fileBean1.setFileName("E:\\image\\"+i+".jpg");
+			fileBean1.setFileName("D:\\IAMGE\\1.jpg");
+			fileBean1.setFileFormat("jpg");
 
-		fileBean1.setFilesize("148670"); // 设置大小图的时候
-		clientBatchFileBeanA.addFile(fileBean1);
+			fileBean1.setFilesize("148670"); // 设置大小图的时候
+			clientBatchFileBeanA.addFile(fileBean1);
 		//}
 		// fileBean1.addOtherAtt(R"RECEIVE_TIME", "20120702");
 		// fileBean1.addOtherAtt("IMAGECONFKIND", "test012");
@@ -162,15 +169,16 @@ public class LMClient {
 	 */
 	public void queryExample(String batchId) {
 		ClientBatchBean clientBatchBean = new ClientBatchBean();
-		clientBatchBean.setModelCode(modelCode);
-		clientBatchBean.setUser(userName);
-		clientBatchBean.setPassWord(passWord);
+		clientBatchBean.setModelCode("WD_1001");
+		clientBatchBean.setUser("xdadmin");
+		clientBatchBean.setPassWord("xdadmin");
 		clientBatchBean.setDownLoad(true);
 		clientBatchBean.getIndex_Object().setContentID(batchId);
-		clientBatchBean.getIndex_Object().addCustomMap("BUSI_DATE", "20140906");
-		clientBatchBean.getIndex_Object().setVersion("0");
+		clientBatchBean.getIndex_Object().addCustomMap("CREATEDATE", "20201010");
+		clientBatchBean.getIndex_Object().addCustomMap("BUSI_SERIAL_NO", "123456");
+//		clientBatchBean.getIndex_Object().setVersion("0");
 		ClientBatchFileBean documentObjectB = new ClientBatchFileBean();
-		documentObjectB.setFilePartName("HOUDU_P"); // 要查询的文档部件名
+		documentObjectB.setFilePartName("WD_1001_PART"); // 要查询的文档部件名
 		// documentObjectB.addFilter("FILE_NO",
 		// "D02716BB-F9CA-3F85-477D-25069D8CCF6B"); // 增加过滤条件
 		// documentObjectB.addFilter("SQL_FILTER",
@@ -180,7 +188,6 @@ public class LMClient {
 
 		try {
 			String resultMsg = clientApi.queryBatch(clientBatchBean, groupName);
-			log.debug("#######查询批次返回的信息[" + resultMsg + "]#######");
 			System.out.println("#######查询批次返回的信息[" + resultMsg + "]#######");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -193,20 +200,21 @@ public class LMClient {
 	 */
 	public void heightQueryExample() {
 		ClientHeightQuery heightQuery = new ClientHeightQuery();
-		heightQuery.setUserName(userName);
-		heightQuery.setPassWord(passWord);
+		heightQuery.setUserName("xdadmin");
+		heightQuery.setPassWord("xdadmin");
 		heightQuery.setLimit(10);
 		heightQuery.setPage(1);
-		heightQuery.setModelCode(modelCode);
-		heightQuery.addCustomAtt("TEST", "1");
-		// heightQuery.addCustomAtt("BUSI_SERIAL_NO", "2013092701");
-		// heightQuery.addfilters("VARCHARTYPE='varchartype'");
+		heightQuery.setModelCode("WD_1001");
+		heightQuery.addCustomAtt("BUSI_SERIAL_NO", "20151214101");
+		heightQuery.addCustomAtt("CREATEDATE", "20160126");
 		try {
 			String resultMsg = clientApi.heightQuery(heightQuery, "WHGroup");
-			log.info("#######调用高级搜索返回的信息[" + resultMsg + "]#######");
+			System.out.println("#######调用高级搜索返回的信息-[" + resultMsg + "]#######");
+			log.info("#######调用高级搜索返回的信息-[" + resultMsg + "]#######");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	
 	}
 
 	/**
@@ -235,7 +243,7 @@ public class LMClient {
 	/**
 	 * 更新时需要注明版本号则表示自第几个版本更新,
 	 * ------------------------------------------------------- 没有版本控制则无需注明
-	 *
+	 * 
 	 */
 	public void updateExample(String contentID) {
 		ClientBatchBean clientBatchBean = new ClientBatchBean();
@@ -250,11 +258,11 @@ public class LMClient {
 		batchFileBean.setFilePartName(filePartName);
 
 		// // 新增一个文件
-		ClientFileBean fileBean1 = new ClientFileBean();
-		fileBean1.setOptionType(OptionKey.U_ADD);
-		fileBean1.setFileName("D:\\image\\2.jpg");
-		fileBean1.setFileFormat("jpg");
-		batchFileBean.addFile(fileBean1);
+		 ClientFileBean fileBean1 = new ClientFileBean();
+		 fileBean1.setOptionType(OptionKey.U_ADD);
+		 fileBean1.setFileName("D:\\image\\2.jpg");
+		 fileBean1.setFileFormat("jpg");
+		 batchFileBean.addFile(fileBean1);
 		// //
 		//
 		// // 替换一个文件
@@ -288,12 +296,12 @@ public class LMClient {
 		}
 	}
 
-
+	
 
 	/**
 	 * 查询影像并将影像下载到DOWN_LOAD_FILE_PATH目录下
 	 */
-	public void queryAndDownload(String contentID) {
+	public void queryAndDownload(String contentID ) {
 		ClientBatchBean clientBatchBean = new ClientBatchBean();
 		clientBatchBean.setModelCode(modelCode);
 		clientBatchBean.setUser(userName);
@@ -327,17 +335,16 @@ public class LMClient {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
 	 * 将文件下载到DOWN_LOAD_FILE_PATH路径下
-	 *
+	 * 
 	 * @param urlStr
 	 * @param fileName
 	 * @param contentID
 	 *            批次号
 	 */
 	private void receiveFileByURL(String urlStr, String fileName, String contentID) {
-//		String path = DOWN_LOAD_FILE_PATH + "/" + contentID + "/";
 		String path = DOWN_LOAD_FILE_PATH + "/" + contentID + "/";
 		File file = new File(path + fileName);
 		File pareFile = file.getParentFile();
@@ -352,7 +359,7 @@ public class LMClient {
 		try {
 			url = new URL(urlStr);
 			in = url.openStream();
-			fos = new FileOutputStream(file);
+			 fos = new FileOutputStream(file);
 			if (in != null) {
 				byte[] b = new byte[1024];
 				int len = 0;
@@ -379,19 +386,19 @@ public class LMClient {
 	}
 
 
-//	public static void main(String[] args) {
-//		LMClient client = new LMClient();
-//		//更新接口
-////		client.updateExample(contentID);
-//		// 上传接口
-////		 client.uploadExample();
-//		// 高级查询接口
-////		 client.heightQueryExample();
-//		//详细查询接口
-//		 client.queryExample("20200703_404_988_A25E671E-4965-C178-143C-BD884B69A001-21");
-//		//影像下载接口
-////		 client.queryAndDownload(contentID);
-//
-//	}
+	public static void main(String[] args) {
+		Demo client = new Demo();
+		//更新接口
+//		 client.updateExample(contentID);
+		// 上传接口
+//		 client.uploadExample();
+		// 高级查询接口
+//		 client.heightQueryExample();
+		//详细查询接口
+		 client.queryExample("20200703_8_5DC8B821-4E9E-E7D4-F84E-8880093A000C-21");
+		//影像下载接口
+//		 client.queryAndDownload(contentID);
+
+	}
 
 }
