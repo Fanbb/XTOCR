@@ -66,20 +66,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     @Value("${ocr.ocrUrl}")
     private String ocrUrl;
 
-    String ip = "192.168.111.91";
-    int socketPort = 8021;
-    String groupName = "WHGroup"; // 内容存储服务器组名
-    SunEcmClientApi clientApi = new SunEcmClientSocketApiImpl(ip, socketPort);
-    String BEGIN_COLUMN = "CREATEDATE";
-    static String BEGIN_VALUE = "20160126";
-    // 下载文件的路径
-    String DOWN_LOAD_FILE_PATH = imgUploadPath + "/IMAGE/" + DateUtils.datePath() + "/";
-    // =========================批次信息设定=========================
-//    String modelCode = "WD_1001"; // 内容模型代码
-//    String userName = "xdadmin";
-//    String passWord = "xdadmin";
-
-
     @Override
     public ResultData runMore(String channelCode, String url, String str) {
         /**
@@ -116,37 +102,37 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 switch (imgType) {
                     case "1":
                         List list = new ArrayList();
-                        list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                        list.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack","true"));
+                        list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront", "true"));
+                        list.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack", "true"));
                         discernResult.setResultData(list);
                         objects.add(discernResult);
                         break;
                     case "2":
                         List list2 = new ArrayList();
-                        list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard","true"));
+                        list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard", "true"));
                         discernResult.setResultData(list2);
                         objects.add(discernResult);
                         break;
                     case "3":
                         List list3 = new ArrayList();
-                        list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit","true"));
+                        list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit", "true"));
                         discernResult.setResultData(list3);
                         objects.add(discernResult);
                         break;
                     case "4":
                         List list4 = new ArrayList();
-                        list4.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit","true"));
+                        list4.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit", "true"));
                         discernResult.setResultData(list4);
                         objects.add(discernResult);
                         break;
                     default:
                         //通用识别
                         List list5 = new ArrayList();
-                        list5.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                        list5.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack","true"));
-                        list5.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard","true"));
-                        list5.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit","true"));
-                        list5.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit","true"));
+                        list5.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront", "true"));
+                        list5.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack", "true"));
+                        list5.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard", "true"));
+                        list5.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit", "true"));
+                        list5.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit", "true"));
                         discernResult.setResultData(list5);
                         objects.add(discernResult);
                         break;
@@ -159,37 +145,37 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             switch (imgType) {
                 case "1":
                     List list = new ArrayList();
-                    list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                    list.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack","true"));
+                    list.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront", "true"));
+                    list.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack", "true"));
                     discernResult.setResultData(list);
                     objects.add(discernResult);
                     break;
                 case "2":
                     List list2 = new ArrayList();
-                    list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard","true"));
+                    list2.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard", "true"));
                     discernResult.setResultData(list2);
                     objects.add(discernResult);
                     break;
                 case "3":
                     List list3 = new ArrayList();
-                    list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit","true"));
+                    list3.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit", "true"));
                     discernResult.setResultData(list3);
                     objects.add(discernResult);
                     break;
                 case "4":
                     List list4 = new ArrayList();
-                    list4.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit","true"));
+                    list4.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit", "true"));
                     discernResult.setResultData(list4);
                     objects.add(discernResult);
                     break;
                 default:
                     //通用识别
                     List list5 = new ArrayList();
-                    list5.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront","true"));
-                    list5.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit","true"));
-                    list5.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack","true"));
-                    list5.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard","true"));
-                    list5.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit","true"));
+                    list5.add(new IDCardFront("ee349106-96a4-4837-9a65-f6a97e3e6525", "张三", "男", "汉族", "新威支行", "412823199605061615", "1996年5月6日", "IDCardFront", "true"));
+                    list5.add(new PremisesPermit("ee349106-96a4-4837-9a65-f6a97e3e6585", "李四", "817810101101281795", "城市住宅/商住", "威海市统一路29号", "2000平方米", "136平方米", "国有土地使用权", "三室一厅", "PremisesPermit", "true"));
+                    list5.add(new IDCardBack("ee349106-96a4-4837-9a65-f6a97e3e6515", "山东省威海市公安局", "2006.09.16", "2006.36.16", "IDCardBack", "true"));
+                    list5.add(new BankCard("ee349106-96a4-4837-9a65-f6a97e3e6535", "123468956785449", "BankCard", "true"));
+                    list5.add(new DepositReceipt("ee349106-96a4-4837-9a65-f6a97e3e6585", "妹妹", "817810101101281795", "CNY300.00", "叁佰圆整", "000000000", "Deposit", "true"));
                     discernResult.setResultData(list5);
                     objects.add(discernResult);
                     break;
@@ -210,8 +196,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     @Override
     public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName) {
         //批量影像下载 返回唯一标识对应相应的imgUrl
-
-
+//        LMClient lmClient = new LMClient();
+//        lmClient.queryAndDownload("202006_556_5C70D1D9-3050-793D-4767-518F3249C4BF-1","WD_1001","xdadmin","xdadmin","20160126","");
+        queryAndDownload("202006_556_5C70D1D9-3050-793D-4767-518F3249C4BF-1","WD_1001","xdadmin","xdadmin","20160126","");
         List<FileNamesAndPoint> fileNamesAndPoints = new ArrayList<>();
         //进行影像数据录入生成对应影像ID和相关url返回值
 
@@ -409,7 +396,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    if (StringUtils.isEmpty(deposit.getDepositNo())||StringUtils.isEmpty(deposit.getAccNo())||StringUtils.isEmpty(deposit.getAmt())||StringUtils.isEmpty(deposit.getAmtCapital())||StringUtils.isEmpty(deposit.getName())) {
+                    if (StringUtils.isEmpty(deposit.getDepositNo()) || StringUtils.isEmpty(deposit.getAccNo()) || StringUtils.isEmpty(deposit.getAmt()) || StringUtils.isEmpty(deposit.getAmtCapital()) || StringUtils.isEmpty(deposit.getName())) {
                         flag = false;
                         deposit.setFlag("false");
                     }
@@ -634,7 +621,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     /**
      * 查询影像并将影像下载到DOWN_LOAD_FILE_PATH目录下
      */
-    public void queryAndDownload(String batchNumber,String modelCode,String userName,String passWord,String createDate,String filePartName) {
+    private static void queryAndDownload(String batchNumber, String modelCode, String userName, String passWord, String createDate, String filePartName) {
+        SunEcmClientApi clientApi = new SunEcmClientSocketApiImpl("192.168.111.91", 8021);
         ClientBatchBean clientBatchBean = new ClientBatchBean();
         clientBatchBean.setModelCode(modelCode);
         clientBatchBean.setUser(userName);
@@ -643,7 +631,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         clientBatchBean.getIndex_Object().addCustomMap("CREATEDATE", createDate);
         clientBatchBean.setDownLoad(true);
         try {
-            String resultMsg = clientApi.queryBatch(clientBatchBean, groupName);
+            String resultMsg = clientApi.queryBatch(clientBatchBean, "WHGroup");
             log.info("#######查询批次返回的信息[" + resultMsg + "]#######");
 
             String batchStr = resultMsg.split(TransOptionKey.SPLITSYM)[1];
@@ -673,11 +661,11 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
      *
      * @param urlStr
      * @param fileName
-     * @param contentID
-     *            批次号
+     * @param contentID 批次号
      */
-    private void receiveFileByURL(String urlStr, String fileName, String contentID) {
-        String path = DOWN_LOAD_FILE_PATH + "/" + contentID + "/";
+    private static void receiveFileByURL(String urlStr, String fileName, String contentID) {
+        String path = "D:/ocr/uploadPath/" + DateUtils.datePath() + "/" + contentID + "/";
+//        String path = "/u02/IMAGE/" + DateUtils.datePath() + "/" + contentID + "/";
         File file = new File(path + fileName);
         File pareFile = file.getParentFile();
         if (pareFile == null || !pareFile.exists()) {
@@ -687,7 +675,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
         URL url;
         InputStream in = null;
-        FileOutputStream fos=null;
+        FileOutputStream fos = null;
         try {
             url = new URL(urlStr);
             in = url.openStream();
@@ -716,4 +704,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             }
         }
     }
+
+
 }
