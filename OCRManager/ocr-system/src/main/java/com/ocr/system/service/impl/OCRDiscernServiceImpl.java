@@ -319,7 +319,10 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         image.setParentId(imgId);
         image.setOcrResult(json);
         iOcrImageService.insertOcrImage(image);
-        List<RequestModel> models = JSONArray.parseArray(json, RequestModel.class);
+
+        List<RequestModel2> model2s = JSONArray.parseArray(json, RequestModel2.class);
+        RequestModel2 model2 = model2s.get(0);
+        List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
 
         List list = new ArrayList();
         for (RequestModel model : models) {
