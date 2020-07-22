@@ -84,8 +84,6 @@ public class OCRDiscernController extends BaseController {
             return error("批次号为空！");
         }else if (StringUtils.isEmpty(discernResult.getChannelCode())){
             return error("渠道号为空！");
-        }else if (StringUtils.isEmpty(discernResult.getIdentificationCode())){
-            return error("唯一标识为空！");
         }else if (StringUtils.isEmpty(discernResult.getImgType())){
             return error("影像类型为空！");
         }else if (StringUtils.isEmpty(discernResult.getCreateDate())){

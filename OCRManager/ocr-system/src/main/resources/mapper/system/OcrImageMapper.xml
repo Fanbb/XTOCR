@@ -41,6 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectOcrImageVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectOcrImageByFilePath" parameterType="String" resultMap="OcrImageResult">
+        <include refid="selectOcrImageVo"/>
+        where local_path = #{localPath}
+    </select>
         
     <insert id="insertOcrImage" parameterType="OcrImage">
         insert into ocr_image

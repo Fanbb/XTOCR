@@ -58,5 +58,6 @@ public interface OcrImageMapper
      * @return 结果
      */
 	public int deleteOcrImageByIds(String[] ids);
-	
+
+    OcrImage selectOcrImageByFilePath(String localPath);
 }

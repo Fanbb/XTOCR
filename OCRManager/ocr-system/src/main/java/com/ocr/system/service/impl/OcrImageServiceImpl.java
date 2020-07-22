@@ -2,6 +2,7 @@ package com.ocr.system.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import com.ocr.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,12 @@ public class OcrImageServiceImpl implements IOcrImageService
 	{
 	    return ocrImageMapper.selectOcrImageById(id);
 	}
-	
+
+	@Override
+	public OcrImage selectOcrImageByFilePath(String filePath) {
+		return ocrImageMapper.selectOcrImageByFilePath(filePath);
+	}
+
 	/**
      * 查询识别影像列表
      * 
@@ -99,5 +105,18 @@ public class OcrImageServiceImpl implements IOcrImageService
 	{
 		return ocrImageMapper.deleteOcrImageByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public void insertOcrImageByFileNoAndFilePath(String fileNo, String filePath) {
+		OcrImage ocrImage = new OcrImage();
+		String imgId = UUID.randomUUID().toString();
+		ocrImage.setId(imgId);
+		ocrImage.setOcrDate(new Date());
+		ocrImage.setCompTradeId(fileNo);
+		ocrImage.setOcrTime(DateUtils.dateTime( "yyyy-MM-dd",DateUtils.getDate()));
+		ocrImage.setParentId(imgId);
+		ocrImage.setLocalPath(filePath);
+		ocrImageMapper.insertOcrImage(ocrImage);
+	}
+
 }

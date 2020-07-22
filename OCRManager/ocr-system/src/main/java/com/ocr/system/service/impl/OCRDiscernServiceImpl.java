@@ -2,6 +2,7 @@ package com.ocr.system.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.utils.DateUtils;
 import com.ocr.common.utils.FileTypeUtils;
 import com.ocr.common.utils.StringUtils;
@@ -31,10 +32,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -193,32 +191,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         return resultData;
     }
 
-    @Override
-    public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName) {
-        //批量影像下载 返回唯一标识对应相应的imgUrl
-//        LMClient lmClient = new LMClient();
-//        lmClient.queryAndDownload("202006_556_5C70D1D9-3050-793D-4767-518F3249C4BF-1","WD_1001","xdadmin","xdadmin","20160126","");
-        queryAndDownload("202006_556_5C70D1D9-3050-793D-4767-518F3249C4BF-1","WD_1001","xdadmin","xdadmin","20160126","");
-        List<FileNamesAndPoint> fileNamesAndPoints = new ArrayList<>();
-        //进行影像数据录入生成对应影像ID和相关url返回值
 
-
-        ResultData resultData = new ResultData();
-        String[] split = identificationCode.split(",");//批次内文件名
-
-        List<Object> objects = new ArrayList<>();
-
-        if (batchNumber.equals("500")) {
-            resultData.setType("0");
-            resultData.setMsg("错误！");
-        } else {
-            resultData.setType("1");
-            resultData.setMsg("识别成功！");
-            resultData.setData(objects);
-        }
-
-        return resultData;
-    }
 
     @Override
     public ResultData runOneAgain(String channelCode, String imgUrl, String imgStr, String imgType) {
@@ -621,7 +594,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     /**
      * 查询影像并将影像下载到DOWN_LOAD_FILE_PATH目录下
      */
-    private static void queryAndDownload(String batchNumber, String modelCode, String userName, String passWord, String createDate, String filePartName) {
+    private Map queryAndDownload(String batchNumber, String modelCode, String userName, String passWord, String createDate, String filePartName, String identificationCode) {
+        Map map = new HashMap();
         SunEcmClientApi clientApi = new SunEcmClientSocketApiImpl("192.168.111.91", 8021);
         ClientBatchBean clientBatchBean = new ClientBatchBean();
         clientBatchBean.setModelCode(modelCode);
@@ -641,12 +615,26 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 List<BatchFileBean> fileBeans = batchBean.getDocument_Objects();
                 for (BatchFileBean batchFileBean : fileBeans) {
                     List<FileBean> files = batchFileBean.getFiles();
-                    for (FileBean fileBean : files) {
-                        String urlStr = fileBean.getUrl();
-                        String fileName = fileBean.getFileNO() + "-" + Thread.currentThread().getId() + "." + fileBean.getFileFormat();
-                        log.debug("#######文件访问链接为[" + urlStr + "], 文件名为[" + fileName + "]#######");
-                        // 调用下载文件方法
-                        receiveFileByURL(urlStr, fileName, batchNumber);
+                    if (StringUtils.isEmpty(identificationCode)) {
+                        for (FileBean fileBean : files) {
+                            String urlStr = fileBean.getUrl();
+                            String fileName = fileBean.getFileNO() + "_" + System.currentTimeMillis() + "." + fileBean.getFileFormat();
+                            log.debug("#######文件访问链接为[" + urlStr + "], 文件名为[" + fileName + "]#######");
+                            // 调用下载文件方法
+                            receiveFileByURL(urlStr, fileName, batchNumber);
+                            map.put(fileBean.getFileNO(), fileName);
+                        }
+                    } else {
+                        for (FileBean fileBean : files) {
+                            String urlStr = fileBean.getUrl();
+                            if (identificationCode.contains(fileBean.getFileNO())) {
+                                String fileName = fileBean.getFileNO() + "_" + System.currentTimeMillis() + "." + fileBean.getFileFormat();
+                                log.debug("#######文件访问链接为[" + urlStr + "], 文件名为[" + fileName + "]#######");
+                                // 调用下载文件方法
+                                receiveFileByURL(urlStr, fileName, batchNumber);
+                                map.put(fileBean.getFileNO(), fileName);
+                            }
+                        }
                     }
                 }
             }
@@ -654,6 +642,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return map;
     }
 
     /**
@@ -663,9 +652,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
      * @param fileName
      * @param contentID 批次号
      */
-    private static void receiveFileByURL(String urlStr, String fileName, String contentID) {
-        String path = "D:/ocr/uploadPath/" + DateUtils.datePath() + "/" + contentID + "/";
-//        String path = "/u02/IMAGE/" + DateUtils.datePath() + "/" + contentID + "/";
+    private void receiveFileByURL(String urlStr, String fileName, String contentID) {
+        String path = imgUploadPath + "/IMAGE/" + DateUtils.datePath() + "/" + contentID + "/";
         File file = new File(path + fileName);
         File pareFile = file.getParentFile();
         if (pareFile == null || !pareFile.exists()) {
@@ -703,6 +691,159 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 log.error("unitedaccess http -- GetFileServer: " + e.toString());
             }
         }
+    }
+
+    @Override
+    public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName) {
+        //批量影像下载 返回唯一标识对应相应的imgUrl
+        Map map = queryAndDownload(batchNumber, modelCode, userName, password, createDate, filePartName, identificationCode);
+        log.info("**&&&map" + map.toString());
+        StringBuffer buffer = new StringBuffer();
+        for (Object key : map.keySet()) {
+            String relativePath = serverProfile + DateUtils.datePath() + "/" + batchNumber + "/" + map.get(key).toString();
+            String data = "{\"image_type\":\"" + imgType + "\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"}";
+            //存储影像信息
+            iOcrImageService.insertOcrImageByFileNoAndFilePath(key.toString(),relativePath);
+            buffer.append(data + ",");
+        }
+
+        String requestData = "{\"data_list\":[" + buffer.deleteCharAt(buffer.length() - 1).toString() + "]}";
+        log.info("**&&&requestData" + requestData);
+        String request = HttpUtils.sendPost2(ocrUrl, requestData);
+        log.info("**&&&request" + request);
+
+        List<RequestModel2> model2s = JSONArray.parseArray(request, RequestModel2.class);
+        //进行影像数据录入生成对应影像ID和相关url返回值
+        List<ResultDataModel> resultDataModels = new ArrayList<>();
+        for (RequestModel2 model2 : model2s) {
+            ResultDataModel dataModel = new ResultDataModel();
+            List list = new ArrayList();
+            //根据图片路径获取影像信息
+            OcrImage ocrImage = iOcrImageService.selectOcrImageByFilePath(model2.getPath());
+            dataModel.setBatchNumber(batchNumber);
+            dataModel.setIdentificationCode(ocrImage.getCompTradeId());
+
+            if (StringUtils.isEmpty(request) || request.equals("[]")) {
+                OcrTrade ocrTrade = new OcrTrade();
+                ocrTrade.setId(UUID.randomUUID().toString());
+                ocrTrade.setChannel(channelCode);
+                ocrTrade.setImageId(ocrImage.getId());
+                ocrTrade.setImageType("None");
+                ocrTrade.setImageName("0");
+                ocrTrade.setOcrStatus("1");
+                ocrTrade.setTickStatus("2");
+                ocrTrade.setPlatStatus("1");
+                ocrTrade.setRemark2("0");
+                ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+                ocrTrade.setOcrTime(DateUtils.getTimeShort());
+                iOcrTradeService.insertOcrTrade(ocrTrade);
+                log.info("OCR识别结果为空");
+            }else {
+                List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
+                for (RequestModel model : models) {
+                    String tradeId;
+                    Boolean flag = true;
+                    switch (model.getClass_name()) {
+                        case "IDCardFront":
+                            IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
+                            idCardFront.setImgType(model.getClass_name());
+                            idCardFront.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (StringUtils.isEmpty(idCardFront.getSex()) || StringUtils.isEmpty(idCardFront.getNation()) || StringUtils.isEmpty(idCardFront.getName()) || StringUtils.isEmpty(idCardFront.getBirthday()) || StringUtils.isEmpty(idCardFront.getAddress()) || StringUtils.isEmpty(idCardFront.getIdCardNo())) {
+                                flag = false;
+                                idCardFront.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, ocrImage.getId(), flag);
+                            idCardFront.setTradeId(tradeId);
+                            list.add(idCardFront);
+                            break;
+                        case "IDCardBack":
+                            IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
+                            idCardBack.setImgType(model.getClass_name());
+                            idCardBack.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (StringUtils.isEmpty(idCardBack.getStartDate()) || StringUtils.isEmpty(idCardBack.getEndDate()) || StringUtils.isEmpty(idCardBack.getAuthority())) {
+                                flag = false;
+                                idCardBack.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, ocrImage.getId(), flag);
+                            idCardBack.setTradeId(tradeId);
+                            list.add(idCardBack);
+                            break;
+                        case "BankCard":
+                            BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
+                            bankCard.setImgType(model.getClass_name());
+                            bankCard.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (StringUtils.isEmpty(bankCard.getBankCardNo())) {
+                                flag = false;
+                                bankCard.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, ocrImage.getId(), flag);
+                            bankCard.setTradeId(tradeId);
+                            list.add(bankCard);
+                            break;
+                        case "Deposit":
+                            DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
+                            deposit.setImgType(model.getClass_name());
+                            deposit.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (StringUtils.isEmpty(deposit.getDepositNo()) || StringUtils.isEmpty(deposit.getAccNo()) || StringUtils.isEmpty(deposit.getAmt()) || StringUtils.isEmpty(deposit.getAmtCapital()) || StringUtils.isEmpty(deposit.getName())) {
+                                flag = false;
+                                deposit.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, ocrImage.getId(), flag);
+                            deposit.setTradeId(tradeId);
+                            list.add(deposit);
+                            break;
+                        case "PremisesPermit":
+                            PremisesPermit premisesPermit = JSONArray.parseObject(model.getOcr_result(), PremisesPermit.class);
+                            premisesPermit.setImgType(model.getClass_name());
+                            premisesPermit.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (StringUtils.isEmpty(premisesPermit.getBuiltArea())||StringUtils.isEmpty(premisesPermit.getCertificateNo())||StringUtils.isEmpty(premisesPermit.getFloorArea())||StringUtils.isEmpty(premisesPermit.getName())||StringUtils.isEmpty(premisesPermit.getLocation())||StringUtils.isEmpty(premisesPermit.getPurpose())||StringUtils.isEmpty(premisesPermit.getLandUse())||StringUtils.isEmpty(premisesPermit.getStructure())) {
+                                flag = false;
+                                premisesPermit.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, ocrImage.getId(), flag);
+                            premisesPermit.setTradeId(tradeId);
+                            list.add(premisesPermit);
+                            break;
+                        default:
+                            tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, ocrImage.getId());
+                            NoneEnty noneEnty = new NoneEnty();
+                            noneEnty.setImgType("None");
+                            noneEnty.setTradeId(tradeId);
+                            list.add(noneEnty);
+                            break;
+                    }
+                }
+            }
+            dataModel.setResultData(list);
+            resultDataModels.add(dataModel);
+        }
+
+        ResultData resultData = new ResultData();
+
+        if (batchNumber.equals("500")) {
+            resultData.setType("0");
+            resultData.setMsg("错误！");
+        } else {
+            resultData.setType("1");
+            resultData.setMsg("识别成功！");
+            resultData.setData(resultDataModels);
+        }
+        return resultData;
     }
 
 

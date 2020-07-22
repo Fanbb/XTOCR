@@ -1,10 +1,7 @@
 package com.ocr.system.service;
 
 import com.ocr.system.domain.OcrTrade;
-import com.ocr.system.model.BankCard;
-import com.ocr.system.model.DepositReceipt;
-import com.ocr.system.model.IDCardBack;
-import com.ocr.system.model.IDCardFront;
+import com.ocr.system.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -125,4 +122,6 @@ public interface IOcrTradeService
 	String insertBankCardFlag(BankCard bankCard, String channelCode, String imgId, Boolean flag);
 
 	String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag);
+
+    String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag);
 }

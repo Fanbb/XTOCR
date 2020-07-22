@@ -18,6 +18,14 @@ public interface IOcrImageService
      * @return 识别影像信息
      */
 	public OcrImage selectOcrImageById(String id);
+
+	/**
+	 * 查询识别影像信息
+	 *
+	 * @param filePath 识别影像路径
+	 * @return 识别影像信息
+	 */
+	public OcrImage selectOcrImageByFilePath(String filePath);
 	
 	/**
      * 查询识别影像列表
@@ -58,5 +66,6 @@ public interface IOcrImageService
      * @return 结果
      */
 	public int deleteOcrImageByIds(String ids);
-	
+
+	void insertOcrImageByFileNoAndFilePath(String fileNo, String filePath);
 }

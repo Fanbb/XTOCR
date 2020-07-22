@@ -87,7 +87,6 @@ public class RecognitionFilesController extends BaseController {
     public AjaxResult fileUpload(@RequestParam("file") MultipartFile[] file, Map mmap) throws IOException {
         StringBuffer tradeIds = new StringBuffer();
         if (file != null && file.length > 0) {
-
             try {
                 for (int i = 0; i < file.length; i++) {
                     if (!file[i].isEmpty()) {
@@ -199,6 +198,57 @@ public class RecognitionFilesController extends BaseController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            return AjaxResult.error("文件为空");
+        }
+
+        mmap.put("tradeIds", tradeIds.deleteCharAt(tradeIds.length() - 1).toString());
+        return AjaxResult.success(mmap);
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequiresPermissions("system:recognitionFiles:fileUpload")
+    @PostMapping("/fileUpload2")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    @Log(title = "影像上传识别", businessType = BusinessType.OTHER)
+    public AjaxResult fileUpload2(@RequestParam("file") MultipartFile[] file, Map mmap) throws IOException {
+        StringBuffer tradeIds = new StringBuffer();
+        if (file != null && file.length > 0) {
+            String datas ="";
+            for (int i = 0; i < file.length; i++) {
+                if (!file[i].isEmpty()) {
+                    String dateStr = DateUtils.datePath();
+                    String imgId = UUID.randomUUID().toString();
+                    String oldFileName = file[i].getOriginalFilename();
+                    String sName = oldFileName.substring(oldFileName.lastIndexOf("."));
+                    Long fileName = System.currentTimeMillis();
+                    String path = imgUploadPath + "/IMAGE/" + dateStr;
+                    File pathFile = new File(path);
+                    if (!pathFile.exists()) {
+                        pathFile.mkdirs();
+                    }
+                    String filePath = path + "/" + fileName + sName;
+                    String relativePath = serverProfile + dateStr + "/" + fileName + sName;
+                    //存入影像信息 返回结果msg
+                    String msg = iOcrImageService.insertOcrImage(imgId, relativePath);
+                    log.info("影像存储信息" + msg);
+                    File newFile = new File(filePath);
+                    file[i].transferTo(newFile);
+                    String data = "{\"image_type\":\"0\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"},";
+                    datas=datas+data;
+                }
+            }
+//            datas.
+//            log.info("**data****" + datas);
+            String request = HttpUtils.sendPost2(ocrUrl, datas);
+            log.info("**request****" + request);
         } else {
             return AjaxResult.error("文件为空");
         }

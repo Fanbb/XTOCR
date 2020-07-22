@@ -5,10 +5,7 @@ import com.ocr.common.core.text.Convert;
 import com.ocr.common.utils.DateUtils;
 import com.ocr.system.domain.OcrTrade;
 import com.ocr.system.mapper.OcrTradeMapper;
-import com.ocr.system.model.BankCard;
-import com.ocr.system.model.DepositReceipt;
-import com.ocr.system.model.IDCardBack;
-import com.ocr.system.model.IDCardFront;
+import com.ocr.system.model.*;
 import com.ocr.system.service.IOcrTradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -191,6 +188,11 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
     @Override
+    public String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag) {
+        return getStringFlag(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit),flag);
+    }
+
+    @Override
     public String[] selectImagePath(String[] tradeIds) {
         return ocrTradeMapper.selectImagePath(tradeIds);
     }
@@ -251,6 +253,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setOcrSeq(ocrSeq);
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
+
         switch (imgType){
             case "IDCardFront":
             case "IDCardBack":
@@ -261,6 +264,30 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                 break;
             case "Deposit":
                 ocrTrade.setImageName("3");
+                break;
+            case "PremisesPermit":
+                ocrTrade.setImageName("4");
+                break;
+            case "Bankbook":
+                ocrTrade.setImageName("5");
+                break;
+            case "ResidenceBooklet":
+                ocrTrade.setImageName("6");
+                break;
+            case "MarriageLicense":
+                ocrTrade.setImageName("7");
+                break;
+            case "DrivingLicense":
+                ocrTrade.setImageName("8");
+                break;
+            case "DriversLicense":
+                ocrTrade.setImageName("9");
+                break;
+            case "PlateNumber":
+                ocrTrade.setImageName("10");
+                break;
+            case "BusinessLicense":
+                ocrTrade.setImageName("11");
                 break;
         }
 
