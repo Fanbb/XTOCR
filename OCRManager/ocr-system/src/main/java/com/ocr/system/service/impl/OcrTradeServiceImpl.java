@@ -149,6 +149,29 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
             case "Deposit":
                 ocrTrade.setImageName("3");
                 break;
+            case "PremisesPermit":
+                ocrTrade.setImageName("4");
+                break;
+            case "Bankbook":
+                ocrTrade.setImageName("5");
+                break;
+            case "ResidenceBooklet":
+                ocrTrade.setImageName("6");
+                break;
+            case "MarriageLicense":
+                ocrTrade.setImageName("7");
+                break;
+            case "DrivingLicense":
+                ocrTrade.setImageName("8");
+                break;
+            case "DriversLicense":
+                ocrTrade.setImageName("9");
+                break;
+            case "PlateNumber":
+                ocrTrade.setImageName("10");
+                break;
+            case "BusinessLicense":
+                ocrTrade.setImageName("11");
         }
         if (flag){
             ocrTrade.setOcrStatus("0");
@@ -193,6 +216,11 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
     @Override
+    public String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId) {
+        return getString(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit));
+    }
+
+    @Override
     public String[] selectImagePath(String[] tradeIds) {
         return ocrTradeMapper.selectImagePath(tradeIds);
     }
@@ -219,6 +247,30 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                     break;
                 case "3":
                     values.add("存单");
+                    break;
+                case "4":
+                    values.add("房本");
+                    break;
+                case "5":
+                    values.add("存折");
+                    break;
+                case "6":
+                    values.add("户口本");
+                    break;
+                case "7":
+                    values.add("结婚证");
+                    break;
+                case "8":
+                    values.add("行驶证");
+                    break;
+                case "9":
+                    values.add("驾驶证");
+                    break;
+                case "10":
+                    values.add("车牌号");
+                    break;
+                case "11":
+                    values.add("营业执照");
                     break;
             }
         }
@@ -253,7 +305,6 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setOcrSeq(ocrSeq);
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
-
         switch (imgType){
             case "IDCardFront":
             case "IDCardBack":
@@ -290,7 +341,6 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                 ocrTrade.setImageName("11");
                 break;
         }
-
         ocrTrade.setOcrStatus("0");
         ocrTrade.setTickStatus("0");
         ocrTrade.setPlatStatus("0");

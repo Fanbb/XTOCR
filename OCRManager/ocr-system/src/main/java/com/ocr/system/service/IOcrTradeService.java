@@ -124,4 +124,6 @@ public interface IOcrTradeService
 	String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag);
 
     String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag);
+
+    String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId);
 }

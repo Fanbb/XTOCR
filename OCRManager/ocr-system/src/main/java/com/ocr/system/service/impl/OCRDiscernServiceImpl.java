@@ -720,6 +720,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             List list = new ArrayList();
             //根据图片路径获取影像信息
             OcrImage ocrImage = iOcrImageService.selectOcrImageByFilePath(model2.getPath());
+
             dataModel.setBatchNumber(batchNumber);
             dataModel.setIdentificationCode(ocrImage.getCompTradeId());
 
@@ -739,6 +740,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 iOcrTradeService.insertOcrTrade(ocrTrade);
                 log.info("OCR识别结果为空");
             }else {
+                ocrImage.setOcrResult(model2.getImage_result());
+                iOcrImageService.updateOcrImage(ocrImage);
                 List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
                 for (RequestModel model : models) {
                     String tradeId;

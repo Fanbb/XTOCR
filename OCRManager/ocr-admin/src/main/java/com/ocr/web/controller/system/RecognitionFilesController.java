@@ -73,7 +73,7 @@ public class RecognitionFilesController extends BaseController {
     }
 
     /**
-     * 文件上传
+     * 文件上传 放弃使用
      *
      * @param file
      * @return
@@ -111,8 +111,6 @@ public class RecognitionFilesController extends BaseController {
                         String data = "{\"image_type\":\"0\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"}";
                         String request = HttpUtils.sendPost2(ocrUrl, data);
 
-                        log.info("**data****" + data);
-                        log.info("**request****" + request);
                         if (StringUtils.isEmpty(request) || request.equals("[]")) {
                             OcrTrade ocrTrade = new OcrTrade();
                             ocrTrade.setId(UUID.randomUUID().toString());
@@ -221,7 +219,7 @@ public class RecognitionFilesController extends BaseController {
     public AjaxResult fileUpload2(@RequestParam("file") MultipartFile[] file, Map mmap) throws IOException {
         StringBuffer tradeIds = new StringBuffer();
         if (file != null && file.length > 0) {
-            String datas ="";
+            StringBuffer buffer = new StringBuffer();
             for (int i = 0; i < file.length; i++) {
                 if (!file[i].isEmpty()) {
                     String dateStr = DateUtils.datePath();
@@ -241,14 +239,93 @@ public class RecognitionFilesController extends BaseController {
                     log.info("影像存储信息" + msg);
                     File newFile = new File(filePath);
                     file[i].transferTo(newFile);
-                    String data = "{\"image_type\":\"0\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"},";
-                    datas=datas+data;
+                    String data = "{\"image_type\":\"0\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"}";
+                    buffer.append(data+",");
                 }
             }
-//            datas.
-//            log.info("**data****" + datas);
-            String request = HttpUtils.sendPost2(ocrUrl, datas);
-            log.info("**request****" + request);
+            String requestData = "{\"data_list\":[" + buffer.deleteCharAt(buffer.length() - 1).toString() + "]}";
+            String request = HttpUtils.sendPost2(ocrUrl, requestData);
+            List<RequestModel2> model2s = JSONArray.parseArray(request, RequestModel2.class);
+            //进行影像数据录入生成对应影像ID和相关url返回值
+            for (RequestModel2 model2 : model2s) {
+                //根据图片路径获取影像信息
+                OcrImage ocrImage = iOcrImageService.selectOcrImageByFilePath(model2.getPath());
+
+                if (StringUtils.isEmpty(request) || request.equals("[]")) {
+                    OcrTrade ocrTrade = new OcrTrade();
+                    ocrTrade.setId(UUID.randomUUID().toString());
+                    ocrTrade.setChannel("system");
+                    ocrTrade.setImageId(ocrImage.getId());
+                    ocrTrade.setImageType("None");
+                    ocrTrade.setImageName("0");
+                    ocrTrade.setOcrStatus("1");
+                    ocrTrade.setTickStatus("2");
+                    ocrTrade.setPlatStatus("1");
+                    ocrTrade.setRemark2("0");
+                    ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+                    ocrTrade.setOcrTime(DateUtils.getTimeShort());
+                    iOcrTradeService.insertOcrTrade(ocrTrade);
+                    log.info("OCR识别结果为空");
+                }else {
+                    ocrImage.setOcrResult(model2.getImage_result());
+                    iOcrImageService.updateOcrImage(ocrImage);
+                    List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
+                    for (RequestModel model : models) {
+                        String tradeId;
+                        switch (model.getClass_name()) {
+                            case "IDCardFront":
+                                IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
+                                idCardFront.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, "system", ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "IDCardBack":
+                                IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
+                                idCardBack.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertIDCardBack(idCardBack, "system", ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "BankCard":
+                                BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
+                                bankCard.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertBankCard(bankCard, "system", ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "Deposit":
+                                DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
+                                deposit.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertDeposit(deposit, "system", ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "PremisesPermit":
+                                PremisesPermit premisesPermit = JSONArray.parseObject(model.getOcr_result(), PremisesPermit.class);
+                                premisesPermit.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, "system", ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            default:
+                                tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                        }
+                    }
+                }
+            }
         } else {
             return AjaxResult.error("文件为空");
         }
@@ -264,7 +341,6 @@ public class RecognitionFilesController extends BaseController {
     public String detail(@PathVariable("tradeIds") String tradeIds, ModelMap model) {
         model.addAttribute("tradeIds", tradeIds);
         return prefix + "/data/data";
-
     }
 
 
