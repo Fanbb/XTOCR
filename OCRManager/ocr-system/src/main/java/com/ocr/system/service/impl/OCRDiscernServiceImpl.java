@@ -12,10 +12,7 @@ import com.ocr.system.domain.ChannelType;
 import com.ocr.system.domain.OcrImage;
 import com.ocr.system.domain.OcrTrade;
 import com.ocr.system.model.*;
-import com.ocr.system.service.IChannelTypeService;
-import com.ocr.system.service.IOcrImageService;
-import com.ocr.system.service.IOcrTradeService;
-import com.ocr.system.service.OCRDiscernService;
+import com.ocr.system.service.*;
 import com.sunyard.client.SunEcmClientApi;
 import com.sunyard.client.bean.ClientBatchBean;
 import com.sunyard.client.impl.SunEcmClientSocketApiImpl;
@@ -54,6 +51,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
     @Autowired
     private IChannelTypeService iChannelTypeService;
+
+    @Autowired
+    private ISysConfigService configService;
 
     @Value("${ocr.profile}")
     private String imgUploadPath;
@@ -594,9 +594,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     /**
      * 查询影像并将影像下载到DOWN_LOAD_FILE_PATH目录下
      */
-    private Map queryAndDownload(String batchNumber, String modelCode, String userName, String passWord, String createDate, String filePartName, String identificationCode) {
+    private Map queryAndDownload(String batchNumber, String modelCode, String userName, String passWord, String createDate, String filePartName, String identificationCode,int maxCount) {
         Map map = new HashMap();
-        SunEcmClientApi clientApi = new SunEcmClientSocketApiImpl("192.168.111.91", 8021);
+        SunEcmClientApi clientApi = new SunEcmClientSocketApiImpl(configService.selectConfigByKey("sys.screenage.ip"), Integer.parseInt(configService.selectConfigByKey("sys.screenage.port")));
         ClientBatchBean clientBatchBean = new ClientBatchBean();
         clientBatchBean.setModelCode(modelCode);
         clientBatchBean.setUser(userName);
@@ -616,6 +616,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 for (BatchFileBean batchFileBean : fileBeans) {
                     List<FileBean> files = batchFileBean.getFiles();
                     if (StringUtils.isEmpty(identificationCode)) {
+                        if (files.size()>maxCount){
+                            return map;
+                        }
                         for (FileBean fileBean : files) {
                             String urlStr = fileBean.getUrl();
                             String fileName = fileBean.getFileNO() + "_" + System.currentTimeMillis() + "." + fileBean.getFileFormat();
@@ -625,6 +628,10 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             map.put(fileBean.getFileNO(), fileName);
                         }
                     } else {
+                        String[] split = identificationCode.split(",");
+                        if (split.length>maxCount){
+                            return map;
+                        }
                         for (FileBean fileBean : files) {
                             String urlStr = fileBean.getUrl();
                             if (identificationCode.contains(fileBean.getFileNO())) {
@@ -695,8 +702,15 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
     @Override
     public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName) {
+        ResultData resultData = new ResultData();
         //批量影像下载 返回唯一标识对应相应的imgUrl
-        Map map = queryAndDownload(batchNumber, modelCode, userName, password, createDate, filePartName, identificationCode);
+        int maxCount = Integer.parseInt(configService.selectConfigByKey("sys.user.maxCount"));
+        Map map = queryAndDownload(batchNumber, modelCode, userName, password, createDate, filePartName, identificationCode,maxCount);
+        if (map.size()==0){
+            resultData.setMsg("识别失败！影像数量超过"+maxCount+"个！");
+            resultData.setType("0");
+            return resultData;
+        }
         log.info("**&&&map" + map.toString());
         StringBuffer buffer = new StringBuffer();
         for (Object key : map.keySet()) {
@@ -720,7 +734,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             List list = new ArrayList();
             //根据图片路径获取影像信息
             OcrImage ocrImage = iOcrImageService.selectOcrImageByFilePath(model2.getPath());
-
             dataModel.setBatchNumber(batchNumber);
             dataModel.setIdentificationCode(ocrImage.getCompTradeId());
 
@@ -835,8 +848,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             dataModel.setResultData(list);
             resultDataModels.add(dataModel);
         }
-
-        ResultData resultData = new ResultData();
 
         if (batchNumber.equals("500")) {
             resultData.setType("0");
