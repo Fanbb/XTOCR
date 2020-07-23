@@ -291,7 +291,11 @@ public class OcrTradeController extends BaseController {
             DepositReceipt depositReceipt = JSON.parseObject(ocrTrade.getRemark1(), DepositReceipt.class);
             mmap.put("depositReceipt", depositReceipt);
             return prefix + "/detail/depositReceipt";
-        } else {
+        } else if (ocrTrade.getImageType().equals("PremisesPermit")) {
+            PremisesPermit premisesPermit = JSON.parseObject(ocrTrade.getRemark1(), PremisesPermit.class);
+            mmap.put("premisesPermit", premisesPermit);
+            return prefix + "/detail/premisesPermit";
+        }else {
             return prefix + "/detail/data";
         }
 

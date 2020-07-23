@@ -607,9 +607,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         try {
             String resultMsg = clientApi.queryBatch(clientBatchBean, "WHGroup");
             log.info("#######查询批次返回的信息[" + resultMsg + "]#######");
-
             String batchStr = resultMsg.split(TransOptionKey.SPLITSYM)[1];
-
             List<BatchBean> batchBeans = XMLUtil.xml2list(XMLUtil.removeHeadRoot(batchStr), BatchBean.class);
             for (BatchBean batchBean : batchBeans) {
                 List<BatchFileBean> fileBeans = batchBean.getDocument_Objects();
@@ -667,7 +665,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             log.info("no parefile ,begin to create mkdir,path=" + pareFile.getPath());
             pareFile.mkdirs();
         }
-
         URL url;
         InputStream in = null;
         FileOutputStream fos = null;
@@ -711,7 +708,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             resultData.setType("0");
             return resultData;
         }
-        log.info("**&&&map" + map.toString());
         StringBuffer buffer = new StringBuffer();
         for (Object key : map.keySet()) {
             String relativePath = serverProfile + DateUtils.datePath() + "/" + batchNumber + "/" + map.get(key).toString();
@@ -722,7 +718,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         }
 
         String requestData = "{\"data_list\":[" + buffer.deleteCharAt(buffer.length() - 1).toString() + "]}";
-        log.info("**&&&requestData" + requestData);
         String request = HttpUtils.sendPost2(ocrUrl, requestData);
         log.info("**&&&request" + request);
 
