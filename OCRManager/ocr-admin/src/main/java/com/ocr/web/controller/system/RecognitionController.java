@@ -176,6 +176,14 @@ public class RecognitionController extends BaseController {
                      */
                     iOcrTradeService.insertDeposit(deposit, "system", imgId);
                     break;
+                case "PremisesPermit":
+                    PremisesPermit premisesPermit = JSONArray.parseObject(model.getOcr_result(), PremisesPermit.class);
+                    premisesPermit.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertPremisesPermit(premisesPermit, "system", imgId);
+                    break;
                 default:
                     iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", imgId);
                     break;
