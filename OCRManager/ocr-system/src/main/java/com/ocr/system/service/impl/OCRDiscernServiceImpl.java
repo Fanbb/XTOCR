@@ -248,6 +248,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 case "3":
                     imgName = "Deposit";
                     break;
+                case "4":
+                    imgName = "PremisesPermit";
+                    break;
             }
 
             log.info("OCR识别结果为空");
@@ -376,6 +379,21 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, imgId, flag);
                     deposit.setTradeId(tradeId);
                     list.add(deposit);
+                    break;
+                case "PremisesPermit":
+                    PremisesPermit premisesPermit = JSONArray.parseObject(model.getOcr_result(), PremisesPermit.class);
+                    premisesPermit.setImgType(model.getClass_name());
+                    premisesPermit.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(premisesPermit.getBuiltArea())||StringUtils.isEmpty(premisesPermit.getCertificateNo())||StringUtils.isEmpty(premisesPermit.getFloorArea())||StringUtils.isEmpty(premisesPermit.getName())||StringUtils.isEmpty(premisesPermit.getLocation())||StringUtils.isEmpty(premisesPermit.getPurpose())||StringUtils.isEmpty(premisesPermit.getLandUse())||StringUtils.isEmpty(premisesPermit.getStructure())) {
+                        flag = false;
+                        premisesPermit.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag);
+                    premisesPermit.setTradeId(tradeId);
+                    list.add(premisesPermit);
                     break;
                 default:
                     tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, imgId);
