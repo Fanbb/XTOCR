@@ -52,9 +52,8 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="30%" align="right">房屋位置：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getLocation()}}"/>
+                            <td style="width: 70%">
+                                <textarea style="font-size:19px" disabled="disabled">[[@{${premisesPermit.getLocation()}}]]</textarea>
                             </td>
                         </tr>
                         <tr style="height: 50px">
@@ -73,9 +72,8 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="30%" align="right">土地使用方式：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getLandUse()}}"/>
+                            <td style="width: 70%">
+                                <textarea style="font-size:19px" disabled="disabled">[[@{${premisesPermit.getLandUse()}}]]</textarea>
                             </td>
                         </tr>
                         <tr style="height: 50px">
