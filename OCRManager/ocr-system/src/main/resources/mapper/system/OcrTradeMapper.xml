@@ -20,10 +20,12 @@
         <result property="remark1" column="remark1"/>
         <result property="remark2" column="remark2"/>
         <result property="remark3" column="remark3"/>
+        <result property="fieldTotal" column="field_total"/>
+        <result property="rightTotal" column="right_total"/>
     </resultMap>
 
     <sql id="selectOcrTradeVo">
-        select id, ocr_date, ocr_time, channel, ocr_seq, ocr_status, tick_status, image_id, image_type, image_name, plat_status, ocr_organ, remark1, remark2, remark3 from ocr_trade
+        select id, ocr_date, ocr_time, channel, ocr_seq, ocr_status, tick_status, image_id, image_type, image_name, plat_status, ocr_organ, remark1, remark2, remark3,field_total,right_total from ocr_trade
     </sql>
 
     <select id="selectOcrTradeList" parameterType="OcrTrade" resultMap="OcrTradeResult">
@@ -44,6 +46,8 @@
             <if test="remark1 != null  and remark1 != '' ">and remark1 = #{remark1}</if>
             <if test="remark2 != null  and remark2 != '' ">and remark2 = #{remark2}</if>
             <if test="remark3 != null  and remark3 != '' ">and remark3 = #{remark3}</if>
+            <if test="fieldTotal != null  and fieldTotal != '' ">and field_total = #{fieldTotal}</if>
+            <if test="rightTotal != null  and rightTotal != '' ">and right_total = #{rightTotal}</if>
             <if test="userId != null">
                 and channel in (select channel_code from sys_user_channel where user_id =#{userId})
             </if>
@@ -79,6 +83,8 @@
             <if test="remark1 != null  and remark1 != ''  ">remark1,</if>
             <if test="remark2 != null  and remark2 != ''  ">remark2,</if>
             <if test="remark3 != null  and remark3 != ''  ">remark3,</if>
+            <if test="fieldTotal != null  and fieldTotal != ''  ">field_total,</if>
+            <if test="rightTotal != null  and rightTotal != ''  ">right_total,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  and id != ''  ">#{id},</if>
@@ -96,6 +102,8 @@
             <if test="remark1 != null  and remark1 != ''  ">#{remark1},</if>
             <if test="remark2 != null  and remark2 != ''  ">#{remark2},</if>
             <if test="remark3 != null  and remark3 != ''  ">#{remark3},</if>
+            <if test="fieldTotal != null  and fieldTotal != ''  ">#{fieldTotal},</if>
+            <if test="rightTotal != null  and rightTotal != ''  ">#{rightTotal},</if>
         </trim>
     </insert>
 
@@ -116,6 +124,8 @@
             <if test="remark1 != null  and remark1 != ''  ">remark1 = #{remark1},</if>
             <if test="remark2 != null  and remark2 != ''  ">remark2 = #{remark2},</if>
             <if test="remark3 != null  and remark3 != ''  ">remark3 = #{remark3},</if>
+            <if test="fieldTotal != null  and fieldTotal != ''  ">field_total = #{fieldTotal},</if>
+            <if test="rightTotal != null  and rightTotal != ''  ">right_total = #{rightTotal},</if>
         </trim>
         where id = #{id}
     </update>

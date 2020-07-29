@@ -88,9 +88,18 @@ public class OcrTrade extends BaseEntity {
     @Excel(name = "影像导出状态", readConverterExp = "0=未导出,1=已导出")
     private String remark2;
     /**
-     * 预留字段3
+     * 预留字段3 用作存储字段勾选
      */
     private String remark3;
+
+    /**
+     * 识别字段总数
+     */
+    private String fieldTotal;
+    /**
+     * 识别正确字段数量
+     */
+    private String rightTotal;
 
     /**
      * 渠道
@@ -228,6 +237,8 @@ public class OcrTrade extends BaseEntity {
                 .append("remark1", getRemark1())
                 .append("remark2", getRemark2())
                 .append("remark3", getRemark3())
+                .append("fieldTotal", getFieldTotal())
+                .append("rightTotal", getRightTotal())
                 .toString();
     }
 
@@ -253,5 +264,21 @@ public class OcrTrade extends BaseEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getFieldTotal() {
+        return fieldTotal;
+    }
+
+    public void setFieldTotal(String fieldTotal) {
+        this.fieldTotal = fieldTotal;
+    }
+
+    public String getRightTotal() {
+        return rightTotal;
+    }
+
+    public void setRightTotal(String rightTotal) {
+        this.rightTotal = rightTotal;
     }
 }

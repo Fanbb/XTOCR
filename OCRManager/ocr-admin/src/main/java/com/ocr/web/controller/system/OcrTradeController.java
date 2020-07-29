@@ -7,6 +7,7 @@ import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.core.page.TableDataInfo;
 import com.ocr.common.core.text.Convert;
 import com.ocr.common.enums.BusinessType;
+import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.poi.ExcelUtil;
 import com.ocr.framework.util.ShiroUtils;
 import com.ocr.system.domain.OcrImage;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -59,10 +63,10 @@ public class OcrTradeController extends BaseController {
     @RequiresPermissions("system:ocrTrade:view")
     @GetMapping()
     public String ocrTrade(ModelMap mmap) {
-        if (ShiroUtils.getSysUser().getRemark().equals("渠道业务员")){
-            mmap.addAttribute("channels",channelService.selectChannelsByUserId(ShiroUtils.getSysUser().getUserId()));
-        }else {
-            mmap.addAttribute("channels",channelService.selectChannelAll());
+        if (ShiroUtils.getSysUser().getRemark().equals("渠道业务员")) {
+            mmap.addAttribute("channels", channelService.selectChannelsByUserId(ShiroUtils.getSysUser().getUserId()));
+        } else {
+            mmap.addAttribute("channels", channelService.selectChannelAll());
         }
         return prefix + "/ocrTrade";
     }
@@ -96,7 +100,7 @@ public class OcrTradeController extends BaseController {
     @ResponseBody
     public TableDataInfo list(OcrTrade ocrTrade) {
         startPage();
-        if (ShiroUtils.getSysUser().getRemark().equals("渠道业务员")){
+        if (ShiroUtils.getSysUser().getRemark().equals("渠道业务员")) {
             ocrTrade.setUserId(ShiroUtils.getSysUser().getUserId());
         }
         List<OcrTrade> list = ocrTradeService.selectOcrTradeList(ocrTrade);
@@ -140,6 +144,30 @@ public class OcrTradeController extends BaseController {
     @PostMapping("/blend")
     @ResponseBody
     public AjaxResult blend(OcrTrade ocrTrade) {
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
+    @RequiresPermissions("system:ocrTrade:blend")
+    @Log(title = "流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldBlendIdCardFront")
+    @ResponseBody
+    public AjaxResult fieldBlendIdCardFront(IDCardFrontBack idCardFrontBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(idCardFrontBack.getTradeId());
+        Integer fieldTotal=IDCardFrontBack.class.getDeclaredFields().length-1;
+        Integer rightTotal = 0;
+        try{
+            rightTotal = testReflect(idCardFrontBack);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if (fieldTotal==rightTotal){
+            ocrTrade.setTickStatus("1");
+        }else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(idCardFrontBack));
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
 
@@ -277,7 +305,13 @@ public class OcrTradeController extends BaseController {
 
         if (ocrTrade.getImageType().equals("IDCardFront")) {
             IDCardFront idCardFront = JSON.parseObject(ocrTrade.getRemark1(), IDCardFront.class);
+            IDCardFrontBack idCardFrontBack = new IDCardFrontBack("","0","0","0","0","0","0","0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())){
+                idCardFrontBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardFrontBack.class);
+            }
+            idCardFrontBack.setTradeId(ocrTrade.getId());
             mmap.put("idCardFront", idCardFront);
+            mmap.put("idCardFrontBack", idCardFrontBack);
             return prefix + "/detail/cardFront";
         } else if (ocrTrade.getImageType().equals("IDCardBack")) {
             IDCardBack idCardBack = JSON.parseObject(ocrTrade.getRemark1(), IDCardBack.class);
@@ -295,7 +329,7 @@ public class OcrTradeController extends BaseController {
             PremisesPermit premisesPermit = JSON.parseObject(ocrTrade.getRemark1(), PremisesPermit.class);
             mmap.put("premisesPermit", premisesPermit);
             return prefix + "/detail/premisesPermit";
-        }else {
+        } else {
             return prefix + "/detail/data";
         }
 
@@ -350,6 +384,23 @@ public class OcrTradeController extends BaseController {
         map.put("name", listName);
         map.put("data", EnchantsEntity);
         return map;
+    }
+
+    public static Integer testReflect(Object model) throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Integer count = 0;
+        Field[] field = model.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
+        for (int j = 0; j < field.length; j++) {     //遍历所有属性
+            String name = field[j].getName();    //获取属性的名字
+            if (!name.equals("tradeId")){
+                name = name.substring(0, 1).toUpperCase() + name.substring(1); //将属性的首字符大写，方便构造get，set方法
+                Method m = model.getClass().getMethod("get" + name);
+                String value = (String) m.invoke(model);    //调用getter方法获取属性值
+                if (null != value && value.equals("0")) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
 
