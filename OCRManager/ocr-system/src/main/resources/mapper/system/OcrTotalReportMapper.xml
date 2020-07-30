@@ -12,6 +12,9 @@
         <result property="tickRate" column="TICK_RATE"/>
         <result property="platTotal" column="PLAT_TOTAL"/>
         <result property="platTate" column="PLAT_RATE"/>
+        <result property="rightTotal" column="RIGHT_TOTAL"/>
+        <result property="fieldTotal" column="FIELD_TOTAL"/>
+        <result property="fieldRate" column="FILED_RATE"/>
     </resultMap>
 
     <sql id="selectOcrTotalReportVo">
@@ -21,7 +24,10 @@
        SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)  TICK_TOTAL,
        ROUND(SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' TICK_RATE ,
        SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)  PLAT_TOTAL,
-       ROUND(SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' PLAT_RATE FROM OCR_TRADE T
+       ROUND(SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' PLAT_RATE,
+       SUM(T.RIGHT_TOTAL) RIGHT_TOTAL ,
+       SUM(T.FIELD_TOTAL) FIELD_TOTAL ,
+       CASE WHEN SUM(T.RIGHT_TOTAL) IS NOT NULL THEN ROUND(SUM(T.RIGHT_TOTAL)/SUM(T.FIELD_TOTAL)*100,2)||'%' ELSE '' END FILED_RATE FROM OCR_TRADE T
     </sql>
 
     <select id="selectOcrTotalReportList" parameterType="OcrTotalReport" resultMap="OcrTotalReportResult">

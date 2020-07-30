@@ -49,6 +49,15 @@ public class TickStatusView extends BaseEntity {
     @Excel(name = "识别率", prompt = "识别率")
     private String ocrRate;
 
+    @Excel(name = "字段勾选成功数 ", prompt = "字段勾选成功数")
+    private Integer rightTotal;
+
+    @Excel(name = "字段总数", prompt = "字段总数")
+    private Integer fieldTotal;
+
+    @Excel(name = "字段识别率", prompt = "字段识别率")
+    private String tickRate;
+
     public Date getOcrDate() {
         return ocrDate;
     }
@@ -89,13 +98,40 @@ public class TickStatusView extends BaseEntity {
         this.ocrRate = ocrRate;
     }
 
-    public TickStatusView(Date ocrDate, String channel, String imageName, Integer tickTotal, Integer tradeTotal, String ocrRate) {
+    public Integer getRightTotal() {
+        return rightTotal;
+    }
+
+    public void setRightTotal(Integer rightTotal) {
+        this.rightTotal = rightTotal;
+    }
+
+    public Integer getFieldTotal() {
+        return fieldTotal;
+    }
+
+    public void setFieldTotal(Integer fieldTotal) {
+        this.fieldTotal = fieldTotal;
+    }
+
+    public String getTickRate() {
+        return tickRate;
+    }
+
+    public void setTickRate(String tickRate) {
+        this.tickRate = tickRate;
+    }
+
+    public TickStatusView(Date ocrDate, String channel, String imageName, Integer tickTotal, Integer tradeTotal, String ocrRate, Integer rightTotal, Integer fieldTotal, String tickRate) {
         this.ocrDate = ocrDate;
         this.channel = channel;
         this.imageName = imageName;
         this.tickTotal = tickTotal;
         this.tradeTotal = tradeTotal;
         this.ocrRate = ocrRate;
+        this.rightTotal = rightTotal;
+        this.fieldTotal = fieldTotal;
+        this.tickRate = tickRate;
     }
 
     public TickStatusView() {
@@ -107,7 +143,11 @@ public class TickStatusView extends BaseEntity {
                 .append("channel", getChannel())
                 .append("imageName", getImageName())
                 .append("tickTotal", getTickTotal())
-                .append("tradeTotal", getOcrRate())
+                .append("tradeTotal", getTradeTotal())
+                .append("ocrRate", getOcrRate())
+                .append("rightTotal", getRightTotal())
+                .append("fieldTotal", getFieldTotal())
+                .append("tickRate", getTickRate())
                 .toString();
     }
 

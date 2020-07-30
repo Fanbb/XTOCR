@@ -43,10 +43,21 @@ public class OcrTotalReport extends BaseEntity {
      * 平台返回识别成功率
      */
     private String platTate;
+    /**
+     * 字段勾选成功数
+     */
+    private Integer rightTotal;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+    /**
+     * 字段总数
+     */
+    private Integer fieldTotal;
+
+    /**
+     * 字段识别率
+     */
+    private String fieldRate;
+
 
     public String getImageName() {
         return imageName;
@@ -112,10 +123,34 @@ public class OcrTotalReport extends BaseEntity {
         this.platTate = platTate;
     }
 
+    public Integer getRightTotal() {
+        return rightTotal;
+    }
+
+    public void setRightTotal(Integer rightTotal) {
+        this.rightTotal = rightTotal;
+    }
+
+    public Integer getFieldTotal() {
+        return fieldTotal;
+    }
+
+    public void setFieldTotal(Integer fieldTotal) {
+        this.fieldTotal = fieldTotal;
+    }
+
+    public String getFieldRate() {
+        return fieldRate;
+    }
+
+    public void setFieldRate(String fieldRate) {
+        this.fieldRate = fieldRate;
+    }
+
     public OcrTotalReport() {
     }
 
-    public OcrTotalReport(String imageName, String tradeTotal, String ocrTotal, String ocrRate, String tickTotal, String tickRate, String platTotal, String platTate) {
+    public OcrTotalReport(String imageName, String tradeTotal, String ocrTotal, String ocrRate, String tickTotal, String tickRate, String platTotal, String platTate, Integer rightTotal, Integer fieldTotal, String fieldRate) {
         this.imageName = imageName;
         this.tradeTotal = tradeTotal;
         this.ocrTotal = ocrTotal;
@@ -124,6 +159,9 @@ public class OcrTotalReport extends BaseEntity {
         this.tickRate = tickRate;
         this.platTotal = platTotal;
         this.platTate = platTate;
+        this.rightTotal = rightTotal;
+        this.fieldTotal = fieldTotal;
+        this.fieldRate = fieldRate;
     }
 
     @Override
@@ -137,6 +175,9 @@ public class OcrTotalReport extends BaseEntity {
                 ", tickRate='" + tickRate + '\'' +
                 ", platTotal='" + platTotal + '\'' +
                 ", platTate='" + platTate + '\'' +
+                ", rightTotal=" + rightTotal +
+                ", fieldTotal=" + fieldTotal +
+                ", fieldRate='" + fieldRate + '\'' +
                 '}';
     }
 }

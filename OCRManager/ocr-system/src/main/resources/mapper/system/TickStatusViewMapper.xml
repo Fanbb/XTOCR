@@ -10,10 +10,13 @@
         <result property="tickTotal" column="tick_total"/>
         <result property="tradeTotal" column="trade_total"/>
         <result property="ocrRate" column="ocr_rate"/>
+        <result property="rightTotal" column="right_total"/>
+        <result property="fieldTotal" column="field_total"/>
+        <result property="tickRate" column="tick_rate"/>
     </resultMap>
 
     <sql id="selectTickStatusViewVo">
-        select ocr_date,channel,image_name,tick_total,trade_total,ocr_rate from tick_status_view
+        select ocr_date,channel,image_name,tick_total,trade_total,ocr_rate,right_total,field_total,tick_rate from tick_status_view
     </sql>
 
     <select id="selectTickStatusViewList" parameterType="TickStatusView" resultMap="TickStatusViewResult">
@@ -25,6 +28,9 @@
             <if test="tickTotal != null  and tickTotal != '' ">and tick_total = #{tickTotal}</if>
             <if test="tradeTotal != null  and tradeTotal != '' ">and trade_total = #{tradeTotal}</if>
             <if test="ocrRate != null  and ocrRate != '' ">and ocr_rate = #{ocrRate}</if>
+            <if test="rightTotal != null  and rightTotal != '' ">and right_total = #{rightTotal}</if>
+            <if test="fieldTotal != null  and fieldTotal != '' ">and field_total = #{fieldTotal}</if>
+            <if test="tickRate != null  and tickRate != '' ">and tick_rate = #{tickRate}</if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
                 AND ocr_date &gt;= to_date(#{params.beginTime},'yyyy-MM-dd HH24:mi:ss')
             </if>
