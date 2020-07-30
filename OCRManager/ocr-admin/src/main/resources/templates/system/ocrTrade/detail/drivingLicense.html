@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('流水查询详情')"/>
+</head>
+<body class="gray-bg">
+<div style="padding:5px;overflow-y:auto">
+    <div class="col-md-12">
+        <div class="col-sm-8">
+            <div class="box box-primary" style="height: auto">
+                <div class="box-header with-border">
+                    <div class="box-header with-border">
+                        <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
+                    </div>
+                    <div class="box-body" id="imageBody" style="width:100%;overflow-y:auto">
+                        <div class="imageBox" id="imageBox" style="margin:0px 10px">
+                            <img class="span" style="width:98%"
+                                 th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-content" id="div2">
+                <form style="width: 100%" id="form-user-edit" th:object="${drivingLicenseBack}">
+                    <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
+                    <div class="row">
+                        <h2 class="box-title" th:align="center" style="font-weight:bold">行驶证识别信息：</h2>
+                    </div>
+                    <table style="font-size: 15px">
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">号牌号码：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getPlateNumber()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="plateNumber" name="plateNumber" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{plateNumber}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">车辆类型：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getVehicleType()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="vehicleType" name="vehicleType" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{vehicleType}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">所有人：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getOwner()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="owner" name="owner" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{owner}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">住址：</td>
+                            <td width="45%"><textarea style="font-size:19px" disabled="disabled">[[@{${drivingLicense.getAddress()}}]]</textarea>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="address" name="address" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{address}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">使用性质：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getUseNature()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="useNature" name="useNature" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{useNature}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">品牌型号：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getBrandModel()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="brandModel" name="brandModel" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{brandModel}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">识别代码：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getIdentifyCode()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="identifyCode" name="identifyCode" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{identifyCode}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">发动机号：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getEngineNumber()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="engineNumber" name="engineNumber" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{engineNumber}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">注册日期：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getRegistrationDate()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="registrationDate" name="registrationDate" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{registrationDate}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">发证日期：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getIssueDate()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="issueDate" name="issueDate" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{issueDate}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">发证单位：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getIssueUnit()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="issueUnit" name="issueUnit" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{issueUnit}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">档案编号：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getFileNumber()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="fileNumber" name="fileNumber" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{fileNumber}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">核定载人数：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getNumber()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="number" name="number" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{number}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">总质量：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getTotalMass()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="totalMass" name="totalMass" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{totalMass}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">整备质量：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getUnladenMass()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="unladenMass" name="unladenMass" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{unladenMass}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">核定载质量：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getRatifiedMass()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="ratifiedMass" name="ratifiedMass" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{ratifiedMass}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">外廓尺寸：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getGabarite()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="gabarite" name="gabarite" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{gabarite}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">准牵引总质量：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getTractionMass()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="tractionMass" name="tractionMass" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{tractionMass}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">备注：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getRemark()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="remark" name="remark" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{remark}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">检验记录：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${drivingLicense.getInspectionRecord()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="inspectionRecord" name="inspectionRecord" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{inspectionRecord}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr style="height: 50px">
+                            <td></td>
+                            <td align="center" colspan="2">
+                                <div class="col-sm-7">
+                                    <button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">
+                                        提交
+                                    </button>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script>
+    var prefix = ctx + "system/ocrTrade";
+    window.onload = function () {
+        var myDiv = document.getElementById("imageBody");
+        var myDiv2 = document.getElementById("div2");
+        if (window.screen.height == 768) {
+            myDiv.style.height = "500px";
+            myDiv2.style.height = "523px";
+        } else if (window.screen.height == 1080) {
+            myDiv.style.height = "800px";
+            myDiv2.style.height = "825px";
+        }
+    }
+
+    function submit2() {
+        if ($.validate.form()) {
+            $.ajax({
+                url: prefix + "/fieldDrivingLicenseBack",
+                type: "post",
+                data: {
+                    "plateNumber": $("input[name='plateNumber']:checked").val(),
+                    "vehicleType": $("input[name='vehicleType']:checked").val(),
+                    "owner": $("input[name='owner']:checked").val(),
+                    "address": $("input[name='address']:checked").val(),
+                    "useNature": $("input[name='useNature']:checked").val(),
+                    "brandModel": $("input[name='brandModel']:checked").val(),
+                    "identifyCode": $("input[name='identifyCode']:checked").val(),
+                    "engineNumber": $("input[name='engineNumber']:checked").val(),
+                    "registrationDate": $("input[name='registrationDate']:checked").val(),
+                    "issueDate": $("input[name='issueDate']:checked").val(),
+                    "issueUnit": $("input[name='issueUnit']:checked").val(),
+                    "fileNumber": $("input[name='fileNumber']:checked").val(),
+                    "number": $("input[name='number']:checked").val(),
+                    "totalMass": $("input[name='totalMass']:checked").val(),
+                    "unladenMass": $("input[name='unladenMass']:checked").val(),
+                    "gabarite": $("input[name='gabarite']:checked").val(),
+                    "tractionMass": $("input[name='tractionMass']:checked").val(),
+                    "remark": $("input[name='remark']:checked").val(),
+                    "tradeId": $("input[name='tradeId']").val()
+                },
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg("保存成功,正在刷新数据请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successTabCallback(result);
+                }
+            })
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('流水查询详情')"/>
+</head>
+<body class="gray-bg">
+<div style="padding:5px;overflow-y:auto">
+    <div class="col-md-12">
+        <div class="col-sm-8">
+            <div class="box box-primary" style="height: auto">
+                <div class="box-header with-border">
+                    <div class="box-header with-border">
+                        <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
+                    </div>
+                    <div class="box-body" id="imageBody" style="width:100%;overflow-y:auto">
+                        <div class="imageBox" id="imageBox" style="margin:0px 10px">
+                            <img class="span" style="width:98%"
+                                 th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-content" id="div2">
+                <form style="width: 100%" id="form-user-edit" th:object="${residenceBookletBack}">
+                    <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
+                    <div class="row">
+                        <h2 class="box-title" th:align="center" style="font-weight:bold">户口本识别信息：</h2>
+                    </div>
+                    <table style="font-size: 15px">
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">姓名：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${residenceBookletBack.getNativePlace()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="nativePlace" name="nativePlace" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{nativePlace}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">住址：</td>
+                            <td width="45%"><textarea style="font-size:19px" disabled="disabled">[[@{${residenceBookletBack.getAddress()}}]]</textarea>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="address" name="address" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{address}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td></td>
+                            <td align="center" colspan="2">
+                                <div class="col-sm-7">
+                                    <button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">
+                                        提交
+                                    </button>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script>
+    var prefix = ctx + "system/ocrTrade";
+    window.onload = function () {
+        var myDiv = document.getElementById("imageBody");
+        var myDiv2 = document.getElementById("div2");
+        if (window.screen.height == 768) {
+            myDiv.style.height = "500px";
+            myDiv2.style.height = "523px";
+        } else if (window.screen.height == 1080) {
+            myDiv.style.height = "800px";
+            myDiv2.style.height = "825px";
+        }
+    }
+
+    function submit2() {
+        if ($.validate.form()) {
+            $.ajax({
+                url: prefix + "/fieldResidenceBookletBack",
+                type: "post",
+                data: {
+                    "nativePlace": $("input[name='nativePlace']:checked").val(),
+                    "address": $("input[name='address']:checked").val(),
+                    "tradeId": $("input[name='tradeId']").val()
+                },
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg("保存成功,正在刷新数据请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successTabCallback(result);
+                }
+            })
+        }
+    }
+</script>
+
+</body>
+</html>
