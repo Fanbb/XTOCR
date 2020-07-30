@@ -111,7 +111,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setImageName("0");
         ocrTrade.setOcrStatus("1");
         ocrTrade.setTickStatus("2");
-        ocrTrade.setPlatStatus("0");
+        ocrTrade.setPlatStatus("1");
         ocrTrade.setRemark2("0");
         ocrTrade.setRemark1(result);
         ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
