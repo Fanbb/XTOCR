@@ -152,16 +152,16 @@ public class OcrTradeController extends BaseController {
     @ResponseBody
     public AjaxResult fieldBlendIdCardFront(IDCardFrontBack idCardFrontBack) {
         OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(idCardFrontBack.getTradeId());
-        Integer fieldTotal=IDCardFrontBack.class.getDeclaredFields().length-1;
+        Integer fieldTotal = IDCardFrontBack.class.getDeclaredFields().length - 1;
         Integer rightTotal = 0;
-        try{
+        try {
             rightTotal = testReflect(idCardFrontBack);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (fieldTotal==rightTotal){
+        if (fieldTotal == rightTotal) {
             ocrTrade.setTickStatus("1");
-        }else {
+        } else {
             ocrTrade.setTickStatus("2");
         }
         ocrTrade.setFieldTotal(fieldTotal.toString());
@@ -175,16 +175,16 @@ public class OcrTradeController extends BaseController {
     @ResponseBody
     public AjaxResult fieldBlendIdCardBack(IDCardBackBack idCardBackBack) {
         OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(idCardBackBack.getTradeId());
-        Integer fieldTotal=IDCardBackBack.class.getDeclaredFields().length-1;
+        Integer fieldTotal = IDCardBackBack.class.getDeclaredFields().length - 1;
         Integer rightTotal = 0;
-        try{
+        try {
             rightTotal = testReflect(idCardBackBack);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (fieldTotal==rightTotal){
+        if (fieldTotal == rightTotal) {
             ocrTrade.setTickStatus("1");
-        }else {
+        } else {
             ocrTrade.setTickStatus("2");
         }
         ocrTrade.setFieldTotal(fieldTotal.toString());
@@ -198,16 +198,16 @@ public class OcrTradeController extends BaseController {
     @ResponseBody
     public AjaxResult fieldBlendBankCardBack(BankCardBack bankCardBack) {
         OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(bankCardBack.getTradeId());
-        Integer fieldTotal=BankCardBack.class.getDeclaredFields().length-1;
+        Integer fieldTotal = BankCardBack.class.getDeclaredFields().length - 1;
         Integer rightTotal = 0;
-        try{
+        try {
             rightTotal = testReflect(bankCardBack);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (fieldTotal==rightTotal){
+        if (fieldTotal == rightTotal) {
             ocrTrade.setTickStatus("1");
-        }else {
+        } else {
             ocrTrade.setTickStatus("2");
         }
         ocrTrade.setFieldTotal(fieldTotal.toString());
@@ -221,16 +221,16 @@ public class OcrTradeController extends BaseController {
     @ResponseBody
     public AjaxResult fieldBlendDepositReceiptBack(DepositReceiptBack depositReceiptBack) {
         OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(depositReceiptBack.getTradeId());
-        Integer fieldTotal=DepositReceiptBack.class.getDeclaredFields().length-1;
+        Integer fieldTotal = DepositReceiptBack.class.getDeclaredFields().length - 1;
         Integer rightTotal = 0;
-        try{
+        try {
             rightTotal = testReflect(depositReceiptBack);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (fieldTotal==rightTotal){
+        if (fieldTotal == rightTotal) {
             ocrTrade.setTickStatus("1");
-        }else {
+        } else {
             ocrTrade.setTickStatus("2");
         }
         ocrTrade.setFieldTotal(fieldTotal.toString());
@@ -245,21 +245,159 @@ public class OcrTradeController extends BaseController {
     @ResponseBody
     public AjaxResult fieldBlendPremisesPermitBack(PremisesPermitBack premisesPermitBack) {
         OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(premisesPermitBack.getTradeId());
-        Integer fieldTotal=PremisesPermitBack.class.getDeclaredFields().length-1;
+        Integer fieldTotal = PremisesPermitBack.class.getDeclaredFields().length - 1;
         Integer rightTotal = 0;
-        try{
+        try {
             rightTotal = testReflect(premisesPermitBack);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (fieldTotal==rightTotal){
+        if (fieldTotal == rightTotal) {
             ocrTrade.setTickStatus("1");
-        }else {
+        } else {
             ocrTrade.setTickStatus("2");
         }
         ocrTrade.setFieldTotal(fieldTotal.toString());
         ocrTrade.setRightTotal(rightTotal.toString());
         ocrTrade.setRemark3(JSON.toJSONString(premisesPermitBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
+    @Log(title = "户口本流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldResidenceBookletBack")
+    @ResponseBody
+    public AjaxResult fieldResidenceBookletBack(ResidenceBookletBack residenceBookletBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(residenceBookletBack.getTradeId());
+        Integer fieldTotal = ResidenceBookletBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(residenceBookletBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(residenceBookletBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
+    @Log(title = "结婚证流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldMarriageLicenseBack")
+    @ResponseBody
+    public AjaxResult fieldMarriageLicenseBack(MarriageLicenseBack marriageLicenseBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(marriageLicenseBack.getTradeId());
+        Integer fieldTotal = MarriageLicenseBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(marriageLicenseBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(marriageLicenseBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
+    @Log(title = "行驶证流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldDrivingLicenseBack")
+    @ResponseBody
+    public AjaxResult fieldDrivingLicenseBack(DrivingLicenseBack drivingLicenseBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(drivingLicenseBack.getTradeId());
+        Integer fieldTotal = DrivingLicenseBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(drivingLicenseBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(drivingLicenseBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
+    @Log(title = "驾驶证流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldDriversLicenseBack")
+    @ResponseBody
+    public AjaxResult fieldDriversLicenseBack(DriversLicenseBack driversLicenseBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(driversLicenseBack.getTradeId());
+        Integer fieldTotal = DriversLicenseBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(driversLicenseBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(driversLicenseBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
+    @Log(title = "车牌号流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldPlateNumberBack")
+    @ResponseBody
+    public AjaxResult fieldPlateNumberBack(PlateNumberBack plateNumberBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(plateNumberBack.getTradeId());
+        Integer fieldTotal = PlateNumberBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(plateNumberBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(plateNumberBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+
+    @Log(title = "营业执照流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldBusinessLicenseBack")
+    @ResponseBody
+    public AjaxResult fieldBusinessLicenseBack(BusinessLicenseBack businessLicenseBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(businessLicenseBack.getTradeId());
+        Integer fieldTotal = BusinessLicenseBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(businessLicenseBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(businessLicenseBack));
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
 
@@ -397,8 +535,8 @@ public class OcrTradeController extends BaseController {
 
         if (ocrTrade.getImageType().equals("IDCardFront")) {
             IDCardFront idCardFront = JSON.parseObject(ocrTrade.getRemark1(), IDCardFront.class);
-            IDCardFrontBack idCardFrontBack = new IDCardFrontBack("","0","0","0","0","0","0","0");
-            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())){
+            IDCardFrontBack idCardFrontBack = new IDCardFrontBack("", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 idCardFrontBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardFrontBack.class);
             }
             idCardFrontBack.setTradeId(ocrTrade.getId());
@@ -407,8 +545,8 @@ public class OcrTradeController extends BaseController {
             return prefix + "/detail/cardFront";
         } else if (ocrTrade.getImageType().equals("IDCardBack")) {
             IDCardBack idCardBack = JSON.parseObject(ocrTrade.getRemark1(), IDCardBack.class);
-            IDCardBackBack idCardBackBack = new IDCardBackBack("","0","0","0");
-            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())){
+            IDCardBackBack idCardBackBack = new IDCardBackBack("", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 idCardBackBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardBackBack.class);
             }
             idCardBackBack.setTradeId(ocrTrade.getId());
@@ -417,8 +555,8 @@ public class OcrTradeController extends BaseController {
             return prefix + "/detail/cardBack";
         } else if (ocrTrade.getImageType().equals("BankCard")) {
             BankCard bankCard = JSON.parseObject(ocrTrade.getRemark1(), BankCard.class);
-            BankCardBack bankCardBack = new BankCardBack("","0");
-            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())){
+            BankCardBack bankCardBack = new BankCardBack("", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 bankCardBack = JSON.parseObject(ocrTrade.getRemark3(), BankCardBack.class);
             }
             bankCardBack.setTradeId(ocrTrade.getId());
@@ -427,8 +565,8 @@ public class OcrTradeController extends BaseController {
             return prefix + "/detail/bankCard";
         } else if (ocrTrade.getImageType().equals("Deposit")) {
             DepositReceipt depositReceipt = JSON.parseObject(ocrTrade.getRemark1(), DepositReceipt.class);
-            DepositReceiptBack depositReceiptBack = new DepositReceiptBack("","0","0","0","0","0");
-            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())){
+            DepositReceiptBack depositReceiptBack = new DepositReceiptBack("", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 depositReceiptBack = JSON.parseObject(ocrTrade.getRemark3(), DepositReceiptBack.class);
             }
             depositReceiptBack.setTradeId(ocrTrade.getId());
@@ -437,14 +575,84 @@ public class OcrTradeController extends BaseController {
             return prefix + "/detail/depositReceipt";
         } else if (ocrTrade.getImageType().equals("PremisesPermit")) {
             PremisesPermit premisesPermit = JSON.parseObject(ocrTrade.getRemark1(), PremisesPermit.class);
-            PremisesPermitBack premisesPermitBack = new PremisesPermitBack("","0","0","0","0","0","0","0","0");
-            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())){
+            PremisesPermitBack premisesPermitBack = new PremisesPermitBack("", "0", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 premisesPermitBack = JSON.parseObject(ocrTrade.getRemark3(), PremisesPermitBack.class);
             }
             premisesPermitBack.setTradeId(ocrTrade.getId());
             mmap.put("premisesPermitBack", premisesPermitBack);
             mmap.put("premisesPermit", premisesPermit);
             return prefix + "/detail/premisesPermit";
+        } /*else if (ocrTrade.getImageType().equals("Bankbook")) {
+            PremisesPermit premisesPermit = JSON.parseObject(ocrTrade.getRemark1(), PremisesPermit.class);
+            PremisesPermitBack premisesPermitBack = new PremisesPermitBack("", "0", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                premisesPermitBack = JSON.parseObject(ocrTrade.getRemark3(), PremisesPermitBack.class);
+            }
+            premisesPermitBack.setTradeId(ocrTrade.getId());
+            mmap.put("premisesPermitBack", premisesPermitBack);
+            mmap.put("premisesPermit", premisesPermit);
+            return prefix + "/detail/bankbook";
+        } */ else if (ocrTrade.getImageType().equals("ResidenceBooklet")) {
+            ResidenceBooklet residenceBooklet = JSON.parseObject(ocrTrade.getRemark1(), ResidenceBooklet.class);
+            ResidenceBookletBack residenceBookletBack = new ResidenceBookletBack("", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                residenceBookletBack = JSON.parseObject(ocrTrade.getRemark3(), ResidenceBookletBack.class);
+            }
+            residenceBookletBack.setTradeId(ocrTrade.getId());
+            mmap.put("residenceBookletBack", residenceBookletBack);
+            mmap.put("residenceBooklet", residenceBooklet);
+            return prefix + "/detail/residenceBooklet";
+        } else if (ocrTrade.getImageType().equals("MarriageLicense")) {
+            MarriageLicense marriageLicense = JSON.parseObject(ocrTrade.getRemark1(), MarriageLicense.class);
+            MarriageLicenseBack marriageLicenseBack = new MarriageLicenseBack("", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                marriageLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), MarriageLicenseBack.class);
+            }
+            marriageLicenseBack.setTradeId(ocrTrade.getId());
+            mmap.put("marriageLicenseBack", marriageLicenseBack);
+            mmap.put("marriageLicense", marriageLicense);
+            return prefix + "/detail/marriageLicense";
+        } else if (ocrTrade.getImageType().equals("DrivingLicense")) {
+            DrivingLicense drivingLicense = JSON.parseObject(ocrTrade.getRemark1(), DrivingLicense.class);
+            DrivingLicenseBack drivingLicenseBack = new DrivingLicenseBack("", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                drivingLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), DrivingLicenseBack.class);
+            }
+            drivingLicenseBack.setTradeId(ocrTrade.getId());
+            mmap.put("drivingLicenseBack", drivingLicenseBack);
+            mmap.put("drivingLicense", drivingLicense);
+            return prefix + "/detail/drivingLicense";
+        } else if (ocrTrade.getImageType().equals("DriversLicense")) {
+            DriversLicense driversLicense = JSON.parseObject(ocrTrade.getRemark1(), DriversLicense.class);
+            DriversLicenseBack driversLicenseBack = new DriversLicenseBack("", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                driversLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), DriversLicenseBack.class);
+            }
+            driversLicenseBack.setTradeId(ocrTrade.getId());
+            mmap.put("driversLicenseBack", driversLicenseBack);
+            mmap.put("driversLicense", driversLicense);
+            return prefix + "/detail/driversLicense";
+        } else if (ocrTrade.getImageType().equals("PlateNumber")) {
+            PlateNumber plateNumber = JSON.parseObject(ocrTrade.getRemark1(), PlateNumber.class);
+            PlateNumberBack plateNumberBack = new PlateNumberBack("", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                plateNumberBack = JSON.parseObject(ocrTrade.getRemark3(), PlateNumberBack.class);
+            }
+            plateNumberBack.setTradeId(ocrTrade.getId());
+            mmap.put("plateNumberBack", plateNumberBack);
+            mmap.put("plateNumber", plateNumber);
+            return prefix + "/detail/plateNumber";
+        } else if (ocrTrade.getImageType().equals("BusinessLicense")) {
+            BusinessLicense businessLicense = JSON.parseObject(ocrTrade.getRemark1(), BusinessLicense.class);
+            BusinessLicenseBack businessLicenseBack = new BusinessLicenseBack("", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                businessLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), BusinessLicenseBack.class);
+            }
+            businessLicenseBack.setTradeId(ocrTrade.getId());
+            mmap.put("businessLicenseBack", businessLicenseBack);
+            mmap.put("businessLicense", businessLicense);
+            return prefix + "/detail/businessLicense";
         } else {
             return prefix + "/detail/data";
         }
@@ -507,7 +715,7 @@ public class OcrTradeController extends BaseController {
         Field[] field = model.getClass().getDeclaredFields();        //获取实体类的所有属性，返回Field数组
         for (int j = 0; j < field.length; j++) {     //遍历所有属性
             String name = field[j].getName();    //获取属性的名字
-            if (!name.equals("tradeId")){
+            if (!name.equals("tradeId")) {
                 name = name.substring(0, 1).toUpperCase() + name.substring(1); //将属性的首字符大写，方便构造get，set方法
                 Method m = model.getClass().getMethod("get" + name);
                 String value = (String) m.invoke(model);    //调用getter方法获取属性值
