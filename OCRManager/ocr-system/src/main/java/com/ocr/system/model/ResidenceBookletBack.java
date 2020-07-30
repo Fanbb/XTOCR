@@ -2,10 +2,10 @@ package com.ocr.system.model;
 
 
 /**
- * 户口本
+ * 户口本副例
  * @author Jocker
  */
-public class ResidenceBooklet {
+public class ResidenceBookletBack {
     /**
      * 流水ID
      */
@@ -18,14 +18,6 @@ public class ResidenceBooklet {
      * 户籍地址
      */
     private String address;
-    /**
-     * 图片类型
-     */
-    private String imgType;
-    /**
-     * 识别结果
-     */
-    private String flag;
 
     public String getTradeId() {
         return tradeId;
@@ -51,41 +43,21 @@ public class ResidenceBooklet {
         this.address = address;
     }
 
-    public String getImgType() {
-        return imgType;
-    }
-
-    public void setImgType(String imgType) {
-        this.imgType = imgType;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public ResidenceBooklet(String tradeId, String nativePlace, String address, String imgType, String flag) {
+    public ResidenceBookletBack(String tradeId, String nativePlace, String address) {
         this.tradeId = tradeId;
         this.nativePlace = nativePlace;
         this.address = address;
-        this.imgType = imgType;
-        this.flag = flag;
     }
 
-    public ResidenceBooklet() {
+    public ResidenceBookletBack() {
     }
 
     @Override
     public String toString() {
-        return "ResidenceBooklet{" +
+        return "ResidenceBookletBack{" +
                 "tradeId='" + tradeId + '\'' +
                 ", nativePlace='" + nativePlace + '\'' +
                 ", address='" + address + '\'' +
-                ", imgType='" + imgType + '\'' +
-                ", flag='" + flag + '\'' +
                 '}';
     }
 }

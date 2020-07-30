@@ -2,10 +2,10 @@ package com.ocr.system.model;
 
 
 /**
- * 结婚证
+ * 结婚证副例
  * @author Jocker
  */
-public class MarriageLicense {
+public class MarriageLicenseBack {
     /**
      * 流水ID
      */
@@ -22,14 +22,6 @@ public class MarriageLicense {
      * 配偶身份证号
      */
     private String idCardNo;
-    /**
-     * 图片类型
-     */
-    private String imgType;
-    /**
-     * 识别结果
-     */
-    private String flag;
 
     public String getTradeId() {
         return tradeId;
@@ -63,43 +55,23 @@ public class MarriageLicense {
         this.idCardNo = idCardNo;
     }
 
-    public String getImgType() {
-        return imgType;
+    public MarriageLicenseBack() {
     }
 
-    public void setImgType(String imgType) {
-        this.imgType = imgType;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public MarriageLicense() {
-    }
-
-    public MarriageLicense(String tradeId, String marriageNo, String name, String idCardNo, String imgType, String flag) {
+    public MarriageLicenseBack(String tradeId, String marriageNo, String name, String idCardNo) {
         this.tradeId = tradeId;
         this.marriageNo = marriageNo;
         this.name = name;
         this.idCardNo = idCardNo;
-        this.imgType = imgType;
-        this.flag = flag;
     }
 
     @Override
     public String toString() {
-        return "MarriageLicense{" +
+        return "MarriageLicenseBack{" +
                 "tradeId='" + tradeId + '\'' +
                 ", marriageNo='" + marriageNo + '\'' +
                 ", name='" + name + '\'' +
                 ", idCardNo='" + idCardNo + '\'' +
-                ", imgType='" + imgType + '\'' +
-                ", flag='" + flag + '\'' +
                 '}';
     }
 }
