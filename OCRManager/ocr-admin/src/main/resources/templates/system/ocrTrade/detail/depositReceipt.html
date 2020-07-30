@@ -23,50 +23,83 @@
         </div>
         <div class="col-sm-4">
             <div class="form-content" id="div2">
-                <form style="width: 100%" id="form-user-edit" th:object="${ocrTrade}">
-                    <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
+                <form style="width: 100%" id="form-user-edit" th:object="${depositReceiptBack}">
+                    <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
                     <div class="row">
                         <h2 class="box-title" th:align="center" style="font-weight:bold">存单识别信息：</h2>
                     </div>
                     <table style="font-size: 15px">
                         <tr style="height: 50px">
-                            <td width="30%" align="right">户名：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" style="font-size: 19px"
-                                                          readonly="true"
-                                                          disabled="disabled"
-                                                          th:value="@{${depositReceipt.getName()}}"/>
+                            <td width="21%" align="right">户名：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${depositReceipt.getName()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="name" name="name" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{name}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">存单号：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" style="font-size: 19px" readonly="true"
-                                                          disabled="disabled" th:value="@{${depositReceipt.getDepositNo()}}"/>
+                            <td width="21%" align="right">存单号：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${depositReceipt.getDepositNo()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="depositNo" name="depositNo" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{depositNo}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">账号：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" style="font-size: 19px" readonly="true"
-                                                          disabled="disabled" th:value="@{${depositReceipt.getAccNo()}}"/>
+                            <td width="21%" align="right">账号：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px;width: 230px"
+                                                   disabled="disabled" th:value="@{${depositReceipt.getAccNo()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="accNo" name="accNo" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{accNo}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">金额：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" style="font-size: 19px" readonly="true"
-                                                          disabled="disabled" th:value="@{${depositReceipt.getAmt()}}"/>
+                            <td width="21%" align="right">金额：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${depositReceipt.getAmt()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="amt" name="amt" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{amt}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">金额大写：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" style="font-size: 19px" readonly="true"
-                                                          disabled="disabled" th:value="@{${depositReceipt.getAmtCapital()}}"/>
+                            <td width="21%" align="right">金额大写：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${depositReceipt.getAmtCapital()}}"/>
                             </td>
-                        </tr>
-                        <tr style="height: 50px">
-                            <td width="30%" align="right">人工勾对：</td>
-                            <td width="70%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('blend_status')}">
-                                    <input type="radio" id="tickStatus" name="tickStatus" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{tickStatus}">
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="amtCapital" name="amtCapital" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{amtCapital}">
                                     <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
                             </td>
@@ -80,6 +113,7 @@
                                     </button>
                                 </div>
                             </td>
+                            <td></td>
                         </tr>
                     </table>
                 </form>
@@ -103,39 +137,38 @@
     }
 
     function submit2() {
-        var tickStatus = $("input[name='tickStatus']:checked").val();
-        if ( tickStatus == ''||tickStatus == null) {
-            return alert("请选择勾对！");
-        }
-        $.ajax({
-            url: prefix + "/blend",
-            type: "post",
-            data: {
-                "id": function () {
-                    return $("input[name='id']").val();
+        if ($.validate.form()) {
+            $.ajax({
+                url: prefix + "/fieldBlendDepositReceiptBack",
+                type: "post",
+                data: {
+                    "name": $("input[name='name']:checked").val(),
+                    "accNo": $("input[name='accNo']:checked").val(),
+                    "amt": $("input[name='amt']:checked").val(),
+                    "amtCapital": $("input[name='amtCapital']:checked").val(),
+                    "depositNo": $("input[name='depositNo']:checked").val(),
+                    "tradeId": $("input[name='tradeId']").val()
                 },
-                "tickStatus": function () {
-                    return tickStatus;
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg("保存成功,正在刷新数据请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successTabCallback(result);
                 }
-            },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("保存成功,正在刷新数据请稍后……", {
-                        icon: 1,
-                        time: 500,
-                        shade: [0.1, '#8F8F8F']
-                    }, function () {
-                        location.reload();
-                    });
-                } else {
-                    alert(result.msg);
-                }
-                if (typeof callback == "function") {
-                    callback(result);
-                }
-                $.operate.successTabCallback(result);
-            }
-        })
+            })
+        }
     }
 </script>
 </body>

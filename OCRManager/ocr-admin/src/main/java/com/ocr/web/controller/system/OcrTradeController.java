@@ -147,7 +147,7 @@ public class OcrTradeController extends BaseController {
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
 
-    @Log(title = "流水字段勾对", businessType = BusinessType.UPDATE)
+    @Log(title = "身份证正面流水字段勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/fieldBlendIdCardFront")
     @ResponseBody
     public AjaxResult fieldBlendIdCardFront(IDCardFrontBack idCardFrontBack) {
@@ -170,7 +170,7 @@ public class OcrTradeController extends BaseController {
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
 
-    @Log(title = "流水字段勾对", businessType = BusinessType.UPDATE)
+    @Log(title = "身份证反面流水字段勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/fieldBlendIdCardBack")
     @ResponseBody
     public AjaxResult fieldBlendIdCardBack(IDCardBackBack idCardBackBack) {
@@ -193,7 +193,7 @@ public class OcrTradeController extends BaseController {
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
 
-    @Log(title = "流水字段勾对", businessType = BusinessType.UPDATE)
+    @Log(title = "银行卡流水字段勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/fieldBlendBankCardBack")
     @ResponseBody
     public AjaxResult fieldBlendBankCardBack(BankCardBack bankCardBack) {
@@ -216,7 +216,7 @@ public class OcrTradeController extends BaseController {
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
 
-    @Log(title = "流水字段勾对", businessType = BusinessType.UPDATE)
+    @Log(title = "存单流水字段勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/fieldBlendDepositReceiptBack")
     @ResponseBody
     public AjaxResult fieldBlendDepositReceiptBack(DepositReceiptBack depositReceiptBack) {
@@ -240,7 +240,7 @@ public class OcrTradeController extends BaseController {
     }
 
 
-    @Log(title = "流水字段勾对", businessType = BusinessType.UPDATE)
+    @Log(title = "房本流水字段勾对", businessType = BusinessType.UPDATE)
     @PostMapping("/fieldBlendPremisesPermitBack")
     @ResponseBody
     public AjaxResult fieldBlendPremisesPermitBack(PremisesPermitBack premisesPermitBack) {

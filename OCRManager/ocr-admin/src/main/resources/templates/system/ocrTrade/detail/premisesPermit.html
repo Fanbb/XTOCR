@@ -23,72 +23,127 @@
         </div>
         <div class="col-md-4">
             <div class="form-content" id="div2">
-                <form style="width: 100%" id="form-user-edit" th:object="${ocrTrade}">
-                    <input type="text" hidden="hidden" name="id" th:field="*{id}"/>
+                <form style="width: 100%" id="form-user-edit" th:object="${premisesPermitBack}">
+                    <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
                     <div class="row">
                         <h2 class="box-title" th:align="center" style="font-weight:bold">不动产权证识别信息：</h2>
                     </div>
                     <table style="font-size: 15px">
                         <tr style="height: 50px">
-                            <td width="30%" align="right">姓名：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getName()}}"/>
+                            <td width="21%" align="right">姓名：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${premisesPermit.getName()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="name" name="name" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{name}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">产权证号：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getCertificateNo()}}"/>
+                            <td width="21%" align="right">产权证号：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${premisesPermit.getCertificateNo()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="certificateNo" name="certificateNo" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{certificateNo}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">房屋用途：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getPurpose()}}"/>
+                            <td width="21%" align="right">房屋用途：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${premisesPermit.getPurpose()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="purpose" name="purpose" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{purpose}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">房屋位置：</td>
-                            <td style="width: 70%">
-                                <textarea style="font-size:19px" disabled="disabled">[[@{${premisesPermit.getLocation()}}]]</textarea>
+                            <td width="21%" align="right">房屋位置：</td>
+                            <td width="45%"><textarea style="font-size:19px" disabled="disabled">[[@{${premisesPermit.getLocation()}}]]</textarea>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="location" name="location" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{location}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">建筑面积：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getBuiltArea()}}"/>
+                            <td width="21%" align="right">建筑面积：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled"
+                                                   th:value="@{${premisesPermit.getBuiltArea()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="builtArea" name="builtArea" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{builtArea}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">套内建筑面积：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getFloorArea()}}"/>
+                            <td width="21%" align="right">套内建筑面积：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled"
+                                                   th:value="@{${premisesPermit.getFloorArea()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="floorArea" name="floorArea" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{floorArea}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">土地使用方式：</td>
-                            <td style="width: 70%">
-                                <textarea style="font-size:19px" disabled="disabled">[[@{${premisesPermit.getLandUse()}}]]</textarea>
+                            <td width="21%" align="right">土地使用方式：</td>
+                            <td width="45%"><textarea style="font-size:19px" disabled="disabled">[[@{${premisesPermit.getLandUse()}}]]</textarea>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="landUse" name="landUse" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{landUse}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
-                            <td width="30%" align="right">房屋结构：</td>
-                            <td style="width: 70%"><input type="text" class="form-control" readonly="true" style="font-size: 19px"
-                                                          disabled="disabled"
-                                                          th:value="@{${premisesPermit.getStructure()}}"/>
+                            <td width="21%" align="right">房屋结构：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled"
+                                                   th:value="@{${premisesPermit.getStructure()}}"/>
                             </td>
-                        </tr>
-                        <tr style="height: 50px">
-                            <td width="30%" align="right">人工勾对：</td>
-                            <td width="70%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('blend_status')}">
-                                    <input type="radio" id="tickStatus" name="tickStatus" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{tickStatus}">
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;">
+                                    <input type="radio" id="structure" name="structure" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{structure}">
                                     <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
                             </td>
@@ -102,6 +157,7 @@
                                     </button>
                                 </div>
                             </td>
+                            <td></td>
                         </tr>
                     </table>
                 </form>
@@ -125,40 +181,41 @@
     }
 
     function submit2() {
-        var tickStatus = $("input[name='tickStatus']:checked").val();
-        if ( tickStatus == ''||tickStatus == null) {
-            return alert("请选择勾对！");
-        }
-        $.ajax({
-            url: prefix + "/blend",
-            type: "post",
-            data: {
-                "id": function () {
-                    return $("input[name='id']").val();
+        if ($.validate.form()) {
+            $.ajax({
+                url: prefix + "/fieldBlendPremisesPermitBack",
+                type: "post",
+                data: {
+                    "name": $("input[name='name']:checked").val(),
+                    "certificateNo": $("input[name='certificateNo']:checked").val(),
+                    "purpose": $("input[name='purpose']:checked").val(),
+                    "location": $("input[name='location']:checked").val(),
+                    "builtArea": $("input[name='builtArea']:checked").val(),
+                    "floorArea": $("input[name='floorArea']:checked").val(),
+                    "landUse": $("input[name='landUse']:checked").val(),
+                    "structure": $("input[name='structure']:checked").val(),
+                    "tradeId": $("input[name='tradeId']").val()
                 },
-                "tickStatus": function () {
-                    return tickStatus;
-                }
-            },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("保存成功,正在刷新数据请稍后……", {
-                        icon: 1,
-                        time: 500,
-                        shade: [0.1, '#8F8F8F']
-                    }, function () {
-                        location.reload();
-                    });
-                } else {
-                    alert(result.msg);
-                }
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg("保存成功,正在刷新数据请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
 
-                if (typeof callback == "function") {
-                    callback(result);
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successTabCallback(result);
                 }
-                $.operate.successTabCallback(result);
-            }
-        })
+            })
+        }
     }
 
 </script>
