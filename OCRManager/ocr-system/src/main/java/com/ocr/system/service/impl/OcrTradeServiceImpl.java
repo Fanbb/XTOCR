@@ -80,21 +80,49 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         return ocrTradeMapper.deleteOcrTradeByIds(Convert.toStrArray(ids));
     }
 
+    /**
+     * 身份证正面流水
+     * @param idCardFront
+     * @param channelCode 渠道
+     * @param imgId       影像id
+     * @return
+     */
     @Override
     public String insertIDCardFront(IDCardFront idCardFront, String channelCode, String imgId) {
         return getString(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront));
     }
 
+    /**
+     * 身份证反面流水
+     * @param idCardBack
+     * @param channelCode
+     * @param imgId       影像id
+     * @return
+     */
     @Override
     public String insertIDCardBack(IDCardBack idCardBack, String channelCode, String imgId) {
         return getString(channelCode, imgId, idCardBack.getImgType(), null, JSON.toJSONString(idCardBack));
     }
 
+    /**
+     * 银行卡流水
+     * @param bankCard
+     * @param channelCode 渠道
+     * @param imgId       影像id
+     * @return
+     */
     @Override
     public String insertBankCard(BankCard bankCard, String channelCode, String imgId) {
         return getString(channelCode, imgId, bankCard.getImgType(), bankCard.getBankCardNo(), JSON.toJSONString(bankCard));
     }
 
+    /**
+     * 存单流水
+     * @param depositReceipt
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
     @Override
     public String insertDeposit(DepositReceipt depositReceipt, String channelCode, String imgId) {
         return getString(channelCode, imgId, depositReceipt.getImgType(), depositReceipt.getDepositNo(), JSON.toJSONString(depositReceipt));
@@ -215,9 +243,88 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         return getStringFlag(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit),flag);
     }
 
+    /**
+     * 房本流水
+     * @param premisesPermit
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
     @Override
     public String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId) {
         return getString(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit));
+    }
+
+    /**
+     * 营业执照流水
+     * @param businessLicense
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertBusinessLicense(BusinessLicense businessLicense, String channelCode, String imgId) {
+        return getString(channelCode, imgId, businessLicense.getImgType(), businessLicense.getSocialCode(), JSON.toJSONString(businessLicense));
+    }
+
+    /**
+     * 车牌号流水
+     * @param plateNumber
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertPlateNumber(PlateNumber plateNumber, String channelCode, String imgId) {
+        return getString(channelCode, imgId, plateNumber.getImgType(), plateNumber.getNumber(), JSON.toJSONString(plateNumber));
+    }
+
+    /**
+     * 驾驶证流水
+     * @param driversLicense
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertDriversLicense(DriversLicense driversLicense, String channelCode, String imgId) {
+        return getString(channelCode, imgId, driversLicense.getImgType(), driversLicense.getFileNumber(), JSON.toJSONString(driversLicense));
+    }
+
+    /**
+     * 行驶证流水
+     * @param drivingLicense
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertDrivingLicense(DrivingLicense drivingLicense, String channelCode, String imgId) {
+        return getString(channelCode, imgId, drivingLicense.getImgType(), drivingLicense.getFileNumber(), JSON.toJSONString(drivingLicense));
+    }
+
+    /**
+     * 结婚证流水
+     * @param marriageLicense
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertMarriageLicense(MarriageLicense marriageLicense, String channelCode, String imgId) {
+        return getString(channelCode, imgId, marriageLicense.getImgType(), marriageLicense.getMarriageNo(), JSON.toJSONString(marriageLicense));
+    }
+
+    /**
+     * 户口本流水
+     * @param residenceBooklet
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId) {
+        return getString(channelCode, imgId, residenceBooklet.getImgType(), residenceBooklet.getAddress(), JSON.toJSONString(residenceBooklet));
     }
 
     @Override

@@ -144,7 +144,6 @@ public class RecognitionFilesController extends BaseController {
                         String tradeId = "";
                         for (RequestModel2 model2 : model2s) {
                             List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
-
                             for (RequestModel model : models) {
                                 switch (model.getClass_name()) {
                                     case "IDCardFront":
@@ -181,6 +180,69 @@ public class RecognitionFilesController extends BaseController {
                                          * 调用流水存储 返回流水id
                                          */
                                         tradeId = iOcrTradeService.insertDeposit(deposit, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "PremisesPermit":
+                                        PremisesPermit premisesPermit = JSONArray.parseObject(model.getOcr_result(), PremisesPermit.class);
+                                        premisesPermit.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "ResidenceBooklet":
+                                        ResidenceBooklet residenceBooklet = JSONArray.parseObject(model.getOcr_result(), ResidenceBooklet.class);
+                                        residenceBooklet.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "MarriageLicense":
+                                        MarriageLicense marriageLicense = JSONArray.parseObject(model.getOcr_result(), MarriageLicense.class);
+                                        marriageLicense.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "DrivingLicense":
+                                        DrivingLicense drivingLicense = JSONArray.parseObject(model.getOcr_result(), DrivingLicense.class);
+                                        drivingLicense.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "DriversLicense":
+                                        DriversLicense driversLicense = JSONArray.parseObject(model.getOcr_result(), DriversLicense.class);
+                                        driversLicense.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertDriversLicense(driversLicense, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "PlateNumber":
+                                        PlateNumber plateNumber = JSONArray.parseObject(model.getOcr_result(), PlateNumber.class);
+                                        plateNumber.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertPlateNumber(plateNumber, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "BusinessLicense":
+                                        BusinessLicense businessLicense = JSONArray.parseObject(model.getOcr_result(), BusinessLicense.class);
+                                        businessLicense.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, "system", imgId);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     default:
@@ -240,7 +302,7 @@ public class RecognitionFilesController extends BaseController {
                     File newFile = new File(filePath);
                     file[i].transferTo(newFile);
                     String data = "{\"image_type\":\"0\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"}";
-                    buffer.append(data+",");
+                    buffer.append(data + ",");
                 }
             }
             String requestData = "{\"data_list\":[" + buffer.deleteCharAt(buffer.length() - 1).toString() + "]}";
@@ -266,7 +328,7 @@ public class RecognitionFilesController extends BaseController {
                     ocrTrade.setOcrTime(DateUtils.getTimeShort());
                     iOcrTradeService.insertOcrTrade(ocrTrade);
                     log.info("OCR识别结果为空");
-                }else {
+                } else {
                     ocrImage.setOcrResult(model2.getImage_result());
                     iOcrImageService.updateOcrImage(ocrImage);
                     List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);

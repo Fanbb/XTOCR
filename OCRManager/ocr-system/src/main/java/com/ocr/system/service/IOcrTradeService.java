@@ -64,7 +64,7 @@ public interface IOcrTradeService
 	public String insertIDCardFront(IDCardFront idCardFront,String channelCode, String imgId);
 
 	/**
-	 * 身份证正面流水
+	 * 身份证反面流水
 	 * @param idCardBack
 	 * @param channelCode
 	 * @param imgId 影像id
@@ -73,8 +73,8 @@ public interface IOcrTradeService
 	public String insertIDCardBack(IDCardBack idCardBack,String channelCode, String imgId);
 
 	/**
-	 * 身份证正面流水
-	 * @param bankCard 渠道
+	 * 银行卡流水
+	 * @param bankCard
 	 * @param channelCode 渠道
 	 * @param imgId 影像id
 	 * @return
@@ -82,7 +82,7 @@ public interface IOcrTradeService
 	public String insertBankCard(BankCard bankCard,String channelCode, String imgId);
 
 	/**
-	 * 身份证正面流水
+	 * 存单流水
 	 * @param depositReceipt
 	 * @param channelCode
 	 * @param imgId
@@ -91,14 +91,81 @@ public interface IOcrTradeService
 	public String insertDeposit(DepositReceipt depositReceipt,String channelCode, String imgId);
 
 	/**
-	 * 存入
+	 * 房本流水
+	 * @param premisesPermit
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId);
+
+	/**
+	 * 营业执照流水
+	 * @param businessLicense
+	 * @param system
+	 * @param imgId
+	 * @return
+	 */
+	String insertBusinessLicense(BusinessLicense businessLicense, String channelCode, String imgId);
+
+	/**
+	 * 车牌号流水
+	 * @param plateNumber
+	 * @param system
+	 * @param imgId
+	 * @return
+	 */
+	String insertPlateNumber(PlateNumber plateNumber, String channelCode, String imgId);
+
+	/**
+	 * 驾驶证流水
+	 * @param driversLicense
+	 * @param system
+	 * @param imgId
+	 * @return
+	 */
+	String insertDriversLicense(DriversLicense driversLicense, String channelCode, String imgId);
+
+	/**
+	 * 行驶证流水
+	 * @param drivingLicense
+	 * @param system
+	 * @param imgId
+	 * @return
+	 */
+	String insertDrivingLicense(DrivingLicense drivingLicense, String channelCode, String imgId);
+
+	/**
+	 * 结婚证流水
+	 * @param marriageLicense
+	 * @param system
+	 * @param imgId
+	 * @return
+	 */
+	String insertMarriageLicense(MarriageLicense marriageLicense, String channelCode, String imgId);
+
+	/**
+	 * 户口本流水
+	 * @param residenceBooklet
+	 * @param system
+	 * @param imgId
+	 * @return
+	 */
+	String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId);
+
+	/**
+	 * 存入无效类型
 	 * @param channelCode
 	 * @param imgId
 	 * @return
 	 */
 	public String insertNoneTrade(String result,String channelCode, String imgId);
 
-
+	/**
+	 * 通过流水id获取影像路径
+	 * @param tradeIds
+	 * @return
+	 */
 	public String[] selectImagePath(String[] tradeIds);
 
 	public String selectCountByTrickStatus(String tickStatus);
@@ -125,5 +192,4 @@ public interface IOcrTradeService
 
     String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag);
 
-    String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId);
 }

@@ -184,6 +184,54 @@ public class RecognitionController extends BaseController {
                      */
                     iOcrTradeService.insertPremisesPermit(premisesPermit, "system", imgId);
                     break;
+                case "ResidenceBooklet":
+                    ResidenceBooklet residenceBooklet = JSONArray.parseObject(model.getOcr_result(), ResidenceBooklet.class);
+                    residenceBooklet.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertResidenceBooklet(residenceBooklet, "system", imgId);
+                    break;
+                case "MarriageLicense":
+                    MarriageLicense marriageLicense = JSONArray.parseObject(model.getOcr_result(), MarriageLicense.class);
+                    marriageLicense.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertMarriageLicense(marriageLicense, "system", imgId);
+                    break;
+                case "DrivingLicense":
+                    DrivingLicense drivingLicense = JSONArray.parseObject(model.getOcr_result(), DrivingLicense.class);
+                    drivingLicense.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertDrivingLicense(drivingLicense, "system", imgId);
+                    break;
+                case "DriversLicense":
+                    DriversLicense driversLicense = JSONArray.parseObject(model.getOcr_result(), DriversLicense.class);
+                    driversLicense.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertDriversLicense(driversLicense, "system", imgId);
+                    break;
+                case "PlateNumber":
+                    PlateNumber plateNumber = JSONArray.parseObject(model.getOcr_result(), PlateNumber.class);
+                    plateNumber.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertPlateNumber(plateNumber, "system", imgId);
+                    break;
+                case "BusinessLicense":
+                    BusinessLicense businessLicense = JSONArray.parseObject(model.getOcr_result(), BusinessLicense.class);
+                    businessLicense.setImgType(model.getClass_name());
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    iOcrTradeService.insertBusinessLicense(businessLicense, "system", imgId);
+                    break;
                 default:
                     iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", imgId);
                     break;
