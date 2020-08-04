@@ -85,7 +85,8 @@ public class RecognitionFilesController extends BaseController {
     @ResponseBody
     @Log(title = "影像上传识别", businessType = BusinessType.OTHER)
     public AjaxResult fileUpload(@RequestParam("file") MultipartFile[] file, Map mmap) throws IOException {
-        StringBuffer tradeIds = new StringBuffer();
+        StringBuilder tradeIds = new StringBuilder();
+//        StringBuffer tradeIds = new StringBuffer();
         if (file != null && file.length > 0) {
             try {
                 for (int i = 0; i < file.length; i++) {
@@ -279,10 +280,12 @@ public class RecognitionFilesController extends BaseController {
     @ResponseBody
     @Log(title = "影像上传识别", businessType = BusinessType.OTHER)
     public AjaxResult fileUpload2(@RequestParam("file") MultipartFile[] file, Map mmap) throws IOException {
-        StringBuffer tradeIds = new StringBuffer();
+//        StringBuffer tradeIds = new StringBuffer();
+        StringBuilder tradeIds = new StringBuilder();
         String channelCode = "system";
         if (file != null && file.length > 0) {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
+//            StringBuffer buffer = new StringBuffer();
             for (int i = 0; i < file.length; i++) {
                 if (!file[i].isEmpty()) {
                     String dateStr = DateUtils.datePath();

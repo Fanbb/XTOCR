@@ -726,7 +726,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             resultData.setType("0");
             return resultData;
         }
-        StringBuffer buffer = new StringBuffer();
+//        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (Object key : map.keySet()) {
             String relativePath = serverProfile + DateUtils.datePath() + "/" + batchNumber + "/" + map.get(key).toString();
             String data = "{\"image_type\":\"" + imgType + "\",\"path\":\"" + relativePath + "\",\"read_image_way\":\"3\"}";
