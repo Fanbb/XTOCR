@@ -255,6 +255,7 @@
     </div>
 </div>
 <th:block th:include="include :: footer"/>
+<script th:src="@{/ocr/jquery-3.4.1.min.js}"></script>
 <script>
     var prefix = ctx + "system/ocrTrade";
 
@@ -319,11 +320,11 @@
         if (window.screen.height == 768) {
             myDiv.style.height = "500px";
             myDiv2.style.height = "520px";
-            canvas2.style.height = "500px";
+            canvas2.style.height = "456px";
             canvas2.style.width = "527px";
         } else if (window.screen.height == 1080) {
             myDiv.style.height = "800px";
-            canvas2.style.height = "800px";
+            canvas2.style.height = "700px";
             canvas2.style.width = "807px";
         }
         var imageUrl = $("#divPan>img").attr("src");
