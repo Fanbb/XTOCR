@@ -50,5 +50,16 @@ public class OcrTotalReportController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 导出识别流水列表
+     */
+    @RequiresPermissions("system:ocrTotalReport:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(OcrTotalReport ocrTotalReport) {
+        List<OcrTotalReport> list = iOcrTotalReportService.selectOcrTotalReportList2(ocrTotalReport);
+        ExcelUtil<OcrTotalReport> util = new ExcelUtil<>(OcrTotalReport.class);
+        return util.exportExcel(list, "ocrTotalReport");
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.ocr.system.domain;
 
+import com.ocr.common.annotation.Excel;
 import com.ocr.common.core.domain.BaseEntity;
 
 /**
@@ -13,49 +14,59 @@ public class OcrTotalReport extends BaseEntity {
 
     /**
      * 识别类型
+     * 1身份证2银行卡3存单4房本5存折6户口本7结婚证8行驶证9驾驶证10车牌号11营业执照
      */
+    @Excel(name = "识别类型", readConverterExp = "0=无效类型,1=身份证,2=银行卡,3=存单,4=房本,5=存折,6=户口本,7=结婚证,8=行驶证,9=驾驶证,10=车牌号,11=营业执照")
     private String imageName;
     /**
      * 识别总数
      */
+    @Excel(name = "识别总数", prompt = "识别总数")
     private String tradeTotal;
     /**
      * OCR识别成功数量
      */
+    @Excel(name = "OCR识别成功数量", prompt = "OCR识别成功数量")
     private String ocrTotal;
     /**
      * OCR识别率
      */
+    @Excel(name = "OCR识别率", prompt = "OCR识别率")
     private String ocrRate;
-    /**
-     * 勾对识别成功数量
-     */
-    private String tickTotal;
-    /**
-     * 勾对识别成功率
-     */
-    private String tickRate;
     /**
      * 平台返回识别成功数量
      */
+    @Excel(name = "平台返回识别成功数量", prompt = "平台返回识别成功数量")
     private String platTotal;
     /**
      * 平台返回识别成功率
      */
+    @Excel(name = "平台返回识别成功率", prompt = "平台返回识别成功率")
     private String platTate;
+    /**
+     * 版面识别成功数量
+     */
+    @Excel(name = "版面识别成功数量", prompt = "版面识别成功数量")
+    private String tickTotal;
+    /**
+     * 版面识别成功率
+     */
+    @Excel(name = "版面识别成功率", prompt = "版面识别成功率")
+    private String tickRate;
     /**
      * 字段勾选成功数
      */
+    @Excel(name = "字段勾选成功数", prompt = "字段勾选成功数")
     private Integer rightTotal;
-
     /**
      * 字段总数
      */
+    @Excel(name = "字段总数", prompt = "字段总数")
     private Integer fieldTotal;
-
     /**
      * 字段识别率
      */
+    @Excel(name = "字段识别率", prompt = "字段识别率")
     private String fieldRate;
 
 
@@ -155,10 +166,10 @@ public class OcrTotalReport extends BaseEntity {
         this.tradeTotal = tradeTotal;
         this.ocrTotal = ocrTotal;
         this.ocrRate = ocrRate;
-        this.tickTotal = tickTotal;
-        this.tickRate = tickRate;
         this.platTotal = platTotal;
         this.platTate = platTate;
+        this.tickTotal = tickTotal;
+        this.tickRate = tickRate;
         this.rightTotal = rightTotal;
         this.fieldTotal = fieldTotal;
         this.fieldRate = fieldRate;
@@ -171,10 +182,10 @@ public class OcrTotalReport extends BaseEntity {
                 ", tradeTotal='" + tradeTotal + '\'' +
                 ", ocrTotal='" + ocrTotal + '\'' +
                 ", ocrRate='" + ocrRate + '\'' +
-                ", tickTotal='" + tickTotal + '\'' +
-                ", tickRate='" + tickRate + '\'' +
                 ", platTotal='" + platTotal + '\'' +
                 ", platTate='" + platTate + '\'' +
+                ", tickTotal='" + tickTotal + '\'' +
+                ", tickRate='" + tickRate + '\'' +
                 ", rightTotal=" + rightTotal +
                 ", fieldTotal=" + fieldTotal +
                 ", fieldRate='" + fieldRate + '\'' +

@@ -8,10 +8,10 @@
         <result property="tradeTotal" column="TRADE_TOTAL"/>
         <result property="ocrTotal" column="OCR_TOTAL"/>
         <result property="ocrRate" column="OCR_RATE"/>
-        <result property="tickTotal" column="TICK_TOTAL"/>
-        <result property="tickRate" column="TICK_RATE"/>
         <result property="platTotal" column="PLAT_TOTAL"/>
         <result property="platTate" column="PLAT_RATE"/>
+        <result property="tickTotal" column="TICK_TOTAL"/>
+        <result property="tickRate" column="TICK_RATE"/>
         <result property="rightTotal" column="RIGHT_TOTAL"/>
         <result property="fieldTotal" column="FIELD_TOTAL"/>
         <result property="fieldRate" column="FILED_RATE"/>
@@ -42,6 +42,20 @@
             </if>
         </where>
         GROUP BY T.IMAGE_NAME
+    </select>
+
+    <select id="selectOcrTotalReportList2" parameterType="OcrTotalReport" resultMap="OcrTotalReportResult">
+        <include refid="selectOcrTotalReportVo"/>
+        <where>
+            <if test="imageName != null  and imageName != '' ">and T.IMAGE_NAME = #{imageName}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND T.OCR_DATE &gt;= to_date(#{params.beginTime},'yyyy-MM-dd')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND T.OCR_DATE &lt;= to_date(#{params.endTime},'yyyy-MM-dd')
+            </if>
+        </where>
+        GROUP BY T.IMAGE_NAME order by T.IMAGE_NAME asc
     </select>
 
 </mapper>

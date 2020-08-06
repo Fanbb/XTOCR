@@ -38,6 +38,11 @@
             </form>
         </div>
 
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTotalReport:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
         <div class="col-sm-12 select-table table-striped">
             <table id="bootstrap-table" data-mobile-responsive="true"></table>
         </div>
@@ -51,14 +56,15 @@
     $(function () {
         var options = {
             url: prefix + "/list",
+            exportUrl: prefix + "/export",
             modalName: "OCR识别流水汇总",
             showSearch: true,
             showRefresh: false,
             showToggle: false,
             showColumns: false,
             search: false,
-            sortName: "imageName",
-            sortOrder: "desc",
+            // sortName: "t.imageName",
+            // sortOrder: "desc",
             columns: [{
                 checkbox: true
             },
@@ -90,18 +96,6 @@
                     sortable: true
                 },
                 {
-                    field: 'tickTotal',
-                    title: '勾对识别成功数量',
-                    align: "center",
-                    sortable: true
-                },
-                {
-                    field: 'tickRate',
-                    title: '勾对识别成功率',
-                    align: "center",
-                    sortable: true
-                },
-                {
                     field: 'platTotal',
                     title: '平台返回识别成功数量',
                     align: "center",
@@ -110,6 +104,18 @@
                 {
                     field: 'platTate',
                     title: '平台返回识别成功率',
+                    align: "center",
+                    sortable: true
+                },
+                {
+                    field: 'tickTotal',
+                    title: '版面识别成功数量',
+                    align: "center",
+                    sortable: true
+                },
+                {
+                    field: 'tickRate',
+                    title: '版面识别成功率',
                     align: "center",
                     sortable: true
                 },

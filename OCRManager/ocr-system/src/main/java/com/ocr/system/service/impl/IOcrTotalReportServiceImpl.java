@@ -19,4 +19,9 @@ public class IOcrTotalReportServiceImpl implements IOcrTotalReportService {
     public List<OcrTotalReport> selectOcrTradeViewList(OcrTotalReport ocrTotalReport) {
         return ocrTotalReportMapper.selectOcrTotalReportList(ocrTotalReport);
     }
+
+    @Override
+    public List<OcrTotalReport> selectOcrTotalReportList2(OcrTotalReport ocrTotalReport) {
+        return ocrTotalReportMapper.selectOcrTotalReportList2(ocrTotalReport);
+    }
 }

@@ -32,7 +32,7 @@ public class OcrTradeView  extends BaseEntity {
     /**
      * 影像类型
      */
-    @Excel(name = "影像类型", readConverterExp = "1=身份证,2=银行卡,3=存单")
+    @Excel(name = "影像类型", readConverterExp = "0=无效类型,1=身份证,2=银行卡,3=存单,4=房本,5=存折,6=户口本,7=结婚证,8=行驶证,9=驾驶证,10=车牌号,11=营业执照")
     private String imageName;
     /**
      * OCR识别成功数量

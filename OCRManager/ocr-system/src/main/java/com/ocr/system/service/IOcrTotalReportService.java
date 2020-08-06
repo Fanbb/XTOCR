@@ -21,5 +21,6 @@ public interface IOcrTotalReportService {
      * @return 识别流水汇总集合
      */
     public List<OcrTotalReport> selectOcrTradeViewList(OcrTotalReport ocrTotalReport);
+    public List<OcrTotalReport> selectOcrTotalReportList2(OcrTotalReport ocrTotalReport);
 
 }

@@ -743,6 +743,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         List<RequestModel2> model2s = JSONArray.parseArray(request, RequestModel2.class);
         //进行影像数据录入生成对应影像ID和相关url返回值
         List<ResultDataModel> resultDataModels = new ArrayList<>();
+        int i =0;
         for (RequestModel2 model2 : model2s) {
             ResultDataModel dataModel = new ResultDataModel();
             List list = new ArrayList();
@@ -788,6 +789,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, ocrImage.getId(), flag);
                             idCardFront.setTradeId(tradeId);
                             list.add(idCardFront);
+                            i++;
                             break;
                         case "IDCardBack":
                             IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
@@ -803,6 +805,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, ocrImage.getId(), flag);
                             idCardBack.setTradeId(tradeId);
                             list.add(idCardBack);
+                            i++;
                             break;
                         case "BankCard":
                             BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
@@ -818,6 +821,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, ocrImage.getId(), flag);
                             bankCard.setTradeId(tradeId);
                             list.add(bankCard);
+                            i++;
                             break;
                         case "Deposit":
                             DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
@@ -832,6 +836,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             }
                             tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, ocrImage.getId(), flag);
                             deposit.setTradeId(tradeId);
+                            i++;
                             list.add(deposit);
                             break;
                         case "PremisesPermit":
@@ -848,13 +853,13 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, ocrImage.getId(), flag);
                             premisesPermit.setTradeId(tradeId);
                             list.add(premisesPermit);
+                            i++;
                             break;
                         default:
                             tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, ocrImage.getId());
                             NoneEnty noneEnty = new NoneEnty();
                             noneEnty.setImgType("None");
                             noneEnty.setTradeId(tradeId);
-                            list.add(noneEnty);
                             break;
                     }
                 }
@@ -863,9 +868,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             resultDataModels.add(dataModel);
         }
 
-        if (batchNumber.equals("500")) {
+        if (i==0) {
             resultData.setType("0");
-            resultData.setMsg("错误！");
+            resultData.setMsg("无识别结果！");
         } else {
             resultData.setType("1");
             resultData.setMsg("识别成功！");

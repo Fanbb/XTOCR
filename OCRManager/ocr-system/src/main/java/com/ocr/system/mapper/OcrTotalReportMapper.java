@@ -19,5 +19,11 @@ public interface OcrTotalReportMapper
 	 * @return
 	 */
 	public List<OcrTotalReport> selectOcrTotalReportList(OcrTotalReport ocrTotalReport);
+	/**
+	 * 识别汇总查询
+	 * @param ocrTotalReport
+	 * @return
+	 */
+	public List<OcrTotalReport> selectOcrTotalReportList2(OcrTotalReport ocrTotalReport);
 
 }
