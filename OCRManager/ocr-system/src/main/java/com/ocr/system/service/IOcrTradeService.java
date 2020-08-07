@@ -102,7 +102,7 @@ public interface IOcrTradeService
 	/**
 	 * 营业执照流水
 	 * @param businessLicense
-	 * @param system
+	 * @param channelCode
 	 * @param imgId
 	 * @return
 	 */
@@ -111,7 +111,7 @@ public interface IOcrTradeService
 	/**
 	 * 车牌号流水
 	 * @param plateNumber
-	 * @param system
+	 * @param channelCode
 	 * @param imgId
 	 * @return
 	 */
@@ -120,7 +120,7 @@ public interface IOcrTradeService
 	/**
 	 * 驾驶证流水
 	 * @param driversLicense
-	 * @param system
+	 * @param channelCode
 	 * @param imgId
 	 * @return
 	 */
@@ -129,7 +129,7 @@ public interface IOcrTradeService
 	/**
 	 * 行驶证流水
 	 * @param drivingLicense
-	 * @param system
+	 * @param channelCode
 	 * @param imgId
 	 * @return
 	 */
@@ -138,7 +138,7 @@ public interface IOcrTradeService
 	/**
 	 * 结婚证流水
 	 * @param marriageLicense
-	 * @param system
+	 * @param channelCode
 	 * @param imgId
 	 * @return
 	 */
@@ -147,7 +147,7 @@ public interface IOcrTradeService
 	/**
 	 * 户口本流水
 	 * @param residenceBooklet
-	 * @param system
+	 * @param channelCode
 	 * @param imgId
 	 * @return
 	 */
