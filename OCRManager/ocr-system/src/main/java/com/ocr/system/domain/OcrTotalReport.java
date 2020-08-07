@@ -12,6 +12,7 @@ import com.ocr.common.core.domain.BaseEntity;
 public class OcrTotalReport extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
+
     /**
      * 识别类型
      * 1身份证2银行卡3存单4房本5存折6户口本7结婚证8行驶证9驾驶证10车牌号11营业执照
@@ -48,6 +49,11 @@ public class OcrTotalReport extends BaseEntity {
      */
     @Excel(name = "版面识别成功数量", prompt = "版面识别成功数量")
     private String tickTotal;
+    /**
+     * 版面识别成功数量
+     */
+    @Excel(name = "版面识别勾对总数", prompt = "版面识别勾对总数")
+    private String tickTotalNumber;
     /**
      * 版面识别成功率
      */
@@ -110,6 +116,14 @@ public class OcrTotalReport extends BaseEntity {
         this.tickTotal = tickTotal;
     }
 
+    public String getTickTotalNumber() {
+        return tickTotalNumber;
+    }
+
+    public void setTickTotalNumber(String tickTotalNumber) {
+        this.tickTotalNumber = tickTotalNumber;
+    }
+
     public String getTickRate() {
         return tickRate;
     }
@@ -161,7 +175,7 @@ public class OcrTotalReport extends BaseEntity {
     public OcrTotalReport() {
     }
 
-    public OcrTotalReport(String imageName, String tradeTotal, String ocrTotal, String ocrRate, String tickTotal, String tickRate, String platTotal, String platTate, Integer rightTotal, Integer fieldTotal, String fieldRate) {
+    public OcrTotalReport(String imageName, String tradeTotal, String ocrTotal, String ocrRate, String tickTotal, String tickTotalNumber, String tickRate, String platTotal, String platTate, Integer rightTotal, Integer fieldTotal, String fieldRate) {
         this.imageName = imageName;
         this.tradeTotal = tradeTotal;
         this.ocrTotal = ocrTotal;
@@ -169,6 +183,7 @@ public class OcrTotalReport extends BaseEntity {
         this.platTotal = platTotal;
         this.platTate = platTate;
         this.tickTotal = tickTotal;
+        this.tickTotalNumber = tickTotalNumber;
         this.tickRate = tickRate;
         this.rightTotal = rightTotal;
         this.fieldTotal = fieldTotal;
@@ -185,6 +200,7 @@ public class OcrTotalReport extends BaseEntity {
                 ", platTotal='" + platTotal + '\'' +
                 ", platTate='" + platTate + '\'' +
                 ", tickTotal='" + tickTotal + '\'' +
+                ", tickTotalNumber='" + tickTotalNumber + '\'' +
                 ", tickRate='" + tickRate + '\'' +
                 ", rightTotal=" + rightTotal +
                 ", fieldTotal=" + fieldTotal +

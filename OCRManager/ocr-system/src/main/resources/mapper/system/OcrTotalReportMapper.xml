@@ -11,6 +11,7 @@
         <result property="platTotal" column="PLAT_TOTAL"/>
         <result property="platTate" column="PLAT_RATE"/>
         <result property="tickTotal" column="TICK_TOTAL"/>
+        <result property="tickTotalNumber" column="TICK_TOTAL_NUMBER"/>
         <result property="tickRate" column="TICK_RATE"/>
         <result property="rightTotal" column="RIGHT_TOTAL"/>
         <result property="fieldTotal" column="FIELD_TOTAL"/>
@@ -19,15 +20,16 @@
 
     <sql id="selectOcrTotalReportVo">
         SELECT T.IMAGE_NAME, COUNT(*) TRADE_TOTAL,
-       SUM(CASE WHEN T.OCR_STATUS = 0 THEN 1 ELSE 0 END)  OCR_TOTAL,
-       ROUND(SUM(CASE WHEN T.OCR_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' OCR_RATE,
-       SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)  TICK_TOTAL,
-       ROUND(SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' TICK_RATE ,
-       SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)  PLAT_TOTAL,
-       ROUND(SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' PLAT_RATE,
-       SUM(T.RIGHT_TOTAL) RIGHT_TOTAL ,
-       SUM(T.FIELD_TOTAL) FIELD_TOTAL ,
-       CASE WHEN SUM(T.RIGHT_TOTAL) IS NOT NULL THEN ROUND(SUM(T.RIGHT_TOTAL)/SUM(T.FIELD_TOTAL)*100,2)||'%' ELSE '' END FILED_RATE FROM OCR_TRADE T
+        SUM(CASE WHEN T.OCR_STATUS = 0 THEN 1 ELSE 0 END)  OCR_TOTAL,
+        ROUND(SUM(CASE WHEN T.OCR_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' OCR_RATE,
+        SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)  TICK_TOTAL,
+        SUM(CASE WHEN T.TICK_STATUS = 0 THEN 0 ELSE 1 END)  TICK_TOTAL_NUMBER,
+        ROUND(SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)/SUM(CASE WHEN T.TICK_STATUS = 0 THEN 0 ELSE 1 END)*100,2)||'%' TICK_RATE ,
+        SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)  PLAT_TOTAL,
+        ROUND(SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' PLAT_RATE,
+        SUM(T.RIGHT_TOTAL) RIGHT_TOTAL ,
+        SUM(T.FIELD_TOTAL) FIELD_TOTAL ,
+        CASE WHEN SUM(T.RIGHT_TOTAL) IS NOT NULL THEN ROUND(SUM(T.RIGHT_TOTAL)/SUM(T.FIELD_TOTAL)*100,2)||'%' ELSE '' END FILED_RATE FROM OCR_TRADE T
     </sql>
 
     <select id="selectOcrTotalReportList" parameterType="OcrTotalReport" resultMap="OcrTotalReportResult">
