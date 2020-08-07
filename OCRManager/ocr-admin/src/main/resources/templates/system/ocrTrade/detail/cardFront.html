@@ -58,7 +58,10 @@
                 <form id="form-user-edit" th:object="${idCardFrontBack}">
                     <table style="font-size: 15px;width: 100%">
                         <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
-                        <tr><td colspan="3"><h2 class="box-title" th:align="center" style="font-weight:bold">身份证正面识别信息：</h2></td></tr>
+                        <tr>
+                            <td colspan="3"><h2 class="box-title" th:align="center" style="font-weight:bold">
+                                身份证正面识别信息：</h2></td>
+                        </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">姓名：</td>
                             <td width="35%"><input type="text" class="form-control" readonly="true"
@@ -161,45 +164,42 @@
     </div>
 </div>
 <th:block th:include="include :: footer"/>
-<script th:src="@{/ocr/jquery-3.4.1.min.js}"></script>
 <script>
     var prefix = ctx + "system/ocrTrade";
-
     function submit2() {
-        var tickStatus = $("input[name='tickStatus']:checked").val();
-        if (tickStatus == '' || tickStatus == null) {
-            return alert("请选择勾对！");
-        }
-        $.ajax({
-            url: prefix + "/blend",
-            type: "post",
-            data: {
-                "id": function () {
-                    return $("input[name='id']").val();
+        if ($.validate.form()) {
+            $.ajax({
+                url: prefix + "/fieldBlendIdCardFront",
+                type: "post",
+                data: {
+                    "name": $("input[name='name']:checked").val(),
+                    "sex": $("input[name='sex']:checked").val(),
+                    "nation": $("input[name='nation']:checked").val(),
+                    "birthday": $("input[name='birthday']:checked").val(),
+                    "address": $("input[name='address']:checked").val(),
+                    "idCardNo": $("input[name='idCardNo']:checked").val(),
+                    "tradeId": $("input[name='tradeId']").val()
                 },
-                "tickStatus": function () {
-                    return tickStatus;
-                }
-            },
-            success: function (result) {
-                if (result.code == 0) {
-                    layer.msg("保存成功,正在刷新数据请稍后……", {
-                        icon: 1,
-                        time: 500,
-                        shade: [0.1, '#8F8F8F']
-                    }, function () {
-                        location.reload();
-                    });
-                } else {
-                    alert(result.msg);
-                }
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg("保存成功,正在刷新数据请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
 
-                if (typeof callback == "function") {
-                    callback(result);
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successTabCallback(result);
                 }
-                $.operate.successTabCallback(result);
-            }
-        })
+            })
+        }
     }
 
     var canvas = document.getElementById("canvas");
