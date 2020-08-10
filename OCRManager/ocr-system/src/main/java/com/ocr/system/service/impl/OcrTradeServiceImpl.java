@@ -207,7 +207,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
             ocrTrade.setPlatStatus("0");
         }else {
             ocrTrade.setOcrStatus("1");
-            ocrTrade.setTickStatus("2");
+            ocrTrade.setTickStatus("0");
             ocrTrade.setPlatStatus("1");
         }
         ocrTrade.setRemark2("0");
