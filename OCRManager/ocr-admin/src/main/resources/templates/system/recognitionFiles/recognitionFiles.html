@@ -44,11 +44,14 @@
             msgFilesTooMany:"选择上传的文件数量({n})超过允许的最大数值{m}!"
         }).on("filebatchuploadsuccess", function(event, data, previewId, index) {
             var result =data.response.data;
-            if (result!=null){
+            debugger;
+            if (result.tradeIds!=null){
                 var ocrTradeId= result.tradeIds;
                 var url = prefix + '/data/'+ocrTradeId;
                 console.info(url);
                 createMenuItem(url, "识别结果详情");
+            }else {
+                alert(result.msg());
             }
         });
     })

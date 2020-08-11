@@ -311,13 +311,18 @@ public class RecognitionFilesController extends BaseController {
             }
             String requestData = "{\"data_list\":[" + buffer.deleteCharAt(buffer.length() - 1).toString() + "]}";
             String request = HttpUtils.sendPost2(ocrUrl, requestData);
+            log.info("###request******:"+request);
+            if (StringUtils.isEmpty(request) || request.equals("[]")) {
+                return AjaxResult.error("识别资源占用中，请稍后重试！");
+            }
             List<RequestModel2> model2s = JSONArray.parseArray(request, RequestModel2.class);
             //进行影像数据录入生成对应影像ID和相关url返回值
             for (RequestModel2 model2 : model2s) {
                 //根据图片路径获取影像信息
+                log.info("###filePath******:"+model2.getPath());
                 OcrImage ocrImage = iOcrImageService.selectOcrImageByFilePath(model2.getPath());
 
-                if (StringUtils.isEmpty(request) || request.equals("[]")) {
+                if (StringUtils.isEmpty(model2.getImage_result()) || model2.getImage_result().equals("[]")) {
                     OcrTrade ocrTrade = new OcrTrade();
                     ocrTrade.setId(UUID.randomUUID().toString());
                     ocrTrade.setChannel("system");
