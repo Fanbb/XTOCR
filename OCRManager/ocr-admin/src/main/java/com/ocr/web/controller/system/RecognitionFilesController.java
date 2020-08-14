@@ -320,29 +320,17 @@ public class RecognitionFilesController extends BaseController {
             for (RequestModel2 model2 : model2s) {
                 //根据图片路径获取影像信息
                 log.info("###filePath******:"+model2.getPath());
+                String tradeId;
                 OcrImage ocrImage = iOcrImageService.selectOcrImageByFilePath(model2.getPath());
-
                 if (StringUtils.isEmpty(model2.getImage_result()) || model2.getImage_result().equals("[]")) {
-                    OcrTrade ocrTrade = new OcrTrade();
-                    ocrTrade.setId(UUID.randomUUID().toString());
-                    ocrTrade.setChannel("system");
-                    ocrTrade.setImageId(ocrImage.getId());
-                    ocrTrade.setImageType("None");
-                    ocrTrade.setImageName("0");
-                    ocrTrade.setOcrStatus("1");
-                    ocrTrade.setTickStatus("2");
-                    ocrTrade.setPlatStatus("1");
-                    ocrTrade.setRemark2("0");
-                    ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
-                    ocrTrade.setOcrTime(DateUtils.getTimeShort());
-                    iOcrTradeService.insertOcrTrade(ocrTrade);
+                    tradeId = iOcrTradeService.insertNoneTrade(model2.getImage_result(), channelCode, ocrImage.getId());
+                    tradeIds.append(tradeId + ",");
                     log.info("OCR识别结果为空");
                 } else {
                     ocrImage.setOcrResult(model2.getImage_result());
                     iOcrImageService.updateOcrImage(ocrImage);
                     List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
                     for (RequestModel model : models) {
-                        String tradeId;
                         switch (model.getClass_name()) {
                             case "IDCardFront":
                                 IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);

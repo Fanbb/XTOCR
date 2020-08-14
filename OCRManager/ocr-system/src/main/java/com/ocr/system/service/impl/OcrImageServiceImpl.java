@@ -76,7 +76,6 @@ public class OcrImageServiceImpl implements IOcrImageService
 		int result = ocrImageMapper.insertOcrImage(ocrImage);
 		if (result>0){
 			return "影像信息插入成功";
-
 		} else {
 			return "影像信息插入失败";
 		}
