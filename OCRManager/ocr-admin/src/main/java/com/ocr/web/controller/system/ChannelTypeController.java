@@ -109,6 +109,27 @@ public class ChannelTypeController extends BaseController {
                 case "3":
                     channelType.setOcrTypeNm("存单");
                     break;
+                case "4":
+                    channelType.setOcrTypeNm("房本");
+                    break;
+                case "6":
+                    channelType.setOcrTypeNm("户口本");
+                    break;
+                case "7":
+                    channelType.setOcrTypeNm("结婚证");
+                    break;
+                case "8":
+                    channelType.setOcrTypeNm("行驶证");
+                    break;
+                case "9":
+                    channelType.setOcrTypeNm("驾驶证");
+                    break;
+                case "10":
+                    channelType.setOcrTypeNm("车牌号");
+                    break;
+                case "11":
+                    channelType.setOcrTypeNm("营业执照");
+                    break;
                 default:
                     break;
             }

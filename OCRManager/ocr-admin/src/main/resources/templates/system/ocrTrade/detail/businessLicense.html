@@ -32,7 +32,7 @@
 <body class="gray-bg">
 <div style="padding:5px;overflow-y:auto">
     <div class="col-md-12">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <div class="box box-primary" style="height: auto">
                 <div class="box-header with-border">
                     <div class="box-header with-border">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="form-content" id="div2">
                 <form style="width: 100%" id="form-user-edit" th:object="${businessLicenseBack}">
                     <table style="font-size: 15px;width: 100%">
@@ -118,9 +118,7 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">住所：</td>
-                            <td width="45%"><input type="text" class="form-control" readonly="true"
-                                                   style="font-size: 19px"
-                                                   disabled="disabled" th:value="@{${businessLicense.getAddress()}}"/></td>
+                            <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${businessLicense.getAddress()}}]]</textarea>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -132,7 +130,7 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">经营范围：</td>
-                            <td width="45%"><textarea style="font-size:19px" disabled="disabled">[[@{${businessLicense.getBusinessScope()}}]]</textarea>
+                            <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${businessLicense.getBusinessScope()}}]]</textarea>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">

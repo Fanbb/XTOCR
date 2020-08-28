@@ -32,7 +32,7 @@
 <body class="gray-bg">
 <div style="padding:5px;overflow-y:auto">
     <div class="col-md-12">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <div class="box box-primary" style="height: auto">
                 <div class="box-header with-border">
                     <div class="box-header with-border">
@@ -53,9 +53,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="form-content" id="div2">
-                <form style="width: 100%" id="form-user-edit" th:object="${MarriageLicenseBack}">
+        <div class="col-sm-6">
+            <div class="form-content" id="div2" style="overflow-x: hidden">
+                <form style="width: 100%" id="form-user-edit" th:object="${marriageLicenseBack}">
                     <table style="font-size: 15px;width: 100%">
                         <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
                         <tr><td colspan="3"><h2 class="box-title" th:align="center" style="font-weight:bold">结婚证识别信息：</h2></td></tr>
