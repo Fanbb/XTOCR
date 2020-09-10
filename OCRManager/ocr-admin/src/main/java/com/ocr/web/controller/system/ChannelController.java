@@ -92,6 +92,7 @@ public class ChannelController extends BaseController {
             return AjaxResult.error("该渠道编号已经存在！");
         }
         channel.setId(UUID.randomUUID().toString());
+        channel.setStatus("0");
         return toAjax(channelService.insertChannel(channel));
     }
 

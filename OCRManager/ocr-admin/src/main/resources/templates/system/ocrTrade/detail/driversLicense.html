@@ -63,7 +63,7 @@
                             <td width="21%" align="right">姓名：</td>
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
-                                                   disabled="disabled" th:value="@{${driversLicenseBack.getName()}}"/>
+                                                   disabled="disabled" th:value="@{${driversLicense.getName()}}"/>
                             </td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
@@ -78,7 +78,7 @@
                             <td width="21%" align="right">性别：</td>
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
-                                                   disabled="disabled" th:value="@{${driversLicenseBack.getSex()}}"/>
+                                                   disabled="disabled" th:value="@{${driversLicense.getSex()}}"/>
                             </td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
@@ -94,7 +94,7 @@
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled"
-                                                   th:value="@{${driversLicenseBack.getNationality()}}"/></td>
+                                                   th:value="@{${driversLicense.getNationality()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -109,7 +109,7 @@
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled"
-                                                   th:value="@{${driversLicenseBack.getAddress()}}"/></td>
+                                                   th:value="@{${driversLicense.getAddress()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -124,7 +124,7 @@
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled"
-                                                   th:value="@{${driversLicenseBack.getBirthDate()}}"/></td>
+                                                   th:value="@{${driversLicense.getBirthDate()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -136,7 +136,7 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">初次领证日期：</td>
-                            <td width="45%"><textarea style="font-size:19px" disabled="disabled">[[@{${driversLicenseBack.getIssueDate()}}]]</textarea>
+                            <td width="45%"><textarea style="font-size:19px; width:100%" disabled="disabled">[[@{${driversLicense.getIssueDate()}}]]</textarea>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -152,7 +152,7 @@
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled"
-                                                   th:value="@{${driversLicenseBack.getDrivingType()}}"/></td>
+                                                   th:value="@{${driversLicense.getDrivingType()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -167,7 +167,7 @@
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled"
-                                                   th:value="@{${driversLicenseBack.getStartDate()}}"/></td>
+                                                   th:value="@{${driversLicense.getStartDate()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -182,7 +182,7 @@
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled"
-                                                   th:value="@{${driversLicenseBack.getEndDate()}}"/></td>
+                                                   th:value="@{${driversLicense.getEndDate()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -196,7 +196,7 @@
                             <td width="21%" align="right">证号：</td>
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
-                                                   disabled="disabled" th:value="@{${driversLicenseBack.getCardNo()}}"/>
+                                                   disabled="disabled" th:value="@{${driversLicense.getCardNo()}}"/>
                             </td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
@@ -212,7 +212,7 @@
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled"
-                                                   th:value="@{${driversLicenseBack.getFileNumber()}}"/></td>
+                                                   th:value="@{${driversLicense.getFileNumber()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -226,7 +226,7 @@
                             <td width="21%" align="right">记录：</td>
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
-                                                   disabled="disabled" th:value="@{${driversLicenseBack.getRecord()}}"/>
+                                                   disabled="disabled" th:value="@{${driversLicense.getRecord()}}"/>
                             </td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"

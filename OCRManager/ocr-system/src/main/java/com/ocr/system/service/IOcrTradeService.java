@@ -192,4 +192,16 @@ public interface IOcrTradeService
 
     String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag);
 
+	String insertResidenceBookletFlag(ResidenceBooklet residenceBooklet, String channelCode, String imgId, Boolean flag);
+
+	String insertMarriageLicenseFlag(MarriageLicense marriageLicense, String channelCode, String imgId, Boolean flag);
+
+	String insertDriversLicenseFlag(DriversLicense driversLicense, String channelCode, String imgId, Boolean flag);
+
+	String insertDrivingLicenseFlag(DrivingLicense drivingLicense, String channelCode, String imgId, Boolean flag);
+
+	String insertPlateNumberFlag(PlateNumber plateNumber, String channelCode, String imgId, Boolean flag);
+
+	String insertBusinessLicenseFlag(BusinessLicense businessLicense, String channelCode, String imgId, Boolean flag);
+
 }

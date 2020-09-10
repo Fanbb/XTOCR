@@ -243,6 +243,37 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         return getStringFlag(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit),flag);
     }
 
+    @Override
+    public String insertResidenceBookletFlag(ResidenceBooklet residenceBooklet, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, residenceBooklet.getImgType(), "", JSON.toJSONString(residenceBooklet),flag);
+    }
+
+    @Override
+    public String insertMarriageLicenseFlag(MarriageLicense marriageLicense, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, marriageLicense.getImgType(), marriageLicense.getMarriageNo(), JSON.toJSONString(marriageLicense),flag);
+    }
+
+    @Override
+    public String insertDrivingLicenseFlag(DrivingLicense drivingLicense, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, drivingLicense.getImgType(), drivingLicense.getFileNumber(), JSON.toJSONString(drivingLicense),flag);
+    }
+
+    @Override
+    public String insertDriversLicenseFlag(DriversLicense driversLicense, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, driversLicense.getImgType(), driversLicense.getFileNumber(), JSON.toJSONString(driversLicense),flag);
+    }
+
+    @Override
+    public String insertPlateNumberFlag(PlateNumber plateNumber, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, plateNumber.getImgType(), plateNumber.getNumber(), JSON.toJSONString(plateNumber),flag);
+    }
+
+    @Override
+    public String insertBusinessLicenseFlag(BusinessLicense businessLicense, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, businessLicense.getImgType(), businessLicense.getSocialCode(), JSON.toJSONString(businessLicense),flag);
+    }
+
+
     /**
      * 房本流水
      * @param premisesPermit
@@ -324,7 +355,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      */
     @Override
     public String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId) {
-        return getString(channelCode, imgId, residenceBooklet.getImgType(), residenceBooklet.getAddress(), JSON.toJSONString(residenceBooklet));
+        return getString(channelCode, imgId, residenceBooklet.getImgType(), "", JSON.toJSONString(residenceBooklet));
     }
 
     @Override

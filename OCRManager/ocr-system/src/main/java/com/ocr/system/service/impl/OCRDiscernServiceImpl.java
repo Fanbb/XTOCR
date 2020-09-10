@@ -145,6 +145,24 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 case "4":
                     imgName = "PremisesPermit";
                     break;
+                case "6":
+                    imgName = "ResidenceBooklet";
+                    break;
+                case "7":
+                    imgName = "MarriageLicense";
+                    break;
+                case "8":
+                    imgName = "DrivingLicense";
+                    break;
+                case "9":
+                    imgName = "DriversLicense";
+                    break;
+                case "10":
+                    imgName = "PlateNumber";
+                    break;
+                case "11":
+                    imgName = "BusinessLicense";
+                    break;
             }
 
             log.info("OCR识别结果为空");
@@ -189,14 +207,18 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 return resultData;
             }
             if (model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardFront")) {
-                if (!imgType.equals("1") && !imgType.equals("0")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "1");
+
+                if (null == channelType1) {
                     resultData.setMsg("无身份证识别类型权限！");
                     resultData.setType("0");
                     return resultData;
                 }
             }
             if (model.getClass_name().equals("BankCard")) {
-                if (!imgType.equals("2") && !imgType.equals("0")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "2");
+
+                if (null == channelType1) {
                     resultData.setMsg("无银行卡识别类型权限！");
                     resultData.setType("0");
                     return resultData;
@@ -204,12 +226,78 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
             }
             if (model.getClass_name().equals("Deposit")) {
-                if (!imgType.equals("3") && !imgType.equals("0")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "3");
+
+                if (null == channelType1) {
                     resultData.setMsg("无存单识别类型权限！");
                     resultData.setType("0");
                     return resultData;
                 }
             }
+            if (model.getClass_name().equals("PremisesPermit")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "4");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无房本识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("ResidenceBooklet")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "6");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无户口本识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("MarriageLicense")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "7");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无结婚证识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("DrivingLicense")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "8");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无行驶证识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("DriversLicense")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "9");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无驾驶证识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("PlateNumber")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "10");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无车牌号识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("BusinessLicense")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "11");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无营业执照识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+
 
             String tradeId;
             Boolean flag = true;
@@ -288,6 +376,97 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag);
                     premisesPermit.setTradeId(tradeId);
                     list.add(premisesPermit);
+                    break;
+                case "ResidenceBooklet":
+                    ResidenceBooklet residenceBooklet = JSONArray.parseObject(model.getOcr_result(), ResidenceBooklet.class);
+                    residenceBooklet.setImgType(model.getClass_name());
+                    residenceBooklet.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(residenceBooklet.getAddress())||StringUtils.isEmpty(residenceBooklet.getNativePlace())) {
+                        flag = false;
+                        residenceBooklet.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertResidenceBookletFlag(residenceBooklet, channelCode, imgId, flag);
+                    residenceBooklet.setTradeId(tradeId);
+                    list.add(residenceBooklet);
+                    break;
+                case "MarriageLicense":
+                    MarriageLicense marriageLicense = JSONArray.parseObject(model.getOcr_result(), MarriageLicense.class);
+                    marriageLicense.setImgType(model.getClass_name());
+                    marriageLicense.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(marriageLicense.getMarriageNo())||StringUtils.isEmpty(marriageLicense.getIdCardNo())||StringUtils.isEmpty(marriageLicense.getName())) {
+                        flag = false;
+                        marriageLicense.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertMarriageLicenseFlag(marriageLicense, channelCode, imgId, flag);
+                    marriageLicense.setTradeId(tradeId);
+                    list.add(marriageLicense);
+                    break;
+                case "DrivingLicense":
+                    DrivingLicense drivingLicense = JSONArray.parseObject(model.getOcr_result(), DrivingLicense.class);
+                    drivingLicense.setImgType(model.getClass_name());
+                    drivingLicense.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(drivingLicense.getFileNumber())||StringUtils.isEmpty(drivingLicense.getAddress())||StringUtils.isEmpty(drivingLicense.getBrandModel())||StringUtils.isEmpty(drivingLicense.getEngineNumber())||StringUtils.isEmpty(drivingLicense.getGabarite())||StringUtils.isEmpty(drivingLicense.getIdentifyCode())||StringUtils.isEmpty(drivingLicense.getInspectionRecord())||StringUtils.isEmpty(drivingLicense.getIssueDate())||StringUtils.isEmpty(drivingLicense.getIssueUnit())||StringUtils.isEmpty(drivingLicense.getNumber())||StringUtils.isEmpty(drivingLicense.getOwner())||StringUtils.isEmpty(drivingLicense.getPlateNumber())||StringUtils.isEmpty(drivingLicense.getRatifiedMass())||StringUtils.isEmpty(drivingLicense.getRegistrationDate())||StringUtils.isEmpty(drivingLicense.getRemark())||StringUtils.isEmpty(drivingLicense.getTotalMass())||StringUtils.isEmpty(drivingLicense.getTractionMass())||StringUtils.isEmpty(drivingLicense.getUnladenMass())||StringUtils.isEmpty(drivingLicense.getUseNature())||StringUtils.isEmpty(drivingLicense.getVehicleType())) {
+                        flag = false;
+                        drivingLicense.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertDrivingLicenseFlag(drivingLicense, channelCode, imgId, flag);
+                    drivingLicense.setTradeId(tradeId);
+                    list.add(drivingLicense);
+                    break;
+                case "DriversLicense":
+                    DriversLicense driversLicense = JSONArray.parseObject(model.getOcr_result(), DriversLicense.class);
+                    driversLicense.setImgType(model.getClass_name());
+                    driversLicense.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(driversLicense.getFileNumber())||StringUtils.isEmpty(driversLicense.getAddress())||StringUtils.isEmpty(driversLicense.getBirthDate())||StringUtils.isEmpty(driversLicense.getCardNo())||StringUtils.isEmpty(driversLicense.getDrivingType())||StringUtils.isEmpty(driversLicense.getEndDate())||StringUtils.isEmpty(driversLicense.getIssueDate())||StringUtils.isEmpty(driversLicense.getName())||StringUtils.isEmpty(driversLicense.getNationality())||StringUtils.isEmpty(driversLicense.getRecord())||StringUtils.isEmpty(driversLicense.getSex())||StringUtils.isEmpty(driversLicense.getStartDate())) {
+                        flag = false;
+                        driversLicense.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertDriversLicenseFlag(driversLicense, channelCode, imgId, flag);
+                    driversLicense.setTradeId(tradeId);
+                    list.add(driversLicense);
+                    break;
+                case "PlateNumber":
+                    PlateNumber plateNumber = JSONArray.parseObject(model.getOcr_result(), PlateNumber.class);
+                    plateNumber.setImgType(model.getClass_name());
+                    plateNumber.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(plateNumber.getNumber())) {
+                        flag = false;
+                        plateNumber.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertPlateNumberFlag(plateNumber, channelCode, imgId, flag);
+                    plateNumber.setTradeId(tradeId);
+                    list.add(plateNumber);
+                    break;
+                case "BusinessLicense":
+                    BusinessLicense businessLicense = JSONArray.parseObject(model.getOcr_result(), BusinessLicense.class);
+                    businessLicense.setImgType(model.getClass_name());
+                    businessLicense.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(businessLicense.getSocialCode())||StringUtils.isEmpty(businessLicense.getAddress())||StringUtils.isEmpty(businessLicense.getBusinessScope())||StringUtils.isEmpty(businessLicense.getBusinessTerm())||StringUtils.isEmpty(businessLicense.getCompanyName())||StringUtils.isEmpty(businessLicense.getLegalPerson())||StringUtils.isEmpty(businessLicense.getRegisterDate())||StringUtils.isEmpty(businessLicense.getRegisteredCapital())||StringUtils.isEmpty(businessLicense.getVertical())
+                    ) {
+                        flag = false;
+                        businessLicense.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag);
+                    businessLicense.setTradeId(tradeId);
+                    list.add(businessLicense);
                     break;
                 default:
                     tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, imgId);
