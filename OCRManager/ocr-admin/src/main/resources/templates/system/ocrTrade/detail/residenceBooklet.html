@@ -60,10 +60,10 @@
                         <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
                         <tr><td colspan="3"><h2 class="box-title" th:align="center" style="font-weight:bold">户口本识别信息：</h2></td></tr>
                         <tr style="height: 50px">
-                            <td width="21%" align="right">姓名：</td>
+                            <td width="21%" align="right">籍贯：</td>
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
-                                                   disabled="disabled" th:value="@{${residenceBookletBack.getNativePlace()}}"/>
+                                                   disabled="disabled" th:value="@{${residenceBooklet.getNativePlace()}}"/>
                             </td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
@@ -76,7 +76,7 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">住址：</td>
-                            <td width="45%"><textarea style="font-size:19px" disabled="disabled">[[@{${residenceBookletBack.getAddress()}}]]</textarea>
+                            <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${residenceBooklet.getAddress()}}]]</textarea>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
