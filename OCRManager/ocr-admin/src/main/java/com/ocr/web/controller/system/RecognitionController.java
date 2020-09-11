@@ -88,7 +88,8 @@ public class RecognitionController extends BaseController {
         String imgId = UUID.randomUUID().toString();
         String oldFileName = file.getOriginalFilename();
         String sName = oldFileName.substring(oldFileName.lastIndexOf("."));
-        Long fileName = System.currentTimeMillis();
+        //Long fileName = System.currentTimeMillis();
+        String fileName = UUID.randomUUID().toString();
 
         String path = imgUploadPath + "/IMAGE/" + dateStr;
         File pathFile = new File(path);

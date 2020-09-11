@@ -1,6 +1,7 @@
 package com.ocr.system.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,8 @@ public class ChannelTypeServiceImpl implements IChannelTypeService {
      */
     @Override
     public int insertChannelType(ChannelType channelType) {
-        channelType.setId(System.currentTimeMillis() + "");
+        //channelType.setId(System.currentTimeMillis() + "");
+        channelType.setId(UUID.randomUUID().toString() + "");
         return channelTypeMapper.insertChannelType(channelType);
     }
 

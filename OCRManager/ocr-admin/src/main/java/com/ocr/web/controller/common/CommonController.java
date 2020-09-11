@@ -17,6 +17,8 @@ import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.file.FileUploadUtils;
 import com.ocr.common.utils.file.FileUtils;
 
+import java.util.UUID;
+
 /**
  * 通用请求处理
  * 
@@ -45,7 +47,8 @@ public class CommonController
             {
                 throw new Exception(StringUtils.format("文件名称({})非法，不允许下载。 ", fileName));
             }
-            String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+            //String realFileName = System.currentTimeMillis() + fileName.substring(fileName.indexOf("_") + 1);
+            String realFileName = UUID.randomUUID().toString() + fileName.substring(fileName.indexOf("_") + 1);
             String filePath = Global.getDownloadPath() + fileName;
 
             response.setCharacterEncoding("utf-8");

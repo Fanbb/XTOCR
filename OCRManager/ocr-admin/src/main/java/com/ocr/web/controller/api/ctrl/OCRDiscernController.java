@@ -98,7 +98,7 @@ public class OCRDiscernController extends BaseController {
             return error("用户名为空！");
         }else {
             ResultData resultData = ocrDiscernService.videoPlatformDiscernReal(discernResult.getBatchNumber(),discernResult.getChannelCode(),discernResult.getIdentificationCode(),discernResult.getImgType(),discernResult.getUserName(),discernResult.getPassWord(),discernResult.getModelCode(),discernResult.getCreateDate(),discernResult.getFilePartName());
-//            ResultData resultData = ocrDiscernService.videoPlatformDiscern(discernResult.getBatchNumber(),discernResult.getChannelCode(),discernResult.getIdentificationCode(),discernResult.getImgType());
+            //ResultData resultData = ocrDiscernService.videoPlatformDiscern(discernResult.getBatchNumber(),discernResult.getChannelCode(),discernResult.getIdentificationCode(),discernResult.getImgType());
             if (resultData.getType().equals("1")) {
                 return AjaxResult.success(resultData.getMsg(), resultData.getData());
             } else {
