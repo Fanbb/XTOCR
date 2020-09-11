@@ -9,38 +9,45 @@ ocr:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ocr/uploadPath，Linux配置 /u02）
-  #  profile: /u02
+  #profile: /u02
   profile: D:/ocr/uploadPath
   # 项目日志地址  （Windows配置D:/home/ocr/logs，Linux配置 /home/ocr/logs）
-  #  logFilePath: /home/ocr/logs
+  #logFilePath: /home/ocr/logs
   logFilePath: D:/home/ocr/logs
-  # 本机服务器图片地址路径  （项目部署IP）
+  # 本机服务器图片地址路径  （项目部署IP） 8.8.5.122 123 120
   # 生产ip：192.168.110.214:8080/OCR/profile/IMAGE/
   # 测试http://192.168.119.26:8080/profile/IMAGE/
   #  serverProfile: http://192.168.110.214:8080/OCR/profile/IMAGE/
   serverProfile: http://192.168.117.108:8080/OCR/profile/IMAGE/
-  #  serverProfile: http://192.168.119.26:8080/OCR/profile/IMAGE/
-  # ocr服务器接口访问地址 （ocr服务器IP路径 OCR测试地址http://192.168.119.31:10002/mask）
-  ocrUrl: http://192.168.110.214:10002/mask
-  #  ocrUrl: http://192.168.119.31:10002/mask
+  #serverProfile: http://192.168.110.230:8080/OCR/profile/IMAGE/
+  #serverProfile: http://8.8.5.122:8080/OCR/profile/IMAGE/
+  #serverProfile: http://8.8.5.123:8080/OCR/profile/IMAGE/
+  #serverProfile: http://192.168.119.26:8080/OCR/profile/IMAGE/
+  #ocr服务器接口访问地址 （ocr服务器IP路径 OCR测试地址http://192.168.119.31:10002/mask）
+  #ocrUrl: http://192.168.110.214:10002/mask
+  #ocrUrl: http://8.8.5.122:10002/mask
+  #ocrUrl: http://8.8.5.123:10002/mask
+  #ocrUrl: http://192.168.119.31:10002/mask
+  ocrUrl: http://192.168.110.230:10002/mask
+
 
   # 获取ip地址开关
   addressEnabled: true
 
   ## 开发环境配置
-#server:
-#  # 服务器的HTTP端口，（默认为80 服务器部署端口8080）
-#  port: 8080
-#  servlet:
-#    # 应用的访问路径
-#    context-path: /
-#  tomcat:
-#    # tomcat的URI编码
-#    uri-encoding: UTF-8
-#    # tomcat最大线程数，默认为200
-#    max-threads: 800
-#    # Tomcat启动初始化的线程数，默认值25
-#    min-spare-threads: 30
+server:
+  # 服务器的HTTP端口，（默认为80 服务器部署端口8080）
+  port: 8080
+  servlet:
+    # 应用的访问路径
+    context-path: /OCR
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
 
 # 日志配置
 logging:
@@ -110,7 +117,7 @@ shiro:
     # 首页地址
     indexUrl: /index
     # 验证码开关
-    captchaEnabled: true
+    captchaEnabled: false
     # 验证码类型 math 数组计算 char 字符
     captchaType: math
   cookie:
