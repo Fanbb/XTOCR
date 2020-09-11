@@ -796,7 +796,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName) {
         ResultData resultData = new ResultData();
 
-        //TODO 识别前权限判断， 除了0(通用凭证)以外的类型
         if (!imgType.equals("0")) {
             ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
             if (null == channelType || !imgType.equals(channelType.getOcrType())) {
@@ -865,7 +864,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
 
                 for (RequestModel model : models) {
-                    //TODO 补齐所有影像类型的权限，识别出结果后，判断渠道是否有此权限
                     if (model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardBack")) {
                         ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "1");
 
@@ -1006,7 +1004,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
 
 
-            //TODO 需要确定批次内所有的影像是否都有识别权限，如果有继续，如果没有那就跳过
             //如果所有影像都有识别权限
             if (authorityFlag && !(StringUtils.isEmpty(request) || request.equals("[]"))) {
                 for (RequestModel model : models) {
@@ -1094,7 +1091,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             i++;
                             break;
 
-                        //TODO 补齐所有影像类型的存值
                         case "ResidenceBooklet":
                             ResidenceBooklet residenceBooklet = JSONArray.parseObject(model.getOcr_result(), ResidenceBooklet.class);
                             residenceBooklet.setImgType(model.getClass_name());
