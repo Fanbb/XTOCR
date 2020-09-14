@@ -795,14 +795,23 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     @Override
     public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName) {
         ResultData resultData = new ResultData();
+        //查询渠道的全部识别权限
+        ChannelType channelType2 = new ChannelType();
+        channelType2.setChannelCode(channelCode);
+        List<ChannelType> channelTypes = iChannelTypeService.selectChannelTypeList(channelType2);
 
         if (!imgType.equals("0")) {
-            ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
-            if (null == channelType || !imgType.equals(channelType.getOcrType())) {
+            //ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
+            if (!judgeAuth(channelTypes, imgType)) {
                 resultData.setMsg("无识别类型权限！");
                 resultData.setType("0");
                 return resultData;
             }
+//            if (null == channelType || !imgType.equals(channelType.getOcrType())) {
+//                resultData.setMsg("无识别类型权限！");
+//                resultData.setType("0");
+//                return resultData;
+//            }
         }
 
         //批量影像下载 返回唯一标识对应相应的imgUrl
@@ -865,11 +874,11 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
                 for (RequestModel model : models) {
                     if (model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardBack")) {
-                        ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "1");
+                        //ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "1");
 
-                        if (null == channelType1) {
+                        //if (null == channelType1) {
+                        if (!judgeAuth(channelTypes, "1")) {
                             authorityFlag = false;
-
                             if (authorityStr.indexOf("无身份证识别类型权限") < 0) {
                                 authorityStr += "无身份证识别类型权限！";
                             }
@@ -878,9 +887,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         continue;
                     }
                     if (model.getClass_name().equals("BankCard")) {
-                        ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "2");
-
-                        if (null == channelType1) {
+                        if (!judgeAuth(channelTypes, "2")) {
                             authorityFlag = false;
                             if (authorityStr.indexOf("无银行卡识别类型权限") < 0) {
                                 authorityStr += "无银行卡识别类型权限！";
@@ -891,9 +898,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
                     }
                     if (model.getClass_name().equals("Deposit")) {
-                        ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "3");
-
-                        if (null == channelType1) {
+                        if (!judgeAuth(channelTypes, "3")) {
                             authorityFlag = false;
                             if (authorityStr.indexOf("无存单识别类型权限") < 0) {
                                 authorityStr += "无存单识别类型权限！";
@@ -903,86 +908,72 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         continue;
                     }
                     if (model.getClass_name().equals("PremisesPermit")) {
-                        ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "4");
-
-                                if (null == channelType1) {
-                                    authorityFlag = false;
-                                    if (authorityStr.indexOf("无房本识别类型权限") < 0) {
-                                        authorityStr += "无房本识别类型权限！";
-                                    }
-                                    break;
-                                }
-                                continue;
-                            }
-                            if (model.getClass_name().equals("ResidenceBooklet")) {
-                                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "6");
-
-                                if (null == channelType1) {
-                                    authorityFlag = false;
-                                    if (authorityStr.indexOf("无户口本识别类型权限") < 0) {
-                                        authorityStr += "无户口本识别类型权限！";
-                                    }
-                                    break;
-                                }
-                                continue;
-                            }
-                            if (model.getClass_name().equals("MarriageLicense")) {
-                                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "7");
-
-                                if (null == channelType1) {
-                                    authorityFlag = false;
-                                    if (authorityStr.indexOf("无结婚证识别类型权限") < 0) {
-                                        authorityStr += "无结婚证识别类型权限！";
-                                    }
-                                    break;
-                                }
-                                continue;
-                            }
-                            if (model.getClass_name().equals("DrivingLicense")) {
-                                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "8");
-
-                                if (null == channelType1) {
-                                    authorityFlag = false;
-                                    if (authorityStr.indexOf("无行驶证识别类型权限") < 0) {
-                                        authorityStr += "无行驶证识别类型权限！";
-                                    }
-                                    break;
-                                }
-                                continue;
-                            }
-                            if (model.getClass_name().equals("DriversLicense")) {
-                                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "9");
-
-                                if (null == channelType1) {
-                                    authorityFlag = false;
-                                    if (authorityStr.indexOf("无驾驶证识别类型权限") < 0) {
-                                        authorityStr += "无驾驶证识别类型权限！";
-                                    }
-                                    break;
-                                }
-                                continue;
-                            }
-                            if (model.getClass_name().equals("PlateNumber")) {
-                                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "10");
-
-                                if (null == channelType1) {
-                                    authorityFlag = false;
-                                    if (authorityStr.indexOf("无车牌号识别类型权限") < 0) {
-                                        authorityStr += "无车牌号识别类型权限！";
-                                    }
-                                    break;
-                                }
-                                continue;
-                            }
-                            if (model.getClass_name().equals("BusinessLicense")) {
-                                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "11");
-
-                                if (null == channelType1) {
-                                    authorityFlag = false;
-                                    if (authorityStr.indexOf("无营业执照识别类型权限") < 0) {
-                                        authorityStr += "无营业执照识别类型权限！";
+                        if (!judgeAuth(channelTypes, "4")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无房本识别类型权限") < 0) {
+                                authorityStr += "无房本识别类型权限！";
                             }
                             break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("ResidenceBooklet")) {
+                        if (!judgeAuth(channelTypes, "6")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无户口本识别类型权限") < 0) {
+                                authorityStr += "无户口本识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("MarriageLicense")) {
+                        if (!judgeAuth(channelTypes, "7")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无结婚证识别类型权限") < 0) {
+                                authorityStr += "无结婚证识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("DrivingLicense")) {
+                        if (!judgeAuth(channelTypes, "8")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无行驶证识别类型权限") < 0) {
+                                authorityStr += "无行驶证识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("DriversLicense")) {
+                        if (!judgeAuth(channelTypes, "9")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无驾驶证识别类型权限") < 0) {
+                                authorityStr += "无驾驶证识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("PlateNumber")) {
+                        if (!judgeAuth(channelTypes, "10")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无车牌号识别类型权限") < 0) {
+                                authorityStr += "无车牌号识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("BusinessLicense")) {
+                        if (!judgeAuth(channelTypes, "11")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无营业执照识别类型权限") < 0) {
+                                authorityStr += "无营业执照识别类型权限！";
+                            }
+                        break;
                         }
                         continue;
                     }
@@ -1217,5 +1208,23 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             resultData.setData(resultDataModels);
         }
         return resultData;
+    }
+
+    /**
+     * @return true 有权限 false 无权限
+     * @param channelTypes 渠道权限集合
+     * @param imgType 需要判断的权限
+     * */
+    private boolean judgeAuth (List<ChannelType> channelTypes, String imgType) {
+        for (ChannelType channelType : channelTypes) {
+            if (channelType != null && channelType.getOcrType() != null) {
+                if (channelType.getOcrType().equals(imgType)) {
+                    return true;
+                } else {
+                    continue;
+                }
+            }
+        }
+        return false;
     }
 }

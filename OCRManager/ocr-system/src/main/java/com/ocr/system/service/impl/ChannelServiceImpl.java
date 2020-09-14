@@ -78,7 +78,7 @@ public class ChannelServiceImpl implements IChannelService {
     @Override
     public Boolean channelStatus(String channelCode) {
         Channel channel = channelMapper.selectChannelByCode(channelCode);
-        if (channel.getStatus().equals("1")) {
+        if (channel != null && channel.getStatus() != null && "1".equals(channel.getStatus())) {
             return true;
         }
         return false;

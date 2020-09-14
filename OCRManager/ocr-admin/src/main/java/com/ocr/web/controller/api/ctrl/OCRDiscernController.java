@@ -40,15 +40,19 @@ public class OCRDiscernController extends BaseController {
     @ApiImplicitParam(name = "ocrDiscernEntity", value = "OCR内网调用接口参数", dataType = "OCRDiscernEntity")
     @PostMapping("/outUrlDiscern")
     public AjaxResult outUrlDiscern(OCRDiscernEntity ocrDiscernEntity) {
+        //首先判断渠道是否为停用状态
+        if (iChannelService.channelStatus(ocrDiscernEntity.getChannelCode())) {
+            return error("渠道停用状态，无权限访问OCR平台！");
+        }
         if (StringUtils.isEmpty(ocrDiscernEntity.getChannelCode())||StringUtils.isEmpty(ocrDiscernEntity.getImgType())) {
             return error("用户平台类别或图片类型不能为空！");
         } else {
             if (StringUtils.isEmpty(ocrDiscernEntity.getImgUrl()) && StringUtils.isEmpty(ocrDiscernEntity.getImgStr())) {
                 return error("图片路径与图片Base64不能同时为空");
             }
-            if (iChannelService.channelStatus(ocrDiscernEntity.getChannelCode())) {
-                return error("渠道停用状态，无权限访问OCR平台！");
-            }
+            //if (iChannelService.channelStatus(ocrDiscernEntity.getChannelCode())) {
+            //    return error("渠道停用状态，无权限访问OCR平台！");
+            //}
 
             ResultData resultData = ocrDiscernService.runOneAgain(ocrDiscernEntity.getChannelCode(), ocrDiscernEntity.getImgUrl(), ocrDiscernEntity.getImgStr(),ocrDiscernEntity.getImgType());
 //            ResultData resultData = ocrDiscernService.runOne(ocrDiscernEntity.getChannelCode(), ocrDiscernEntity.getImgUrl(), ocrDiscernEntity.getImgStr(),ocrDiscernEntity.getImgType());
@@ -80,6 +84,11 @@ public class OCRDiscernController extends BaseController {
     @ApiImplicitParam(name = "discernResult", value = "影像平台影像识别参数", dataType = "DiscernResult")
     @PostMapping("/videoPlatformDiscern")
     public AjaxResult videoPlatformDiscern(DiscernResult discernResult) {
+        //首先判断渠道是否为停用状态
+        if (iChannelService.channelStatus(discernResult.getChannelCode())) {
+            return error("渠道停用状态，无权限访问OCR平台！");
+        }
+
         if (StringUtils.isEmpty(discernResult.getBatchNumber())){
             return error("批次号为空！");
         }else if (StringUtils.isEmpty(discernResult.getChannelCode())){
