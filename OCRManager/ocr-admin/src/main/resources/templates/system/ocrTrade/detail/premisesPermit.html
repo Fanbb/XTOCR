@@ -76,9 +76,12 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">产权证号：</td>
+                            <!--
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${premisesPermit.getCertificateNo()}}"/>
+                            -->
+                            <td width="45%"><textarea style="font-size:19px; width:100%" disabled="disabled">[[@{${premisesPermit.getCertificateNo()}}]]</textarea>
                             </td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
@@ -87,6 +90,7 @@
                                            th:value="${dict.dictValue}" th:field="*{certificateNo}">
                                     <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
+                            </td>
                             </td>
                         </tr>
                         <tr style="height: 50px">

@@ -106,10 +106,13 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">住址：</td>
+                            <!--
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled"
                                                    th:value="@{${driversLicense.getAddress()}}"/></td>
+                            -->
+                            <td width="45%"><textarea style="font-size:19px; width:100%" disabled="disabled">[[@{${driversLicense.getAddress()}}]]</textarea>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -117,6 +120,7 @@
                                            th:value="${dict.dictValue}" th:field="*{address}">
                                     <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
+                            </td>
                             </td>
                         </tr>
                         <tr style="height: 50px">
@@ -136,7 +140,11 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">初次领证日期：</td>
-                            <td width="45%"><textarea style="font-size:19px; width:100%" disabled="disabled">[[@{${driversLicense.getIssueDate()}}]]</textarea>
+                            <!--<td width="45%"><textarea style="font-size:19px; width:100%" disabled="disabled">[[@{${driversLicense.getIssueDate()}}]]</textarea>-->
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled"
+                                                   th:value="@{${driversLicense.getIssueDate()}}"/></td>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -145,7 +153,7 @@
                                     <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
                             </td>
-                            </td>
+                            <!--</td>-->
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">准驾车型：</td>
@@ -224,10 +232,13 @@
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">记录：</td>
+                            <!--
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled" th:value="@{${driversLicense.getRecord()}}"/>
                             </td>
+                            -->
+                            <td width="45%"><textarea style="font-size:19px; width:100%" disabled="disabled">[[@{${driversLicense.getRecord()}}]]</textarea>
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
@@ -235,6 +246,7 @@
                                            th:value="${dict.dictValue}" th:field="*{record}">
                                     <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
+                            </td>
                             </td>
                         </tr>
                         <tr style="height: 50px">
