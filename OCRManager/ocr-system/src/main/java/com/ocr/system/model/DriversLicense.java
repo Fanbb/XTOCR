@@ -1,6 +1,8 @@
 package com.ocr.system.model;
 
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 驾驶证
  * @author Jocker
@@ -227,5 +229,9 @@ public class DriversLicense {
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getFileNumber())||StringUtils.isEmpty(getAddress())||StringUtils.isEmpty(getBirthDate())||StringUtils.isEmpty(getCardNo())||StringUtils.isEmpty(getDrivingType())||StringUtils.isEmpty(getEndDate())||StringUtils.isEmpty(getIssueDate())||StringUtils.isEmpty(getName())||StringUtils.isEmpty(getNationality())||StringUtils.isEmpty(getRecord())||StringUtils.isEmpty(getSex())||StringUtils.isEmpty(getStartDate());
     }
 }

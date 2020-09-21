@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 身份证反面
  * @author Jocker
@@ -102,5 +104,9 @@ public class IDCardBack {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getStartDate()) || StringUtils.isEmpty(getEndDate()) || StringUtils.isEmpty(getAuthority());
     }
 }

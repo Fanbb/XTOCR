@@ -1008,7 +1008,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(idCardFront.getSex()) || StringUtils.isEmpty(idCardFront.getNation()) || StringUtils.isEmpty(idCardFront.getName()) || StringUtils.isEmpty(idCardFront.getBirthday()) || StringUtils.isEmpty(idCardFront.getAddress()) || StringUtils.isEmpty(idCardFront.getIdCardNo())) {
+                            if (idCardFront.hasEmptyField()) {
                                 flag = false;
                                 idCardFront.setFlag("false");
                             }
@@ -1024,7 +1024,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(idCardBack.getStartDate()) || StringUtils.isEmpty(idCardBack.getEndDate()) || StringUtils.isEmpty(idCardBack.getAuthority())) {
+                            if (idCardBack.hasEmptyField()) {
                                 flag = false;
                                 idCardBack.setFlag("false");
                             }
@@ -1040,7 +1040,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(bankCard.getBankCardNo())) {
+                            if (bankCard.hasEmptyField()) {
                                 flag = false;
                                 bankCard.setFlag("false");
                             }
@@ -1056,7 +1056,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(deposit.getDepositNo()) || StringUtils.isEmpty(deposit.getAccNo()) || StringUtils.isEmpty(deposit.getAmt()) || StringUtils.isEmpty(deposit.getAmtCapital()) || StringUtils.isEmpty(deposit.getName())) {
+                            if (deposit.hasEmptyField()) {
                                 flag = false;
                                 deposit.setFlag("false");
                             }
@@ -1072,7 +1072,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(premisesPermit.getBuiltArea())||StringUtils.isEmpty(premisesPermit.getCertificateNo())||StringUtils.isEmpty(premisesPermit.getFloorArea())||StringUtils.isEmpty(premisesPermit.getName())||StringUtils.isEmpty(premisesPermit.getLocation())||StringUtils.isEmpty(premisesPermit.getPurpose())||StringUtils.isEmpty(premisesPermit.getLandUse())||StringUtils.isEmpty(premisesPermit.getStructure())) {
+                            if (premisesPermit.hasEmptyField()) {
                                 flag = false;
                                 premisesPermit.setFlag("false");
                             }
@@ -1089,7 +1089,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(residenceBooklet.getAddress())||StringUtils.isEmpty(residenceBooklet.getNativePlace())) {
+                            if (residenceBooklet.hasEmptyField()) {
                                 flag = false;
                                 residenceBooklet.setFlag("false");
                             }
@@ -1105,7 +1105,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(marriageLicense.getMarriageNo())||StringUtils.isEmpty(marriageLicense.getIdCardNo())||StringUtils.isEmpty(marriageLicense.getName())) {
+                            if (marriageLicense.hasEmptyField()) {
                                 flag = false;
                                 marriageLicense.setFlag("false");
                             }
@@ -1121,7 +1121,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(drivingLicense.getFileNumber())||StringUtils.isEmpty(drivingLicense.getAddress())||StringUtils.isEmpty(drivingLicense.getBrandModel())||StringUtils.isEmpty(drivingLicense.getEngineNumber())||StringUtils.isEmpty(drivingLicense.getGabarite())||StringUtils.isEmpty(drivingLicense.getIdentifyCode())||StringUtils.isEmpty(drivingLicense.getInspectionRecord())||StringUtils.isEmpty(drivingLicense.getIssueDate())||StringUtils.isEmpty(drivingLicense.getIssueUnit())||StringUtils.isEmpty(drivingLicense.getNumber())||StringUtils.isEmpty(drivingLicense.getOwner())||StringUtils.isEmpty(drivingLicense.getPlateNumber())||StringUtils.isEmpty(drivingLicense.getRatifiedMass())||StringUtils.isEmpty(drivingLicense.getRegistrationDate())||StringUtils.isEmpty(drivingLicense.getRemark())||StringUtils.isEmpty(drivingLicense.getTotalMass())||StringUtils.isEmpty(drivingLicense.getTractionMass())||StringUtils.isEmpty(drivingLicense.getUnladenMass())||StringUtils.isEmpty(drivingLicense.getUseNature())||StringUtils.isEmpty(drivingLicense.getVehicleType())) {
+                            if (drivingLicense.hasEmptyField()) {
                                 flag = false;
                                 drivingLicense.setFlag("false");
                             }
@@ -1137,7 +1137,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(driversLicense.getFileNumber())||StringUtils.isEmpty(driversLicense.getAddress())||StringUtils.isEmpty(driversLicense.getBirthDate())||StringUtils.isEmpty(driversLicense.getCardNo())||StringUtils.isEmpty(driversLicense.getDrivingType())||StringUtils.isEmpty(driversLicense.getEndDate())||StringUtils.isEmpty(driversLicense.getIssueDate())||StringUtils.isEmpty(driversLicense.getName())||StringUtils.isEmpty(driversLicense.getNationality())||StringUtils.isEmpty(driversLicense.getRecord())||StringUtils.isEmpty(driversLicense.getSex())||StringUtils.isEmpty(driversLicense.getStartDate())) {
+                            if (driversLicense.hasEmptyField()) {
                                 flag = false;
                                 driversLicense.setFlag("false");
                             }
@@ -1153,7 +1153,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(plateNumber.getNumber())) {
+                            if (plateNumber.hasEmptyField()) {
                                 flag = false;
                                 plateNumber.setFlag("false");
                             }
@@ -1169,8 +1169,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             /**
                              * 调用流水存储 返回流水id
                              */
-                            if (StringUtils.isEmpty(businessLicense.getSocialCode())||StringUtils.isEmpty(businessLicense.getAddress())||StringUtils.isEmpty(businessLicense.getBusinessScope())||StringUtils.isEmpty(businessLicense.getBusinessTerm())||StringUtils.isEmpty(businessLicense.getCompanyName())||StringUtils.isEmpty(businessLicense.getLegalPerson())||StringUtils.isEmpty(businessLicense.getRegisterDate())||StringUtils.isEmpty(businessLicense.getRegisteredCapital())||StringUtils.isEmpty(businessLicense.getVertical())
-                            ) {
+                            if (businessLicense.hasEmptyField()) {
                                 flag = false;
                                 businessLicense.setFlag("false");
                             }
@@ -1179,9 +1178,6 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             list.add(businessLicense);
                             i++;
                             break;
-
-
-
                         default:
                             tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, ocrImage.getId());
                             NoneEnty noneEnty = new NoneEnty();

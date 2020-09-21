@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 身份证正面
  *
@@ -145,5 +147,9 @@ public class IDCardFront {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getSex()) || StringUtils.isEmpty(getNation()) || StringUtils.isEmpty(getName()) || StringUtils.isEmpty(getBirthday()) || StringUtils.isEmpty(getAddress()) || StringUtils.isEmpty(getIdCardNo());
     }
 }

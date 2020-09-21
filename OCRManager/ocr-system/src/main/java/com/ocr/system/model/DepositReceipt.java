@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 存单
  * @author Jocker
@@ -130,5 +132,9 @@ public class DepositReceipt {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getDepositNo()) || StringUtils.isEmpty(getAccNo()) || StringUtils.isEmpty(getAmt()) || StringUtils.isEmpty(getAmtCapital()) || StringUtils.isEmpty(getName());
     }
 }

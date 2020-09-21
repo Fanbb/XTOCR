@@ -1,6 +1,8 @@
 package com.ocr.system.model;
 
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 结婚证
  * @author Jocker
@@ -101,5 +103,9 @@ public class MarriageLicense {
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getMarriageNo())|| StringUtils.isEmpty(getIdCardNo())||StringUtils.isEmpty(getName());
     }
 }

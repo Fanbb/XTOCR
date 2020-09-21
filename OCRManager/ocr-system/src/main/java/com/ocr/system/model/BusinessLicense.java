@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 营业执照
  * @author Jocker
@@ -184,5 +186,9 @@ public class BusinessLicense {
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getSocialCode())||StringUtils.isEmpty(getAddress())||StringUtils.isEmpty(getBusinessScope())||StringUtils.isEmpty(getBusinessTerm())||StringUtils.isEmpty(getCompanyName())||StringUtils.isEmpty(getLegalPerson())||StringUtils.isEmpty(getRegisterDate())||StringUtils.isEmpty(getRegisteredCapital())||StringUtils.isEmpty(getVertical());
     }
 }

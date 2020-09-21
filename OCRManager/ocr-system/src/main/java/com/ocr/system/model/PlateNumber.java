@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 车牌号
  * @author Jocker
@@ -72,5 +74,9 @@ public class PlateNumber {
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getNumber());
     }
 }

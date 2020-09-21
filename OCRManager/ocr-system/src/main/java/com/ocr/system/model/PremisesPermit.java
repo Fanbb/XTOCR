@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 房本
  * @author Jocker
@@ -172,5 +174,9 @@ public class PremisesPermit {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getBuiltArea())||StringUtils.isEmpty(getCertificateNo())|| StringUtils.isEmpty(getFloorArea())||StringUtils.isEmpty(getName())||StringUtils.isEmpty(getLocation())||StringUtils.isEmpty(getPurpose())||StringUtils.isEmpty(getLandUse())||StringUtils.isEmpty(getStructure());
     }
 }

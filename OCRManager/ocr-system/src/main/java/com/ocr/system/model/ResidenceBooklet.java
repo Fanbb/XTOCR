@@ -1,6 +1,8 @@
 package com.ocr.system.model;
 
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 户口本
  * @author Jocker
@@ -87,5 +89,9 @@ public class ResidenceBooklet {
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getAddress())|| StringUtils.isEmpty(getNativePlace());
     }
 }

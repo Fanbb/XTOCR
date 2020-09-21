@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 银行卡
  * @author Jocker
@@ -73,5 +75,9 @@ public class BankCard {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getBankCardNo());
     }
 }

@@ -1,5 +1,7 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
  * 行驶证
  * @author Jocker
@@ -338,5 +340,9 @@ public class DrivingLicense {
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
+    }
+
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getFileNumber())||StringUtils.isEmpty(getAddress())||StringUtils.isEmpty(getBrandModel())||StringUtils.isEmpty(getEngineNumber())||StringUtils.isEmpty(getGabarite())||StringUtils.isEmpty(getIdentifyCode())||StringUtils.isEmpty(getInspectionRecord())||StringUtils.isEmpty(getIssueDate())||StringUtils.isEmpty(getIssueUnit())||StringUtils.isEmpty(getNumber())||StringUtils.isEmpty(getOwner())||StringUtils.isEmpty(getPlateNumber())||StringUtils.isEmpty(getRatifiedMass())||StringUtils.isEmpty(getRegistrationDate())||StringUtils.isEmpty(getRemark())||StringUtils.isEmpty(getTotalMass())||StringUtils.isEmpty(getTractionMass())||StringUtils.isEmpty(getUnladenMass())||StringUtils.isEmpty(getUseNature())||StringUtils.isEmpty(getVehicleType());
     }
 }

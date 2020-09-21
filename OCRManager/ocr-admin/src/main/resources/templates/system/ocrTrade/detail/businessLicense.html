@@ -68,7 +68,7 @@
                             <td width="34%">
                                 <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
                                      style="left: 10px;display:inline">
-                                    <input type="radio" id="socialCode" socialCode="name" th:id="${dict.dictCode}"
+                                    <input type="radio" id="socialCode" name="socialCode" th:id="${dict.dictCode}"
                                            th:value="${dict.dictValue}" th:field="*{socialCode}">
                                     <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
                                 </div>
