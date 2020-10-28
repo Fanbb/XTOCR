@@ -68,7 +68,7 @@ public class TollInvoiceBack {
 
     @Override
     public String toString() {
-        return "TollInvoice{" +
+        return "TollInvoiceBack{" +
                 "tradeId='" + tradeId + '\'' +
                 ", invoiceCode='" + invoiceCode + '\'' +
                 ", invoiceNumber='" + invoiceNumber + '\'' +

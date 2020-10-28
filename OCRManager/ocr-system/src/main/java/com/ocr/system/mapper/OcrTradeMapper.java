@@ -62,7 +62,7 @@ public interface OcrTradeMapper
 
 	/**
 	 * 根据流水id获取影像地址
-	 * @param id
+	 * @param ids
 	 * @return
 	 */
 	public String[] selectImagePath(String[] ids);

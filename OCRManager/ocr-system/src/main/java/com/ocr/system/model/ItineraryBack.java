@@ -1,5 +1,4 @@
 package com.ocr.system.model;
-
 /**
  * 航空运输电子客票行程单
  *
@@ -22,11 +21,11 @@ public class ItineraryBack {
     /**
      * 出发站
      */
-    private String depStation;
+    private String startingStation;
     /**
      * 终点站
      */
-    private String terminus;
+    private String endingStation;
     /**
      * 航班
      */
@@ -43,12 +42,12 @@ public class ItineraryBack {
     public ItineraryBack() {
     }
 
-    public ItineraryBack(String tradeId, String name, String date, String depStation, String terminus, String flight, String seatLevel, String amt) {
+    public ItineraryBack(String tradeId, String name, String date, String startingStation, String endingStation, String flight, String seatLevel, String amt) {
         this.tradeId = tradeId;
         this.name = name;
         this.date = date;
-        this.depStation = depStation;
-        this.terminus = terminus;
+        this.startingStation = startingStation;
+        this.endingStation = endingStation;
         this.flight = flight;
         this.seatLevel = seatLevel;
         this.amt = amt;
@@ -78,20 +77,20 @@ public class ItineraryBack {
         this.date = date;
     }
 
-    public String getDepStation() {
-        return depStation;
+    public String getStartingStation() {
+        return startingStation;
     }
 
-    public void setDepStation(String depStation) {
-        this.depStation = depStation;
+    public void setStartingStation(String startingStation) {
+        this.startingStation = startingStation;
     }
 
-    public String getTerminus() {
-        return terminus;
+    public String getEndingStation() {
+        return endingStation;
     }
 
-    public void setTerminus(String terminus) {
-        this.terminus = terminus;
+    public void setEndingStation(String endingStation) {
+        this.endingStation = endingStation;
     }
 
     public String getFlight() {
@@ -124,8 +123,8 @@ public class ItineraryBack {
                 "tradeId='" + tradeId + '\'' +
                 ", name='" + name + '\'' +
                 ", date='" + date + '\'' +
-                ", depStation='" + depStation + '\'' +
-                ", terminus='" + terminus + '\'' +
+                ", startingStation='" + startingStation + '\'' +
+                ", endingStation='" + endingStation   + '\'' +
                 ", flight='" + flight + '\'' +
                 ", seatLevel='" + seatLevel + '\'' +
                 ", amt='" + amt + '\'' +

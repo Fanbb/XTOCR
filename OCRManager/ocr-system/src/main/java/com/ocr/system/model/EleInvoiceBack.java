@@ -1,12 +1,12 @@
 package com.ocr.system.model;
 
 /**
- * 增值税专用发票
+ * 增值税普通发票
  *
  * @author Jocker
  * @date 2020/9/17
  */
-public class VatInvoiceBack {
+public class EleInvoiceBack {
     /**
      * 流水ID
      */
@@ -49,21 +49,21 @@ public class VatInvoiceBack {
     private String Subjects;
 
 
-    public VatInvoiceBack() {
+    public EleInvoiceBack() {
     }
 
 
-    public VatInvoiceBack(String tradeId, String code, String number, String issuedDate, String purchaserName, String purchaserTaxpayerNum, String valueAddedTax, String sellerName, String sellerTaxpayerNum, String subjects) {
+    public EleInvoiceBack(String tradeId, String code, String number, String issuedDate, String purchaserName, String purchaserTaxpayerNum, String valueAddedTax, String sellerName, String sellerTaxpayerNum, String subjects) {
         this.tradeId = tradeId;
-        Code = code;
-        Number = number;
-        IssuedDate = issuedDate;
-        PurchaserName = purchaserName;
-        PurchaserTaxpayerNum = purchaserTaxpayerNum;
-        ValueAddedTax = valueAddedTax;
-        SellerName = sellerName;
-        SellerTaxpayerNum = sellerTaxpayerNum;
-        Subjects = subjects;
+        this.Code = code;
+        this.Number = number;
+        this.IssuedDate = issuedDate;
+        this.PurchaserName = purchaserName;
+        this.PurchaserTaxpayerNum = purchaserTaxpayerNum;
+        this.ValueAddedTax = valueAddedTax;
+        this.SellerName = sellerName;
+        this.SellerTaxpayerNum = sellerTaxpayerNum;
+        this.Subjects = subjects;
     }
 
     public String getSubjects() {
@@ -73,6 +73,7 @@ public class VatInvoiceBack {
     public void setSubjects(String subjects) {
         Subjects = subjects;
     }
+
     public String getTradeId() {
         return tradeId;
     }
@@ -145,10 +146,9 @@ public class VatInvoiceBack {
         SellerTaxpayerNum = sellerTaxpayerNum;
     }
 
-
     @Override
     public String toString() {
-        return "VatInvoiceBack{" +
+        return "EleInvoiceBack{" +
                 "tradeId='" + tradeId + '\'' +
                 ", Code='" + Code + '\'' +
                 ", Number='" + Number + '\'' +

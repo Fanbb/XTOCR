@@ -200,6 +200,25 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                 break;
             case "BusinessLicense":
                 ocrTrade.setImageName("11");
+                break;
+            case "VatInvoice":
+                ocrTrade.setImageName("12");
+                break;
+            case "Invoice":
+                ocrTrade.setImageName("13");
+                break;
+            case "Itinerary":
+                ocrTrade.setImageName("14");
+                break;
+            case "RalTicket":
+                ocrTrade.setImageName("15");
+                break;
+            case "TollInvoice":
+                ocrTrade.setImageName("16");
+                break;
+            case "QuotaInvoice":
+                ocrTrade.setImageName("17");
+                break;
         }
         if (flag){
             ocrTrade.setOcrStatus("0");
@@ -273,7 +292,39 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         return getStringFlag(channelCode, imgId, businessLicense.getImgType(), businessLicense.getSocialCode(), JSON.toJSONString(businessLicense),flag);
     }
 
+    @Override
+    public String insertInvoiceFlag(Invoice invoice, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, invoice.getImgType(), invoice.getNumber(), JSON.toJSONString(invoice),flag);
+    }
 
+    @Override
+    public String insertItineraryFlag(Itinerary itinerary, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, itinerary.getImgType(), itinerary.getName(), JSON.toJSONString(itinerary),flag);
+    }
+
+    @Override
+    public String insertQuotaInvoiceFlag(QuotaInvoice quotaInvoice, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, quotaInvoice.getImgType(), quotaInvoice.getInvoiceNumber(), JSON.toJSONString(quotaInvoice),flag);
+    }
+
+    @Override
+    public String insertRalTicketFlag(RalTicket ralTicket, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, ralTicket.getImgType(), ralTicket.getName(), JSON.toJSONString(ralTicket),flag);
+    }
+
+    @Override
+    public String insertTollInvoiceFlag(TollInvoice tollInvoice, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, tollInvoice.getImgType(), tollInvoice.getInvoiceNumber(), JSON.toJSONString(tollInvoice),flag);
+    }
+
+    @Override
+    public String insertVatInvoiceFlag(VatInvoice vatInvoice, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, vatInvoice.getImgType(), vatInvoice.getNumber(), JSON.toJSONString(vatInvoice),flag);
+    }
+    @Override
+    public String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice),flag);
+    }
     /**
      * 房本流水
      * @param premisesPermit
@@ -358,6 +409,88 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         return getString(channelCode, imgId, residenceBooklet.getImgType(), "", JSON.toJSONString(residenceBooklet));
     }
 
+    /**
+     * 增值税发票流水
+     * @param vatInvoice
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertVatInvoice(VatInvoice vatInvoice, String channelCode, String imgId) {
+        return getString(channelCode, imgId, vatInvoice.getImgType(), vatInvoice.getNumber(), JSON.toJSONString(vatInvoice));
+    }
+
+    /**
+     * 普通发票流水
+     * @param invoice
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertInvoice(Invoice invoice, String channelCode, String imgId) {
+        return getString(channelCode, imgId, invoice.getImgType(), invoice.getNumber(), JSON.toJSONString(invoice));
+    }
+
+    /**
+     * 航空运输电子客票行程单流水
+     * @param itinerary
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertItinerary(Itinerary itinerary, String channelCode, String imgId) {
+        return getString(channelCode, imgId, itinerary.getImgType(), itinerary.getName(), JSON.toJSONString(itinerary));
+    }
+
+    /**
+     * 火车票流水
+     * @param ralTicket
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertRalTicket(RalTicket ralTicket, String channelCode, String imgId) {
+        return getString(channelCode, imgId, ralTicket.getImgType(), ralTicket.getName(), JSON.toJSONString(ralTicket));
+    }
+    /**
+     * 通行费发票流水
+     * @param tollInvoice
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertTollInvoice(TollInvoice tollInvoice, String channelCode, String imgId) {
+        return getString(channelCode, imgId, tollInvoice.getImgType(), tollInvoice.getInvoiceNumber(), JSON.toJSONString(tollInvoice));
+    }
+
+    /**
+     * 通用定额发票流水
+     * @param quotaInvoice
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertQuotaInvoice(QuotaInvoice quotaInvoice, String channelCode, String imgId) {
+        return getString(channelCode, imgId, quotaInvoice.getImgType(), quotaInvoice.getInvoiceNumber(), JSON.toJSONString(quotaInvoice));
+    }
+    /**
+     * 电子发票流水
+     * @param eleInvoice
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId) {
+        return getString(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice));
+    }
+
     @Override
     public String[] selectImagePath(String[] tradeIds) {
         return ocrTradeMapper.selectImagePath(tradeIds);
@@ -409,6 +542,27 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                     break;
                 case "11":
                     values.add("营业执照");
+                    break;
+                case "12":
+                    values.add("增值税发票");
+                    break;
+                case "13":
+                    values.add("普通发票");
+                    break;
+                case "14":
+                    values.add("航空运输电子客票行程单");
+                    break;
+                case "15":
+                    values.add("火车票");
+                    break;
+                case "16":
+                    values.add("通行费发票");
+                    break;
+                case "17":
+                    values.add("通用定额发票");
+                    break;
+                case "18":
+                    values.add("电子发票");
                     break;
             }
         }
@@ -477,6 +631,27 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                 break;
             case "BusinessLicense":
                 ocrTrade.setImageName("11");
+                break;
+            case "VatInvoice":
+                ocrTrade.setImageName("12");
+                break;
+            case "Invoice":
+                ocrTrade.setImageName("13");
+                break;
+            case "Itinerary":
+                ocrTrade.setImageName("14");
+                break;
+            case "RalTicket":
+                ocrTrade.setImageName("15");
+                break;
+            case "TollInvoice":
+                ocrTrade.setImageName("16");
+                break;
+            case "QuotaInvoice":
+                ocrTrade.setImageName("17");
+                break;
+            case "EleInvoice":
+                ocrTrade.setImageName("18");
                 break;
         }
         ocrTrade.setOcrStatus("0");

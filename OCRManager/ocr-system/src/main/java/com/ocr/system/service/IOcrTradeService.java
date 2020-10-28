@@ -152,7 +152,62 @@ public interface IOcrTradeService
 	 * @return
 	 */
 	String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId);
-
+	/**
+	 * 增值税发票流水
+	 * @param vatInvoice
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertVatInvoice(VatInvoice vatInvoice, String channelCode, String imgId);
+	/**
+	 * 普通发票流水
+	 * @param invoice
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertInvoice(Invoice invoice, String channelCode, String imgId);
+	/**
+	 * 航空运输电子客票行程单流水
+	 * @param itinerary
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertItinerary(Itinerary itinerary, String channelCode, String imgId);
+	/**
+	 * 火车票流水
+	 * @param ralTicket
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertRalTicket(RalTicket ralTicket, String channelCode, String imgId);
+	/**
+	 * 通行费发票流水
+	 * @param tollInvoice
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertTollInvoice(TollInvoice tollInvoice, String channelCode, String imgId);
+	/**
+	 * 通用定额发票流水
+	 * @param quotaInvoice
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertQuotaInvoice(QuotaInvoice quotaInvoice, String channelCode, String imgId);
+    /**
+     * 电子发票流水
+     * @param eleInvoice
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId);
 	/**
 	 * 存入无效类型
 	 * @param channelCode
@@ -203,5 +258,19 @@ public interface IOcrTradeService
 	String insertPlateNumberFlag(PlateNumber plateNumber, String channelCode, String imgId, Boolean flag);
 
 	String insertBusinessLicenseFlag(BusinessLicense businessLicense, String channelCode, String imgId, Boolean flag);
+
+	String insertInvoiceFlag(Invoice invoice, String channelCode, String imgId, Boolean flag);
+
+	String insertItineraryFlag(Itinerary itinerary, String channelCode, String imgId, Boolean flag);
+
+	String insertQuotaInvoiceFlag(QuotaInvoice quotaInvoice, String channelCode, String imgId, Boolean flag);
+
+	String insertRalTicketFlag(RalTicket ralTicket, String channelCode, String imgId, Boolean flag);
+
+	String insertTollInvoiceFlag(TollInvoice tollInvoice, String channelCode, String imgId, Boolean flag);
+
+	String insertVatInvoiceFlag(VatInvoice vatInvoice, String channelCode, String imgId, Boolean flag);
+
+    String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag);
 
 }

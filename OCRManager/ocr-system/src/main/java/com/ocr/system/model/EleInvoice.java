@@ -1,12 +1,14 @@
 package com.ocr.system.model;
 
+import com.ocr.common.utils.StringUtils;
+
 /**
- * 增值税专用发票
+ * 增值税普通发票
  *
  * @author Jocker
  * @date 2020/9/17
  */
-public class VatInvoiceBack {
+public class EleInvoice {
     /**
      * 流水ID
      */
@@ -47,23 +49,33 @@ public class VatInvoiceBack {
      *服务名称
      */
     private String Subjects;
+    /**
+     * 图片类型
+     */
+    private String imgType;
+    /**
+     * 识别结果
+     */
+    private String flag;
 
 
-    public VatInvoiceBack() {
+    public EleInvoice() {
     }
 
 
-    public VatInvoiceBack(String tradeId, String code, String number, String issuedDate, String purchaserName, String purchaserTaxpayerNum, String valueAddedTax, String sellerName, String sellerTaxpayerNum, String subjects) {
+    public EleInvoice(String tradeId, String code, String number, String issuedDate, String purchaserName, String purchaserTaxpayerNum, String valueAddedTax, String sellerName, String sellerTaxpayerNum, String subjects, String imgType, String flag) {
         this.tradeId = tradeId;
-        Code = code;
-        Number = number;
-        IssuedDate = issuedDate;
-        PurchaserName = purchaserName;
-        PurchaserTaxpayerNum = purchaserTaxpayerNum;
-        ValueAddedTax = valueAddedTax;
-        SellerName = sellerName;
-        SellerTaxpayerNum = sellerTaxpayerNum;
-        Subjects = subjects;
+        this.Code = code;
+        this.Number = number;
+        this.IssuedDate = issuedDate;
+        this.PurchaserName = purchaserName;
+        this.PurchaserTaxpayerNum = purchaserTaxpayerNum;
+        this.ValueAddedTax = valueAddedTax;
+        this.SellerName = sellerName;
+        this.SellerTaxpayerNum = sellerTaxpayerNum;
+        this.Subjects = subjects;
+        this.imgType = imgType;
+        this.flag = flag;
     }
 
     public String getSubjects() {
@@ -73,6 +85,7 @@ public class VatInvoiceBack {
     public void setSubjects(String subjects) {
         Subjects = subjects;
     }
+
     public String getTradeId() {
         return tradeId;
     }
@@ -145,10 +158,25 @@ public class VatInvoiceBack {
         SellerTaxpayerNum = sellerTaxpayerNum;
     }
 
+    public String getImgType() {
+        return imgType;
+    }
+
+    public void setImgType(String imgType) {
+        this.imgType = imgType;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     @Override
     public String toString() {
-        return "VatInvoiceBack{" +
+        return "EleInvoice{" +
                 "tradeId='" + tradeId + '\'' +
                 ", Code='" + Code + '\'' +
                 ", Number='" + Number + '\'' +
@@ -159,6 +187,14 @@ public class VatInvoiceBack {
                 ", SellerName='" + SellerName + '\'' +
                 ", SellerTaxpayerNum='" + SellerTaxpayerNum + '\'' +
                 ", Subjects='" + Subjects + '\'' +
+                ", imgType='" + imgType + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
+    }
+    public boolean hasEmptyField() {
+        return StringUtils.isEmpty(getCode())||StringUtils.isEmpty(getNumber())
+                ||StringUtils.isEmpty(getIssuedDate())||StringUtils.isEmpty(getPurchaserName())
+                ||StringUtils.isEmpty(getPurchaserTaxpayerNum())||StringUtils.isEmpty(getValueAddedTax())
+                ||StringUtils.isEmpty(getSellerName()) ||StringUtils.isEmpty(getSellerTaxpayerNum())||StringUtils.isEmpty(getSubjects());
     }
 }

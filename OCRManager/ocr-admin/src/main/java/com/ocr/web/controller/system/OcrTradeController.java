@@ -400,7 +400,160 @@ public class OcrTradeController extends BaseController {
         ocrTrade.setRemark3(JSON.toJSONString(businessLicenseBack));
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
-
+    @Log(title = "普通发票流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldInvoiceBack")
+    @ResponseBody
+    public AjaxResult fieldInvoiceBack(InvoiceBack invoiceBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(invoiceBack.getTradeId());
+        Integer fieldTotal = InvoiceBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(invoiceBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(invoiceBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+    @Log(title = "航空运输电子客票行程单流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldItineraryBack")
+    @ResponseBody
+    public AjaxResult fieldItineraryBack(ItineraryBack itineraryBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(itineraryBack.getTradeId());
+        Integer fieldTotal = ItineraryBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(itineraryBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(itineraryBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+    @Log(title = "通用定额发票流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldQuotaInvoiceBack")
+    @ResponseBody
+    public AjaxResult fieldQuotaInvoiceBack(QuotaInvoiceBack quotaInvoiceBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(quotaInvoiceBack.getTradeId());
+        Integer fieldTotal = QuotaInvoiceBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(quotaInvoiceBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(quotaInvoiceBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+    @Log(title = "火车票流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldRalTicketBack")
+    @ResponseBody
+    public AjaxResult fieldRalTicketBack(RalTicketBack ralTicketBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(ralTicketBack.getTradeId());
+        Integer fieldTotal = RalTicketBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(ralTicketBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(ralTicketBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+    @Log(title = "火车票流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldTollInvoiceBack")
+    @ResponseBody
+    public AjaxResult fieldTollInvoiceBack(TollInvoiceBack rollInvoiceBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(rollInvoiceBack.getTradeId());
+        Integer fieldTotal = TollInvoiceBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(rollInvoiceBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(rollInvoiceBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+    @Log(title = "增值税发票流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldVatInvoiceBack")
+    @ResponseBody
+    public AjaxResult fieldVatInvoiceBack(VatInvoiceBack vatInvoiceBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(vatInvoiceBack.getTradeId());
+        Integer fieldTotal = VatInvoiceBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(vatInvoiceBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(vatInvoiceBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+    @Log(title = "电子发票流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldEleInvoiceBack")
+    @ResponseBody
+    public AjaxResult fieldEleInvoiceBack(EleInvoiceBack eleInvoiceBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(eleInvoiceBack.getTradeId());
+        Integer fieldTotal = EleInvoiceBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(eleInvoiceBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(eleInvoiceBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
     /**
      * 修改识别流水
      */
@@ -653,7 +806,80 @@ public class OcrTradeController extends BaseController {
             mmap.put("businessLicenseBack", businessLicenseBack);
             mmap.put("businessLicense", businessLicense);
             return prefix + "/detail/businessLicense";
-        } else {
+        }else if (ocrTrade.getImageType().equals("VatInvoice")) {
+            VatInvoice vatInvoice = JSON.parseObject(ocrTrade.getRemark1(), VatInvoice.class);
+            VatInvoiceBack vatInvoiceBack = new VatInvoiceBack("", "0", "0", "0", "0", "0", "0", "0", "0","0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                vatInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), VatInvoiceBack.class);
+            }
+            vatInvoiceBack.setTradeId(ocrTrade.getId());
+            mmap.put("vatInvoiceBack", vatInvoiceBack);
+            mmap.put("vatInvoice", vatInvoice);
+            return prefix + "/detail/vatInvoice";
+        }else if (ocrTrade.getImageType().equals("Invoice")) {
+            Invoice invoice = JSON.parseObject(ocrTrade.getRemark1(), Invoice.class);
+            InvoiceBack invoiceBack = new InvoiceBack("", "0", "0", "0", "0", "0", "0", "0", "0","0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                invoiceBack = JSON.parseObject(ocrTrade.getRemark3(), InvoiceBack.class);
+            }
+            invoiceBack.setTradeId(ocrTrade.getId());
+            mmap.put("invoiceBack", invoiceBack);
+            mmap.put("invoice", invoice);
+            return prefix + "/detail/invoice";
+        }else if (ocrTrade.getImageType().equals("Itinerary")) {
+            Itinerary itinerary = JSON.parseObject(ocrTrade.getRemark1(), Itinerary.class);
+            ItineraryBack itineraryBack = new ItineraryBack("", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                itineraryBack = JSON.parseObject(ocrTrade.getRemark3(), ItineraryBack.class);
+            }
+            itineraryBack.setTradeId(ocrTrade.getId());
+            mmap.put("itineraryBack", itineraryBack);
+            mmap.put("itinerary", itinerary);
+            return prefix + "/detail/itinerary";
+        }else if (ocrTrade.getImageType().equals("RalTicket")) {
+            RalTicket ralTicket = JSON.parseObject(ocrTrade.getRemark1(), RalTicket.class);
+            RalTicketBack ralTicketBack = new RalTicketBack("", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                ralTicketBack = JSON.parseObject(ocrTrade.getRemark3(), RalTicketBack.class);
+            }
+            ralTicketBack.setTradeId(ocrTrade.getId());
+            mmap.put("ralTicketBack", ralTicketBack);
+            mmap.put("ralTicket", ralTicket);
+            return prefix + "/detail/ralTicket";
+        }else if (ocrTrade.getImageType().equals("TollInvoice")) {
+            TollInvoice tollInvoice = JSON.parseObject(ocrTrade.getRemark1(), TollInvoice.class);
+            TollInvoiceBack tollInvoiceBack = new TollInvoiceBack("", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                tollInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), TollInvoiceBack.class);
+            }
+            tollInvoiceBack.setTradeId(ocrTrade.getId());
+            mmap.put("tollInvoiceBack", tollInvoiceBack);
+            mmap.put("tollInvoice", tollInvoice);
+            return prefix + "/detail/tollInvoice";
+        }else if (ocrTrade.getImageType().equals("QuotaInvoice")) {
+            QuotaInvoice quotaInvoice = JSON.parseObject(ocrTrade.getRemark1(), QuotaInvoice.class);
+            QuotaInvoiceBack quotaInvoiceBack = new QuotaInvoiceBack("", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                quotaInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), QuotaInvoiceBack.class);
+            }
+            quotaInvoiceBack.setTradeId(ocrTrade.getId());
+            mmap.put("quotaInvoiceBack", quotaInvoiceBack);
+            mmap.put("quotaInvoice", quotaInvoice);
+            return prefix + "/detail/quotaInvoice";
+        }else if (ocrTrade.getImageType().equals("EleInvoice")) {
+            EleInvoice eleInvoice = JSON.parseObject(ocrTrade.getRemark1(), EleInvoice.class);
+            EleInvoiceBack eleInvoiceBack = new EleInvoiceBack("", "0", "0", "0", "0", "0", "0", "0", "0","0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                eleInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), EleInvoiceBack.class);
+            }
+            eleInvoiceBack.setTradeId(ocrTrade.getId());
+            mmap.put("eleInvoiceBack", eleInvoiceBack);
+            mmap.put("eleInvoice", eleInvoice);
+            return prefix + "/detail/eleInvoice";
+        }
+
+
+        else {
             return prefix + "/detail/data";
         }
 

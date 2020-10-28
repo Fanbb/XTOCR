@@ -164,6 +164,27 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 case "11":
                     imgName = "BusinessLicense";
                     break;
+                case "12":
+                    imgName = "VatInvoice";
+                    break;
+                case "13":
+                    imgName = "Invoice";
+                    break;
+                case "14":
+                    imgName = "Itinerary";
+                    break;
+                case "15":
+                    imgName = "RalTicket";
+                    break;
+                case "16":
+                    imgName = "TollInvoice";
+                    break;
+                case "17":
+                    imgName = "QuotaInvoice";
+                    break;
+                case "18":
+                    imgName = "EleInvoice";
+                    break;
             }
 
             log.info("OCR识别结果为空");
@@ -299,7 +320,69 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 }
             }
 
+            if (model.getClass_name().equals("VatInvoice")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "12");
 
+                if (null == channelType1) {
+                    resultData.setMsg("无增值税发票识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("Invoice")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "13");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无普通发票识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("Itinerary")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "14");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无航空运输电子客票行程单识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("RalTicket")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "15");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无火车票识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("TollInvoice")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "16");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无通行费发票识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("QuotaInvoice")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "17");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无定额发票识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            if (model.getClass_name().equals("EleInvoice")) {
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "18");
+
+                if (null == channelType1) {
+                    resultData.setMsg("无电子发票识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
             String tradeId;
             Boolean flag = true;
             switch (model.getClass_name()) {
@@ -468,6 +551,111 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag);
                     businessLicense.setTradeId(tradeId);
                     list.add(businessLicense);
+                    break;
+                case "VatInvoice":
+                    VatInvoice vatInvoice = JSONArray.parseObject(model.getOcr_result(), VatInvoice.class);
+                    vatInvoice.setImgType(model.getClass_name());
+                    vatInvoice.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(vatInvoice.getCode())||StringUtils.isEmpty(vatInvoice.getIssuedDate())||StringUtils.isEmpty(vatInvoice.getNumber())||StringUtils.isEmpty(vatInvoice.getPurchaserName())||StringUtils.isEmpty(vatInvoice.getPurchaserTaxpayerNum())||StringUtils.isEmpty(vatInvoice.getSellerName())||StringUtils.isEmpty(vatInvoice.getSellerTaxpayerNum())||StringUtils.isEmpty(vatInvoice.getValueAddedTax())||StringUtils.isEmpty(vatInvoice.getSubjects())) {
+                        flag = false;
+                        vatInvoice.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, imgId, flag);
+                    vatInvoice.setTradeId(tradeId);
+                    list.add(vatInvoice);
+                    break;
+                case "Invoice":
+                    Invoice invoice = JSONArray.parseObject(model.getOcr_result(), Invoice.class);
+                    invoice.setImgType(model.getClass_name());
+                    invoice.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(invoice.getCode())||StringUtils.isEmpty(invoice.getIssuedDate())||StringUtils.isEmpty(invoice.getNumber())||StringUtils.isEmpty(invoice.getPurchaserName())||StringUtils.isEmpty(invoice.getPurchaserTaxpayerNum())||StringUtils.isEmpty(invoice.getSellerName())||StringUtils.isEmpty(invoice.getSellerTaxpayerNum())||StringUtils.isEmpty(invoice.getValueAddedTax())||StringUtils.isEmpty(invoice.getSubjects())) {
+                        flag = false;
+                        invoice.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, imgId, flag);
+                    invoice.setTradeId(tradeId);
+                    list.add(invoice);
+                    break;
+                case "Itinerary":
+                    Itinerary itinerary = JSONArray.parseObject(model.getOcr_result(), Itinerary.class);
+                    itinerary.setImgType(model.getClass_name());
+                    itinerary.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(itinerary.getAmt())||StringUtils.isEmpty(itinerary.getDate())||StringUtils.isEmpty(itinerary.getStartingStation())||StringUtils.isEmpty(itinerary.getFlight())||StringUtils.isEmpty(itinerary.getName())||StringUtils.isEmpty(itinerary.getSeatLevel())||StringUtils.isEmpty(itinerary.getEndingStation())) {
+                        flag = false;
+                        itinerary.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, imgId, flag);
+                    itinerary.setTradeId(tradeId);
+                    list.add(itinerary);
+                    break;
+                case "RalTicket":
+                    RalTicket ralTicket = JSONArray.parseObject(model.getOcr_result(), RalTicket.class);
+                    ralTicket.setImgType(model.getClass_name());
+                    ralTicket.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(ralTicket.getAmt())||StringUtils.isEmpty(ralTicket.getDate())||StringUtils.isEmpty(ralTicket.getStartingStation())||StringUtils.isEmpty(ralTicket.getName())||StringUtils.isEmpty(ralTicket.getSeatLevel())||StringUtils.isEmpty(ralTicket.getTrainNumber())||StringUtils.isEmpty(ralTicket.getEndingStation())) {
+                        flag = false;
+                        ralTicket.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, imgId, flag);
+                    ralTicket.setTradeId(tradeId);
+                    list.add(ralTicket);
+                    break;
+                case "TollInvoice":
+                    TollInvoice tollInvoice = JSONArray.parseObject(model.getOcr_result(), TollInvoice.class);
+                    tollInvoice.setImgType(model.getClass_name());
+                    tollInvoice.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(tollInvoice.getAmt())||StringUtils.isEmpty(tollInvoice.getInvoiceCode())||StringUtils.isEmpty(tollInvoice.getInvoiceNumber())) {
+                        flag = false;
+                        tollInvoice.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, imgId, flag);
+                    tollInvoice.setTradeId(tradeId);
+                    list.add(tollInvoice);
+                    break;
+                case "QuotaInvoice":
+                    QuotaInvoice quotaInvoice = JSONArray.parseObject(model.getOcr_result(), QuotaInvoice.class);
+                    quotaInvoice.setImgType(model.getClass_name());
+                    quotaInvoice.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(quotaInvoice.getAmt())||StringUtils.isEmpty(quotaInvoice.getInvoiceCode())||StringUtils.isEmpty(quotaInvoice.getInvoiceNumber())) {
+                        flag = false;
+                        quotaInvoice.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, imgId, flag);
+                    quotaInvoice.setTradeId(tradeId);
+                    list.add(quotaInvoice);
+                    break;
+                case "EleInvoice":
+                    EleInvoice eleInvoice = JSONArray.parseObject(model.getOcr_result(), EleInvoice.class);
+                    eleInvoice.setImgType(model.getClass_name());
+                    eleInvoice.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(eleInvoice.getCode())||StringUtils.isEmpty(eleInvoice.getIssuedDate())||StringUtils.isEmpty(eleInvoice.getNumber())||StringUtils.isEmpty(eleInvoice.getPurchaserName())||StringUtils.isEmpty(eleInvoice.getPurchaserTaxpayerNum())||StringUtils.isEmpty(eleInvoice.getSellerName())||StringUtils.isEmpty(eleInvoice.getSellerTaxpayerNum())||StringUtils.isEmpty(eleInvoice.getValueAddedTax())||StringUtils.isEmpty(eleInvoice.getSubjects())) {
+                        flag = false;
+                        eleInvoice.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, imgId, flag);
+                    eleInvoice.setTradeId(tradeId);
+                    list.add(eleInvoice);
                     break;
                 default:
                     tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, imgId);
@@ -977,6 +1165,76 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         }
                         continue;
                     }
+                    if (model.getClass_name().equals("VatInvoice")) {
+                        if (!judgeAuth(channelTypes, "12")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无增值税发票识别类型权限") < 0) {
+                                authorityStr += "无增值税发票识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("Invoice")) {
+                        if (!judgeAuth(channelTypes, "13")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无普通发票识别类型权限") < 0) {
+                                authorityStr += "无普通发票识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("Itinerary")) {
+                        if (!judgeAuth(channelTypes, "14")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无航空运输电子客票行程单识别类型权限") < 0) {
+                                authorityStr += "无航空运输电子客票行程单识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("RalTicket")) {
+                        if (!judgeAuth(channelTypes, "15")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无火车票识别类型权限") < 0) {
+                                authorityStr += "无火车票识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("TollInvoice")) {
+                        if (!judgeAuth(channelTypes, "16")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无通行费发票识别类型权限") < 0) {
+                                authorityStr += "无通行费发票识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("QuotaInvoice")) {
+                        if (!judgeAuth(channelTypes, "17")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无通用定额发票识别类型权限") < 0) {
+                                authorityStr += "无通用定额发票识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("EleInvoice")) {
+                        if (!judgeAuth(channelTypes, "18")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无电子发票识别类型权限") < 0) {
+                                authorityStr += "无电子发票识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
                 }
             }
         }
@@ -1176,6 +1434,117 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, ocrImage.getId(), flag);
                             businessLicense.setTradeId(tradeId);
                             list.add(businessLicense);
+                            i++;
+                            break;
+                        case "VatInvoice":
+                            VatInvoice vatInvoice = JSONArray.parseObject(model.getOcr_result(), VatInvoice.class);
+                            vatInvoice.setImgType(model.getClass_name());
+                            vatInvoice.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (vatInvoice.hasEmptyField()) {
+                                flag = false;
+                                vatInvoice.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, ocrImage.getId(), flag);
+                            vatInvoice.setTradeId(tradeId);
+                            list.add(vatInvoice);
+                            i++;
+                            break;
+                        case "Invoice":
+                            Invoice invoice = JSONArray.parseObject(model.getOcr_result(), Invoice.class);
+                            invoice.setImgType(model.getClass_name());
+                            invoice.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (invoice.hasEmptyField()) {
+                                flag = false;
+                                invoice.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, ocrImage.getId(), flag);
+                            invoice.setTradeId(tradeId);
+                            list.add(invoice);
+                            i++;
+                            break;
+                        case "Itinerary":
+                            Itinerary itinerary = JSONArray.parseObject(model.getOcr_result(), Itinerary.class);
+                            itinerary.setImgType(model.getClass_name());
+                            itinerary.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (itinerary.hasEmptyField()) {
+                                flag = false;
+                                itinerary.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, ocrImage.getId(), flag);
+                            itinerary.setTradeId(tradeId);
+                            list.add(itinerary);
+                            i++;
+                            break;
+                        case "RalTicket":
+                            RalTicket ralTicket = JSONArray.parseObject(model.getOcr_result(), RalTicket.class);
+                            ralTicket.setImgType(model.getClass_name());
+                            ralTicket.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (ralTicket.hasEmptyField()) {
+                                flag = false;
+                                ralTicket.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, ocrImage.getId(), flag);
+                            ralTicket.setTradeId(tradeId);
+                            list.add(ralTicket);
+                            i++;
+                            break;
+                        case "TollInvoice":
+                            TollInvoice tollInvoice = JSONArray.parseObject(model.getOcr_result(), TollInvoice.class);
+                            tollInvoice.setImgType(model.getClass_name());
+                            tollInvoice.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (tollInvoice.hasEmptyField()) {
+                                flag = false;
+                                tollInvoice.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, ocrImage.getId(), flag);
+                            tollInvoice.setTradeId(tradeId);
+                            list.add(tollInvoice);
+                            i++;
+                        case "QuotaInvoice":
+                            QuotaInvoice quotaInvoice = JSONArray.parseObject(model.getOcr_result(), QuotaInvoice.class);
+                            quotaInvoice.setImgType(model.getClass_name());
+                            quotaInvoice.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (quotaInvoice.hasEmptyField()) {
+                                flag = false;
+                                quotaInvoice.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, ocrImage.getId(), flag);
+                            quotaInvoice.setTradeId(tradeId);
+                            list.add(quotaInvoice);
+                            i++;
+                            break;
+                        case "EleInvoice":
+                            EleInvoice eleInvoice = JSONArray.parseObject(model.getOcr_result(), EleInvoice.class);
+                            eleInvoice.setImgType(model.getClass_name());
+                            eleInvoice.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (eleInvoice.hasEmptyField()) {
+                                flag = false;
+                                eleInvoice.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, ocrImage.getId(), flag);
+                            eleInvoice.setTradeId(tradeId);
+                            list.add(eleInvoice);
                             i++;
                             break;
                         default:

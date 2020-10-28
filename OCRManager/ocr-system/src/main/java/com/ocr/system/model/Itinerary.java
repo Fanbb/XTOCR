@@ -24,11 +24,11 @@ public class Itinerary {
     /**
      * 出发站
      */
-    private String depStation;
+    private String startingStation;
     /**
      * 终点站
      */
-    private String terminus;
+    private String endingStation;
     /**
      * 航班
      */
@@ -54,12 +54,12 @@ public class Itinerary {
     public Itinerary() {
     }
 
-    public Itinerary(String tradeId, String name, String date, String depStation, String terminus, String flight, String seatLevel, String amt, String imgType, String flag) {
+    public Itinerary(String tradeId, String name, String date, String startingStation, String endingStation, String flight, String seatLevel, String amt, String imgType, String flag) {
         this.tradeId = tradeId;
         this.name = name;
         this.date = date;
-        this.depStation = depStation;
-        this.terminus = terminus;
+        this.startingStation = startingStation;
+        this.endingStation = endingStation;
         this.flight = flight;
         this.seatLevel = seatLevel;
         this.amt = amt;
@@ -91,20 +91,20 @@ public class Itinerary {
         this.date = date;
     }
 
-    public String getDepStation() {
-        return depStation;
+    public String getStartingStation() {
+        return startingStation;
     }
 
-    public void setDepStation(String depStation) {
-        this.depStation = depStation;
+    public void setStartingStation(String startingStation) {
+        this.startingStation = startingStation;
     }
 
-    public String getTerminus() {
-        return terminus;
+    public String getEndingStation() {
+        return endingStation;
     }
 
-    public void setTerminus(String terminus) {
-        this.terminus = terminus;
+    public void setEndingStation(String endingStation) {
+        this.endingStation = endingStation;
     }
 
     public String getFlight() {
@@ -153,8 +153,8 @@ public class Itinerary {
                 "tradeId='" + tradeId + '\'' +
                 ", name='" + name + '\'' +
                 ", date='" + date + '\'' +
-                ", depStation='" + depStation + '\'' +
-                ", terminus='" + terminus + '\'' +
+                ", startingStation='" + startingStation  + '\'' +
+                ", endingStation='" + endingStation   + '\'' +
                 ", flight='" + flight + '\'' +
                 ", seatLevel='" + seatLevel + '\'' +
                 ", amt='" + amt + '\'' +
@@ -164,6 +164,6 @@ public class Itinerary {
     }
 
     public boolean hasEmptyField() {
-        return StringUtils.isEmpty(getName())||StringUtils.isEmpty(getDate())||StringUtils.isEmpty(getDepStation())||StringUtils.isEmpty(getTerminus())||StringUtils.isEmpty(getFlight())||StringUtils.isEmpty(getSeatLevel())||StringUtils.isEmpty(getAmt());
+        return StringUtils.isEmpty(getName())||StringUtils.isEmpty(getDate())||StringUtils.isEmpty(getStartingStation())||StringUtils.isEmpty(getEndingStation())||StringUtils.isEmpty(getFlight())||StringUtils.isEmpty(getSeatLevel())||StringUtils.isEmpty(getAmt());
     }
 }

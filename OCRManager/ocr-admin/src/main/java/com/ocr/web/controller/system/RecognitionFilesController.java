@@ -247,6 +247,69 @@ public class RecognitionFilesController extends BaseController {
                                         tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, "system", imgId);
                                         tradeIds.append(tradeId + ",");
                                         break;
+                                    case "VatInvoice":
+                                        VatInvoice vatInvoice = JSONArray.parseObject(model.getOcr_result(), VatInvoice.class);
+                                        vatInvoice.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "Invoice":
+                                        Invoice invoice = JSONArray.parseObject(model.getOcr_result(), Invoice.class);
+                                        invoice.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertInvoice(invoice, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "Itinerary":
+                                        Itinerary itinerary = JSONArray.parseObject(model.getOcr_result(), Itinerary.class);
+                                        itinerary.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertItinerary(itinerary, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "RalTicket":
+                                        RalTicket ralTicket = JSONArray.parseObject(model.getOcr_result(), RalTicket.class);
+                                        ralTicket.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertRalTicket(ralTicket, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "TollInvoice":
+                                        TollInvoice tollInvoice = JSONArray.parseObject(model.getOcr_result(), TollInvoice.class);
+                                        tollInvoice.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "QuotaInvoice":
+                                        QuotaInvoice quotaInvoice = JSONArray.parseObject(model.getOcr_result(), QuotaInvoice.class);
+                                        quotaInvoice.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
+                                    case "EleInvoice":
+                                        EleInvoice eleInvoice = JSONArray.parseObject(model.getOcr_result(), EleInvoice.class);
+                                        eleInvoice.setImgType(model.getClass_name());
+                                        /**
+                                         * 调用流水存储 返回流水id
+                                         */
+                                        tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, "system", imgId);
+                                        tradeIds.append(tradeId + ",");
+                                        break;
                                     default:
                                         tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", imgId);
                                         tradeIds.append(tradeId + ",");
@@ -431,6 +494,69 @@ public class RecognitionFilesController extends BaseController {
                                  * 调用流水存储 返回流水id
                                  */
                                 tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, channelCode, ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "VatInvoice":
+                                VatInvoice vatInvoice = JSONArray.parseObject(model.getOcr_result(), VatInvoice.class);
+                                vatInvoice.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, channelCode, ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "Invoice":
+                                Invoice invoice = JSONArray.parseObject(model.getOcr_result(), Invoice.class);
+                                invoice.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertInvoice(invoice, channelCode, ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "Itinerary":
+                                Itinerary itinerary = JSONArray.parseObject(model.getOcr_result(), Itinerary.class);
+                                itinerary.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertItinerary(itinerary, channelCode, ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "RalTicket":
+                                RalTicket ralTicket = JSONArray.parseObject(model.getOcr_result(), RalTicket.class);
+                                ralTicket.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertRalTicket(ralTicket, channelCode, ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "TollInvoice":
+                                TollInvoice tollInvoice = JSONArray.parseObject(model.getOcr_result(), TollInvoice.class);
+                                tollInvoice.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, channelCode, ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "QuotaInvoice":
+                                QuotaInvoice quotaInvoice = JSONArray.parseObject(model.getOcr_result(), QuotaInvoice.class);
+                                quotaInvoice.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, channelCode, ocrImage.getId());
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "EleInvoice":
+                                EleInvoice eleInvoice = JSONArray.parseObject(model.getOcr_result(), EleInvoice.class);
+                                eleInvoice.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId());
                                 tradeIds.append(tradeId + ",");
                                 break;
                             default:

@@ -3,7 +3,7 @@ package com.ocr.system.model;
 import com.ocr.common.utils.StringUtils;
 
 /**
- * 增值税发票
+ * 增值税专用发票
  *
  * @author Jocker
  * @date 2020/9/17
@@ -14,21 +14,41 @@ public class VatInvoice {
      */
     private String tradeId;
     /**
-     * 销货方名称
+     * 发票代码
      */
-    private String name;
+    private String Code;
     /**
-     * 服务名称
+     * 发票号码
      */
-    private String serName;
+    private String Number;
     /**
-     * 金额
+     * 开票日期
      */
-    private String amt;
+    private String IssuedDate;
     /**
-     * 税额
+     *购买方名称
      */
-    private String taxAmt;
+    private String PurchaserName;
+    /**
+     *购买方纳税人识别号
+     */
+    private String PurchaserTaxpayerNum;
+    /**
+     *金额
+     */
+    private String ValueAddedTax;
+    /**
+     *销售方名称
+     */
+    private String SellerName;
+    /**
+     *销售方纳税人识别号
+     */
+    private String SellerTaxpayerNum;
+    /**
+     *服务名称
+     */
+    private String Subjects;
     /**
      * 图片类型
      */
@@ -42,16 +62,26 @@ public class VatInvoice {
     public VatInvoice() {
     }
 
-    public VatInvoice(String tradeId, String name, String serName, String amt, String taxAmt, String imgType, String flag) {
+
+    public VatInvoice(String tradeId, String code, String number, String issuedDate, String purchaserName, String purchaserTaxpayerNum, String valueAddedTax, String sellerName, String sellerTaxpayerNum, String subjects, String imgType, String flag) {
         this.tradeId = tradeId;
-        this.name = name;
-        this.serName = serName;
-        this.amt = amt;
-        this.taxAmt = taxAmt;
-        this.imgType = imgType;
-        this.flag = flag;
+        this.Code = code;
+        this.Number = number;
+        this.IssuedDate = issuedDate;
+        this.PurchaserName = purchaserName;
+        this.PurchaserTaxpayerNum = purchaserTaxpayerNum;
+        this.ValueAddedTax = valueAddedTax;
+        this.SellerName = sellerName;
+        this.SellerTaxpayerNum = sellerTaxpayerNum;
+        this.Subjects = subjects;
+    }
+    public String getSubjects() {
+        return Subjects;
     }
 
+    public void setSubjects(String subjects) {
+        Subjects = subjects;
+    }
     public String getTradeId() {
         return tradeId;
     }
@@ -60,36 +90,68 @@ public class VatInvoice {
         this.tradeId = tradeId;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return Code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        Code = code;
     }
 
-    public String getSerName() {
-        return serName;
+    public String getNumber() {
+        return Number;
     }
 
-    public void setSerName(String serName) {
-        this.serName = serName;
+    public void setNumber(String number) {
+        Number = number;
     }
 
-    public String getAmt() {
-        return amt;
+    public String getIssuedDate() {
+        return IssuedDate;
     }
 
-    public void setAmt(String amt) {
-        this.amt = amt;
+    public void setIssuedDate(String issuedDate) {
+        IssuedDate = issuedDate;
     }
 
-    public String getTaxAmt() {
-        return taxAmt;
+    public String getPurchaserName() {
+        return PurchaserName;
     }
 
-    public void setTaxAmt(String taxAmt) {
-        this.taxAmt = taxAmt;
+    public void setPurchaserName(String purchaserName) {
+        PurchaserName = purchaserName;
+    }
+
+    public String getPurchaserTaxpayerNum() {
+        return PurchaserTaxpayerNum;
+    }
+
+    public void setPurchaserTaxpayerNum(String purchaserTaxpayerNum) {
+        PurchaserTaxpayerNum = purchaserTaxpayerNum;
+    }
+
+    public String getValueAddedTax() {
+        return ValueAddedTax;
+    }
+
+    public void setValueAddedTax(String valueAddedTax) {
+        ValueAddedTax = valueAddedTax;
+    }
+
+    public String getSellerName() {
+        return SellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        SellerName = sellerName;
+    }
+
+    public String getSellerTaxpayerNum() {
+        return SellerTaxpayerNum;
+    }
+
+    public void setSellerTaxpayerNum(String sellerTaxpayerNum) {
+        SellerTaxpayerNum = sellerTaxpayerNum;
     }
 
     public String getImgType() {
@@ -112,16 +174,23 @@ public class VatInvoice {
     public String toString() {
         return "VatInvoice{" +
                 "tradeId='" + tradeId + '\'' +
-                ", name='" + name + '\'' +
-                ", serName='" + serName + '\'' +
-                ", amt='" + amt + '\'' +
-                ", taxAmt='" + taxAmt + '\'' +
+                ", Code='" + Code + '\'' +
+                ", Number='" + Number + '\'' +
+                ", IssuedDate='" + IssuedDate + '\'' +
+                ", PurchaserName='" + PurchaserName + '\'' +
+                ", PurchaserTaxpayerNum='" + PurchaserTaxpayerNum + '\'' +
+                ", ValueAddedTax='" + ValueAddedTax + '\'' +
+                ", SellerName='" + SellerName + '\'' +
+                ", SellerTaxpayerNum='" + SellerTaxpayerNum + '\'' +
+                ", Subjects='" + Subjects + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
                 '}';
     }
-
     public boolean hasEmptyField() {
-        return StringUtils.isEmpty(getName())||StringUtils.isEmpty(getSerName())||StringUtils.isEmpty(getAmt())||StringUtils.isEmpty(getTaxAmt());
+        return StringUtils.isEmpty(getCode())||StringUtils.isEmpty(getNumber())
+                ||StringUtils.isEmpty(getIssuedDate())||StringUtils.isEmpty(getPurchaserName())
+                ||StringUtils.isEmpty(getPurchaserTaxpayerNum())||StringUtils.isEmpty(getValueAddedTax())
+                ||StringUtils.isEmpty(getSellerName()) ||StringUtils.isEmpty(getSellerTaxpayerNum())||StringUtils.isEmpty(getSubjects());
     }
 }
