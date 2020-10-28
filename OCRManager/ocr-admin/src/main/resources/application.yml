@@ -15,21 +15,23 @@ ocr:
   #logFilePath: /home/ocr/logs
   logFilePath: D:/home/ocr/logs
   # 本机服务器图片地址路径  （项目部署IP） 8.8.5.122 123 120
-  # 生产ip：192.168.110.214:8080/OCR/profile/IMAGE/
-  # 测试http://192.168.119.26:8080/profile/IMAGE/
-  #  serverProfile: http://192.168.110.214:8080/OCR/profile/IMAGE/
-  serverProfile: http://192.168.117.108:8080/OCR/profile/IMAGE/
+  # 本地调试ip
+  serverProfile: http://192.168.117.89:8080/OCR/profile/IMAGE/
+  #临时测试ip
   #serverProfile: http://192.168.110.230:8080/OCR/profile/IMAGE/
+  #serverProfile: http://192.168.119.26:8080/OCR/profile/IMAGE/
+  #生产ip
   #serverProfile: http://8.8.5.122:8080/OCR/profile/IMAGE/
   #serverProfile: http://8.8.5.123:8080/OCR/profile/IMAGE/
-  #serverProfile: http://192.168.119.26:8080/OCR/profile/IMAGE/
+
+
   #ocr服务器接口访问地址 （ocr服务器IP路径 OCR测试地址http://192.168.119.31:10002/mask）
-  #ocrUrl: http://192.168.110.214:10002/mask
+  ocrUrl: http://192.168.110.230:10002/mask
+  #测试ip
+  #ocrUrl: http://192.168.119.31:10002/mask
+  #生产ip
   #ocrUrl: http://8.8.5.122:10002/mask
   #ocrUrl: http://8.8.5.123:10002/mask
-  #ocrUrl: http://192.168.119.31:10002/mask
-  ocrUrl: http://192.168.110.230:10002/mask
-
 
   # 获取ip地址开关
   addressEnabled: true
