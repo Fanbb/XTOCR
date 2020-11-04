@@ -66,6 +66,25 @@ public class FileUploadUtils
     }
 
     /**
+     * 以默认配置lu+"/IMAGE/"为路径 进行文件上传(为了适应多平台文件上传识别)
+     *
+     * @param file 上传的文件
+     * @return 文件名称
+     * @throws Exception
+     */
+    public static final String upload_2(MultipartFile file) throws IOException
+    {
+        try
+        {
+            return upload(getDefaultBaseDir()+"/IMAGE/", file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
+        }
+        catch (Exception e)
+        {
+            throw new IOException(e.getMessage(), e);
+        }
+    }
+
+    /**
      * 根据文件路径上传
      *
      * @param baseDir 相对应用的基目录

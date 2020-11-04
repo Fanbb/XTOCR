@@ -4,7 +4,6 @@ import com.ocr.system.domain.OcrTrade;
 import com.ocr.system.model.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 识别流水 服务层
@@ -208,6 +207,16 @@ public interface IOcrTradeService
      * @return
      */
     String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId);
+
+	/**
+	 * 通用文本流水
+	 * @param eleInvoice
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertGeneralText(GeneralText eleInvoice, String channelCode, String imgId);
+
 	/**
 	 * 存入无效类型
 	 * @param channelCode
@@ -272,5 +281,7 @@ public interface IOcrTradeService
 	String insertVatInvoiceFlag(VatInvoice vatInvoice, String channelCode, String imgId, Boolean flag);
 
     String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag);
+
+	String insertGeneralTestFlag(GeneralText bigTest, String channelCode, String imgId, Boolean flag);
 
 }

@@ -876,6 +876,10 @@ public class OcrTradeController extends BaseController {
             mmap.put("eleInvoiceBack", eleInvoiceBack);
             mmap.put("eleInvoice", eleInvoice);
             return prefix + "/detail/eleInvoice";
+        }else if (ocrTrade.getImageType().equals("GeneralText")) {
+            GeneralText generalText = JSON.parseObject(ocrTrade.getRemark1(), GeneralText.class);
+            mmap.put("generalText", generalText);
+            return prefix + "/detail/generalText";
         }
 
 

@@ -15,6 +15,18 @@
                 <div class="ibox-content">
                     <div class="form-group">
                         <label class="font-noraml">图片上传</label>
+
+                        <label style="margin-left: 10px;">
+                            <input type="radio" value="10000" id="optionsRadios1" name="optionsRadios" >通用文本识别
+                        </label>
+
+                        <label style="margin-left: 10px;">
+                            <input type="radio" value="10001" id="10001" name="optionsRadios" >视频
+                        </label>
+
+                        <label style="margin-left: 10px;">
+                            <input type="radio" checked="" value="0" id="0" name="optionsRadios" >其他
+                        </label>
                         <div class="file-loading">
                             <input id="file" name="file" type="file" multiple>
                         </div>
@@ -31,32 +43,37 @@
 
     $(document).ready(function () {
         $("#file").fileinput({
-            uploadUrl: prefix + '/fileUpload2',
+            uploadUrl: prefix + '/fileUploadIncludeGeneralText',
             uploadAsync: false, //默认异步上传
             showUpload: true, //是否显示上传按钮
-            showRemove : true, //显示移除按钮
-            showPreview : true, //是否显示预览
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
             showCaption: false,//是否显示标题
             browseClass: "btn btn-primary", //按钮样式
             maxFileCount: 10,
-            validateInitialCount:true,
-            allowedFileTypes:['image'],
-            msgFilesTooMany:"选择上传的文件数量({n})超过允许的最大数值{m}!"
-        }).on("filebatchuploadsuccess", function(event, data, previewId, index) {
-            var result =data.response.data;
+            validateInitialCount: true,
+            allowedFileTypes: ['image'],
+            msgFilesTooMany: "选择上传的文件数量({n})超过允许的最大数值{m}!",
+            //往后台传递参数过去,通用文字识别，视频，其他的值
+            uploadExtraData: function(previewId, index) {   //额外参数的关键点
+                var data = {
+                    imgType :  $(':radio[name=optionsRadios]:checked').val() //获取radio选中的值
+                };
+                return data;
+            }
+        }).on("filebatchuploadsuccess", function (event, data, previewId, index) {
+            var result = data.response.data;
             debugger;
-            if (result.tradeIds!=null){
-                var ocrTradeId= result.tradeIds;
-                var url = prefix + '/data/'+ocrTradeId;
+            if (result.tradeIds != null) {
+                var ocrTradeId = result.tradeIds;
+                var url = prefix + '/data/' + ocrTradeId;
                 console.info(url);
                 createMenuItem(url, "识别结果详情");
-            }else {
+            } else {
                 alert(result.msg());
             }
         });
     })
-
-
 
 </script>
 </body>

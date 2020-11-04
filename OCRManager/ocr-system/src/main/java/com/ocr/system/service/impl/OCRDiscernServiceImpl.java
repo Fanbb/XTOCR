@@ -2,7 +2,7 @@ package com.ocr.system.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.ocr.common.core.domain.AjaxResult;
+import com.ocr.common.constant.ChannelTypeConstants;
 import com.ocr.common.utils.DateUtils;
 import com.ocr.common.utils.FileTypeUtils;
 import com.ocr.common.utils.StringUtils;
@@ -131,8 +131,10 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
             image.setLocalPath(relativePath + sName);
             image.setParentId(imgId);
-            iOcrImageService.insertOcrImage(image);
-            String imgName = "";
+            iOcrImageService.insertOcrImage(image);//ocr_image
+            //判断图片的类型
+            String imgName = ChannelTypeConstants.getChannelType().get(imgType);
+            /*
             switch (imgType) {
                 case "1":
                     imgName = "IDCardFront";
@@ -185,8 +187,11 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 case "18":
                     imgName = "EleInvoice";
                     break;
+                case "10000":
+                    imgName = "text";
+                    break;
             }
-
+            */
             log.info("OCR识别结果为空");
             OcrTrade ocrTrade = new OcrTrade();
             ocrTrade.setId(UUID.randomUUID().toString());
@@ -228,15 +233,33 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 resultData.setType("0");
                 return resultData;
             }
-            if (model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardBack")) {
-                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "1");
 
+            //判断是否有对应的权限start
+            //身份证特殊处理
+            if(model.getClass_name().equals(ChannelTypeConstants.getChannelType().get("IDCardFront")) || model.getClass_name().equals(ChannelTypeConstants.getChannelType().get("IDCardBack"))){
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "1");
                 if (null == channelType1) {
                     resultData.setMsg("无身份证识别类型权限！");
                     resultData.setType("0");
                     return resultData;
                 }
             }
+            //其他
+            if (model.getClass_name().equals(ChannelTypeConstants.getChannelType().get(model.getClass_name()))) {
+                String num=ChannelTypeConstants.getChannelType2().get(model.getClass_name());
+                String ChannelName=ChannelTypeConstants.getChannelType2().get(num);
+
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, num);
+
+                if (null == channelType1) {
+                    resultData.setMsg("无"+ChannelName+"识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            //判断是否有对应的权限end
+
+            /*
             if (model.getClass_name().equals("BankCard")) {
                 ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, "2");
 
@@ -382,7 +405,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     resultData.setType("0");
                     return resultData;
                 }
-            }
+            }*/
             String tradeId;
             Boolean flag = true;
             switch (model.getClass_name()) {
@@ -656,6 +679,21 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, imgId, flag);
                     eleInvoice.setTradeId(tradeId);
                     list.add(eleInvoice);
+                    break;
+                case "GeneralText":
+                    GeneralText generalText = JSONArray.parseObject(model.getOcr_result(), GeneralText.class);
+                    generalText.setImgType(model.getClass_name());
+                    generalText.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (generalText.hasEmptyField()) {
+                        flag = false;
+                        generalText.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, imgId, flag);
+                    generalText.setTradeId(tradeId);
+                    list.add(generalText);
                     break;
                 default:
                     tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, imgId);
@@ -1235,6 +1273,17 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         }
                         continue;
                     }
+
+                    if (model.getClass_name().equals("GeneralText")) {
+                        if (!judgeAuth(channelTypes, "10000")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无通用文字识别类型权限") < 0) {
+                                authorityStr += "无通用文字识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
                 }
             }
         }
@@ -1545,6 +1594,22 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, ocrImage.getId(), flag);
                             eleInvoice.setTradeId(tradeId);
                             list.add(eleInvoice);
+                            i++;
+                            break;
+                        case "GeneralText":
+                            GeneralText generalText = JSONArray.parseObject(model.getOcr_result(), GeneralText.class);
+                            generalText.setImgType(model.getClass_name());
+                            generalText.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (generalText.hasEmptyField()) {
+                                flag = false;
+                                generalText.setFlag("false");
+                            }
+                            tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, ocrImage.getId(), flag);
+                            generalText.setTradeId(tradeId);
+                            list.add(generalText);
                             i++;
                             break;
                         default:

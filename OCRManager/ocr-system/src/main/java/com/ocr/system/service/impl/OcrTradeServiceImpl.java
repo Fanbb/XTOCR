@@ -1,6 +1,7 @@
 package com.ocr.system.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.ocr.common.constant.ChannelTypeConstants;
 import com.ocr.common.core.text.Convert;
 import com.ocr.common.utils.DateUtils;
 import com.ocr.system.domain.OcrTrade;
@@ -166,6 +167,17 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setOcrSeq(ocrSeq);
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
+
+        //修改start
+        String numType =ChannelTypeConstants.getChannelType2().get(imgType);
+        if(imgType.equals("IDCardBack") || imgType.equals("IDCardFront")){
+            ocrTrade.setImageName("1");
+        }else{
+            ocrTrade.setImageName(numType);
+        }
+        //修改end
+
+        /*
         switch (imgType){
             case "IDCardFront":
             case "IDCardBack":
@@ -220,6 +232,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                 ocrTrade.setImageName("17");
                 break;
         }
+         */
         if (flag){
             ocrTrade.setOcrStatus("0");
             ocrTrade.setTickStatus("0");
@@ -325,6 +338,12 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     public String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag){
         return getStringFlag(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice),flag);
     }
+
+    @Override
+    public String insertGeneralTestFlag(GeneralText generalText, String channelCode, String imgId, Boolean flag){
+        return getStringFlag(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText),flag);
+    }
+
     /**
      * 房本流水
      * @param premisesPermit
@@ -491,6 +510,18 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         return getString(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice));
     }
 
+    /**
+     * 通用文本流水
+     * @param generalText
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertGeneralText(GeneralText generalText, String channelCode, String imgId) {
+        return getString(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText));
+    }
+
     @Override
     public String[] selectImagePath(String[] tradeIds) {
         return ocrTradeMapper.selectImagePath(tradeIds);
@@ -563,6 +594,9 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                     break;
                 case "18":
                     values.add("电子发票");
+                    break;
+                case "10000":
+                    values.add("通用文本");
                     break;
             }
         }
@@ -652,6 +686,9 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                 break;
             case "EleInvoice":
                 ocrTrade.setImageName("18");
+                break;
+            case "GeneralText":
+                ocrTrade.setImageName("10000");
                 break;
         }
         ocrTrade.setOcrStatus("0");
