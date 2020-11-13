@@ -537,67 +537,69 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         List<String> list = ocrTradeMapper.selectNameToTypeTotal();
         List<String> values = new ArrayList<>();
         for (String value:list) {
-            switch (value){
-                case "0":
-                    values.add("无效类型");
-                    break;
-                case "1":
-                    values.add("身份证");
-                    break;
-                case "2":
-                    values.add("银行卡");
-                    break;
-                case "3":
-                    values.add("存单");
-                    break;
-                case "4":
-                    values.add("房本");
-                    break;
-                case "5":
-                    values.add("存折");
-                    break;
-                case "6":
-                    values.add("户口本");
-                    break;
-                case "7":
-                    values.add("结婚证");
-                    break;
-                case "8":
-                    values.add("行驶证");
-                    break;
-                case "9":
-                    values.add("驾驶证");
-                    break;
-                case "10":
-                    values.add("车牌号");
-                    break;
-                case "11":
-                    values.add("营业执照");
-                    break;
-                case "12":
-                    values.add("增值税发票");
-                    break;
-                case "13":
-                    values.add("普通发票");
-                    break;
-                case "14":
-                    values.add("航空运输电子客票行程单");
-                    break;
-                case "15":
-                    values.add("火车票");
-                    break;
-                case "16":
-                    values.add("通行费发票");
-                    break;
-                case "17":
-                    values.add("通用定额发票");
-                    break;
-                case "18":
-                    values.add("电子发票");
-                    break;
-                case "10000":
-                    values.add("通用文本");
-                    break;
+            if(value != null){
+                switch (value){
+                    case "0":
+                        values.add("无效类型");
+                        break;
+                    case "1":
+                        values.add("身份证");
+                        break;
+                    case "2":
+                        values.add("银行卡");
+                        break;
+                    case "3":
+                        values.add("存单");
+                        break;
+                    case "4":
+                        values.add("房本");
+                        break;
+                    case "5":
+                        values.add("存折");
+                        break;
+                    case "6":
+                        values.add("户口本");
+                        break;
+                    case "7":
+                        values.add("结婚证");
+                        break;
+                    case "8":
+                        values.add("行驶证");
+                        break;
+                    case "9":
+                        values.add("驾驶证");
+                        break;
+                    case "10":
+                        values.add("车牌号");
+                        break;
+                    case "11":
+                        values.add("营业执照");
+                        break;
+                    case "12":
+                        values.add("增值税发票");
+                        break;
+                    case "13":
+                        values.add("普通发票");
+                        break;
+                    case "14":
+                        values.add("航空运输电子客票行程单");
+                        break;
+                    case "15":
+                        values.add("火车票");
+                        break;
+                    case "16":
+                        values.add("通行费发票");
+                        break;
+                    case "17":
+                        values.add("通用定额发票");
+                        break;
+                    case "18":
+                        values.add("电子发票");
+                        break;
+                    case "10000":
+                        values.add("通用文本");
+                        break;
+                }
             }
         }
         return values;
@@ -631,6 +633,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setOcrSeq(ocrSeq);
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
+        ocrTrade.setImageName(ChannelTypeConstants.getChannelType2().get(imgType));
+        /*
         switch (imgType){
             case "IDCardFront":
             case "IDCardBack":
@@ -691,6 +695,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                 ocrTrade.setImageName("10000");
                 break;
         }
+        */
         ocrTrade.setOcrStatus("0");
         ocrTrade.setTickStatus("0");
         ocrTrade.setPlatStatus("0");
