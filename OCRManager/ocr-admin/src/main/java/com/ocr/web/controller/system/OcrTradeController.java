@@ -692,6 +692,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 idCardFrontBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardFrontBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                idCardFront = new IDCardFront();
+            }
             idCardFrontBack.setTradeId(ocrTrade.getId());
             mmap.put("idCardFront", idCardFront);
             mmap.put("idCardFrontBack", idCardFrontBack);
@@ -701,6 +704,9 @@ public class OcrTradeController extends BaseController {
             IDCardBackBack idCardBackBack = new IDCardBackBack("", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 idCardBackBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardBackBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                idCardBack = new IDCardBack();
             }
             idCardBackBack.setTradeId(ocrTrade.getId());
             mmap.put("idCardBackBack", idCardBackBack);
@@ -712,6 +718,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 bankCardBack = JSON.parseObject(ocrTrade.getRemark3(), BankCardBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                bankCard = new BankCard();
+            }
             bankCardBack.setTradeId(ocrTrade.getId());
             mmap.put("bankCardBack", bankCardBack);
             mmap.put("bankCard", bankCard);
@@ -722,6 +731,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 depositReceiptBack = JSON.parseObject(ocrTrade.getRemark3(), DepositReceiptBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                depositReceipt = new DepositReceipt();
+            }
             depositReceiptBack.setTradeId(ocrTrade.getId());
             mmap.put("depositReceiptBack", depositReceiptBack);
             mmap.put("depositReceipt", depositReceipt);
@@ -731,6 +743,9 @@ public class OcrTradeController extends BaseController {
             PremisesPermitBack premisesPermitBack = new PremisesPermitBack("", "0", "0", "0", "0", "0", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 premisesPermitBack = JSON.parseObject(ocrTrade.getRemark3(), PremisesPermitBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                premisesPermit = new PremisesPermit();
             }
             premisesPermitBack.setTradeId(ocrTrade.getId());
             mmap.put("premisesPermitBack", premisesPermitBack);
@@ -752,6 +767,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 residenceBookletBack = JSON.parseObject(ocrTrade.getRemark3(), ResidenceBookletBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                residenceBooklet = new ResidenceBooklet();
+            }
             residenceBookletBack.setTradeId(ocrTrade.getId());
             mmap.put("residenceBookletBack", residenceBookletBack);
             mmap.put("residenceBooklet", residenceBooklet);
@@ -761,6 +779,9 @@ public class OcrTradeController extends BaseController {
             MarriageLicenseBack marriageLicenseBack = new MarriageLicenseBack("", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 marriageLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), MarriageLicenseBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                marriageLicense = new MarriageLicense();
             }
             marriageLicenseBack.setTradeId(ocrTrade.getId());
             mmap.put("marriageLicenseBack", marriageLicenseBack);
@@ -772,6 +793,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 drivingLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), DrivingLicenseBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                drivingLicense = new DrivingLicense();
+            }
             drivingLicenseBack.setTradeId(ocrTrade.getId());
             mmap.put("drivingLicenseBack", drivingLicenseBack);
             mmap.put("drivingLicense", drivingLicense);
@@ -781,6 +805,9 @@ public class OcrTradeController extends BaseController {
             DriversLicenseBack driversLicenseBack = new DriversLicenseBack("", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 driversLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), DriversLicenseBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                driversLicense = new DriversLicense();
             }
             driversLicenseBack.setTradeId(ocrTrade.getId());
             mmap.put("driversLicenseBack", driversLicenseBack);
@@ -792,6 +819,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 plateNumberBack = JSON.parseObject(ocrTrade.getRemark3(), PlateNumberBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                plateNumber = new PlateNumber();
+            }
             plateNumberBack.setTradeId(ocrTrade.getId());
             mmap.put("plateNumberBack", plateNumberBack);
             mmap.put("plateNumber", plateNumber);
@@ -801,6 +831,9 @@ public class OcrTradeController extends BaseController {
             BusinessLicenseBack businessLicenseBack = new BusinessLicenseBack("", "0", "0", "0", "0", "0", "0", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 businessLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), BusinessLicenseBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                businessLicense = new BusinessLicense();
             }
             businessLicenseBack.setTradeId(ocrTrade.getId());
             mmap.put("businessLicenseBack", businessLicenseBack);
@@ -812,6 +845,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 vatInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), VatInvoiceBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                vatInvoice = new VatInvoice();
+            }
             vatInvoiceBack.setTradeId(ocrTrade.getId());
             mmap.put("vatInvoiceBack", vatInvoiceBack);
             mmap.put("vatInvoice", vatInvoice);
@@ -821,6 +857,9 @@ public class OcrTradeController extends BaseController {
             InvoiceBack invoiceBack = new InvoiceBack("", "0", "0", "0", "0", "0", "0", "0", "0","0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 invoiceBack = JSON.parseObject(ocrTrade.getRemark3(), InvoiceBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                invoice = new Invoice();
             }
             invoiceBack.setTradeId(ocrTrade.getId());
             mmap.put("invoiceBack", invoiceBack);
@@ -832,6 +871,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 itineraryBack = JSON.parseObject(ocrTrade.getRemark3(), ItineraryBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                itinerary = new Itinerary();
+            }
             itineraryBack.setTradeId(ocrTrade.getId());
             mmap.put("itineraryBack", itineraryBack);
             mmap.put("itinerary", itinerary);
@@ -841,6 +883,9 @@ public class OcrTradeController extends BaseController {
             RalTicketBack ralTicketBack = new RalTicketBack("", "0", "0", "0", "0", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 ralTicketBack = JSON.parseObject(ocrTrade.getRemark3(), RalTicketBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                ralTicket = new RalTicket();
             }
             ralTicketBack.setTradeId(ocrTrade.getId());
             mmap.put("ralTicketBack", ralTicketBack);
@@ -852,6 +897,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 tollInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), TollInvoiceBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                tollInvoice = new TollInvoice();
+            }
             tollInvoiceBack.setTradeId(ocrTrade.getId());
             mmap.put("tollInvoiceBack", tollInvoiceBack);
             mmap.put("tollInvoice", tollInvoice);
@@ -861,6 +909,9 @@ public class OcrTradeController extends BaseController {
             QuotaInvoiceBack quotaInvoiceBack = new QuotaInvoiceBack("", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 quotaInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), QuotaInvoiceBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                quotaInvoice = new QuotaInvoice();
             }
             quotaInvoiceBack.setTradeId(ocrTrade.getId());
             mmap.put("quotaInvoiceBack", quotaInvoiceBack);
@@ -872,12 +923,18 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 eleInvoiceBack = JSON.parseObject(ocrTrade.getRemark3(), EleInvoiceBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                eleInvoice = new EleInvoice();
+            }
             eleInvoiceBack.setTradeId(ocrTrade.getId());
             mmap.put("eleInvoiceBack", eleInvoiceBack);
             mmap.put("eleInvoice", eleInvoice);
             return prefix + "/detail/eleInvoice";
         }else if (ocrTrade.getImageType().equals("GeneralText")) {//通用文字识别
             GeneralText generalText = JSON.parseObject(ocrTrade.getRemark1(), GeneralText.class);
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                generalText = new GeneralText();
+            }
             mmap.put("generalText", generalText);
             return prefix + "/detail/generalText";
         }else if(ocrTrade.getImageType().equals("IDCardFront_Video")) {//视频身份证正面
@@ -885,6 +942,9 @@ public class OcrTradeController extends BaseController {
             IDCardFrontBack idCardFrontBack = new IDCardFrontBack("", "0", "0", "0", "0", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 idCardFrontBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardFrontBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                idCardFront = new IDCardFront();
             }
             idCardFrontBack.setTradeId(ocrTrade.getId());
             mmap.put("idCardFront", idCardFront);
@@ -896,6 +956,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 idCardBackBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardBackBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                idCardBack = new IDCardBack();
+            }
             idCardBackBack.setTradeId(ocrTrade.getId());
             mmap.put("idCardBackBack", idCardBackBack);
             mmap.put("idCardBack", idCardBack);
@@ -906,6 +969,9 @@ public class OcrTradeController extends BaseController {
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 premisesPermitBack = JSON.parseObject(ocrTrade.getRemark3(), PremisesPermitBack.class);
             }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                premisesPermit = new PremisesPermit();
+            }
             premisesPermitBack.setTradeId(ocrTrade.getId());
             mmap.put("premisesPermitBack", premisesPermitBack);
             mmap.put("premisesPermit", premisesPermit);
@@ -915,6 +981,9 @@ public class OcrTradeController extends BaseController {
             BusinessLicenseBack businessLicenseBack = new BusinessLicenseBack("", "0", "0", "0", "0", "0", "0", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
                 businessLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), BusinessLicenseBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                businessLicense = new BusinessLicense();
             }
             businessLicenseBack.setTradeId(ocrTrade.getId());
             mmap.put("businessLicenseBack", businessLicenseBack);
