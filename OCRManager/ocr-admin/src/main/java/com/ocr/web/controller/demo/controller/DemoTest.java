@@ -2,6 +2,7 @@ package com.ocr.web.controller.demo.controller;
 
 import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.utils.file.FileUploadUtils;
+//import com.ocr.common.utils.file.VideoUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 
 @Controller
@@ -37,6 +39,21 @@ public class DemoTest {
             }
         }
 
+        return results;
+    }
+
+    @GetMapping(value = "/uploadFileVideo")
+    @ResponseBody
+    public AjaxResult uploadFileVideo(HttpServletRequest request) throws Exception {
+        AjaxResult results= AjaxResult.success("success");
+        File file=new File("D:\\通用文字测试图片\\测试视频\\范彬彬.mp4");
+        String imgName="D:\\通用文字测试图片\\测试视频\\";
+        //VideoUtils.fetchPics(file,"C:\\Users\\doume\\Desktop\\图片\\test.jpg");
+
+        //Long time=VideoUtils.getVideoDuration(file);
+
+        //VideoUtils.videoExtractPic(file,imgName);
+        // System.out.println(time);
         return results;
     }
 }

@@ -1,7 +1,14 @@
 package com.ocr.common.utils.file;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.util.UUID;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 import com.ocr.common.config.Global;
@@ -257,5 +264,95 @@ public class FileUploadUtils
             extension = MimeTypeUtils.getExtension(file.getContentType());
         }
         return extension;
+    }
+
+    /*
+      *  文件上传：通过真实路径
+      *  baseDir：文件路径
+      *  上传到固定的文件配置地址：application.yml 中的profile
+    */
+    public static final String uploadByURL(String baseDir)
+            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
+            InvalidExtensionException
+    {
+        //1.判断文件名的长度
+        int fileNamelength = baseDir.substring(baseDir.lastIndexOf("\\")+1).length();
+        int fileNamelength2 = baseDir.substring(baseDir.lastIndexOf("/")+1).length();
+        if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH || fileNamelength2 > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH)
+        {
+            throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
+        }
+//      assertAllowed(file, allowedExtension); 文件类型判断
+
+        //2.组装新的文件名和路径
+        String fileType=baseDir.substring(baseDir.lastIndexOf("."));
+        String fileName  = DateUtils.datePath() + "/" + UUID.randomUUID().toString() + fileType;
+        String profile=Global.getProfile();//平台配置的指定文件路径
+
+        //3.创建文件夹
+        File desc = getAbsoluteFile(profile+"/IMAGE/", fileName);//创建文件夹
+        String pathName=profile+"/IMAGE/"+ fileName;
+
+        //4.文件复制到指定路径
+        OutputStream os=new FileOutputStream(pathName);//输出文件到指定目录
+        FileUtils.writeBytes(baseDir,os);
+        return fileName;
+    }
+
+
+    /**
+     * 下载远程文件并保存到本地
+     *
+     * @param baseDir-远程文件路径
+     * @param -本地文件路径（带文件名）
+     */
+    public static final String downloadFile(String baseDir) throws IOException {
+        //1.判断文件名的长度
+        int fileNamelength = baseDir.substring(baseDir.lastIndexOf("\\")+1).length();
+        int fileNamelength2 = baseDir.substring(baseDir.lastIndexOf("/")+1).length();
+        if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH || fileNamelength2 > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH)
+        {
+            throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
+        }
+//      assertAllowed(file, allowedExtension); 文件类型判断
+
+        //2.组装新的文件名和路径
+        String fileType=baseDir.substring(baseDir.lastIndexOf("."));//.mp4
+        String fileName  = DateUtils.datePath() + "/" + UUID.randomUUID().toString() + fileType;
+        String profile=Global.getProfile();//平台配置的指定文件路径
+
+        //3.创建文件夹
+        File desc = getAbsoluteFile(profile+"/IMAGE/", fileName);//创建文件夹
+        String pathName=profile+"/IMAGE/"+ fileName;
+
+        URL website = null;
+        ReadableByteChannel rbc = null;
+        FileOutputStream fos = null;
+        try {
+            website = new URL(baseDir);
+            rbc = Channels.newChannel(website.openStream());
+            fos = new FileOutputStream(pathName);//本地要存储的文件地址 例如：test.txt
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }finally{
+            if(fos!=null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(rbc!=null){
+                try {
+                    rbc.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return fileName;
+
     }
 }

@@ -13,6 +13,7 @@ public class ChannelTypeConstants {
     public static HashMap<String,String> getChannelType(){
         if(hashMap==null){
             hashMap=new HashMap<String,String>();
+            hashMap.put("0","None");
             hashMap.put("1","IDCardFront");
             hashMap.put("2","BankCard");
             hashMap.put("3","Deposit");
@@ -31,7 +32,12 @@ public class ChannelTypeConstants {
             hashMap.put("17","QuotaInvoice");
             hashMap.put("18","EleInvoice");
             hashMap.put("10000","GeneralText");
+            hashMap.put("10001","IDCardFront_Video");
+            hashMap.put("10002","IDCardBack_Video");
+            hashMap.put("10003","PremisesPermit_Video");
+            hashMap.put("10004","BusinessLicense_Video");
 
+            hashMap.put("None","None");
             hashMap.put("IDCardFront","IDCardFront");
             hashMap.put("BankCard","BankCard");
             hashMap.put("Deposit","Deposit");
@@ -50,6 +56,10 @@ public class ChannelTypeConstants {
             hashMap.put("QuotaInvoice","QuotaInvoice");
             hashMap.put("EleInvoice","EleInvoice");
             hashMap.put("GeneralText","GeneralText");
+            hashMap.put("IDCardFront_Video","IDCardFront_Video");
+            hashMap.put("IDCardBack_Video","IDCardBack_Video");
+            hashMap.put("PremisesPermit_Video","PremisesPermit_Video");
+            hashMap.put("BusinessLicense_Video","BusinessLicense_Video");
         }
 
         return hashMap;
@@ -58,6 +68,7 @@ public class ChannelTypeConstants {
     public static HashMap<String,String> getChannelType2(){
         if(hashMap2==null){
             hashMap2=new HashMap<String,String>();
+            hashMap2.put("0","无效类型");
             hashMap2.put("1","身份证");
             hashMap2.put("2","银行卡");
             hashMap2.put("3","存单");
@@ -76,7 +87,12 @@ public class ChannelTypeConstants {
             hashMap2.put("17","定额发票");
             hashMap2.put("18","电子发票");
             hashMap2.put("10000","通用文字识别");
+            hashMap2.put("10001","身份证正面");
+            hashMap2.put("10002","身份证反面");
+            hashMap2.put("10003","房本");
+            hashMap2.put("10004","营业执照");
 
+            hashMap2.put("None","0");
             hashMap2.put("IDCardFront","1");
             hashMap2.put("BankCard","2");
             hashMap2.put("Deposit","3");
@@ -95,6 +111,10 @@ public class ChannelTypeConstants {
             hashMap2.put("QuotaInvoice","17");
             hashMap2.put("EleInvoice","18");
             hashMap2.put("GeneralText","10000");
+            hashMap2.put("IDCardFront_Video","10001");
+            hashMap2.put("IDCardBack_Video","10002");
+            hashMap2.put("PremisesPermit_Video","10003");
+            hashMap2.put("BusinessLicense_Video","10004");
         }
 
         return hashMap2;

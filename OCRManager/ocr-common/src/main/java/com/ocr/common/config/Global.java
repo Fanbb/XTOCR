@@ -139,4 +139,12 @@ public class Global
     {
         return getProfile() + "/upload";
     }
+
+    /**
+     * 获取本机服务图片路径
+     */
+    public static String getServerProfile()
+    {
+        return getConfig("ocr.serverProfile");
+    }
 }

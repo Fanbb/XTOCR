@@ -29,12 +29,12 @@ public class ImageBase64 {
             byte[] bytes1 = decoder.decodeBuffer(base64String);
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes1);
             BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
-            String substring = filePath.substring(0, filePath.length() - 17);
+            /*String substring = filePath.substring(0, filePath.length() - 17);
             File dir = new File(substring);
             log.info("上传路径:" + substring);
             if (!dir.exists()) {
                 dir.mkdirs();
-            }
+            }*/
 
             File file = new File(filePath);
             ImageIO.write(bufferedImage, "jpg", file);
