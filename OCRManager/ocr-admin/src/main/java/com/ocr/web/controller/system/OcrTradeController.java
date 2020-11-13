@@ -876,10 +876,50 @@ public class OcrTradeController extends BaseController {
             mmap.put("eleInvoiceBack", eleInvoiceBack);
             mmap.put("eleInvoice", eleInvoice);
             return prefix + "/detail/eleInvoice";
-        }else if (ocrTrade.getImageType().equals("GeneralText")) {
+        }else if (ocrTrade.getImageType().equals("GeneralText")) {//通用文字识别
             GeneralText generalText = JSON.parseObject(ocrTrade.getRemark1(), GeneralText.class);
             mmap.put("generalText", generalText);
             return prefix + "/detail/generalText";
+        }else if(ocrTrade.getImageType().equals("IDCardFront_Video")) {//视频身份证正面
+            IDCardFront idCardFront = JSON.parseObject(ocrTrade.getRemark1(), IDCardFront.class);
+            IDCardFrontBack idCardFrontBack = new IDCardFrontBack("", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                idCardFrontBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardFrontBack.class);
+            }
+            idCardFrontBack.setTradeId(ocrTrade.getId());
+            mmap.put("idCardFront", idCardFront);
+            mmap.put("idCardFrontBack", idCardFrontBack);
+            return prefix + "/detail/CardFront_Video";
+        }else if (ocrTrade.getImageType().equals("IDCardBack_Video")) {//视频身份证背面
+            IDCardBack idCardBack = JSON.parseObject(ocrTrade.getRemark1(), IDCardBack.class);
+            IDCardBackBack idCardBackBack = new IDCardBackBack("", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                idCardBackBack = JSON.parseObject(ocrTrade.getRemark3(), IDCardBackBack.class);
+            }
+            idCardBackBack.setTradeId(ocrTrade.getId());
+            mmap.put("idCardBackBack", idCardBackBack);
+            mmap.put("idCardBack", idCardBack);
+            return prefix + "/detail/IDCardBack_Video";
+        }else if (ocrTrade.getImageType().equals("PremisesPermit_Video")) {//视频房本
+            PremisesPermit premisesPermit = JSON.parseObject(ocrTrade.getRemark1(), PremisesPermit.class);
+            PremisesPermitBack premisesPermitBack = new PremisesPermitBack("", "0", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                premisesPermitBack = JSON.parseObject(ocrTrade.getRemark3(), PremisesPermitBack.class);
+            }
+            premisesPermitBack.setTradeId(ocrTrade.getId());
+            mmap.put("premisesPermitBack", premisesPermitBack);
+            mmap.put("premisesPermit", premisesPermit);
+            return prefix + "/detail/premisesPermit_Video";
+        }else if (ocrTrade.getImageType().equals("BusinessLicense_Video")) {//视频营业执照
+            BusinessLicense businessLicense = JSON.parseObject(ocrTrade.getRemark1(), BusinessLicense.class);
+            BusinessLicenseBack businessLicenseBack = new BusinessLicenseBack("", "0", "0", "0", "0", "0", "0", "0", "0", "0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                businessLicenseBack = JSON.parseObject(ocrTrade.getRemark3(), BusinessLicenseBack.class);
+            }
+            businessLicenseBack.setTradeId(ocrTrade.getId());
+            mmap.put("businessLicenseBack", businessLicenseBack);
+            mmap.put("businessLicense", businessLicense);
+            return prefix + "/detail/businessLicense_Video";
         }
 
 

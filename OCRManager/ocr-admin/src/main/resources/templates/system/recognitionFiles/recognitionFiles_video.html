@@ -26,15 +26,15 @@
 
                         <!--<label style="margin-left: 10px;">
                             <input type="radio" value="10000" id="optionsRadios1" name="optionsRadios" >通用文本识别
-                        </label>-->
+                        </label>
 
-                        <!--<label style="margin-left: 10px;">
+                        <label style="margin-left: 10px;">
                             <input type="radio" value="10001" id="10001" name="optionsRadios" >视频
                         </label>
--->
+
                         <label style="margin-left: 10px;">
                             <input type="radio" checked="" value="0" id="0" name="optionsRadios" >其他
-                        </label>
+                        </label>-->
                         <div class="file-loading">
                             <input id="file" name="file" type="file" multiple>
                         </div>
@@ -51,17 +51,17 @@
 
     $(document).ready(function () {
         $("#file").fileinput({
-            uploadUrl: prefix + '/fileUploadIncludeGeneralText',
+            uploadUrl: prefix + '/fileUploadVideo',
             uploadAsync: false, //默认异步上传
             showUpload: true, //是否显示上传按钮
             showRemove: true, //显示移除按钮
             showPreview: true, //是否显示预览
             showCaption: false,//是否显示标题
             browseClass: "btn btn-primary", //按钮样式
-            maxFileCount: 10,
+            maxFileCount: 1,
             validateInitialCount: true,
-            allowedFileTypes: ['image'],
-            // allowedFileExtensions: ["jpg", "png", "gif"],
+            //allowedFileTypes:  ["jpg", "png", "gif","avi","mp4"],
+            allowedFileExtensions: ["avi","mp4"],
             msgFilesTooMany: "选择上传的文件数量({n})超过允许的最大数值{m}!",
             //往后台传递参数过去,通用文字识别，视频，其他的值
             uploadExtraData: function(previewId, index) {   //额外参数的关键点
