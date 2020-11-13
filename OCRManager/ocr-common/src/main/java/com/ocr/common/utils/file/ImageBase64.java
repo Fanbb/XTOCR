@@ -32,7 +32,7 @@ public class ImageBase64 {
             File dir = new File(path);
             log.info("上传路径:" + path);
             if (!dir.exists()) {
-                dir.mkdirs();
+                dir.mkdirs();//
             }
 
             File file = new File(filePath);
