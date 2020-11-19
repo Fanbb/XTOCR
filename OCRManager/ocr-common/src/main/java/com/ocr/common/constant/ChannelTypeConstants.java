@@ -32,10 +32,11 @@ public class ChannelTypeConstants {
             hashMap.put("17","QuotaInvoice");
             hashMap.put("18","EleInvoice");
             hashMap.put("10000","GeneralText");
-            hashMap.put("10001","IDCardFront_Video");
-            hashMap.put("10002","IDCardBack_Video");
-            hashMap.put("10003","PremisesPermit_Video");
-            hashMap.put("10004","BusinessLicense_Video");
+            hashMap.put("10001","Video");
+            hashMap.put("10002","IDCardFront_Video");
+            hashMap.put("10003","IDCardBack_Video");
+            hashMap.put("10004","PremisesPermit_Video");
+            hashMap.put("10005","BusinessLicense_Video");
 
             hashMap.put("None","None");
             hashMap.put("IDCardFront","IDCardFront");
@@ -56,6 +57,7 @@ public class ChannelTypeConstants {
             hashMap.put("QuotaInvoice","QuotaInvoice");
             hashMap.put("EleInvoice","EleInvoice");
             hashMap.put("GeneralText","GeneralText");
+            hashMap.put("Video","Video");
             hashMap.put("IDCardFront_Video","IDCardFront_Video");
             hashMap.put("IDCardBack_Video","IDCardBack_Video");
             hashMap.put("PremisesPermit_Video","PremisesPermit_Video");
@@ -87,10 +89,11 @@ public class ChannelTypeConstants {
             hashMap2.put("17","定额发票");
             hashMap2.put("18","电子发票");
             hashMap2.put("10000","通用文字识别");
-            hashMap2.put("10001","身份证正面");
-            hashMap2.put("10002","身份证反面");
-            hashMap2.put("10003","房本");
-            hashMap2.put("10004","营业执照");
+            hashMap2.put("10001","视频");
+            hashMap2.put("10002","身份证正面视频");
+            hashMap2.put("10003","身份证反面视频");
+            hashMap2.put("10004","房本视频");
+            hashMap2.put("10005","营业执照视频");
 
             hashMap2.put("None","0");
             hashMap2.put("IDCardFront","1");
@@ -111,10 +114,11 @@ public class ChannelTypeConstants {
             hashMap2.put("QuotaInvoice","17");
             hashMap2.put("EleInvoice","18");
             hashMap2.put("GeneralText","10000");
-            hashMap2.put("IDCardFront_Video","10001");
-            hashMap2.put("IDCardBack_Video","10002");
-            hashMap2.put("PremisesPermit_Video","10003");
-            hashMap2.put("BusinessLicense_Video","10004");
+            hashMap2.put("Video","10001");
+            hashMap2.put("IDCardFront_Video","10002");
+            hashMap2.put("IDCardBack_Video","10003");
+            hashMap2.put("PremisesPermit_Video","10004");
+            hashMap2.put("BusinessLicense_Video","10005");
         }
 
         return hashMap2;

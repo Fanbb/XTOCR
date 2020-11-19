@@ -8,7 +8,7 @@ import com.ocr.common.core.domain.AjaxResult;
 import com.ocr.common.enums.BusinessType;
 import com.ocr.common.utils.DateUtils;
 import com.ocr.common.utils.StringUtils;
-//import com.ocr.common.utils.file.VideoUtils;
+import com.ocr.common.utils.file.VideoUtils;
 import com.ocr.common.utils.http.HttpUtils;
 import com.ocr.system.domain.OcrImage;
 import com.ocr.system.domain.OcrTrade;
@@ -900,6 +900,7 @@ public class RecognitionFilesController extends BaseController {
         String imgType="10001";
         StringBuilder tradeIds = new StringBuilder();
         String channelCode = "system";
+        String sName ="";
         if (file != null && file.length > 0) {
             StringBuilder buffer = new StringBuilder();
             for (int i = 0; i < file.length; i++) {
@@ -907,7 +908,7 @@ public class RecognitionFilesController extends BaseController {
                     String dateStr = DateUtils.datePath();
                     String imgId = UUID.randomUUID().toString();
                     String oldFileName = file[i].getOriginalFilename();
-                    String sName = oldFileName.substring(oldFileName.lastIndexOf("."));
+                    sName = oldFileName.substring(oldFileName.lastIndexOf("."));
                     //Long fileName = System.currentTimeMillis();
                     String fileName = UUID.randomUUID().toString();
                     String path = imgUploadPath + "/IMAGE/" + dateStr;
@@ -925,16 +926,13 @@ public class RecognitionFilesController extends BaseController {
 
                     //从视频中抽取三张图片：start
                     ArrayList<String> pciList =new ArrayList<>();//存储图片路径
-                    /*VideoUtils.videoExtractPic(newFile,path,pciList);*/
+                    VideoUtils.videoExtractPic(newFile,path,pciList);
                     for(int k=0;k<pciList.size();k++){
                         //根据返回的图片路径组装
                         String data=null;
                         //视频通用识别判断
                         if(imgType.equals("10001")){
-                            data = "{\"image_type\":\"0\",\"path\":\"" + pciList.get(k) + "\",\"read_image_way\":\"3\"}";
-                        }else if(imgType.equals("10002")){
-                            //视频身份证识别判断
-                            data = "{\"image_type\":\"10002\",\"path\":\"" + pciList.get(k) + "\",\"read_image_way\":\"3\"}";
+                            data = "{\"image_type\":\"10001\",\"path\":\"" + pciList.get(k) + "\",\"read_image_way\":\"3\"}";
                         }else{
                             data = "{\"image_type\":\"10001\",\"path\":\"" + pciList.get(k) + "\",\"read_image_way\":\"3\"}";
                         }
@@ -963,7 +961,7 @@ public class RecognitionFilesController extends BaseController {
                 //根据图片路径获取影像信息
                 log.info("###filePath******:"+model2.getPath());
                 String tradeId;
-                String oracleImagePath=model2.getPath().substring(0,model2.getPath().indexOf(".jpg")-2)+".mp4";//路径的生成是固定的，所以可以这样截取
+                String oracleImagePath=model2.getPath().substring(0,model2.getPath().indexOf(".jpg")-2)+sName;//路径的生成是固定的，所以可以这样截取
                 OcrImage ocrImage = iOcrImageService.selectOcrImageByFilePath(oracleImagePath);
                 if (StringUtils.isEmpty(model2.getImage_result()) || model2.getImage_result().equals("[]")) {
                     tradeId = iOcrTradeService.insertNoneTrade(model2.getImage_result(), channelCode, ocrImage.getId());

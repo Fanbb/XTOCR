@@ -890,7 +890,7 @@ public class OcrTradeController extends BaseController {
             mmap.put("idCardFront", idCardFront);
             mmap.put("idCardFrontBack", idCardFrontBack);
             return prefix + "/detail/CardFront_Video";
-        }else if (ocrTrade.getImageType().equals("IDCardBack_Video")) {//视频身份证背面
+        }else if (ocrTrade.getImageType().equals("IDCardBack_Video") ) {//视频身份证背面
             IDCardBack idCardBack = JSON.parseObject(ocrTrade.getRemark1(), IDCardBack.class);
             IDCardBackBack idCardBackBack = new IDCardBackBack("", "0", "0", "0");
             if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
@@ -924,6 +924,11 @@ public class OcrTradeController extends BaseController {
 
 
         else {
+            if(ocrImage.getLocalPath().toLowerCase().contains(".mp4")){
+                //mmap.put("idCardFrontBack", idCardFrontBack);
+                mmap.addAttribute("imgUrl", ocrImage.getLocalPath());
+                return prefix + "/detail/data_Video";
+            }
             return prefix + "/detail/data";
         }
 

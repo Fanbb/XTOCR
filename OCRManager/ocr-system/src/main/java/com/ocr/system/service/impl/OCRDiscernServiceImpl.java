@@ -11,6 +11,7 @@ import com.ocr.common.utils.StringUtils;
 import com.ocr.common.utils.file.FileUploadUtils;
 import com.ocr.common.utils.file.ImageBase64;
 //import com.ocr.common.utils.file.VideoUtils;
+import com.ocr.common.utils.file.VideoUtils;
 import com.ocr.common.utils.http.HttpUtils;
 import com.ocr.system.domain.ChannelType;
 import com.ocr.system.domain.OcrImage;
@@ -1646,6 +1647,211 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
         return resultData;
     }
 
+    /**
+     * 视频对外接口,视频提取三张图片，发给识别，返回识别结果在做判断
+     * channelCode：渠道号
+     * imgUrl：图片路径
+     * imgStr：图片转码转换成BASE64的文件
+     * imgType：图片类型
+     */
+    public ResultData runOneVideo(String channelCode, String imgName, String imgType){
+        //图片类型
+        imgType="10001";
+        StringBuilder tradeIds = new StringBuilder();
+        //生成视频对应的路径
+        String timePath=VideoUtils.CreatePathByVideoName(imgName);
+        String path = imgUploadPath + "/IMAGE/" + timePath;//"系统默认路径"+"IMAGE"
+        ResultData resultData = new ResultData();
+        String localFileName=imgName+".mp4";
+
+        //1:从视频中抽取三张图片：start
+        File newFile = new File(path+localFileName);
+        ArrayList<String> pciList =new ArrayList<>();//存储图片路径
+        VideoUtils.videoExtractPic(newFile,path,pciList);
+        StringBuilder builder=new StringBuilder();
+        for(int k=0;k<pciList.size();k++){
+            //组装
+            String data=null;
+            data = "{\"image_type\":\"10001\",\"path\":\"" + pciList.get(k) + "\",\"read_image_way\":\"3\"}";
+            builder.append(data + ",");
+        }
+        builder.substring(0,builder.length()-1);
+        //从视频中抽取三张图片：end
+
+        //2.权限判断
+        ChannelType channelType = iChannelTypeService.selectByNoAndType(channelCode, imgType);
+        if (!imgType.equals("0")) {
+            if (null == channelType || !imgType.equals(channelType.getOcrType())) {
+                resultData.setMsg("无识别类型权限！");
+                resultData.setType("0");
+                return resultData;
+            }
+        }
+
+        //3.存入影像信息
+        //文件服务器全路径
+        String relativePath = serverProfile + timePath + localFileName ;
+        String imgId = UUID.randomUUID().toString();
+        OcrImage image = new OcrImage();
+        image.setId(imgId);
+        image.setOcrDate(new Date());
+        image.setOcrTime(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+        image.setLocalPath(relativePath);
+        image.setParentId(imgId);
+        iOcrImageService.insertOcrImage(image);
+        log.info("影像存储信息" );
+
+        //4.拼装json
+        String data = "{\"data_list\":[" + builder.deleteCharAt(builder.length() - 1).toString() + "]}";
+        String request = HttpUtils.sendPost2(ocrUrl, data);
+
+        //5.request中没有值，或者图片没有识别出来，插入到流水中
+        if (StringUtils.isEmpty(request) || request.equals("[]") || JSONArray.parseArray(JSON.parseArray(request).toString(), RequestModel2.class).get(0).getImage_result().equals("[]")) {
+            //插入到流水中去:start
+            String imgTypeName = ChannelTypeConstants.getChannelType().get(imgType);//判断图片的类型
+            OcrTrade ocrTrade = new OcrTrade();
+            ocrTrade.setId(UUID.randomUUID().toString());
+            ocrTrade.setChannel(channelCode);
+            ocrTrade.setImageId(imgId);
+            ocrTrade.setImageType(imgTypeName==null ? "None" : imgTypeName);
+            ocrTrade.setImageName(imgType);
+            ocrTrade.setTickStatus("2");
+            ocrTrade.setOcrStatus("1");
+            ocrTrade.setPlatStatus("1");
+            ocrTrade.setRemark2("0");
+            ocrTrade.setOcrDate(DateUtils.dateTime("yyyy-MM-dd", DateUtils.getDate()));
+            ocrTrade.setOcrTime(DateUtils.getTimeShort());
+            iOcrTradeService.insertOcrTrade(ocrTrade);
+            //插入到流水中去:end
+
+            //结束流程，返回结果
+            resultData.setMsg("OCR识别结果为空！");
+            resultData.setType("0");
+            return resultData;
+        }
+
+        //6.request中有值:
+        // 6.1 修改影像,把平台返回的结果放入到里面
+        // 6.2 遍历识别结果：判断是否有对应的权限，有则入流水库，无则直接返回（不入库）
+        // 6.3 根据返回的类型插入到流水中去
+
+        //6.1 修改影像,把平台返回的结果放入到里面
+        String json = JSON.parseArray(request).toString();
+        image.setOcrResult(json);
+        iOcrImageService.updateOcrImage(image);
+
+        //6.2 遍历识别结果：判断是否有对应的权限，有则入流水库，无则直接返回（不入库）
+        List<RequestModel2> model2s = JSONArray.parseArray(json, RequestModel2.class);
+        RequestModel2 model2 = model2s.get(0);
+        List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
+        List list = new ArrayList();
+        for (RequestModel model : models) {
+            if (null == model.getClass_name()) {
+                resultData.setMsg("OCR识别结果为空！");
+                resultData.setType("0");
+                return resultData;
+            }
+
+            //判断是否有对应的权限start
+            if (model.getClass_name().equals(ChannelTypeConstants.getChannelType().get(model.getClass_name()))) {
+                String num=ChannelTypeConstants.getChannelType2().get(model.getClass_name());
+                String ChannelName=ChannelTypeConstants.getChannelType2().get(num);
+                ChannelType channelType1 = iChannelTypeService.selectByNoAndType(channelCode, num);
+                if (null == channelType1) {
+                    resultData.setMsg("无"+ChannelName+"识别类型权限！");
+                    resultData.setType("0");
+                    return resultData;
+                }
+            }
+            //判断是否有对应的权限end
+            String tradeId;
+            Boolean flag = true;
+            //6.3 根据返回的类型插入到流水中去
+            switch (model.getClass_name()) {
+                case "IDCardFront_Video":
+                    IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
+                    idCardFront.setImgType(model.getClass_name());
+                    idCardFront.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(idCardFront.getSex()) || StringUtils.isEmpty(idCardFront.getNation()) || StringUtils.isEmpty(idCardFront.getName()) || StringUtils.isEmpty(idCardFront.getBirthday()) || StringUtils.isEmpty(idCardFront.getAddress()) || StringUtils.isEmpty(idCardFront.getIdCardNo())) {
+                        flag = false;
+                        idCardFront.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, imgId, flag);
+                    idCardFront.setTradeId(tradeId);
+                    list.add(idCardFront);
+                    break;
+                case "IDCardBack_Video":
+                    IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
+                    idCardBack.setImgType(model.getClass_name());
+                    idCardBack.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(idCardBack.getStartDate()) || StringUtils.isEmpty(idCardBack.getEndDate()) || StringUtils.isEmpty(idCardBack.getAuthority())) {
+                        flag = false;
+                        idCardBack.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, imgId, flag);
+                    idCardBack.setTradeId(tradeId);
+                    list.add(idCardBack);
+                    break;
+                case "PremisesPermit_Video":
+                    PremisesPermit premisesPermit = JSONArray.parseObject(model.getOcr_result(), PremisesPermit.class);
+                    premisesPermit.setImgType(model.getClass_name());
+                    premisesPermit.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(premisesPermit.getBuiltArea())||StringUtils.isEmpty(premisesPermit.getCertificateNo())||StringUtils.isEmpty(premisesPermit.getFloorArea())||StringUtils.isEmpty(premisesPermit.getName())||StringUtils.isEmpty(premisesPermit.getLocation())||StringUtils.isEmpty(premisesPermit.getPurpose())||StringUtils.isEmpty(premisesPermit.getLandUse())||StringUtils.isEmpty(premisesPermit.getStructure())) {
+                        flag = false;
+                        premisesPermit.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag);
+                    premisesPermit.setTradeId(tradeId);
+                    list.add(premisesPermit);
+                    break;
+                case "BusinessLicense_Video":
+                    BusinessLicense businessLicense = JSONArray.parseObject(model.getOcr_result(), BusinessLicense.class);
+                    businessLicense.setImgType(model.getClass_name());
+                    businessLicense.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (StringUtils.isEmpty(businessLicense.getSocialCode())||StringUtils.isEmpty(businessLicense.getAddress())||StringUtils.isEmpty(businessLicense.getBusinessScope())||StringUtils.isEmpty(businessLicense.getBusinessTerm())||StringUtils.isEmpty(businessLicense.getCompanyName())||StringUtils.isEmpty(businessLicense.getLegalPerson())||StringUtils.isEmpty(businessLicense.getRegisterDate())||StringUtils.isEmpty(businessLicense.getRegisteredCapital())||StringUtils.isEmpty(businessLicense.getVertical())
+                    ) {
+                        flag = false;
+                        businessLicense.setFlag("false");
+                    }
+                    tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag);
+                    businessLicense.setTradeId(tradeId);
+                    list.add(businessLicense);
+                    break;
+                default:
+                    tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, imgId);
+                    NoneEnty noneEnty = new NoneEnty();
+                    noneEnty.setImgType("None");
+                    noneEnty.setTradeId(tradeId);
+                    list.add(noneEnty);
+                    break;
+            }
+        }
+        resultData.setData(list);
+        /**
+         * 流水ids
+         */
+        if (list.size() > 0) {
+            resultData.setMsg("识别成功！");
+            resultData.setType("1");
+        } else {
+            resultData.setMsg("识别失败！");
+            resultData.setType("0");
+        }
+        return resultData;
+    }
+
 
     /**
      * 单图片的对外统一接口（可以上传文件和视频,视频只是存入到本地没有图片提取）
@@ -1654,16 +1860,16 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
      * imgStr：图片转码转换成BASE64的文件
      * imgType：图片类型
      */
-    @Override
+
+
+   /* @Override
     public ResultData runOneIncludeImageAndVideo(String channelCode, String imgUrl, String imgStr, String imgType)  {
-        /**
-         * 1.获取存储影像 录入数据库影像信息
-         * 2.调用ocr接口识别
-         * 3.处理ocr识别结果
-         *  3.1新增流水数据，录入数据库
-         *  3.2更新影像信息
-         * 4.返回结果
-         */
+//     * 1.获取存储影像 录入数据库影像信息
+//     * 2.调用ocr接口识别
+//     * 3.处理ocr识别结果
+//     *  3.1新增流水数据，录入数据库
+//     *  3.2更新影像信息
+//     * 4.返回结果
 
         //1.文件上传到指定的目录
         ResultData resultData = new ResultData();
@@ -1722,7 +1928,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             iOcrImageService.insertOcrImage(image);//ocr_image
             //判断图片的类型
             String imgName = ChannelTypeConstants.getChannelType().get(imgType);
-            /*
+            *//*
             switch (imgType) {
                 case "1":
                     imgName = "IDCardFront";
@@ -1779,7 +1985,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     imgName = "text";
                     break;
             }
-            */
+            *//*
             log.info("OCR识别结果为空");
             //B 插入流水
             OcrTrade ocrTrade = new OcrTrade();
@@ -1845,9 +2051,9 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             insertTrace(channelCode,imgId,list,model);
         }
         resultData.setData(list);
-        /**
+        *//**
          * 流水ids
-         */
+         *//*
         if (list.size() > 0) {
             resultData.setMsg("识别成功！");
             resultData.setType("1");
@@ -1859,7 +2065,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
 
     }
 
-
+*/
     private void insertTrace(String channelCode,String imgId,List list,RequestModel model){
         String tradeId;
         Boolean flag = true;

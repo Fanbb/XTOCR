@@ -126,7 +126,7 @@
 		</dependency>
 
 		<!--视频提取图片依赖：start -->
-		<!--<dependency>
+		<dependency>
 			<groupId>org.bytedeco</groupId>
 			<artifactId>javacv</artifactId>
 			<version>1.4.4</version>
@@ -235,7 +235,7 @@
 					<artifactId>artoolkitplus-platform</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>-->
+		</dependency>
 		<!--视频提取图片依赖：end -->
 
 

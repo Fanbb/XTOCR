@@ -116,6 +116,35 @@ public class OCRDiscernController extends BaseController {
         }
     }
 
+    @Log(title = "视频调用接口", businessType = BusinessType.API)
+    @ApiOperation("视频调用接口")
+    @PostMapping("/runOneVideo")
+    public AjaxResult runOneVideo(OCRDiscernEntity ocrDiscernEntity) {
+        //首先判断渠道是否为停用状态
+        if (iChannelService.channelStatus(ocrDiscernEntity.getChannelCode())) {
+            return error("渠道停用状态，无权限访问OCR平台！");
+        }
+        if (StringUtils.isEmpty(ocrDiscernEntity.getChannelCode())||StringUtils.isEmpty(ocrDiscernEntity.getImgType())) {
+            return error("用户平台类别或图片类型不能为空！");
+        } else {
+            if (StringUtils.isEmpty(ocrDiscernEntity.getImgUrl()) && StringUtils.isEmpty(ocrDiscernEntity.getImgStr())) {
+                return error("图片路径与图片Base64不能同时为空");
+            }
+            //if (iChannelService.channelStatus(ocrDiscernEntity.getChannelCode())) {
+            //    return error("渠道停用状态，无权限访问OCR平台！");
+            //}
+
+            ResultData resultData = ocrDiscernService.runOneVideo(ocrDiscernEntity.getChannelCode(), ocrDiscernEntity.getImgUrl(), ocrDiscernEntity.getImgType());
+//            ResultData resultData = ocrDiscernService.runOne(ocrDiscernEntity.getChannelCode(), ocrDiscernEntity.getImgUrl(), ocrDiscernEntity.getImgStr(),ocrDiscernEntity.getImgType());
+
+            if (resultData.getType().equals("1")) {
+                return AjaxResult.success(resultData.getMsg(), resultData.getData());
+            } else {
+                return AjaxResult.error(resultData.getMsg());
+            }
+        }
+    }
+
 }
 
 

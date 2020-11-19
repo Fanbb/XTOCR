@@ -1,6 +1,9 @@
 package com.ocr.system.service;
 
+import com.ocr.common.exception.file.InvalidExtensionException;
 import com.ocr.system.model.ResultData;
+
+import java.io.IOException;
 
 
 public interface OCRDiscernService {
@@ -48,4 +51,6 @@ public interface OCRDiscernService {
     public ResultData videoPlatformDiscernReal(String batchNumber, String channelCode, String identificationCode, String imgType, String userName, String password, String modelCode, String createDate, String filePartName);
 
     ResultData runOneAgain(String channelCode, String imgUrl, String imgStr, String imgType);
+
+    ResultData runOneVideo(String channelCode, String imgName, String imgType);
 }
