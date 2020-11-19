@@ -24,17 +24,16 @@ public class ImageBase64 {
      * 将base64转为图片上传到服务器 并返回文件路径
      * @param base64String
      */
-    public static Boolean base64StringToImageSave(String base64String,String filePath) {
+    public static Boolean base64StringToImageSave(String base64String,String filePath,String path) {
         try {
             byte[] bytes1 = decoder.decodeBuffer(base64String);
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes1);
             BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
-            /*String substring = filePath.substring(0, filePath.length() - 17);
-            File dir = new File(substring);
-            log.info("上传路径:" + substring);
+            File dir = new File(path);
+            log.info("上传路径:" + path);
             if (!dir.exists()) {
-                dir.mkdirs();
-            }*/
+                dir.mkdirs();//
+            }
 
             File file = new File(filePath);
             ImageIO.write(bufferedImage, "jpg", file);
