@@ -32,26 +32,28 @@ public class VideoServer implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        System.out.println("对外视频服务已经启动");
-        ThreadPoolExecutor service = new ThreadPoolExecutor(5, 200,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(1024),
-                Executors.defaultThreadFactory(),
-                new ThreadPoolExecutor.AbortPolicy());
-        try {
-            //1.创建服务器serverSocket对象和系统要指定的端口号
-            ServerSocket server= new ServerSocket(PORT);
-            //升级：外部可以一直调用，而不是调用一次之后就结束
-            while(true) {
-                //2.使用Server Socket对象中的方法accept,获取请求的客户端对象Socket
-                Socket socket = server.accept();
-                //升级：使用多线程，提高效率，有一个客户端上传文件，就开启一个线程，完成文件的上传
-                Runnable runnable = () -> {
-                    //1.完成文件的上传
-                    String localFileName="";
-                    try{
-                        //3.使用Socket对象中的方法getInputStream()获取网络字节输入流InputStream对象
-                        InputStream is= socket.getInputStream();
+        new Thread() {
+            public void run() {
+                System.out.println("对外视频服务已经启动");
+                ThreadPoolExecutor service = new ThreadPoolExecutor(5, 30,
+                        0L, TimeUnit.MILLISECONDS,
+                        new LinkedBlockingQueue<>(1024),
+                        Executors.defaultThreadFactory(),
+                        new ThreadPoolExecutor.AbortPolicy());
+                try {
+                    //1.创建服务器serverSocket对象和系统要指定的端口号
+                    ServerSocket server= new ServerSocket(PORT);
+                    //升级：外部可以一直调用，而不是调用一次之后就结束
+                    while(true) {
+                        //2.使用Server Socket对象中的方法accept,获取请求的客户端对象Socket
+                        Socket socket = server.accept();
+                        //升级：使用多线程，提高效率，有一个客户端上传文件，就开启一个线程，完成文件的上传
+                        Runnable runnable = () -> {
+                            //1.完成文件的上传
+                            String localFileName="";
+                            try{
+                                //3.使用Socket对象中的方法getInputStream()获取网络字节输入流InputStream对象
+                                InputStream is= socket.getInputStream();
 
                         //使用DataInputStream包装输入流，获取文件名
                         DataInputStream dataInputStream = new DataInputStream(is);
@@ -74,43 +76,47 @@ public class VideoServer implements CommandLineRunner {
                         //String fileName=pathName + localFileName+".mp4";
                         FileOutputStream fos = new FileOutputStream(sb.toString());
 
-                        //6.使用网络字节输出流OutputStream对象中的方法write,给客户端回写数据
-                        int length = 0;
-                        byte[] buff=new byte[1024*512];
-                        while((length=is.read(buff))!=-1) {
-                            //7.使用本地字节输出流FileOutputStream 对象中的方法write,把读取到的文件保存到服务器的
-                            fos.write(buff,0,length);
-                        }
-                        log.info("视频上传路径：" +path+"/"+localFileName);
+                                //6.使用网络字节输出流OutputStream对象中的方法write,给客户端回写数据
+                                int length = 0;
+                                byte[] buff=new byte[1024*512];
+                                while((length=is.read(buff))!=-1) {
+                                    //7.使用本地字节输出流FileOutputStream 对象中的方法write,把读取到的文件保存到服务器的
+                                    fos.write(buff,0,length);
+                                }
+                                log.info("视频上传路径：" +sb);
 
-                        //8.使用Socket对象中的方法getOutputStream，获取到网络字节输出流OutputStream对象
-                        //9.使用网络字节输出流OutputStream对象中的方法write,给客户端回写“上传成功”
-                        socket.getOutputStream().write("{\"msg\":\"上传成功\",\"code\":\"1\"}".getBytes(StandardCharsets.UTF_8));
-                        //10.释放资源（FileOutputStream,Socket,ServerSocket）
-                        fos.close();
-                        socket.close();
+                                //8.使用Socket对象中的方法getOutputStream，获取到网络字节输出流OutputStream对象
+                                //9.使用网络字节输出流OutputStream对象中的方法write,给客户端回写“上传成功”
+                                socket.getOutputStream().write("{\"msg\":\"上传成功\",\"code\":\"1\"}".getBytes(StandardCharsets.UTF_8));
+                                //10.释放资源（FileOutputStream,Socket,ServerSocket）
+                                fos.close();
+                                socket.close();
 
-                    }catch (IOException e) {
-                        System.out.println("对外视频文件上传出错");
-                        //9.使用网络字节输出流OutputStream对象中的方法write,给客户端回写“上传成功”
-                        try {
-                            socket.getOutputStream().write("{\"msg\":\"上传失败\",\"code\":\"0\"}".getBytes(StandardCharsets.UTF_8));
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        e.printStackTrace();
+                            }catch (IOException e) {
+                                System.out.println("对外视频文件上传出错");
+                                //9.使用网络字节输出流OutputStream对象中的方法write,给客户端回写“上传成功”
+                                try {
+                                    socket.getOutputStream().write("{\"msg\":\"上传失败\",\"code\":\"0\"}".getBytes(StandardCharsets.UTF_8));
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                                e.printStackTrace();
+                            }
+                        };
+
+                        service.execute(runnable);
                     }
-                };
 
-                service.execute(runnable);
-            }
+                    //服务不用关闭了
+                    //server.close();
 
-            //服务不用关闭了
-            //server.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("服务器关闭");
+            };
+        }.start();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("服务器关闭");
+
     }
 }
