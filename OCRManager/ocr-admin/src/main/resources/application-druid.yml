@@ -7,8 +7,8 @@ spring:
       # 主库数据源 生产数据库 192.168.110.214:1521:whpaea   测试数据库192.168.119.27:1521:ocrdb
       master:
         #        url: jdbc:oracle:thin:@192.168.110.214:1521:whpaea
-        url: jdbc:oracle:thin:@8.8.5.120:1521:ocrdb
-#        url: jdbc:oracle:thin:@192.168.119.27:1521:ocrdb
+#        url: jdbc:oracle:thin:@8.8.5.120:1521:ocrdb
+        url: jdbc:oracle:thin:@192.168.119.27:1521:ocrdb
         username: OCR
         password: OCR
       # 从库数据源

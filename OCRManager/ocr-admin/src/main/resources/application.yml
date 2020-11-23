@@ -18,20 +18,18 @@ ocr:
   # 生产ip：192.168.110.214:8080/OCR/profile/IMAGE/
   # 测试http://192.168.119.26:8080/profile/IMAGE/
   #  serverProfile: http://192.168.110.214:8080/OCR/profile/IMAGE/
-  serverProfile: http://192.168.117.108:8080/OCR/profile/IMAGE/
+  serverProfile: http://192.168.117.109:8080/OCR/profile/IMAGE/
 #  serverProfile: http://192.168.110.230:8080/OCR/profile/IMAGE/
   #serverProfile: http://8.8.5.122:8080/OCR/profile/IMAGE/
   #serverProfile: http://8.8.5.123:8080/OCR/profile/IMAGE/
-#  serverProfile: http://192.168.119.26:8080/OCR/profile/IMAGE/
+  #serverProfile: http://192.168.119.26:8080/OCR/profile/IMAGE/
   #ocr服务器接口访问地址 （ocr服务器IP路径 OCR测试地址http://192.168.119.31:10002/mask）
   #ocrUrl: http://192.168.110.214:10002/mask
   #ocrUrl: http://8.8.5.122:10002/mask
   #ocrUrl: http://8.8.5.123:10002/mask
-#  ocrUrl: http://192.168.119.31:10002/mask #测试环境
+  #ocrUrl: http://192.168.119.31:10002/mask
   ocrUrl: http://192.168.110.230:10002/mask
 
-#对外视频端口号
-  videoPort: 2323
 
   # 获取ip地址开关
   addressEnabled: true
@@ -84,9 +82,9 @@ spring:
   servlet:
     multipart:
       # 单个文件大小
-      max-file-size:  20MB
+      max-file-size:  10MB
       # 设置总上传的文件大小
-      max-request-size:  40MB
+      max-request-size:  20MB
   # 服务模块
   devtools:
     restart:
