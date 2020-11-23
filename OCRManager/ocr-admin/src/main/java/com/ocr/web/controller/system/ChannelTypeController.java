@@ -60,19 +60,6 @@ public class ChannelTypeController extends BaseController {
     }
 
     /**
-     * 查询渠道识别类型参数列表
-     */
-    @RequiresPermissions("system:channelType:list")
-    @PostMapping("/ChannelTypelist")
-    public String ChannelType(ChannelType channelType, Model model) {
-//        startPage();
-        List<ChannelType> list = channelTypeService.selectChannelTypeList(channelType);
-        model.addAttribute("testone","1");
-        return prefix + "/add::table_refresh";
-    }
-
-
-    /**
      * 导出渠道识别类型参数列表
      */
     @RequiresPermissions("system:channelType:export")
