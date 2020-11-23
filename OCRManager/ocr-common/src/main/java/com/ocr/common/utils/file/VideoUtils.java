@@ -54,7 +54,7 @@ public class VideoUtils {
             int num=length/stepLength; //步长
             int pre=length % stepLength/2;
             //前面的帧数不要
-            for(int m=0;m<pre;m++){
+            for(int m=1;m<pre;m++){
                 frame = ff.grabFrame();
             }
             int cout=1;
