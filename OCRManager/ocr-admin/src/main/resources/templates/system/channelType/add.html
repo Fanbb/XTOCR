@@ -9,9 +9,9 @@
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>渠道名称：</label>
             <div class="col-sm-8">
-                <select id="channelCode" name="channelCode" class="form-control m-b"
+                <select id="channelCode" name="channelCode" class="form-control m-b" th:onchange="channelChange()"
                         th:with="type=${@dict.getType('ocr_channel_name')}">
-                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                    <option id="channelCodeOption" th:each="dict : ${type}" th:text="${dict.dictLabel}"
                             th:value="${dict.dictValue}"></option>
                 </select>
             </div>
@@ -28,83 +28,139 @@
         <!--			</div>-->
         <div class="form-group">
             <label class="col-sm-3 control-label"><span style="color: red; ">*</span>识别类型名称：</label>
-            <div class="col-sm-8">
+            <div class="col-sm-8" >
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="0"
-                           style="position: absolute; opacity: 0;">
-                    <ins class="iCheck-helper"
-                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
-                    通用识别类型
-                </label>
-                <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="1"
+                    <input name="ocrType" type="checkbox" value="1" id="ocrType1"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     身份证
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="2"
+                    <input name="ocrType" type="checkbox" value="2" id="ocrType2"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     银行卡
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="3"
+                    <input name="ocrType" type="checkbox" value="3" id="ocrType3"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     存单
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="4"
+                    <input name="ocrType" type="checkbox" value="4" id="ocrType4"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     房本
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="6"
+                    <input name="ocrType" type="checkbox" value="6" id="ocrType6"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     户口本
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="7"
+                    <input name="ocrType" type="checkbox" value="7" id="ocrType7"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     结婚证
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="8"
+                    <input name="ocrType" type="checkbox" value="8" id="ocrType8"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     行驶证
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="9"
+                    <input name="ocrType" type="checkbox" value="9" id="ocrType9"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     驾驶证
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="10"
+                    <input name="ocrType" type="checkbox" value="10" id="ocrType10"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     车牌号
                 </label>
                 <label class="check-box">
-                    <input name="ocrType" type="checkbox" value="11"
+                    <input name="ocrType" type="checkbox" value="11" id="ocrType11"
                            style="position: absolute; opacity: 0;">
                     <ins class="iCheck-helper"
                          style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
                     营业执照
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="12" id="ocrType12"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    增值税发票
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="13" id="ocrType13"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    普通发票
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="14" id="ocrType14"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    航空运输电子客票行程单
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="15" id="ocrType15"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    火车票
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="16" id="ocrType16"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    通行费发票
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="17" id="ocrType17"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    通用定额发票
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="18" id="ocrType18"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    电子发票
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="10000" id="ocrType10000"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    通用文字识别
+                </label>
+                <label class="check-box">
+                    <input name="ocrType" type="checkbox" value="10001" id="ocrType10001"
+                           style="position: absolute; opacity: 0;">
+                    <ins class="iCheck-helper"
+                         style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    通用视频识别
                 </label>
             </div>
         </div>
@@ -112,7 +168,8 @@
 </div>
 <div th:include="include::footer"></div>
 <script type="text/javascript">
-    var prefix = ctx + "system/channelType"
+    var prefix = ctx + "system/channelType";
+
     $("#form-channelType-add").validate({
         rules: {
             xxxx: {
@@ -129,7 +186,44 @@
             data.push({"name": "ocrTypes", "value": ocrTypes});
             $.operate.save(prefix + "/add", data);
         }
+    };
+
+    function channelChange(){
+        //清除所有被选中的标签
+        var array = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","10000","10001"];
+        for(var k=0;k<array.length;k++ ){
+            if($("#ocrType"+array[k]).parents().hasClass('checked')==true){
+                $("#ocrType"+array[k]).parents(".icheckbox-blue").click();
+            }
+        }
+
+        //获取被选中的option标签
+        var channelCode = $('select  option:selected').val();
+        var data={"channelCode": channelCode};
+        $.ajax({
+            async:false,
+            url: prefix + "/list",
+            type: "post",
+            data: data,
+            success: function (result) {
+                if (result.code == 0) {
+
+                    for(var i=0;i<result.rows.length;i++){
+                        var ocrType=result.rows[i].ocrType;
+                        if(ocrType != null){
+                            //$("#ocrType"+ocrType).parents(".icheckbox-blue").addClass("checked");
+                            $("#ocrType"+ocrType).parents(".icheckbox-blue").click();
+                        }
+                    }
+                } else {
+                    $.modal.alertError(result.msg);
+                }
+            }
+        })
     }
+
+    //初始化加载
+    $("#channelCode").val('system').trigger("change");
 </script>
 </body>
 </html>

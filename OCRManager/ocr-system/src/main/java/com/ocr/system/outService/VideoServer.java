@@ -55,26 +55,26 @@ public class VideoServer implements CommandLineRunner {
                                 //3.使用Socket对象中的方法getInputStream()获取网络字节输入流InputStream对象
                                 InputStream is= socket.getInputStream();
 
-                        //使用DataInputStream包装输入流，获取文件名
-                        DataInputStream dataInputStream = new DataInputStream(is);
-                        localFileName = dataInputStream.readUTF();//文件名
+                                //使用DataInputStream包装输入流，获取文件名
+                                DataInputStream dataInputStream = new DataInputStream(is);
+                                localFileName = dataInputStream.readUTF();//文件名
 
-                        String timePath=VideoUtils.CreatePathByVideoName(localFileName);//根据文件名生成日期路径
+                                String timePath=VideoUtils.CreatePathByVideoName(localFileName);//根据文件名生成日期路径
 
-                        //4.判断文件夹是否存在，不存在则创建
-                        StringBuilder sb=new StringBuilder();
-                        sb.append(Global.getProfile()).append("/IMAGE/").append(timePath);
-                        //String profile= Global.getProfile();//平台配置的指定文件路径
-                        //String pathName=profile+"/IMAGE/"+timePath;
-                        String path=sb.toString();
-                        File file =new File(path);
-                        if(!file.exists()) {
-                            file.mkdirs();
-                        }
-                        sb.append(localFileName).append(".mp4");
-                        //5.使用Socket对象中的方法getOutputStream()获取网络字节输出流Output Stream对象
-                        //String fileName=pathName + localFileName+".mp4";
-                        FileOutputStream fos = new FileOutputStream(sb.toString());
+                                //4.判断文件夹是否存在，不存在则创建
+                                StringBuilder sb=new StringBuilder();
+                                sb.append(Global.getProfile()).append("/IMAGE/").append(timePath);
+                                //String profile= Global.getProfile();//平台配置的指定文件路径
+                                //String pathName=profile+"/IMAGE/"+timePath;
+                                String path=sb.toString();
+                                File file =new File(path);
+                                if(!file.exists()) {
+                                    file.mkdirs();
+                                }
+                                sb.append(localFileName).append(".mp4");
+                                //5.使用Socket对象中的方法getOutputStream()获取网络字节输出流Output Stream对象
+                                //String fileName=pathName + localFileName+".mp4";
+                                FileOutputStream fos = new FileOutputStream(sb.toString());
 
                                 //6.使用网络字节输出流OutputStream对象中的方法write,给客户端回写数据
                                 int length = 0;
