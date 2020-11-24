@@ -18,6 +18,7 @@ public class ChannelTypeConstants {
             hashMap.put("2","BankCard");
             hashMap.put("3","Deposit");
             hashMap.put("4","PremisesPermit");
+            hashMap.put("5","Bankbook");
             hashMap.put("6","ResidenceBooklet");
             hashMap.put("7","MarriageLicense");
             hashMap.put("8","DrivingLicense");
@@ -42,6 +43,7 @@ public class ChannelTypeConstants {
             hashMap.put("IDCardFront","IDCardFront");
             hashMap.put("BankCard","BankCard");
             hashMap.put("Deposit","Deposit");
+            hashMap.put("Bankbook","Bankbook");
             hashMap.put("PremisesPermit","PremisesPermit");
             hashMap.put("ResidenceBooklet","ResidenceBooklet");
             hashMap.put("MarriageLicense","MarriageLicense");
@@ -75,6 +77,7 @@ public class ChannelTypeConstants {
             hashMap2.put("2","银行卡");
             hashMap2.put("3","存单");
             hashMap2.put("4","房本");
+            hashMap2.put("5","存折");
             hashMap2.put("6","户口本");
             hashMap2.put("7","结婚证");
             hashMap2.put("8","行驶证");
@@ -89,7 +92,7 @@ public class ChannelTypeConstants {
             hashMap2.put("17","定额发票");
             hashMap2.put("18","电子发票");
             hashMap2.put("10000","通用文字识别");
-            hashMap2.put("10001","视频");
+            hashMap2.put("10001","通用视频识别");
             hashMap2.put("10002","身份证正面视频");
             hashMap2.put("10003","身份证反面视频");
             hashMap2.put("10004","房本视频");
@@ -100,6 +103,7 @@ public class ChannelTypeConstants {
             hashMap2.put("BankCard","2");
             hashMap2.put("Deposit","3");
             hashMap2.put("PremisesPermit","4");
+            hashMap2.put("Bankbook","5");
             hashMap2.put("ResidenceBooklet","6");
             hashMap2.put("MarriageLicense","7");
             hashMap2.put("DrivingLicense","8");

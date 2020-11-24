@@ -2,11 +2,13 @@ package com.ocr.web.controller.system;
 
 import java.util.List;
 
+import com.ocr.common.constant.ChannelTypeConstants;
 import com.ocr.system.domain.Channel;
 import com.ocr.system.service.IChannelService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,7 +59,6 @@ public class ChannelTypeController extends BaseController {
         return getDataTable(list);
     }
 
-
     /**
      * 导出渠道识别类型参数列表
      */
@@ -96,6 +97,10 @@ public class ChannelTypeController extends BaseController {
             channelType.setChannelName(channel.getChannelName());
             channelType.setChannelNm(channel.getChannelNm());
             channelType.setOcrType(ocrType);
+
+            String channelTypeName=ChannelTypeConstants.getChannelType2().get(ocrType);
+            channelType.setOcrTypeNm(channelTypeName);
+            /*
             switch (ocrType) {
                 case "0":
                     channelType.setOcrTypeNm("通用识别类型");
@@ -132,7 +137,7 @@ public class ChannelTypeController extends BaseController {
                     break;
                 default:
                     break;
-            }
+            }*/
             a=channelTypeService.insertChannelType(channelType);
         }
 
