@@ -143,9 +143,9 @@
                             <td></td>
                             <td align="center" colspan="2">
                                 <div class="col-sm-7">
-                                    <!--<button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">
-                                        提交
-                                    </button>-->
+                                    <a  th:align="center" class="btn btn-primary" th:href="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
+                                        查看放大视频
+                                    </a>
                                 </div>
                             </td>
                             <td></td>
