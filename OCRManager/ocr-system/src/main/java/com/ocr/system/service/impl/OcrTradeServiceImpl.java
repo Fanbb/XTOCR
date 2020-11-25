@@ -89,8 +89,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertIDCardFront(IDCardFront idCardFront, String channelCode, String imgId) {
-        return getString(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront));
+    public String insertIDCardFront(IDCardFront idCardFront, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront),riskFlag);
     }
 
     /**
@@ -101,8 +101,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertIDCardBack(IDCardBack idCardBack, String channelCode, String imgId) {
-        return getString(channelCode, imgId, idCardBack.getImgType(), null, JSON.toJSONString(idCardBack));
+    public String insertIDCardBack(IDCardBack idCardBack, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, idCardBack.getImgType(), null, JSON.toJSONString(idCardBack), riskFlag);
     }
 
     /**
@@ -113,8 +113,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertBankCard(BankCard bankCard, String channelCode, String imgId) {
-        return getString(channelCode, imgId, bankCard.getImgType(), bankCard.getBankCardNo(), JSON.toJSONString(bankCard));
+    public String insertBankCard(BankCard bankCard, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, bankCard.getImgType(), bankCard.getBankCardNo(), JSON.toJSONString(bankCard), riskFlag);
     }
 
     /**
@@ -125,8 +125,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertDeposit(DepositReceipt depositReceipt, String channelCode, String imgId) {
-        return getString(channelCode, imgId, depositReceipt.getImgType(), depositReceipt.getDepositNo(), JSON.toJSONString(depositReceipt));
+    public String insertDeposit(DepositReceipt depositReceipt, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, depositReceipt.getImgType(), depositReceipt.getDepositNo(), JSON.toJSONString(depositReceipt), riskFlag);
     }
 
     @Override
@@ -155,11 +155,11 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
     @Override
-    public String insertIDCardFrontFlag(IDCardFront idCardFront, String channelCode, String imgId, Boolean flag) {
-        return getStringFlag(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront), flag);
+    public String insertIDCardFrontFlag(IDCardFront idCardFront, String channelCode, String imgId, Boolean flag , String riskFlag) {
+        return getStringFlag(channelCode, imgId, idCardFront.getImgType(), idCardFront.getIdCardNo(), JSON.toJSONString(idCardFront), flag,riskFlag);
     }
 
-    private String getStringFlag(String channelCode, String imgId, String imgType, String ocrSeq, String toJSONString, Boolean flag) {
+    private String getStringFlag(String channelCode, String imgId, String imgType, String ocrSeq, String toJSONString, Boolean flag, String riskFlag) {
         OcrTrade ocrTrade = new OcrTrade();
         String id =UUID.randomUUID().toString();
         ocrTrade.setId(id);
@@ -167,6 +167,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setOcrSeq(ocrSeq);
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
+        ocrTrade.setOcrOrgan(riskFlag);
 
         //修改start
         String numType =ChannelTypeConstants.getChannelType2().get(imgType);
@@ -254,94 +255,94 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     }
 
     @Override
-    public String insertIDCardBackFlag(IDCardBack idCardBack, String channelCode, String imgId, Boolean flag) {
-        return getStringFlag(channelCode, imgId, idCardBack.getImgType(), null, JSON.toJSONString(idCardBack),flag);
+    public String insertIDCardBackFlag(IDCardBack idCardBack, String channelCode, String imgId, Boolean flag ,String riskFlag) {
+        return getStringFlag(channelCode, imgId, idCardBack.getImgType(), null, JSON.toJSONString(idCardBack),flag,riskFlag);
 
     }
 
     @Override
-    public String insertBankCardFlag(BankCard bankCard, String channelCode, String imgId, Boolean flag) {
-        return getStringFlag(channelCode, imgId, bankCard.getImgType(), bankCard.getBankCardNo(), JSON.toJSONString(bankCard),flag);
+    public String insertBankCardFlag(BankCard bankCard, String channelCode, String imgId, Boolean flag,String riskFlag) {
+        return getStringFlag(channelCode, imgId, bankCard.getImgType(), bankCard.getBankCardNo(), JSON.toJSONString(bankCard),flag,riskFlag);
 
     }
 
     @Override
-    public String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag) {
-        return getStringFlag(channelCode, imgId, deposit.getImgType(), deposit.getDepositNo(), JSON.toJSONString(deposit),flag);
+    public String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag,String riskFlag) {
+        return getStringFlag(channelCode, imgId, deposit.getImgType(), deposit.getDepositNo(), JSON.toJSONString(deposit),flag,riskFlag);
     }
 
     @Override
-    public String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag) {
-        return getStringFlag(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit),flag);
+    public String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag,String riskFlag) {
+        return getStringFlag(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit),flag,riskFlag);
     }
 
     @Override
-    public String insertResidenceBookletFlag(ResidenceBooklet residenceBooklet, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, residenceBooklet.getImgType(), "", JSON.toJSONString(residenceBooklet),flag);
+    public String insertResidenceBookletFlag(ResidenceBooklet residenceBooklet, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, residenceBooklet.getImgType(), "", JSON.toJSONString(residenceBooklet),flag,riskFlag);
     }
 
     @Override
-    public String insertMarriageLicenseFlag(MarriageLicense marriageLicense, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, marriageLicense.getImgType(), marriageLicense.getMarriageNo(), JSON.toJSONString(marriageLicense),flag);
+    public String insertMarriageLicenseFlag(MarriageLicense marriageLicense, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, marriageLicense.getImgType(), marriageLicense.getMarriageNo(), JSON.toJSONString(marriageLicense),flag,riskFlag);
     }
 
     @Override
-    public String insertDrivingLicenseFlag(DrivingLicense drivingLicense, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, drivingLicense.getImgType(), drivingLicense.getFileNumber(), JSON.toJSONString(drivingLicense),flag);
+    public String insertDrivingLicenseFlag(DrivingLicense drivingLicense, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, drivingLicense.getImgType(), drivingLicense.getFileNumber(), JSON.toJSONString(drivingLicense),flag,riskFlag);
     }
 
     @Override
-    public String insertDriversLicenseFlag(DriversLicense driversLicense, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, driversLicense.getImgType(), driversLicense.getFileNumber(), JSON.toJSONString(driversLicense),flag);
+    public String insertDriversLicenseFlag(DriversLicense driversLicense, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, driversLicense.getImgType(), driversLicense.getFileNumber(), JSON.toJSONString(driversLicense),flag, riskFlag);
     }
 
     @Override
-    public String insertPlateNumberFlag(PlateNumber plateNumber, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, plateNumber.getImgType(), plateNumber.getNumber(), JSON.toJSONString(plateNumber),flag);
+    public String insertPlateNumberFlag(PlateNumber plateNumber, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, plateNumber.getImgType(), plateNumber.getNumber(), JSON.toJSONString(plateNumber),flag, riskFlag);
     }
 
     @Override
-    public String insertBusinessLicenseFlag(BusinessLicense businessLicense, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, businessLicense.getImgType(), businessLicense.getSocialCode(), JSON.toJSONString(businessLicense),flag);
+    public String insertBusinessLicenseFlag(BusinessLicense businessLicense, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, businessLicense.getImgType(), businessLicense.getSocialCode(), JSON.toJSONString(businessLicense),flag, riskFlag);
     }
 
     @Override
-    public String insertInvoiceFlag(Invoice invoice, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, invoice.getImgType(), invoice.getNumber(), JSON.toJSONString(invoice),flag);
+    public String insertInvoiceFlag(Invoice invoice, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, invoice.getImgType(), invoice.getNumber(), JSON.toJSONString(invoice),flag, riskFlag);
     }
 
     @Override
-    public String insertItineraryFlag(Itinerary itinerary, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, itinerary.getImgType(), itinerary.getName(), JSON.toJSONString(itinerary),flag);
+    public String insertItineraryFlag(Itinerary itinerary, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, itinerary.getImgType(), itinerary.getName(), JSON.toJSONString(itinerary),flag, riskFlag);
     }
 
     @Override
-    public String insertQuotaInvoiceFlag(QuotaInvoice quotaInvoice, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, quotaInvoice.getImgType(), quotaInvoice.getInvoiceNumber(), JSON.toJSONString(quotaInvoice),flag);
+    public String insertQuotaInvoiceFlag(QuotaInvoice quotaInvoice, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, quotaInvoice.getImgType(), quotaInvoice.getInvoiceNumber(), JSON.toJSONString(quotaInvoice),flag, riskFlag);
     }
 
     @Override
-    public String insertRalTicketFlag(RalTicket ralTicket, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, ralTicket.getImgType(), ralTicket.getName(), JSON.toJSONString(ralTicket),flag);
+    public String insertRalTicketFlag(RalTicket ralTicket, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, ralTicket.getImgType(), ralTicket.getName(), JSON.toJSONString(ralTicket),flag, riskFlag);
     }
 
     @Override
-    public String insertTollInvoiceFlag(TollInvoice tollInvoice, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, tollInvoice.getImgType(), tollInvoice.getInvoiceNumber(), JSON.toJSONString(tollInvoice),flag);
+    public String insertTollInvoiceFlag(TollInvoice tollInvoice, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, tollInvoice.getImgType(), tollInvoice.getInvoiceNumber(), JSON.toJSONString(tollInvoice),flag, riskFlag);
     }
 
     @Override
-    public String insertVatInvoiceFlag(VatInvoice vatInvoice, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, vatInvoice.getImgType(), vatInvoice.getNumber(), JSON.toJSONString(vatInvoice),flag);
+    public String insertVatInvoiceFlag(VatInvoice vatInvoice, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, vatInvoice.getImgType(), vatInvoice.getNumber(), JSON.toJSONString(vatInvoice),flag, riskFlag);
     }
     @Override
-    public String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice),flag);
+    public String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice),flag, riskFlag);
     }
 
     @Override
-    public String insertGeneralTestFlag(GeneralText generalText, String channelCode, String imgId, Boolean flag){
-        return getStringFlag(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText),flag);
+    public String insertGeneralTestFlag(GeneralText generalText, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText),flag, riskFlag);
     }
 
     /**
@@ -352,8 +353,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId) {
-        return getString(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit));
+    public String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, premisesPermit.getImgType(), premisesPermit.getCertificateNo(), JSON.toJSONString(premisesPermit), riskFlag);
     }
 
     /**
@@ -364,8 +365,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertBusinessLicense(BusinessLicense businessLicense, String channelCode, String imgId) {
-        return getString(channelCode, imgId, businessLicense.getImgType(), businessLicense.getSocialCode(), JSON.toJSONString(businessLicense));
+    public String insertBusinessLicense(BusinessLicense businessLicense, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, businessLicense.getImgType(), businessLicense.getSocialCode(), JSON.toJSONString(businessLicense), riskFlag);
     }
 
     /**
@@ -376,8 +377,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertPlateNumber(PlateNumber plateNumber, String channelCode, String imgId) {
-        return getString(channelCode, imgId, plateNumber.getImgType(), plateNumber.getNumber(), JSON.toJSONString(plateNumber));
+    public String insertPlateNumber(PlateNumber plateNumber, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, plateNumber.getImgType(), plateNumber.getNumber(), JSON.toJSONString(plateNumber), riskFlag);
     }
 
     /**
@@ -388,8 +389,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertDriversLicense(DriversLicense driversLicense, String channelCode, String imgId) {
-        return getString(channelCode, imgId, driversLicense.getImgType(), driversLicense.getFileNumber(), JSON.toJSONString(driversLicense));
+    public String insertDriversLicense(DriversLicense driversLicense, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, driversLicense.getImgType(), driversLicense.getFileNumber(), JSON.toJSONString(driversLicense), riskFlag);
     }
 
     /**
@@ -400,8 +401,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertDrivingLicense(DrivingLicense drivingLicense, String channelCode, String imgId) {
-        return getString(channelCode, imgId, drivingLicense.getImgType(), drivingLicense.getFileNumber(), JSON.toJSONString(drivingLicense));
+    public String insertDrivingLicense(DrivingLicense drivingLicense, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, drivingLicense.getImgType(), drivingLicense.getFileNumber(), JSON.toJSONString(drivingLicense), riskFlag);
     }
 
     /**
@@ -412,8 +413,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertMarriageLicense(MarriageLicense marriageLicense, String channelCode, String imgId) {
-        return getString(channelCode, imgId, marriageLicense.getImgType(), marriageLicense.getMarriageNo(), JSON.toJSONString(marriageLicense));
+    public String insertMarriageLicense(MarriageLicense marriageLicense, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, marriageLicense.getImgType(), marriageLicense.getMarriageNo(), JSON.toJSONString(marriageLicense), riskFlag);
     }
 
     /**
@@ -424,8 +425,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId) {
-        return getString(channelCode, imgId, residenceBooklet.getImgType(), "", JSON.toJSONString(residenceBooklet));
+    public String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, residenceBooklet.getImgType(), "", JSON.toJSONString(residenceBooklet), riskFlag);
     }
 
     /**
@@ -436,8 +437,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertVatInvoice(VatInvoice vatInvoice, String channelCode, String imgId) {
-        return getString(channelCode, imgId, vatInvoice.getImgType(), vatInvoice.getNumber(), JSON.toJSONString(vatInvoice));
+    public String insertVatInvoice(VatInvoice vatInvoice, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, vatInvoice.getImgType(), vatInvoice.getNumber(), JSON.toJSONString(vatInvoice), riskFlag);
     }
 
     /**
@@ -448,8 +449,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertInvoice(Invoice invoice, String channelCode, String imgId) {
-        return getString(channelCode, imgId, invoice.getImgType(), invoice.getNumber(), JSON.toJSONString(invoice));
+    public String insertInvoice(Invoice invoice, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, invoice.getImgType(), invoice.getNumber(), JSON.toJSONString(invoice), riskFlag);
     }
 
     /**
@@ -460,8 +461,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertItinerary(Itinerary itinerary, String channelCode, String imgId) {
-        return getString(channelCode, imgId, itinerary.getImgType(), itinerary.getName(), JSON.toJSONString(itinerary));
+    public String insertItinerary(Itinerary itinerary, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, itinerary.getImgType(), itinerary.getName(), JSON.toJSONString(itinerary), riskFlag);
     }
 
     /**
@@ -472,8 +473,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertRalTicket(RalTicket ralTicket, String channelCode, String imgId) {
-        return getString(channelCode, imgId, ralTicket.getImgType(), ralTicket.getName(), JSON.toJSONString(ralTicket));
+    public String insertRalTicket(RalTicket ralTicket, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, ralTicket.getImgType(), ralTicket.getName(), JSON.toJSONString(ralTicket), riskFlag);
     }
     /**
      * 通行费发票流水
@@ -483,8 +484,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertTollInvoice(TollInvoice tollInvoice, String channelCode, String imgId) {
-        return getString(channelCode, imgId, tollInvoice.getImgType(), tollInvoice.getInvoiceNumber(), JSON.toJSONString(tollInvoice));
+    public String insertTollInvoice(TollInvoice tollInvoice, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, tollInvoice.getImgType(), tollInvoice.getInvoiceNumber(), JSON.toJSONString(tollInvoice), riskFlag);
     }
 
     /**
@@ -495,8 +496,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertQuotaInvoice(QuotaInvoice quotaInvoice, String channelCode, String imgId) {
-        return getString(channelCode, imgId, quotaInvoice.getImgType(), quotaInvoice.getInvoiceNumber(), JSON.toJSONString(quotaInvoice));
+    public String insertQuotaInvoice(QuotaInvoice quotaInvoice, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, quotaInvoice.getImgType(), quotaInvoice.getInvoiceNumber(), JSON.toJSONString(quotaInvoice), riskFlag);
     }
     /**
      * 电子发票流水
@@ -506,8 +507,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId) {
-        return getString(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice));
+    public String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, eleInvoice.getImgType(), eleInvoice.getNumber(), JSON.toJSONString(eleInvoice), riskFlag);
     }
 
     /**
@@ -518,8 +519,8 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
      * @return
      */
     @Override
-    public String insertGeneralText(GeneralText generalText, String channelCode, String imgId) {
-        return getString(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText));
+    public String insertGeneralText(GeneralText generalText, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText), riskFlag);
     }
 
     @Override
@@ -625,7 +626,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTradeMapper.updateRemark2ByIds(ids);
     }
 
-    private String getString(String channelCode, String imgId, String imgType, String ocrSeq, String json) {
+    private String getString(String channelCode, String imgId, String imgType, String ocrSeq, String json,String riskFlag) {
         OcrTrade ocrTrade = new OcrTrade();
         String id =UUID.randomUUID().toString();
         ocrTrade.setId(id);
@@ -634,6 +635,7 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
         ocrTrade.setImageId(imgId);
         ocrTrade.setImageType(imgType);
         ocrTrade.setImageName(ChannelTypeConstants.getChannelType2().get(imgType));
+        ocrTrade.setOcrOrgan(riskFlag);
         /*
         switch (imgType){
             case "IDCardFront":

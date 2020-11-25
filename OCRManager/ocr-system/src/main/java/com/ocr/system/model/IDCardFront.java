@@ -46,6 +46,11 @@ public class IDCardFront {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
+
 
     public String getTradeId() {
         return tradeId;
@@ -103,7 +108,15 @@ public class IDCardFront {
         this.imgType = imgType;
     }
 
-    public IDCardFront(String tradeId, String name, String sex, String nation, String address, String idCardNo, String birthday, String imgType, String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public IDCardFront(String tradeId, String name, String sex, String nation, String address, String idCardNo, String birthday, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.name = name;
         this.sex = sex;
@@ -113,6 +126,7 @@ public class IDCardFront {
         this.birthday = birthday;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public IDCardFront() {
@@ -138,6 +152,7 @@ public class IDCardFront {
                 ", birthday='" + birthday + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

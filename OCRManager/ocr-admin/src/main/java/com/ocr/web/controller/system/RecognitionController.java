@@ -116,7 +116,7 @@ public class RecognitionController extends BaseController {
             OcrTrade ocrTrade = new OcrTrade();
             ocrTrade.setId(UUID.randomUUID().toString());
             ocrTrade.setChannel("system");
-            ocrTrade.setImageId(imgId);
+            ocrTrade.setImageId( imgId);
             ocrTrade.setImageType("None");
             ocrTrade.setImageName("0");
             ocrTrade.setOcrStatus("1");
@@ -127,7 +127,7 @@ public class RecognitionController extends BaseController {
             ocrTrade.setOcrTime(DateUtils.getTimeShort());
             iOcrTradeService.insertOcrTrade(ocrTrade);
             log.info("OCR识别结果为空");
-            mmap.put("imgId", imgId);
+            mmap.put("imgId",  imgId);
             return AjaxResult.success(mmap);
         }
         String json = JSON.parseArray(request).toString();
@@ -136,7 +136,7 @@ public class RecognitionController extends BaseController {
          * 识别请求结果更新
          */
         OcrImage ocrImage = new OcrImage();
-        ocrImage.setId(imgId);
+        ocrImage.setId( imgId);
         ocrImage.setOcrResult(json);
         iOcrImageService.updateOcrImage(ocrImage);
 
@@ -145,6 +145,7 @@ public class RecognitionController extends BaseController {
         List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
 
         for (RequestModel model : models) {
+            String riskFlag = model.getRisk_flag();
             switch (model.getClass_name()) {
                 case "IDCardFront":
                     IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -152,7 +153,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertIDCardFront(idCardFront, "system", imgId);
+                    iOcrTradeService.insertIDCardFront(idCardFront, "system",  imgId, riskFlag);
                     break;
                 case "IDCardBack":
                     IDCardBack idCardBack = JSONArray.parseObject(model.getOcr_result(), IDCardBack.class);
@@ -160,7 +161,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId);
+                    iOcrTradeService.insertIDCardBack(idCardBack, "system",  imgId, riskFlag);
                     break;
                 case "BankCard":
                     BankCard bankCard = JSONArray.parseObject(model.getOcr_result(), BankCard.class);
@@ -168,7 +169,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertBankCard(bankCard, "system", imgId);
+                    iOcrTradeService.insertBankCard(bankCard, "system",  imgId, riskFlag);
                     break;
                 case "Deposit":
                     DepositReceipt deposit = JSONArray.parseObject(model.getOcr_result(), DepositReceipt.class);
@@ -176,7 +177,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertDeposit(deposit, "system", imgId);
+                    iOcrTradeService.insertDeposit(deposit, "system",  imgId, riskFlag);
                     break;
                 case "PremisesPermit":
                     PremisesPermit premisesPermit = JSONArray.parseObject(model.getOcr_result(), PremisesPermit.class);
@@ -184,7 +185,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertPremisesPermit(premisesPermit, "system", imgId);
+                    iOcrTradeService.insertPremisesPermit(premisesPermit, "system",  imgId, riskFlag);
                     break;
                 case "ResidenceBooklet":
                     ResidenceBooklet residenceBooklet = JSONArray.parseObject(model.getOcr_result(), ResidenceBooklet.class);
@@ -192,7 +193,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertResidenceBooklet(residenceBooklet, "system", imgId);
+                    iOcrTradeService.insertResidenceBooklet(residenceBooklet, "system",  imgId, riskFlag);
                     break;
                 case "MarriageLicense":
                     MarriageLicense marriageLicense = JSONArray.parseObject(model.getOcr_result(), MarriageLicense.class);
@@ -200,7 +201,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertMarriageLicense(marriageLicense, "system", imgId);
+                    iOcrTradeService.insertMarriageLicense(marriageLicense, "system",  imgId, riskFlag);
                     break;
                 case "DrivingLicense":
                     DrivingLicense drivingLicense = JSONArray.parseObject(model.getOcr_result(), DrivingLicense.class);
@@ -208,7 +209,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertDrivingLicense(drivingLicense, "system", imgId);
+                    iOcrTradeService.insertDrivingLicense(drivingLicense, "system",  imgId, riskFlag);
                     break;
                 case "DriversLicense":
                     DriversLicense driversLicense = JSONArray.parseObject(model.getOcr_result(), DriversLicense.class);
@@ -216,7 +217,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertDriversLicense(driversLicense, "system", imgId);
+                    iOcrTradeService.insertDriversLicense(driversLicense, "system",  imgId, riskFlag);
                     break;
                 case "PlateNumber":
                     PlateNumber plateNumber = JSONArray.parseObject(model.getOcr_result(), PlateNumber.class);
@@ -224,7 +225,7 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertPlateNumber(plateNumber, "system", imgId);
+                    iOcrTradeService.insertPlateNumber(plateNumber, "system",  imgId, riskFlag);
                     break;
                 case "BusinessLicense":
                     BusinessLicense businessLicense = JSONArray.parseObject(model.getOcr_result(), BusinessLicense.class);
@@ -232,15 +233,15 @@ public class RecognitionController extends BaseController {
                     /**
                      * 调用流水存储 返回流水id
                      */
-                    iOcrTradeService.insertBusinessLicense(businessLicense, "system", imgId);
+                    iOcrTradeService.insertBusinessLicense(businessLicense, "system",  imgId, riskFlag);
                     break;
                 default:
-                    iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system", imgId);
+                    iOcrTradeService.insertNoneTrade(model.getOcr_result(), "system",  imgId);
                     break;
             }
         }
 
-        mmap.put("imgId", imgId);
+        mmap.put("imgId",  imgId);
         return AjaxResult.success(mmap);
     }
 
@@ -249,9 +250,9 @@ public class RecognitionController extends BaseController {
      */
     @GetMapping("/data/{imgId}")
     public String detail(@PathVariable("imgId") String imgId, ModelMap model) {
-        OcrImage ocrImage = iOcrImageService.selectOcrImageById(imgId);
+        OcrImage ocrImage = iOcrImageService.selectOcrImageById( imgId);
         model.addAttribute("imgUrl", ocrImage.getLocalPath());
-        model.addAttribute("imgId", imgId);
+        model.addAttribute("imgId",  imgId);
         return prefix + "/data/data";
     }
 

@@ -153,6 +153,7 @@ public class RecognitionFilesController extends BaseController {
                         for (RequestModel2 model2 : model2s) {
                             List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
                             for (RequestModel model : models) {
+                                String riskFlag = model.getRisk_flag();
                                 switch (model.getClass_name()) {
                                     case "IDCardFront":
                                         IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -160,7 +161,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertIDCardFront(idCardFront, "system", imgId);
+                                        tradeId = iOcrTradeService.insertIDCardFront(idCardFront, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "IDCardBack":
@@ -169,7 +170,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId);
+                                        tradeId = iOcrTradeService.insertIDCardBack(idCardBack, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "BankCard":
@@ -178,7 +179,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertBankCard(bankCard, "system", imgId);
+                                        tradeId = iOcrTradeService.insertBankCard(bankCard, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "Deposit":
@@ -187,7 +188,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertDeposit(deposit, "system", imgId);
+                                        tradeId = iOcrTradeService.insertDeposit(deposit, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "PremisesPermit":
@@ -196,7 +197,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, "system", imgId);
+                                        tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "ResidenceBooklet":
@@ -205,7 +206,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, "system", imgId);
+                                        tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "MarriageLicense":
@@ -214,7 +215,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, "system", imgId);
+                                        tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "DrivingLicense":
@@ -223,7 +224,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, "system", imgId);
+                                        tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "DriversLicense":
@@ -232,7 +233,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertDriversLicense(driversLicense, "system", imgId);
+                                        tradeId = iOcrTradeService.insertDriversLicense(driversLicense, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "PlateNumber":
@@ -241,7 +242,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertPlateNumber(plateNumber, "system", imgId);
+                                        tradeId = iOcrTradeService.insertPlateNumber(plateNumber, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "BusinessLicense":
@@ -250,7 +251,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, "system", imgId);
+                                        tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "VatInvoice":
@@ -259,7 +260,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, "system", imgId);
+                                        tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "Invoice":
@@ -268,7 +269,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertInvoice(invoice, "system", imgId);
+                                        tradeId = iOcrTradeService.insertInvoice(invoice, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "Itinerary":
@@ -277,7 +278,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertItinerary(itinerary, "system", imgId);
+                                        tradeId = iOcrTradeService.insertItinerary(itinerary, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "RalTicket":
@@ -286,7 +287,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertRalTicket(ralTicket, "system", imgId);
+                                        tradeId = iOcrTradeService.insertRalTicket(ralTicket, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "TollInvoice":
@@ -295,7 +296,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, "system", imgId);
+                                        tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "QuotaInvoice":
@@ -304,7 +305,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, "system", imgId);
+                                        tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     case "EleInvoice":
@@ -313,7 +314,7 @@ public class RecognitionFilesController extends BaseController {
                                         /**
                                          * 调用流水存储 返回流水id
                                          */
-                                        tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, "system", imgId);
+                                        tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, "system", imgId,riskFlag);
                                         tradeIds.append(tradeId + ",");
                                         break;
                                     default:
@@ -402,6 +403,7 @@ public class RecognitionFilesController extends BaseController {
                     iOcrImageService.updateOcrImage(ocrImage);
                     List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
                     for (RequestModel model : models) {
+                        String riskFlag = model.getRisk_flag();
                         switch (model.getClass_name()) {
                             case "IDCardFront":
                                 IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -409,7 +411,8 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, ocrImage.getId());
+                                idCardFront.setRiskFlag(model.getRisk_flag());
+                                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, ocrImage.getId(),riskFlag );
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "IDCardBack":
@@ -418,7 +421,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BankCard":
@@ -427,7 +430,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Deposit":
@@ -436,7 +439,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PremisesPermit":
@@ -445,7 +448,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "ResidenceBooklet":
@@ -454,7 +457,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "MarriageLicense":
@@ -463,7 +466,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "DrivingLicense":
@@ -472,7 +475,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "DriversLicense":
@@ -481,7 +484,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDriversLicense(driversLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDriversLicense(driversLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PlateNumber":
@@ -490,7 +493,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertPlateNumber(plateNumber, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPlateNumber(plateNumber, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BusinessLicense":
@@ -499,7 +502,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "VatInvoice":
@@ -508,7 +511,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Invoice":
@@ -517,7 +520,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertInvoice(invoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertInvoice(invoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Itinerary":
@@ -526,7 +529,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertItinerary(itinerary, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertItinerary(itinerary, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "RalTicket":
@@ -535,7 +538,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertRalTicket(ralTicket, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertRalTicket(ralTicket, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "TollInvoice":
@@ -544,7 +547,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "QuotaInvoice":
@@ -553,7 +556,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "EleInvoice":
@@ -562,7 +565,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             default:
@@ -657,6 +660,7 @@ public class RecognitionFilesController extends BaseController {
                     iOcrImageService.updateOcrImage(ocrImage);
                     List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
                     for (RequestModel model : models) {
+                        String riskFlag = model.getRisk_flag();
                         switch (model.getClass_name()) {
                             case "IDCardFront":
                                 IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -664,7 +668,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "IDCardBack":
@@ -673,7 +677,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BankCard":
@@ -682,7 +686,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Deposit":
@@ -691,7 +695,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PremisesPermit":
@@ -700,7 +704,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "ResidenceBooklet":
@@ -709,7 +713,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "MarriageLicense":
@@ -718,7 +722,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "DrivingLicense":
@@ -727,7 +731,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "DriversLicense":
@@ -736,7 +740,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDriversLicense(driversLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDriversLicense(driversLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PlateNumber":
@@ -745,7 +749,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertPlateNumber(plateNumber, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPlateNumber(plateNumber, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BusinessLicense":
@@ -754,7 +758,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "VatInvoice":
@@ -763,7 +767,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Invoice":
@@ -772,7 +776,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertInvoice(invoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertInvoice(invoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Itinerary":
@@ -781,7 +785,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertItinerary(itinerary, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertItinerary(itinerary, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "RalTicket":
@@ -790,7 +794,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertRalTicket(ralTicket, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertRalTicket(ralTicket, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "TollInvoice":
@@ -799,7 +803,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "QuotaInvoice":
@@ -808,7 +812,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "EleInvoice":
@@ -817,7 +821,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "GeneralText":
@@ -827,7 +831,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertGeneralText(generalText, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertGeneralText(generalText, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             /*case "IDCardFront_Video"://视频身份证正面
@@ -836,7 +840,7 @@ public class RecognitionFilesController extends BaseController {
                                 *//**
                                  * 调用流水存储 返回流水id
                                  *//*
-                                tradeId = iOcrTradeService.insertIDCardFront(video_idCardFront, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardFront(video_idCardFront, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "IDCardBack_Video"://视频身份证反面
@@ -845,7 +849,7 @@ public class RecognitionFilesController extends BaseController {
                                 *//**
                                  * 调用流水存储 返回流水id
                                  *//*
-                                tradeId = iOcrTradeService.insertIDCardBack(video_idCardBack, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardBack(video_idCardBack, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PremisesPermit_Video"://视频房本
@@ -854,7 +858,7 @@ public class RecognitionFilesController extends BaseController {
                                 *//**
                                  * 调用流水存储 返回流水id
                                  *//*
-                                tradeId = iOcrTradeService.insertPremisesPermit(video_premisesPermit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPremisesPermit(video_premisesPermit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BusinessLicense_Video"://视频营业执照
@@ -863,7 +867,7 @@ public class RecognitionFilesController extends BaseController {
                                 *//**
                                  * 调用流水存储 返回流水id
                                  *//*
-                                tradeId = iOcrTradeService.insertBusinessLicense(video_businessLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBusinessLicense(video_businessLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;*/
                             default:
@@ -972,6 +976,7 @@ public class RecognitionFilesController extends BaseController {
                     iOcrImageService.updateOcrImage(ocrImage);
                     List<RequestModel> models = JSONArray.parseArray(model2.getImage_result(), RequestModel.class);
                     for (RequestModel model : models) {
+                        String riskFlag = model.getRisk_flag();
                         switch (model.getClass_name()) {
                             case "IDCardFront":
                                 IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -979,7 +984,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardFront(idCardFront, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "IDCardBack":
@@ -988,7 +993,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardBack(idCardBack, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BankCard":
@@ -997,7 +1002,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBankCard(bankCard, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Deposit":
@@ -1006,7 +1011,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDeposit(deposit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PremisesPermit":
@@ -1015,7 +1020,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPremisesPermit(premisesPermit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "ResidenceBooklet":
@@ -1024,7 +1029,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertResidenceBooklet(residenceBooklet, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "MarriageLicense":
@@ -1033,7 +1038,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertMarriageLicense(marriageLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "DrivingLicense":
@@ -1042,7 +1047,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDrivingLicense(drivingLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "DriversLicense":
@@ -1051,7 +1056,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertDriversLicense(driversLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertDriversLicense(driversLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PlateNumber":
@@ -1060,7 +1065,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertPlateNumber(plateNumber, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPlateNumber(plateNumber, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BusinessLicense":
@@ -1069,7 +1074,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBusinessLicense(businessLicense, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "VatInvoice":
@@ -1078,7 +1083,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertVatInvoice(vatInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Invoice":
@@ -1087,7 +1092,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertInvoice(invoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertInvoice(invoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "Itinerary":
@@ -1096,7 +1101,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertItinerary(itinerary, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertItinerary(itinerary, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "RalTicket":
@@ -1105,7 +1110,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertRalTicket(ralTicket, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertRalTicket(ralTicket, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "TollInvoice":
@@ -1114,7 +1119,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertTollInvoice(tollInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "QuotaInvoice":
@@ -1123,7 +1128,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertQuotaInvoice(quotaInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "EleInvoice":
@@ -1132,7 +1137,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "GeneralText":
@@ -1142,7 +1147,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertGeneralText(generalText, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertGeneralText(generalText, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "IDCardFront_Video"://视频身份证正面
@@ -1151,7 +1156,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardFront(video_idCardFront, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardFront(video_idCardFront, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "IDCardBack_Video"://视频身份证反面
@@ -1160,7 +1165,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertIDCardBack(video_idCardBack, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertIDCardBack(video_idCardBack, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "PremisesPermit_Video"://视频房本
@@ -1169,7 +1174,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertPremisesPermit(video_premisesPermit, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertPremisesPermit(video_premisesPermit, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "BusinessLicense_Video"://视频营业执照
@@ -1178,7 +1183,7 @@ public class RecognitionFilesController extends BaseController {
                                 /**
                                  * 调用流水存储 返回流水id
                                  */
-                                tradeId = iOcrTradeService.insertBusinessLicense(video_businessLicense, channelCode, ocrImage.getId());
+                                tradeId = iOcrTradeService.insertBusinessLicense(video_businessLicense, channelCode, ocrImage.getId(), riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             default:

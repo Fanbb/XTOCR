@@ -49,12 +49,15 @@ public class RalTicket {
      * 识别结果
      */
     private String flag;
-
+    /**
+     * 识别结果
+     */
+    private String riskFlag;
 
     public RalTicket() {
     }
 
-    public RalTicket(String tradeId, String name, String date, String startingStation, String endingStation, String trainNumber, String seatLevel, String amt, String imgType, String flag) {
+    public RalTicket(String tradeId, String name, String date, String startingStation, String endingStation, String trainNumber, String seatLevel, String amt, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.name = name;
         this.date = date;
@@ -65,6 +68,7 @@ public class RalTicket {
         this.amt = amt;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public String getTradeId() {
@@ -147,6 +151,14 @@ public class RalTicket {
         this.flag = flag;
     }
 
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
     @Override
     public String toString() {
         return "RalTicket{" +
@@ -160,6 +172,7 @@ public class RalTicket {
                 ", amt='" + amt + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

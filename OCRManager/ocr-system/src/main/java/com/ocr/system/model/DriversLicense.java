@@ -68,6 +68,10 @@ public class DriversLicense {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
     public String getTradeId() {
         return tradeId;
@@ -189,7 +193,15 @@ public class DriversLicense {
         this.flag = flag;
     }
 
-    public DriversLicense(String tradeId, String name, String sex, String nationality, String address, String birthDate, String issueDate, String drivingType, String startDate, String endDate, String cardNo, String fileNumber, String record, String imgType, String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public DriversLicense(String tradeId, String name, String sex, String nationality, String address, String birthDate, String issueDate, String drivingType, String startDate, String endDate, String cardNo, String fileNumber, String record, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.name = name;
         this.sex = sex;
@@ -205,6 +217,7 @@ public class DriversLicense {
         this.record = record;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public DriversLicense() {
@@ -228,6 +241,7 @@ public class DriversLicense {
                 ", record='" + record + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

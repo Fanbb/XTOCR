@@ -55,6 +55,10 @@ public class BusinessLicense {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
     public String getTradeId() {
         return tradeId;
@@ -152,7 +156,15 @@ public class BusinessLicense {
         this.flag = flag;
     }
 
-    public BusinessLicense(String tradeId, String socialCode, String companyName, String registeredCapital, String legalPerson, String address, String businessScope, String vertical, String businessTerm, String registerDate, String imgType, String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String fiskFlag) {
+        this.riskFlag = fiskFlag;
+    }
+
+    public BusinessLicense(String tradeId, String socialCode, String companyName, String registeredCapital, String legalPerson, String address, String businessScope, String vertical, String businessTerm, String registerDate, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.socialCode = socialCode;
         this.companyName = companyName;
@@ -165,6 +177,7 @@ public class BusinessLicense {
         this.registerDate = registerDate;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public BusinessLicense() {
@@ -185,6 +198,7 @@ public class BusinessLicense {
                 ", registerDate='" + registerDate + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

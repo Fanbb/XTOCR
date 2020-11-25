@@ -43,7 +43,7 @@
                 AND T.OCR_DATE &lt;= to_date(#{params.endTime},'yyyy-MM-dd')
             </if>
         </where>
-        GROUP BY T.IMAGE_NAME
+        GROUP BY T.IMAGE_NAME order by t.IMAGE_NAME * 1 asc
     </select>
 
     <select id="selectOcrTotalReportList2" parameterType="OcrTotalReport" resultMap="OcrTotalReportResult">

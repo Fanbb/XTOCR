@@ -33,18 +33,23 @@ public class QuotaInvoice {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
 
     public QuotaInvoice() {
     }
 
-    public QuotaInvoice(String tradeId, String invoiceCode, String invoiceNumber, String amt, String imgType, String flag) {
+    public QuotaInvoice(String tradeId, String invoiceCode, String invoiceNumber, String amt, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.invoiceCode = invoiceCode;
         this.invoiceNumber = invoiceNumber;
         this.amt = amt;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public String getTradeId() {
@@ -95,6 +100,14 @@ public class QuotaInvoice {
         this.flag = flag;
     }
 
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
     @Override
     public String toString() {
         return "QuotaInvoice{" +
@@ -104,6 +117,7 @@ public class QuotaInvoice {
                 ", amt='" + amt + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

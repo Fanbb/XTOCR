@@ -99,6 +99,10 @@ public class DrivingLicense {
      * 识别结果
      */
     private String flag;
+    /**
+     * 识别结果
+     */
+    private String riskFlag;
 
     public String getTradeId() {
         return tradeId;
@@ -284,7 +288,15 @@ public class DrivingLicense {
         this.flag = flag;
     }
 
-    public DrivingLicense(String tradeId, String plateNumber, String vehicleType, String owner, String address, String useNature, String brandModel, String identifyCode, String engineNumber, String registrationDate, String issueDate, String issueUnit, String fileNumber, String number, String totalMass, String unladenMass, String ratifiedMass, String gabarite, String tractionMass, String remark, String inspectionRecord, String imgType, String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public DrivingLicense(String tradeId, String plateNumber, String vehicleType, String owner, String address, String useNature, String brandModel, String identifyCode, String engineNumber, String registrationDate, String issueDate, String issueUnit, String fileNumber, String number, String totalMass, String unladenMass, String ratifiedMass, String gabarite, String tractionMass, String remark, String inspectionRecord, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.plateNumber = plateNumber;
         this.vehicleType = vehicleType;
@@ -308,6 +320,7 @@ public class DrivingLicense {
         this.inspectionRecord = inspectionRecord;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public DrivingLicense() {
@@ -339,6 +352,7 @@ public class DrivingLicense {
                 ", inspectionRecord='" + inspectionRecord + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

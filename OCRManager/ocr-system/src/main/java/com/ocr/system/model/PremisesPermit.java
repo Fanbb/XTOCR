@@ -53,6 +53,10 @@ public class PremisesPermit {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
     public String getName() {
         return name;
@@ -118,10 +122,18 @@ public class PremisesPermit {
         this.structure = structure;
     }
 
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
     public PremisesPermit() {
     }
 
-    public PremisesPermit(String tradeId, String name, String certificateNo, String purpose, String location, String builtArea, String floorArea, String landUse, String structure, String imgType,String flag) {
+    public PremisesPermit(String tradeId, String name, String certificateNo, String purpose, String location, String builtArea, String floorArea, String landUse, String structure, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.name = name;
         this.certificateNo = certificateNo;
@@ -133,13 +145,14 @@ public class PremisesPermit {
         this.structure = structure;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     @Override
     public String toString() {
         return "PremisesPermit{" +
                 "tradeId='" + tradeId + '\'' +
-                "name='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", certificateNo='" + certificateNo + '\'' +
                 ", purpose='" + purpose + '\'' +
                 ", location='" + location + '\'' +
@@ -149,6 +162,7 @@ public class PremisesPermit {
                 ", structure='" + structure + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 
