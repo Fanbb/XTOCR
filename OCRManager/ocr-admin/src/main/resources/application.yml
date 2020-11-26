@@ -30,10 +30,6 @@ ocr:
   ocrUrl: http://192.168.110.230:10002/mask
   #ocrUrl: http://192.168.119.31:10002/mask
 
-
-  #对外视频端口号
-  videoPort: 2323
-
   # 获取ip地址开关
   addressEnabled: true
 

@@ -2,8 +2,10 @@ package com.ocr.system.outService;
 
 import com.ocr.common.config.Global;
 import com.ocr.common.utils.file.VideoUtils;
+import com.ocr.system.service.ISysConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -27,8 +29,8 @@ public class VideoServer implements CommandLineRunner {
     @Value("${ocr.profile}")
     private String imgUploadPath;
 
-    @Value("${ocr.videoPort}")
-    private int PORT ;
+    @Autowired
+    private ISysConfigService configService;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -42,7 +44,8 @@ public class VideoServer implements CommandLineRunner {
                         new ThreadPoolExecutor.AbortPolicy());
                 try {
                     //1.创建服务器serverSocket对象和系统要指定的端口号
-                    ServerSocket server= new ServerSocket(PORT);
+                    int port = Integer.parseInt(configService.selectConfigByKey("sys.video.port"));
+                    ServerSocket server= new ServerSocket(port);
                     //升级：外部可以一直调用，而不是调用一次之后就结束
                     while(true) {
                         //2.使用Server Socket对象中的方法accept,获取请求的客户端对象Socket
