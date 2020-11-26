@@ -40,6 +40,10 @@ public class DepositReceipt {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
 
     public String getName() {
@@ -82,7 +86,15 @@ public class DepositReceipt {
         this.imgType = imgType;
     }
 
-    public DepositReceipt(String tradeId,String name, String accNo, String amt, String amtCapital,String depositNo, String imgType,String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public DepositReceipt(String tradeId, String name, String accNo, String amt, String amtCapital, String depositNo, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.name = name;
         this.accNo = accNo;
@@ -91,6 +103,7 @@ public class DepositReceipt {
         this.depositNo = depositNo;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public DepositReceipt() {
@@ -107,6 +120,7 @@ public class DepositReceipt {
                 ", depositNo='" + depositNo + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

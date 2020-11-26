@@ -60,7 +60,7 @@ public interface IOcrTradeService
 	 * @param imgId 影像id
 	 * @return
 	 */
-	public String insertIDCardFront(IDCardFront idCardFront,String channelCode, String imgId);
+	public String insertIDCardFront(IDCardFront idCardFront,String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 身份证反面流水
@@ -69,7 +69,7 @@ public interface IOcrTradeService
 	 * @param imgId 影像id
 	 * @return
 	 */
-	public String insertIDCardBack(IDCardBack idCardBack,String channelCode, String imgId);
+	public String insertIDCardBack(IDCardBack idCardBack,String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 银行卡流水
@@ -78,7 +78,7 @@ public interface IOcrTradeService
 	 * @param imgId 影像id
 	 * @return
 	 */
-	public String insertBankCard(BankCard bankCard,String channelCode, String imgId);
+	public String insertBankCard(BankCard bankCard,String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 存单流水
@@ -87,7 +87,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	public String insertDeposit(DepositReceipt depositReceipt,String channelCode, String imgId);
+	public String insertDeposit(DepositReceipt depositReceipt,String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 房本流水
@@ -96,7 +96,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId);
+	String insertPremisesPermit(PremisesPermit premisesPermit, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 营业执照流水
@@ -105,7 +105,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertBusinessLicense(BusinessLicense businessLicense, String channelCode, String imgId);
+	String insertBusinessLicense(BusinessLicense businessLicense, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 车牌号流水
@@ -114,7 +114,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertPlateNumber(PlateNumber plateNumber, String channelCode, String imgId);
+	String insertPlateNumber(PlateNumber plateNumber, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 驾驶证流水
@@ -123,7 +123,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertDriversLicense(DriversLicense driversLicense, String channelCode, String imgId);
+	String insertDriversLicense(DriversLicense driversLicense, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 行驶证流水
@@ -132,7 +132,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertDrivingLicense(DrivingLicense drivingLicense, String channelCode, String imgId);
+	String insertDrivingLicense(DrivingLicense drivingLicense, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 结婚证流水
@@ -141,7 +141,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertMarriageLicense(MarriageLicense marriageLicense, String channelCode, String imgId);
+	String insertMarriageLicense(MarriageLicense marriageLicense, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 户口本流水
@@ -150,7 +150,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId);
+	String insertResidenceBooklet(ResidenceBooklet residenceBooklet, String channelCode, String imgId,String riskFlag);
 	/**
 	 * 增值税发票流水
 	 * @param vatInvoice
@@ -158,7 +158,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertVatInvoice(VatInvoice vatInvoice, String channelCode, String imgId);
+	String insertVatInvoice(VatInvoice vatInvoice, String channelCode, String imgId,String riskFlag);
 	/**
 	 * 普通发票流水
 	 * @param invoice
@@ -166,7 +166,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertInvoice(Invoice invoice, String channelCode, String imgId);
+	String insertInvoice(Invoice invoice, String channelCode, String imgId,String riskFlag);
 	/**
 	 * 航空运输电子客票行程单流水
 	 * @param itinerary
@@ -174,7 +174,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertItinerary(Itinerary itinerary, String channelCode, String imgId);
+	String insertItinerary(Itinerary itinerary, String channelCode, String imgId,String riskFlag);
 	/**
 	 * 火车票流水
 	 * @param ralTicket
@@ -182,7 +182,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertRalTicket(RalTicket ralTicket, String channelCode, String imgId);
+	String insertRalTicket(RalTicket ralTicket, String channelCode, String imgId,String riskFlag);
 	/**
 	 * 通行费发票流水
 	 * @param tollInvoice
@@ -190,7 +190,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertTollInvoice(TollInvoice tollInvoice, String channelCode, String imgId);
+	String insertTollInvoice(TollInvoice tollInvoice, String channelCode, String imgId,String riskFlag);
 	/**
 	 * 通用定额发票流水
 	 * @param quotaInvoice
@@ -198,7 +198,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertQuotaInvoice(QuotaInvoice quotaInvoice, String channelCode, String imgId);
+	String insertQuotaInvoice(QuotaInvoice quotaInvoice, String channelCode, String imgId,String riskFlag);
     /**
      * 电子发票流水
      * @param eleInvoice
@@ -206,7 +206,7 @@ public interface IOcrTradeService
      * @param imgId
      * @return
      */
-    String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId);
+    String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 通用文本流水
@@ -215,7 +215,7 @@ public interface IOcrTradeService
 	 * @param imgId
 	 * @return
 	 */
-	String insertGeneralText(GeneralText eleInvoice, String channelCode, String imgId);
+	String insertGeneralText(GeneralText eleInvoice, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 存入无效类型
@@ -246,42 +246,42 @@ public interface IOcrTradeService
 
     List<OcrTrade> selectOcrTradeListByIds(String tradeIds);
 
-	String insertIDCardFrontFlag(IDCardFront idCardFront, String channelCode, String imgId, Boolean flag);
+	String insertIDCardFrontFlag(IDCardFront idCardFront, String channelCode, String imgId, Boolean flag , String riskFlag);
 
-	String insertIDCardBackFlag(IDCardBack idCardBack, String channelCode, String imgId, Boolean flag);
+	String insertIDCardBackFlag(IDCardBack idCardBack, String channelCode, String imgId, Boolean flag  , String riskFlag  );
 
-	String insertBankCardFlag(BankCard bankCard, String channelCode, String imgId, Boolean flag);
+	String insertBankCardFlag(BankCard bankCard, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag);
+	String insertDepositFlag(DepositReceipt deposit, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-    String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag);
+    String insertPremisesPermitFlag(PremisesPermit premisesPermit, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertResidenceBookletFlag(ResidenceBooklet residenceBooklet, String channelCode, String imgId, Boolean flag);
+	String insertResidenceBookletFlag(ResidenceBooklet residenceBooklet, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertMarriageLicenseFlag(MarriageLicense marriageLicense, String channelCode, String imgId, Boolean flag);
+	String insertMarriageLicenseFlag(MarriageLicense marriageLicense, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertDriversLicenseFlag(DriversLicense driversLicense, String channelCode, String imgId, Boolean flag);
+	String insertDriversLicenseFlag(DriversLicense driversLicense, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertDrivingLicenseFlag(DrivingLicense drivingLicense, String channelCode, String imgId, Boolean flag);
+	String insertDrivingLicenseFlag(DrivingLicense drivingLicense, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertPlateNumberFlag(PlateNumber plateNumber, String channelCode, String imgId, Boolean flag);
+	String insertPlateNumberFlag(PlateNumber plateNumber, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertBusinessLicenseFlag(BusinessLicense businessLicense, String channelCode, String imgId, Boolean flag);
+	String insertBusinessLicenseFlag(BusinessLicense businessLicense, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertInvoiceFlag(Invoice invoice, String channelCode, String imgId, Boolean flag);
+	String insertInvoiceFlag(Invoice invoice, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertItineraryFlag(Itinerary itinerary, String channelCode, String imgId, Boolean flag);
+	String insertItineraryFlag(Itinerary itinerary, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertQuotaInvoiceFlag(QuotaInvoice quotaInvoice, String channelCode, String imgId, Boolean flag);
+	String insertQuotaInvoiceFlag(QuotaInvoice quotaInvoice, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertRalTicketFlag(RalTicket ralTicket, String channelCode, String imgId, Boolean flag);
+	String insertRalTicketFlag(RalTicket ralTicket, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertTollInvoiceFlag(TollInvoice tollInvoice, String channelCode, String imgId, Boolean flag);
+	String insertTollInvoiceFlag(TollInvoice tollInvoice, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertVatInvoiceFlag(VatInvoice vatInvoice, String channelCode, String imgId, Boolean flag);
+	String insertVatInvoiceFlag(VatInvoice vatInvoice, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-    String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag);
+    String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag, String riskFlag);
 
-	String insertGeneralTestFlag(GeneralText bigTest, String channelCode, String imgId, Boolean flag);
+	String insertGeneralTestFlag(GeneralText bigTest, String channelCode, String imgId, Boolean flag, String riskFlag);
 
 }

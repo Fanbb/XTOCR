@@ -28,6 +28,10 @@ public class ResidenceBooklet {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
     public String getTradeId() {
         return tradeId;
@@ -69,12 +73,21 @@ public class ResidenceBooklet {
         this.flag = flag;
     }
 
-    public ResidenceBooklet(String tradeId, String nativePlace, String address, String imgType, String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public ResidenceBooklet(String tradeId, String nativePlace, String address, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.nativePlace = nativePlace;
         this.address = address;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public ResidenceBooklet() {
@@ -88,6 +101,7 @@ public class ResidenceBooklet {
                 ", address='" + address + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

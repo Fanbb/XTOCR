@@ -32,6 +32,10 @@ public class MarriageLicense {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
     public String getTradeId() {
         return tradeId;
@@ -81,16 +85,25 @@ public class MarriageLicense {
         this.flag = flag;
     }
 
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
     public MarriageLicense() {
     }
 
-    public MarriageLicense(String tradeId, String marriageNo, String name, String idCardNo, String imgType, String flag) {
+    public MarriageLicense(String tradeId, String marriageNo, String name, String idCardNo, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.marriageNo = marriageNo;
         this.name = name;
         this.idCardNo = idCardNo;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     @Override
@@ -102,6 +115,7 @@ public class MarriageLicense {
                 ", idCardNo='" + idCardNo + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

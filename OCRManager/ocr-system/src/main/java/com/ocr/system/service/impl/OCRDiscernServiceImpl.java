@@ -416,6 +416,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             }*/
             String tradeId;
             Boolean flag = true;
+            String riskFlag = model.getRisk_flag();
+
             switch (model.getClass_name()) {
                 case "IDCardFront":
                     IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -428,7 +430,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         idCardFront.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, imgId, flag);
+                    idCardFront.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, imgId, flag , riskFlag);
                     idCardFront.setTradeId(tradeId);
                     list.add(idCardFront);
                     break;
@@ -443,7 +446,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         idCardBack.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, imgId, flag);
+                    idCardBack.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, imgId, flag,riskFlag);
                     idCardBack.setTradeId(tradeId);
                     list.add(idCardBack);
                     break;
@@ -458,7 +462,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         bankCard.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, imgId, flag);
+                    bankCard.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, imgId, flag,riskFlag);
                     bankCard.setTradeId(tradeId);
                     list.add(bankCard);
                     break;
@@ -473,7 +478,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         deposit.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, imgId, flag);
+                    deposit.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, imgId, flag,riskFlag);
                     deposit.setTradeId(tradeId);
                     list.add(deposit);
                     break;
@@ -488,7 +494,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         premisesPermit.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag);
+                    premisesPermit.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag,riskFlag);
                     premisesPermit.setTradeId(tradeId);
                     list.add(premisesPermit);
                     break;
@@ -503,7 +510,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         residenceBooklet.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertResidenceBookletFlag(residenceBooklet, channelCode, imgId, flag);
+                    residenceBooklet.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertResidenceBookletFlag(residenceBooklet, channelCode, imgId, flag,riskFlag);
                     residenceBooklet.setTradeId(tradeId);
                     list.add(residenceBooklet);
                     break;
@@ -518,7 +526,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         marriageLicense.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertMarriageLicenseFlag(marriageLicense, channelCode, imgId, flag);
+                    marriageLicense.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertMarriageLicenseFlag(marriageLicense, channelCode, imgId, flag,riskFlag);
                     marriageLicense.setTradeId(tradeId);
                     list.add(marriageLicense);
                     break;
@@ -533,7 +542,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         drivingLicense.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertDrivingLicenseFlag(drivingLicense, channelCode, imgId, flag);
+                    drivingLicense.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertDrivingLicenseFlag(drivingLicense, channelCode, imgId, flag,riskFlag);
                     drivingLicense.setTradeId(tradeId);
                     list.add(drivingLicense);
                     break;
@@ -548,7 +558,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         driversLicense.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertDriversLicenseFlag(driversLicense, channelCode, imgId, flag);
+                    driversLicense.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertDriversLicenseFlag(driversLicense, channelCode, imgId, flag,riskFlag);
                     driversLicense.setTradeId(tradeId);
                     list.add(driversLicense);
                     break;
@@ -563,7 +574,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         plateNumber.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertPlateNumberFlag(plateNumber, channelCode, imgId, flag);
+                    plateNumber.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertPlateNumberFlag(plateNumber, channelCode, imgId, flag,riskFlag);
                     plateNumber.setTradeId(tradeId);
                     list.add(plateNumber);
                     break;
@@ -579,7 +591,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         businessLicense.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag);
+                    businessLicense.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag,riskFlag);
                     businessLicense.setTradeId(tradeId);
                     list.add(businessLicense);
                     break;
@@ -594,7 +607,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         vatInvoice.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, imgId, flag);
+                    vatInvoice.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, imgId, flag,riskFlag);
                     vatInvoice.setTradeId(tradeId);
                     list.add(vatInvoice);
                     break;
@@ -609,7 +623,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         invoice.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, imgId, flag);
+                    invoice.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, imgId, flag,riskFlag);
                     invoice.setTradeId(tradeId);
                     list.add(invoice);
                     break;
@@ -624,7 +639,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         itinerary.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, imgId, flag);
+                    itinerary.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, imgId, flag,riskFlag);
                     itinerary.setTradeId(tradeId);
                     list.add(itinerary);
                     break;
@@ -639,7 +655,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         ralTicket.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, imgId, flag);
+                    ralTicket.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, imgId, flag,riskFlag);
                     ralTicket.setTradeId(tradeId);
                     list.add(ralTicket);
                     break;
@@ -654,7 +671,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         tollInvoice.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, imgId, flag);
+                    tollInvoice.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, imgId, flag,riskFlag);
                     tollInvoice.setTradeId(tradeId);
                     list.add(tollInvoice);
                     break;
@@ -669,7 +687,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         quotaInvoice.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, imgId, flag);
+                    quotaInvoice.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, imgId, flag,riskFlag);
                     quotaInvoice.setTradeId(tradeId);
                     list.add(quotaInvoice);
                     break;
@@ -684,7 +703,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         eleInvoice.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, imgId, flag);
+                    eleInvoice.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, imgId, flag,riskFlag);
                     eleInvoice.setTradeId(tradeId);
                     list.add(eleInvoice);
                     break;
@@ -699,7 +719,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         generalText.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, imgId, flag);
+                    generalText.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, imgId, flag,riskFlag);
                     generalText.setTradeId(tradeId);
                     list.add(generalText);
                     break;
@@ -1123,6 +1144,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 for (RequestModel model : models) {
                     String tradeId;
                     Boolean flag = true;
+                    String riskFlag = model.getRisk_flag();
                     switch (model.getClass_name()) {
                         case "IDCardFront":
                             IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
@@ -1135,7 +1157,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 idCardFront.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, ocrImage.getId(), flag);
+                            idCardFront.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, ocrImage.getId(), flag,riskFlag);
                             idCardFront.setTradeId(tradeId);
                             list.add(idCardFront);
                             i++;
@@ -1151,7 +1174,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 idCardBack.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, ocrImage.getId(), flag);
+                            idCardBack.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, ocrImage.getId(), flag,riskFlag);
                             idCardBack.setTradeId(tradeId);
                             list.add(idCardBack);
                             i++;
@@ -1167,7 +1191,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 bankCard.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, ocrImage.getId(), flag);
+                            bankCard.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, ocrImage.getId(), flag,riskFlag);
                             bankCard.setTradeId(tradeId);
                             list.add(bankCard);
                             i++;
@@ -1183,7 +1208,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 deposit.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, ocrImage.getId(), flag);
+                            deposit.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, ocrImage.getId(), flag,riskFlag);
                             deposit.setTradeId(tradeId);
                             i++;
                             list.add(deposit);
@@ -1199,7 +1225,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 premisesPermit.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, ocrImage.getId(), flag);
+                            premisesPermit.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, ocrImage.getId(), flag,riskFlag);
                             premisesPermit.setTradeId(tradeId);
                             list.add(premisesPermit);
                             i++;
@@ -1216,7 +1243,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 residenceBooklet.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertResidenceBookletFlag(residenceBooklet, channelCode, ocrImage.getId(), flag);
+                            residenceBooklet.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertResidenceBookletFlag(residenceBooklet, channelCode, ocrImage.getId(), flag,riskFlag);
                             residenceBooklet.setTradeId(tradeId);
                             list.add(residenceBooklet);
                             i++;
@@ -1232,7 +1260,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 marriageLicense.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertMarriageLicenseFlag(marriageLicense, channelCode, ocrImage.getId(), flag);
+                            marriageLicense.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertMarriageLicenseFlag(marriageLicense, channelCode, ocrImage.getId(), flag,riskFlag);
                             marriageLicense.setTradeId(tradeId);
                             list.add(marriageLicense);
                             i++;
@@ -1248,7 +1277,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 drivingLicense.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertDrivingLicenseFlag(drivingLicense, channelCode, ocrImage.getId(), flag);
+                            drivingLicense.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertDrivingLicenseFlag(drivingLicense, channelCode, ocrImage.getId(), flag,riskFlag);
                             drivingLicense.setTradeId(tradeId);
                             list.add(drivingLicense);
                             i++;
@@ -1264,7 +1294,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 driversLicense.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertDriversLicenseFlag(driversLicense, channelCode, ocrImage.getId(), flag);
+                            driversLicense.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertDriversLicenseFlag(driversLicense, channelCode, ocrImage.getId(), flag,riskFlag);
                             driversLicense.setTradeId(tradeId);
                             list.add(driversLicense);
                             i++;
@@ -1280,7 +1311,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 plateNumber.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertPlateNumberFlag(plateNumber, channelCode, ocrImage.getId(), flag);
+                            plateNumber.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertPlateNumberFlag(plateNumber, channelCode, ocrImage.getId(), flag,riskFlag);
                             plateNumber.setTradeId(tradeId);
                             list.add(plateNumber);
                             i++;
@@ -1296,7 +1328,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 businessLicense.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, ocrImage.getId(), flag);
+                            businessLicense.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, ocrImage.getId(), flag,riskFlag);
                             businessLicense.setTradeId(tradeId);
                             list.add(businessLicense);
                             i++;
@@ -1312,7 +1345,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 vatInvoice.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, ocrImage.getId(), flag);
+                            vatInvoice.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, ocrImage.getId(), flag,riskFlag);
                             vatInvoice.setTradeId(tradeId);
                             list.add(vatInvoice);
                             i++;
@@ -1328,7 +1362,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 invoice.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, ocrImage.getId(), flag);
+                            invoice.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, ocrImage.getId(), flag,riskFlag);
                             invoice.setTradeId(tradeId);
                             list.add(invoice);
                             i++;
@@ -1344,7 +1379,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 itinerary.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, ocrImage.getId(), flag);
+                            itinerary.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, ocrImage.getId(), flag,riskFlag);
                             itinerary.setTradeId(tradeId);
                             list.add(itinerary);
                             i++;
@@ -1360,7 +1396,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 ralTicket.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, ocrImage.getId(), flag);
+                            ralTicket.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, ocrImage.getId(), flag,riskFlag);
                             ralTicket.setTradeId(tradeId);
                             list.add(ralTicket);
                             i++;
@@ -1376,7 +1413,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 tollInvoice.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, ocrImage.getId(), flag);
+                            tollInvoice.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, ocrImage.getId(), flag,riskFlag);
                             tollInvoice.setTradeId(tradeId);
                             list.add(tollInvoice);
                             i++;
@@ -1391,7 +1429,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 quotaInvoice.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, ocrImage.getId(), flag);
+                            quotaInvoice.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, ocrImage.getId(), flag,riskFlag);
                             quotaInvoice.setTradeId(tradeId);
                             list.add(quotaInvoice);
                             i++;
@@ -1407,7 +1446,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 eleInvoice.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, ocrImage.getId(), flag);
+                            eleInvoice.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, ocrImage.getId(), flag,riskFlag);
                             eleInvoice.setTradeId(tradeId);
                             list.add(eleInvoice);
                             i++;
@@ -1423,7 +1463,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                                 flag = false;
                                 generalText.setFlag("false");
                             }
-                            tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, ocrImage.getId(), flag);
+                            generalText.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, ocrImage.getId(), flag,riskFlag);
                             generalText.setTradeId(tradeId);
                             list.add(generalText);
                             i++;
@@ -1575,6 +1616,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
             //判断是否有对应的权限end
             String tradeId;
             Boolean flag = true;
+            String riskFlag = model.getRisk_flag();
             //6.3 根据返回的类型插入到流水中去
             switch (model.getClass_name()) {
                 case "IDCardFront_Video":
@@ -1588,7 +1630,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         idCardFront.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, imgId, flag);
+                    idCardFront.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, imgId, flag,riskFlag);
                     idCardFront.setTradeId(tradeId);
                     list.add(idCardFront);
                     break;
@@ -1603,7 +1646,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         idCardBack.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, imgId, flag);
+                    idCardBack.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, imgId, flag,riskFlag);
                     idCardBack.setTradeId(tradeId);
                     list.add(idCardBack);
                     break;
@@ -1618,7 +1662,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         premisesPermit.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag);
+                    premisesPermit.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag,riskFlag);
                     premisesPermit.setTradeId(tradeId);
                     list.add(premisesPermit);
                     break;
@@ -1634,7 +1679,8 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         flag = false;
                         businessLicense.setFlag("false");
                     }
-                    tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag);
+                    businessLicense.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag,riskFlag);
                     businessLicense.setTradeId(tradeId);
                     list.add(businessLicense);
                     break;
@@ -1674,6 +1720,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
     private void insertTrace(String channelCode,String imgId,List list,RequestModel model){
         String tradeId;
         Boolean flag = true;
+        String riskFlag = model.getRisk_flag();
         if(model.getClass_name().equals("IDCardFront") || model.getClass_name().equals("IDCardFront_Video")){
             IDCardFront idCardFront = JSONArray.parseObject(model.getOcr_result(), IDCardFront.class);
             idCardFront.setImgType(model.getClass_name());
@@ -1685,7 +1732,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 idCardFront.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertIDCardFrontFlag(idCardFront, channelCode, imgId, flag,riskFlag);
             idCardFront.setTradeId(tradeId);
             list.add(idCardFront);
         }else if(model.getClass_name().equals("IDCardBack") || model.getClass_name().equals("IDCardBack_Video")){
@@ -1699,7 +1746,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 idCardBack.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertIDCardBackFlag(idCardBack, channelCode, imgId, flag,riskFlag);
             idCardBack.setTradeId(tradeId);
             list.add(idCardBack);
         }else if(model.getClass_name().equals("BankCard")){
@@ -1713,7 +1760,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 bankCard.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertBankCardFlag(bankCard, channelCode, imgId, flag,riskFlag);
             bankCard.setTradeId(tradeId);
             list.add(bankCard);
         }else if(model.getClass_name().equals("Deposit")){
@@ -1727,7 +1774,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 deposit.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertDepositFlag(deposit, channelCode, imgId, flag,riskFlag);
             deposit.setTradeId(tradeId);
             list.add(deposit);
         }else if(model.getClass_name().equals("PremisesPermit") || model.getClass_name().equals("PremisesPermit_Video")){
@@ -1741,7 +1788,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 premisesPermit.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertPremisesPermitFlag(premisesPermit, channelCode, imgId, flag,riskFlag);
             premisesPermit.setTradeId(tradeId);
             list.add(premisesPermit);
         }else if(model.getClass_name().equals("ResidenceBooklet")){
@@ -1755,7 +1802,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 residenceBooklet.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertResidenceBookletFlag(residenceBooklet, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertResidenceBookletFlag(residenceBooklet, channelCode, imgId, flag,riskFlag);
             residenceBooklet.setTradeId(tradeId);
             list.add(residenceBooklet);
         }else if(model.getClass_name().equals("MarriageLicense")){
@@ -1769,7 +1816,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 marriageLicense.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertMarriageLicenseFlag(marriageLicense, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertMarriageLicenseFlag(marriageLicense, channelCode, imgId, flag,riskFlag);
             marriageLicense.setTradeId(tradeId);
             list.add(marriageLicense);
         }else if(model.getClass_name().equals("DrivingLicense")){
@@ -1783,7 +1830,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 drivingLicense.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertDrivingLicenseFlag(drivingLicense, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertDrivingLicenseFlag(drivingLicense, channelCode, imgId, flag,riskFlag);
             drivingLicense.setTradeId(tradeId);
             list.add(drivingLicense);
         }else if(model.getClass_name().equals("DriversLicense")){
@@ -1797,7 +1844,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 driversLicense.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertDriversLicenseFlag(driversLicense, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertDriversLicenseFlag(driversLicense, channelCode, imgId, flag,riskFlag);
             driversLicense.setTradeId(tradeId);
             list.add(driversLicense);
         }else if(model.getClass_name().equals("PlateNumber")){
@@ -1811,7 +1858,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 plateNumber.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertPlateNumberFlag(plateNumber, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertPlateNumberFlag(plateNumber, channelCode, imgId, flag,riskFlag);
             plateNumber.setTradeId(tradeId);
             list.add(plateNumber);
         }else if(model.getClass_name().equals("BusinessLicense") || model.getClass_name().equals("BusinessLicense_Video")){
@@ -1826,7 +1873,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 businessLicense.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertBusinessLicenseFlag(businessLicense, channelCode, imgId, flag,riskFlag);
             businessLicense.setTradeId(tradeId);
             list.add(businessLicense);
         }else if(model.getClass_name().equals("VatInvoice")){
@@ -1840,7 +1887,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 vatInvoice.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertVatInvoiceFlag(vatInvoice, channelCode, imgId, flag,riskFlag);
             vatInvoice.setTradeId(tradeId);
             list.add(vatInvoice);
         }else if(model.getClass_name().equals("Invoice")){
@@ -1854,7 +1901,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 invoice.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertInvoiceFlag(invoice, channelCode, imgId, flag,riskFlag);
             invoice.setTradeId(tradeId);
             list.add(invoice);
         }else if(model.getClass_name().equals("Itinerary")){
@@ -1868,7 +1915,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 itinerary.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertItineraryFlag(itinerary, channelCode, imgId, flag,riskFlag);
             itinerary.setTradeId(tradeId);
             list.add(itinerary);
         }else if(model.getClass_name().equals("RalTicket")){
@@ -1882,7 +1929,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 ralTicket.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertRalTicketFlag(ralTicket, channelCode, imgId, flag,riskFlag);
             ralTicket.setTradeId(tradeId);
             list.add(ralTicket);
         }else if(model.getClass_name().equals("TollInvoice")){
@@ -1896,7 +1943,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 tollInvoice.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertTollInvoiceFlag(tollInvoice, channelCode, imgId, flag,riskFlag);
             tollInvoice.setTradeId(tradeId);
             list.add(tollInvoice);
         }else if(model.getClass_name().equals("QuotaInvoice")){
@@ -1910,7 +1957,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 quotaInvoice.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertQuotaInvoiceFlag(quotaInvoice, channelCode, imgId, flag,riskFlag);
             quotaInvoice.setTradeId(tradeId);
             list.add(quotaInvoice);
         }else if(model.getClass_name().equals("EleInvoice")){
@@ -1924,7 +1971,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 eleInvoice.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, imgId, flag,riskFlag);
             eleInvoice.setTradeId(tradeId);
             list.add(eleInvoice);
         }else if(model.getClass_name().equals("GeneralText")){
@@ -1938,7 +1985,7 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                 flag = false;
                 generalText.setFlag("false");
             }
-            tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, imgId, flag);
+            tradeId = iOcrTradeService.insertGeneralTestFlag(generalText, channelCode, imgId, flag,riskFlag);
             generalText.setTradeId(tradeId);
             list.add(generalText);
         }else{

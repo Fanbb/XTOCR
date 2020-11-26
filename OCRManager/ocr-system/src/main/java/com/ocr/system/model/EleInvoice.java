@@ -57,25 +57,29 @@ public class EleInvoice {
      * 识别结果
      */
     private String flag;
-
+    /**
+     * 识别结果
+     */
+    private String riskFlag;
 
     public EleInvoice() {
     }
 
 
-    public EleInvoice(String tradeId, String code, String number, String issuedDate, String purchaserName, String purchaserTaxpayerNum, String valueAddedTax, String sellerName, String sellerTaxpayerNum, String subjects, String imgType, String flag) {
+    public EleInvoice(String tradeId, String code, String number, String issuedDate, String purchaserName, String purchaserTaxpayerNum, String valueAddedTax, String sellerName, String sellerTaxpayerNum, String subjects, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
-        this.Code = code;
-        this.Number = number;
-        this.IssuedDate = issuedDate;
-        this.PurchaserName = purchaserName;
-        this.PurchaserTaxpayerNum = purchaserTaxpayerNum;
-        this.ValueAddedTax = valueAddedTax;
-        this.SellerName = sellerName;
-        this.SellerTaxpayerNum = sellerTaxpayerNum;
-        this.Subjects = subjects;
+        Code = code;
+        Number = number;
+        IssuedDate = issuedDate;
+        PurchaserName = purchaserName;
+        PurchaserTaxpayerNum = purchaserTaxpayerNum;
+        ValueAddedTax = valueAddedTax;
+        SellerName = sellerName;
+        SellerTaxpayerNum = sellerTaxpayerNum;
+        Subjects = subjects;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public String getSubjects() {
@@ -174,6 +178,14 @@ public class EleInvoice {
         this.flag = flag;
     }
 
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
     @Override
     public String toString() {
         return "EleInvoice{" +
@@ -189,8 +201,10 @@ public class EleInvoice {
                 ", Subjects='" + Subjects + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
+
     public boolean hasEmptyField() {
         return StringUtils.isEmpty(getCode())||StringUtils.isEmpty(getNumber())
                 ||StringUtils.isEmpty(getIssuedDate())||StringUtils.isEmpty(getPurchaserName())

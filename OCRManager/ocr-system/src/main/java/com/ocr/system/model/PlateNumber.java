@@ -23,6 +23,10 @@ public class PlateNumber {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
     public String getTradeId() {
         return tradeId;
@@ -56,11 +60,20 @@ public class PlateNumber {
         this.flag = flag;
     }
 
-    public PlateNumber(String tradeId, String number, String imgType, String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public PlateNumber(String tradeId, String number, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.number = number;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public PlateNumber() {
@@ -73,6 +86,7 @@ public class PlateNumber {
                 ", number='" + number + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

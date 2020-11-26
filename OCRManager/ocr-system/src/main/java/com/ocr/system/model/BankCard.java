@@ -24,6 +24,10 @@ public class BankCard {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
     public String getBankCardNo() {
         return bankCardNo;
@@ -41,11 +45,20 @@ public class BankCard {
         this.imgType = imgType;
     }
 
-    public BankCard(String tradeId,String bankCardNo, String imgType,String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public BankCard(String tradeId, String bankCardNo, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.bankCardNo = bankCardNo;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public BankCard() {
@@ -58,6 +71,7 @@ public class BankCard {
                 ", bankCardNo='" + bankCardNo + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

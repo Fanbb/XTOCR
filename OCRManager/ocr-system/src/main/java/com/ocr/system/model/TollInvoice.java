@@ -33,18 +33,31 @@ public class TollInvoice {
      * 识别结果
      */
     private String flag;
+    /**
+     * 识别结果
+     */
+    private String riskFlag;
 
 
     public TollInvoice() {
     }
 
-    public TollInvoice(String tradeId, String invoiceCode, String invoiceNumber, String amt, String imgType, String flag) {
+    public TollInvoice(String tradeId, String invoiceCode, String invoiceNumber, String amt, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.invoiceCode = invoiceCode;
         this.invoiceNumber = invoiceNumber;
         this.amt = amt;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
+    }
+
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
     }
 
     public String getTradeId() {
@@ -104,6 +117,7 @@ public class TollInvoice {
                 ", amt='" + amt + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 

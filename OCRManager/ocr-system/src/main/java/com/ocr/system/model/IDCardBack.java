@@ -32,6 +32,10 @@ public class IDCardBack {
      * 识别结果
      */
     private String flag;
+    /**
+     * 预警结果
+     */
+    private String riskFlag;
 
 
     public String getStartDate() {
@@ -66,13 +70,22 @@ public class IDCardBack {
         this.authority = authority;
     }
 
-    public IDCardBack(String tradeId,String authority, String startDate, String endDate, String imgType,String flag) {
+    public String getRiskFlag() {
+        return riskFlag;
+    }
+
+    public void setRiskFlag(String riskFlag) {
+        this.riskFlag = riskFlag;
+    }
+
+    public IDCardBack(String tradeId, String authority, String startDate, String endDate, String imgType, String flag, String riskFlag) {
         this.tradeId = tradeId;
         this.authority = authority;
         this.startDate = startDate;
         this.endDate = endDate;
         this.imgType = imgType;
         this.flag = flag;
+        this.riskFlag = riskFlag;
     }
 
     public IDCardBack() {
@@ -87,6 +100,7 @@ public class IDCardBack {
                 ", endDate='" + endDate + '\'' +
                 ", imgType='" + imgType + '\'' +
                 ", flag='" + flag + '\'' +
+                ", riskFlag='" + riskFlag + '\'' +
                 '}';
     }
 
