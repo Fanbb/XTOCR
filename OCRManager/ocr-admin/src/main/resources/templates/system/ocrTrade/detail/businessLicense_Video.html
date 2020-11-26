@@ -42,6 +42,11 @@
                         <video  controls="">
                             <source th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}" type="video/mp4">
                         </video>
+                        <div id="control" style="left: 149%;">
+                            <button id="left" th:onclick="showVideo([[${imgUrl}]]);" class="btn btn-primary" style="display: inline">
+                                放大视频
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,80 +63,32 @@
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${businessLicense.getSocialCode()}}"/>
                             </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="socialCode" name="socialCode" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{socialCode}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">名称：</td>
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${businessLicense.getCompanyName()}}"/></td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="companyName" name="companyName" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{companyName}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">注册资本：</td>
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${businessLicense.getRegisteredCapital()}}"/></td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="registeredCapital" name="registeredCapital" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{registeredCapital}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">法定代表人：</td>
                             <td width="45%"><input type="text" class="form-control" readonly="true"
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${businessLicense.getLegalPerson()}}"/></td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="legalPerson" name="legalPerson" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{legalPerson}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">住所：</td>
                             <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${businessLicense.getAddress()}}]]</textarea>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="address" name="address" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{address}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">经营范围：</td>
                             <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${businessLicense.getBusinessScope()}}]]</textarea>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="businessScope" name="businessScope" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{businessScope}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                             </td>
                         </tr>
                         <tr style="height: 50px">
@@ -139,44 +96,20 @@
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled" th:value="@{${businessLicense.getVertical()}}"/></td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="vertical" name="vertical" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{vertical}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">营业期限：</td>
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled" th:value="@{${businessLicense.getBusinessTerm()}}"/></td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="businessTerm" name="businessTerm" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{businessTerm}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">成立日期：</td>
                             <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
                                                    readonly="true"
                                                    disabled="disabled" th:value="@{${businessLicense.getRegisterDate()}}"/></td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="registerDate" name="registerDate" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{registerDate}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
-                        <tr style="height: 50px">
+                        <!--<tr style="height: 50px">
                             <td></td>
                             <td align="center" colspan="2">
                                 <div class="col-sm-7">
@@ -186,7 +119,7 @@
                                 </div>
                             </td>
                             <td></td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </form>
             </div>
@@ -412,6 +345,27 @@
             }
             drawImage();
         }
+    }
+
+    //视频放大
+    function showVideo(videoSrc){
+        //页面层-自定义
+        layer.open({
+            type: 2,
+            area: [ '500px', '800px'],
+            fix: false,
+            //不固定
+            maxmin: true,
+            shade: 0.3,
+            title: "视频",
+            content:prefix + '/bigVideoShow?url='+videoSrc,
+            btn: ['关闭'],
+            // 弹层外区域关闭
+            shadeClose: true,
+            cancel: function(index) {
+                return true;
+            }
+        });
     }
 </script>
 

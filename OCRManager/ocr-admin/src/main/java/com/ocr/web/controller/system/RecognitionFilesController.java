@@ -942,7 +942,7 @@ public class RecognitionFilesController extends BaseController {
                     //从视频中抽取三张图片：end
                 }
             }
-
+            log.info("影像存储信息：视频上传成功，生成三张图片");
             String requestData = "{\"data_list\":[" + buffer.deleteCharAt(buffer.length() - 1).toString() + "]}";
             String request = HttpUtils.sendPost2(ocrUrl, requestData);
 
@@ -951,7 +951,7 @@ public class RecognitionFilesController extends BaseController {
             //String request= "[{\"path\":\""+relativePathTest+"\",\"image_result\":[{\"ocr_result\":{\"endDate\":\"20220903\",\"authority\":\"伊春市公安局西林分局\",\"startDate\":\"20120903\"},\"class_name\":\"Video_IDCardBack\"}]}]";
             //end
 
-            log.info("###request******:"+request);
+            log.info("影像识别结果:"+request);
             if (StringUtils.isEmpty(request) || request.equals("[]")) {
                 return AjaxResult.error("识别资源占用中，请稍后重试！");
             }

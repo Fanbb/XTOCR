@@ -42,6 +42,11 @@
                         <video  controls="" >
                             <source th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}" type="video/mp4">
                         </video>
+                        <div id="control" style="left: 149%;">
+                            <button id="left" th:onclick="showVideo([[${imgUrl}]]);" class="btn btn-primary" style="display: inline">
+                                放大视频
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,14 +63,6 @@
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${premisesPermit.getName()}}"/>
                             </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="name" name="name" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{name}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">产权证号：</td>
@@ -76,14 +73,6 @@
                             -->
                             <td width="45%"><textarea style="font-size:19px; width:100%" disabled="disabled">[[@{${premisesPermit.getCertificateNo()}}]]</textarea>
                             </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="certificateNo" name="certificateNo" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{certificateNo}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                             </td>
                         </tr>
                         <tr style="height: 50px">
@@ -92,26 +81,10 @@
                                                    style="font-size: 19px"
                                                    disabled="disabled" th:value="@{${premisesPermit.getPurpose()}}"/>
                             </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="purpose" name="purpose" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{purpose}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">房屋位置：</td>
                             <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${premisesPermit.getLocation()}}]]</textarea>
-                            </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="location" name="location" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{location}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
@@ -121,14 +94,6 @@
                                                    disabled="disabled"
                                                    th:value="@{${premisesPermit.getBuiltArea()}}"/>
                             </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="builtArea" name="builtArea" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{builtArea}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">套内建筑面积：</td>
@@ -137,26 +102,10 @@
                                                    disabled="disabled"
                                                    th:value="@{${premisesPermit.getFloorArea()}}"/>
                             </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="floorArea" name="floorArea" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{floorArea}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
                         <tr style="height: 50px">
                             <td width="21%" align="right">土地使用方式：</td>
                             <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${premisesPermit.getLandUse()}}]]</textarea>
-                            </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="landUse" name="landUse" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{landUse}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
                             </td>
                         </tr>
                         <tr style="height: 50px">
@@ -166,16 +115,8 @@
                                                    disabled="disabled"
                                                    th:value="@{${premisesPermit.getStructure()}}"/>
                             </td>
-                            <td width="34%">
-                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
-                                     style="left: 10px;display:inline">
-                                    <input type="radio" id="structure" name="structure" th:id="${dict.dictCode}"
-                                           th:value="${dict.dictValue}" th:field="*{structure}">
-                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
-                                </div>
-                            </td>
                         </tr>
-                        <tr style="height: 50px">
+                        <!--<tr style="height: 50px">
                             <td></td>
                             <td align="center" colspan="2">
                                 <div class="col-sm-7">
@@ -185,7 +126,7 @@
                                 </div>
                             </td>
                             <td></td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </form>
             </div>
@@ -411,7 +352,26 @@
             drawImage();
         }
     }
-
+    //视频放大
+    function showVideo(videoSrc){
+        //页面层-自定义
+        layer.open({
+            type: 2,
+            area: [ '500px', '800px'],
+            fix: false,
+            //不固定
+            maxmin: true,
+            shade: 0.3,
+            title: "视频",
+            content:prefix + '/bigVideoShow?url='+videoSrc,
+            btn: ['关闭'],
+            // 弹层外区域关闭
+            shadeClose: true,
+            cancel: function(index) {
+                return true;
+            }
+        });
+    }
 </script>
 </body>
 </html>

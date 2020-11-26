@@ -1071,5 +1071,10 @@ public class OcrTradeController extends BaseController {
         return count;
     }
 
-
+    @GetMapping("/bigVideoShow")
+    public String bigVideoShow(String url, ModelMap mmap) {
+        System.out.println(url);
+        mmap.put("url",url);
+        return prefix + "/detail/bigVideoShow";
+    }
 }
