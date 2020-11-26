@@ -125,10 +125,10 @@ public class OCRDiscernController extends BaseController {
             return error("渠道停用状态，无权限访问OCR平台！");
         }
         if (StringUtils.isEmpty(ocrDiscernEntity.getChannelCode())||StringUtils.isEmpty(ocrDiscernEntity.getImgType())) {
-            return error("用户平台类别或图片类型不能为空！");
+            return error("用户平台类别或视频类型不能为空！");
         } else {
-            if (StringUtils.isEmpty(ocrDiscernEntity.getImgUrl()) && StringUtils.isEmpty(ocrDiscernEntity.getImgStr())) {
-                return error("图片路径与图片Base64不能同时为空");
+            if (StringUtils.isEmpty(ocrDiscernEntity.getImgUrl())) {
+                return error("视频名称不对，无法生成路径");
             }
             //if (iChannelService.channelStatus(ocrDiscernEntity.getChannelCode())) {
             //    return error("渠道停用状态，无权限访问OCR平台！");
