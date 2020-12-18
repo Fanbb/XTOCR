@@ -20,52 +20,52 @@ public class ImageBase64 {
 
     private static final Logger log = LoggerFactory.getLogger(ImageBase64.class);
 
-    /**
-     * 将base64转为图片上传到服务器 并返回文件路径
-     * @param base64String
-     */
-    public static Boolean base64StringToImageSave(String base64String,String filePath,String path) {
-        try {
-            sun.misc.BASE64Decoder decode=new sun.misc.BASE64Decoder();
-            byte[] datas=decode.decodeBuffer(base64String);
-            File dir = new File(path);
-            log.info("上传路径:" + path);
-            if (!dir.exists()) {
-                dir.mkdirs();//
-            }
-            File file=new File(filePath);
-            OutputStream fos=new FileOutputStream(file);
-            fos.write(datas);
-            fos.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 //    /**
 //     * 将base64转为图片上传到服务器 并返回文件路径
 //     * @param base64String
 //     */
 //    public static Boolean base64StringToImageSave(String base64String,String filePath,String path) {
 //        try {
-//            byte[] bytes1 = decoder.decodeBuffer(base64String);
-//            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes1);
-//            BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
+//            sun.misc.BASE64Decoder decode=new sun.misc.BASE64Decoder();
+//            byte[] datas=decode.decodeBuffer(base64String);
 //            File dir = new File(path);
 //            log.info("上传路径:" + path);
 //            if (!dir.exists()) {
 //                dir.mkdirs();//
 //            }
-//
-//            File file = new File(filePath);
-//            ImageIO.write(bufferedImage, "jpg", file);
+//            File file=new File(filePath);
+//            OutputStream fos=new FileOutputStream(file);
+//            fos.write(datas);
+//            fos.close();
 //            return true;
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 //        return false;
 //    }
+    /**
+     * 将base64转为图片上传到服务器 并返回文件路径
+     * @param base64String
+     */
+    public static Boolean base64StringToImageSave(String base64String,String filePath,String path) {
+        try {
+            byte[] bytes1 = decoder.decodeBuffer(base64String);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes1);
+            BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
+            File dir = new File(path);
+            log.info("上传路径:" + path);
+            if (!dir.exists()) {
+                dir.mkdirs();//
+            }
+
+            File file = new File(filePath);
+            ImageIO.write(bufferedImage, "jpg", file);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     /**
      * 通过图片url获取图片Base64String
      * @param imgURL

@@ -2,6 +2,7 @@ package com.ocr.system.service.impl;
 
 import java.util.List;
 
+import com.ocr.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ocr.system.mapper.ChannelMapper;
@@ -77,11 +78,16 @@ public class ChannelServiceImpl implements IChannelService {
 
     @Override
     public Boolean channelStatus(String channelCode) {
-        Channel channel = channelMapper.selectChannelByCode(channelCode);
-        if (channel != null && channel.getStatus() != null && "1".equals(channel.getStatus())) {
+        if(StringUtils.isEmpty(channelCode)){
             return true;
+        }else{
+            Channel channel = channelMapper.selectChannelByCode(channelCode);
+            if (channel != null && channel.getStatus() != null && "1".equals(channel.getStatus())) {
+                return true;
+            }
+            return false;
         }
-        return false;
+
     }
 
     @Override
