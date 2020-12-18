@@ -42,7 +42,7 @@ public class OCRDiscernController extends BaseController {
     public AjaxResult outUrlDiscern(OCRDiscernEntity ocrDiscernEntity) {
         //首先判断渠道是否为停用状态
         if (iChannelService.channelStatus(ocrDiscernEntity.getChannelCode())) {
-            return error("渠道停用状态，无权限访问OCR平台！");
+            return error("渠道停用状态或渠道值为空，无权限访问OCR平台！");
         }
         if (StringUtils.isEmpty(ocrDiscernEntity.getChannelCode())||StringUtils.isEmpty(ocrDiscernEntity.getImgType())) {
             return error("用户平台类别或图片类型不能为空！");
