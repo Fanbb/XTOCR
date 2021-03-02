@@ -344,7 +344,18 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     public String insertGeneralTestFlag(GeneralText generalText, String channelCode, String imgId, Boolean flag,String riskFlag){
         return getStringFlag(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText),flag, riskFlag);
     }
-
+    @Override
+    public String insertCunZheFlag(CunZhe cunZhe, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, cunZhe.getImgType(),cunZhe.getPassbookNo(), JSON.toJSONString(cunZhe),flag, riskFlag);
+    }
+    @Override
+    public String insertTongXingFlag(TongXing tongXing, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, tongXing.getImgType(), tongXing.getInvoiceNumber(), JSON.toJSONString(tongXing),flag, riskFlag);
+    }
+    @Override
+    public String insertGouFangHeTongFlag(GouFangHeTong gouFangHeTong, String channelCode, String imgId, Boolean flag,String riskFlag){
+        return getStringFlag(channelCode, imgId, gouFangHeTong.getImgType(), "", JSON.toJSONString(gouFangHeTong),flag, riskFlag);
+    }
     /**
      * 房本流水
      * @param premisesPermit
@@ -522,6 +533,39 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
     public String insertGeneralText(GeneralText generalText, String channelCode, String imgId,String riskFlag) {
         return getString(channelCode, imgId, generalText.getImgType(), "", JSON.toJSONString(generalText), riskFlag);
     }
+    /**
+     * 存折流水
+     * @param cunZhe
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertCunZhe(CunZhe cunZhe, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, cunZhe.getImgType(),cunZhe.getPassbookNo(), JSON.toJSONString(cunZhe), riskFlag);
+    }
+    /**
+     * 通行费流水
+     * @param tongXing
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertTongXing(TongXing tongXing, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, tongXing.getImgType(), tongXing.getInvoiceNumber(), JSON.toJSONString(tongXing), riskFlag);
+    }
+    /**
+     * 购房合同流水
+     * @param gouFangHeTong
+     * @param channelCode
+     * @param imgId
+     * @return
+     */
+    @Override
+    public String insertGouFangHeTong(GouFangHeTong gouFangHeTong, String channelCode, String imgId,String riskFlag) {
+        return getString(channelCode, imgId, gouFangHeTong.getImgType(), "", JSON.toJSONString(gouFangHeTong), riskFlag);
+    }
 
     @Override
     public String[] selectImagePath(String[] tradeIds) {
@@ -596,6 +640,15 @@ public class OcrTradeServiceImpl implements IOcrTradeService {
                         break;
                     case "18":
                         values.add("电子发票");
+                        break;
+                    case "19":
+                        values.add("存折");
+                        break;
+                    case "20":
+                        values.add("通行费");
+                        break;
+                    case "21":
+                        values.add("购房合同");
                         break;
                     case "10000":
                         values.add("通用文本");

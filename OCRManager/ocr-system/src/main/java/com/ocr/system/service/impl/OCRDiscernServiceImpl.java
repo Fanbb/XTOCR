@@ -724,6 +724,54 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                     generalText.setTradeId(tradeId);
                     list.add(generalText);
                     break;
+                case "CunZhe":
+                    CunZhe cunZhe = JSONArray.parseObject(model.getOcr_result(), CunZhe.class);
+                    cunZhe.setImgType(model.getClass_name());
+                    cunZhe.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (cunZhe.hasEmptyField()) {
+                        flag = false;
+                        cunZhe.setFlag("false");
+                    }
+                    cunZhe.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertCunZheFlag(cunZhe, channelCode, imgId, flag,riskFlag);
+                    cunZhe.setTradeId(tradeId);
+                    list.add(cunZhe);
+                    break;
+                case "TongXing":
+                    TongXing tongXing = JSONArray.parseObject(model.getOcr_result(), TongXing.class);
+                    tongXing.setImgType(model.getClass_name());
+                    tongXing.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (tongXing.hasEmptyField()) {
+                        flag = false;
+                        tongXing.setFlag("false");
+                    }
+                    tongXing.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertTongXingFlag(tongXing, channelCode, imgId, flag,riskFlag);
+                    tongXing.setTradeId(tradeId);
+                    list.add(tongXing);
+                    break;
+                case "GouFangHeTong":
+                    GouFangHeTong gouFangHeTong = JSONArray.parseObject(model.getOcr_result(), GouFangHeTong.class);
+                    gouFangHeTong.setImgType(model.getClass_name());
+                    gouFangHeTong.setFlag("true");
+                    /**
+                     * 调用流水存储 返回流水id
+                     */
+                    if (gouFangHeTong.hasEmptyField()) {
+                        flag = false;
+                        gouFangHeTong.setFlag("false");
+                    }
+                    gouFangHeTong.setRiskFlag(model.getRisk_flag());
+                    tradeId = iOcrTradeService.insertGouFangHeTongFlag(gouFangHeTong, channelCode, imgId, flag,riskFlag);
+                    gouFangHeTong.setTradeId(tradeId);
+                    list.add(gouFangHeTong);
+                    break;
                 default:
                     tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, imgId);
                     NoneEnty noneEnty = new NoneEnty();
@@ -1111,7 +1159,36 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                         }
                         continue;
                     }
-
+                    if (model.getClass_name().equals("CunZhe")) {
+                        if (!judgeAuth(channelTypes, "1９")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无存折识别类型权限") < 0) {
+                                authorityStr += "无存折识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("TongXing")) {
+                        if (!judgeAuth(channelTypes, "20")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无通行费识别类型权限") < 0) {
+                                authorityStr += "无通行费识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
+                    if (model.getClass_name().equals("GouFangHeTong")) {
+                        if (!judgeAuth(channelTypes, "21")) {
+                            authorityFlag = false;
+                            if (authorityStr.indexOf("无购房合同识别类型权限") < 0) {
+                                authorityStr += "无购房合同识别类型权限！";
+                            }
+                            break;
+                        }
+                        continue;
+                    }
                     if (model.getClass_name().equals("GeneralText")) {
                         if (!judgeAuth(channelTypes, "10000")) {
                             authorityFlag = false;
@@ -1450,6 +1527,57 @@ public class OCRDiscernServiceImpl implements OCRDiscernService {
                             tradeId = iOcrTradeService.insertEleInvoiceFlag(eleInvoice, channelCode, ocrImage.getId(), flag,riskFlag);
                             eleInvoice.setTradeId(tradeId);
                             list.add(eleInvoice);
+                            i++;
+                            break;
+                        case "CunZhe":
+                            CunZhe cunZhe = JSONArray.parseObject(model.getOcr_result(), CunZhe.class);
+                            cunZhe.setImgType(model.getClass_name());
+                            cunZhe.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (cunZhe.hasEmptyField()) {
+                                flag = false;
+                                cunZhe.setFlag("false");
+                            }
+                            cunZhe.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertCunZheFlag(cunZhe, channelCode, ocrImage.getId(), flag,riskFlag);
+                            cunZhe.setTradeId(tradeId);
+                            list.add(cunZhe);
+                            i++;
+                            break;
+                        case "TongXing":
+                            TongXing tongXing = JSONArray.parseObject(model.getOcr_result(), TongXing.class);
+                            tongXing.setImgType(model.getClass_name());
+                            tongXing.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (tongXing.hasEmptyField()) {
+                                flag = false;
+                                tongXing.setFlag("false");
+                            }
+                            tongXing.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertTongXingFlag(tongXing, channelCode, ocrImage.getId(), flag,riskFlag);
+                            tongXing.setTradeId(tradeId);
+                            list.add(tongXing);
+                            i++;
+                            break;
+                        case "GouFangHeTong":
+                            GouFangHeTong gouFangHeTong = JSONArray.parseObject(model.getOcr_result(), GouFangHeTong.class);
+                            gouFangHeTong.setImgType(model.getClass_name());
+                            gouFangHeTong.setFlag("true");
+                            /**
+                             * 调用流水存储 返回流水id
+                             */
+                            if (gouFangHeTong.hasEmptyField()) {
+                                flag = false;
+                                gouFangHeTong.setFlag("false");
+                            }
+                            gouFangHeTong.setRiskFlag(model.getRisk_flag());
+                            tradeId = iOcrTradeService.insertGouFangHeTongFlag(gouFangHeTong, channelCode, ocrImage.getId(), flag,riskFlag);
+                            gouFangHeTong.setTradeId(tradeId);
+                            list.add(gouFangHeTong);
                             i++;
                             break;
                         case "GeneralText":

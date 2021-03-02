@@ -207,6 +207,30 @@ public interface IOcrTradeService
      * @return
      */
     String insertEleInvoice(EleInvoice eleInvoice, String channelCode, String imgId,String riskFlag);
+	/**
+	 * 存折流水
+	 * @param cunZhe
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertCunZhe(CunZhe cunZhe, String channelCode, String imgId,String riskFlag);
+	/**
+	 * 通行费流水
+	 * @param tongXing
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertTongXing(TongXing tongXing, String channelCode, String imgId,String riskFlag);
+	/**
+	 * 购房合同流水
+	 * @param gouFangHeTong
+	 * @param channelCode
+	 * @param imgId
+	 * @return
+	 */
+	String insertGouFangHeTong(GouFangHeTong gouFangHeTong, String channelCode, String imgId,String riskFlag);
 
 	/**
 	 * 通用文本流水
@@ -283,5 +307,13 @@ public interface IOcrTradeService
     String insertEleInvoiceFlag(EleInvoice eleInvoice, String channelCode, String imgId, Boolean flag, String riskFlag);
 
 	String insertGeneralTestFlag(GeneralText bigTest, String channelCode, String imgId, Boolean flag, String riskFlag);
+
+	String insertCunZheFlag(CunZhe cunZhe, String channelCode, String imgId, Boolean flag, String riskFlag);
+
+	String insertTongXingFlag(TongXing tongXing, String channelCode, String imgId, Boolean flag, String riskFlag);
+
+	String insertGouFangHeTongFlag(GouFangHeTong gouFangHeTong, String channelCode, String imgId, Boolean flag, String riskFlag);
+
+
 
 }

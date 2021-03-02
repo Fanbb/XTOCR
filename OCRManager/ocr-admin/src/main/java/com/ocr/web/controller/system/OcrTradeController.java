@@ -554,6 +554,51 @@ public class OcrTradeController extends BaseController {
         ocrTrade.setRemark3(JSON.toJSONString(eleInvoiceBack));
         return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
     }
+
+    @Log(title = "存折流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldCunZheBack")
+    @ResponseBody
+    public AjaxResult fieldCunZheBack(CunZheBack cunZheBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(cunZheBack.getTradeId());
+        Integer fieldTotal = CunZheBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(cunZheBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(cunZheBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
+    @Log(title = "通行费流水字段勾对", businessType = BusinessType.UPDATE)
+    @PostMapping("/fieldTongXingBack")
+    @ResponseBody
+    public AjaxResult fieldTongXingBack(TongXingBack tongXingBack) {
+        OcrTrade ocrTrade = ocrTradeService.selectOcrTradeById(tongXingBack.getTradeId());
+        Integer fieldTotal = TongXingBack.class.getDeclaredFields().length - 1;
+        Integer rightTotal = 0;
+        try {
+            rightTotal = testReflect(tongXingBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (fieldTotal == rightTotal) {
+            ocrTrade.setTickStatus("1");
+        } else {
+            ocrTrade.setTickStatus("2");
+        }
+        ocrTrade.setFieldTotal(fieldTotal.toString());
+        ocrTrade.setRightTotal(rightTotal.toString());
+        ocrTrade.setRemark3(JSON.toJSONString(tongXingBack));
+        return toAjax(ocrTradeService.updateOcrTrade(ocrTrade));
+    }
     /**
      * 修改识别流水
      */
@@ -989,9 +1034,46 @@ public class OcrTradeController extends BaseController {
             mmap.put("businessLicenseBack", businessLicenseBack);
             mmap.put("businessLicense", businessLicense);
             return prefix + "/detail/businessLicense_Video";
+        }else if (ocrTrade.getImageType().equals("CunZhe")) {//存折
+            CunZhe cunZhe = JSON.parseObject(ocrTrade.getRemark1(), CunZhe.class);
+            CunZheBack cunZheBack = new CunZheBack("","0","0","0","0","0","0","0","0","0","0","0","0","0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                cunZheBack = JSON.parseObject(ocrTrade.getRemark3(), CunZheBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                cunZhe = new CunZhe();
+            }
+            cunZheBack.setTradeId(ocrTrade.getId());
+            mmap.put("cunZheBack", cunZheBack);
+            mmap.put("cunZhe", cunZhe);
+            return prefix + "/detail/cunZhe";
+
         }
+        else if (ocrTrade.getImageType().equals("TongXing")) {//通行费
+            TongXing tongXing = JSON.parseObject(ocrTrade.getRemark1(), TongXing.class);
+            TongXingBack tongXingBack = new TongXingBack("","0","0","0");
+            if (StringUtils.isNotEmpty(ocrTrade.getRemark3())) {
+                tongXingBack = JSON.parseObject(ocrTrade.getRemark3(), TongXingBack.class);
+            }
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                tongXing = new TongXing();
+            }
+            tongXingBack.setTradeId(ocrTrade.getId());
+            mmap.put("tongXingBack", tongXingBack);
+            mmap.put("tongXing", tongXing);
+            return prefix + "/detail/tongXing";
 
+        }
+        else if (ocrTrade.getImageType().equals("GouFangHeTong")) {//购房合同
+            GouFangHeTong gouFangHeTong = JSON.parseObject(ocrTrade.getRemark1(), GouFangHeTong.class);
 
+            if (StringUtils.isEmpty(ocrTrade.getRemark1())) {
+                gouFangHeTong = new GouFangHeTong();
+            }
+            mmap.put("gouFangHeTong", gouFangHeTong);
+            return prefix + "/detail/gouFangHeTong";
+
+        }
         else {
             if(ocrImage.getLocalPath().toLowerCase().contains(".mp4")){
                 //mmap.put("idCardFrontBack", idCardFrontBack);

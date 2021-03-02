@@ -568,6 +568,33 @@ public class RecognitionFilesController extends BaseController {
                                 tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
+                            case "CunZhe":
+                                CunZhe cunZhe = JSONArray.parseObject(model.getOcr_result(), CunZhe.class);
+                                cunZhe.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertCunZhe(cunZhe, channelCode, ocrImage.getId(),riskFlag);
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "TongXing":
+                                TongXing tongXing = JSONArray.parseObject(model.getOcr_result(), TongXing.class);
+                                tongXing.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertTongXing(tongXing, channelCode, ocrImage.getId(),riskFlag);
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "GouFangHeTong":
+                                GouFangHeTong gouFangHeTong = JSONArray.parseObject(model.getOcr_result(), GouFangHeTong.class);
+                                gouFangHeTong.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertGouFangHeTong(gouFangHeTong, channelCode, ocrImage.getId(),riskFlag);
+                                tradeIds.append(tradeId + ",");
+                                break;
                             default:
                                 tradeId = iOcrTradeService.insertNoneTrade(model.getOcr_result(), channelCode, ocrImage.getId());
                                 tradeIds.append(tradeId + ",");
@@ -822,6 +849,33 @@ public class RecognitionFilesController extends BaseController {
                                  * 调用流水存储 返回流水id
                                  */
                                 tradeId = iOcrTradeService.insertEleInvoice(eleInvoice, channelCode, ocrImage.getId(),riskFlag);
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "CunZhe":
+                                CunZhe cunZhe = JSONArray.parseObject(model.getOcr_result(), CunZhe.class);
+                                cunZhe.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertCunZhe(cunZhe, channelCode, ocrImage.getId(),riskFlag);
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "TongXing":
+                                TongXing tongXing = JSONArray.parseObject(model.getOcr_result(), TongXing.class);
+                                tongXing.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertTongXing(tongXing, channelCode, ocrImage.getId(),riskFlag);
+                                tradeIds.append(tradeId + ",");
+                                break;
+                            case "GouFangHeTong":
+                                GouFangHeTong gouFangHeTong = JSONArray.parseObject(model.getOcr_result(), GouFangHeTong.class);
+                                gouFangHeTong.setImgType(model.getClass_name());
+                                /**
+                                 * 调用流水存储 返回流水id
+                                 */
+                                tradeId = iOcrTradeService.insertGouFangHeTong(gouFangHeTong, channelCode, ocrImage.getId(),riskFlag);
                                 tradeIds.append(tradeId + ",");
                                 break;
                             case "GeneralText":

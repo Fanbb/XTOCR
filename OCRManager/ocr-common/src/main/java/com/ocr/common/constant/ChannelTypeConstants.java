@@ -29,9 +29,11 @@ public class ChannelTypeConstants {
             hashMap.put("13","Invoice");
             hashMap.put("14","Itinerary");
             hashMap.put("15","RalTicket");
-            hashMap.put("16","TollInvoice");
             hashMap.put("17","QuotaInvoice");
             hashMap.put("18","EleInvoice");
+            hashMap.put("19","CunZhe");
+            hashMap.put("20","TongXing");
+            hashMap.put("21","GouFangHeTong");
             hashMap.put("10000","GeneralText");
             hashMap.put("10001","Video");
             hashMap.put("10002","IDCardFront_Video");
@@ -58,6 +60,10 @@ public class ChannelTypeConstants {
             hashMap.put("TollInvoice","TollInvoice");
             hashMap.put("QuotaInvoice","QuotaInvoice");
             hashMap.put("EleInvoice","EleInvoice");
+            hashMap.put("CunZhe","CunZhe");
+            hashMap.put("TongXing","TongXing");
+            hashMap.put("GouFangHeTong","GouFangHeTong");
+
             hashMap.put("GeneralText","GeneralText");
             hashMap.put("Video","Video");
             hashMap.put("IDCardFront_Video","IDCardFront_Video");
@@ -88,9 +94,11 @@ public class ChannelTypeConstants {
             hashMap2.put("13","普通发票");
             hashMap2.put("14","航空运输电子客票行程单");
             hashMap2.put("15","火车票");
-            hashMap2.put("16","通行费发票");
             hashMap2.put("17","定额发票");
             hashMap2.put("18","电子发票");
+            hashMap2.put("19","存折");
+            hashMap2.put("20","通行费");
+            hashMap2.put("21","购房合同");
             hashMap2.put("10000","通用文字识别");
             hashMap2.put("10001","通用视频识别");
             hashMap2.put("10002","身份证正面视频");
@@ -117,6 +125,9 @@ public class ChannelTypeConstants {
             hashMap2.put("TollInvoice","16");
             hashMap2.put("QuotaInvoice","17");
             hashMap2.put("EleInvoice","18");
+            hashMap2.put("CunZhe","19");
+            hashMap2.put("TongXing","20");
+            hashMap2.put("GouFangHeTong","21");
             hashMap2.put("GeneralText","10000");
             hashMap2.put("Video","10001");
             hashMap2.put("IDCardFront_Video","10002");
