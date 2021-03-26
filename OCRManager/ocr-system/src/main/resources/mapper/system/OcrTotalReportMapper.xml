@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocr.system.mapper.OcrTotalReportMapper">
+    <resultMap type="OcrTotalReport" id="OcrTotalReportResult">
+        <result property="imageName" column="IMAGE_NAME"/>
+        <result property="tradeTotal" column="TRADE_TOTAL"/>
+        <result property="ocrTotal" column="OCR_TOTAL"/>
+        <result property="ocrRate" column="OCR_RATE"/>
+        <result property="platTotal" column="PLAT_TOTAL"/>
+        <result property="platTate" column="PLAT_RATE"/>
+        <result property="tickTotal" column="TICK_TOTAL"/>
+        <result property="tickTotalNumber" column="TICK_TOTAL_NUMBER"/>
+        <result property="tickRate" column="TICK_RATE"/>
+        <result property="rightTotal" column="RIGHT_TOTAL"/>
+        <result property="fieldTotal" column="FIELD_TOTAL"/>
+        <result property="fieldRate" column="FILED_RATE"/>
+    </resultMap>
+
+    <sql id="selectOcrTotalReportVo">
+        SELECT T.IMAGE_NAME, COUNT(*) TRADE_TOTAL,
+        SUM(CASE WHEN T.OCR_STATUS = 0 THEN 1 ELSE 0 END)  OCR_TOTAL,
+        ROUND(SUM(CASE WHEN T.OCR_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' OCR_RATE,
+        SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)  TICK_TOTAL,
+        SUM(CASE WHEN T.TICK_STATUS = 0 THEN 0 ELSE 1 END)  TICK_TOTAL_NUMBER,
+        ROUND(SUM(CASE WHEN T.TICK_STATUS = 1 THEN 1 ELSE 0 END)/CASE WHEN SUM(CASE WHEN T.TICK_STATUS = 0 THEN 0 ELSE 1 END) = 0 THEN 1 ELSE SUM(CASE WHEN T.TICK_STATUS = 0 THEN 0 ELSE 1 END) END*100,2)||'%' TICK_RATE ,
+        SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)  PLAT_TOTAL,
+        ROUND(SUM(CASE WHEN T.PLAT_STATUS = 0 THEN 1 ELSE 0 END)/COUNT(*)*100,2)||'%' PLAT_RATE,
+        SUM(T.RIGHT_TOTAL) RIGHT_TOTAL ,
+        SUM(T.FIELD_TOTAL) FIELD_TOTAL ,
+        CASE WHEN SUM(T.RIGHT_TOTAL) IS NOT NULL THEN ROUND(SUM(T.RIGHT_TOTAL)/SUM(T.FIELD_TOTAL)*100,2)||'%' ELSE '' END FILED_RATE FROM OCR_TRADE T
+    </sql>
+
+    <select id="selectOcrTotalReportList" parameterType="OcrTotalReport" resultMap="OcrTotalReportResult">
+        <include refid="selectOcrTotalReportVo"/>
+        <where>
+            <if test="imageName != null  and imageName != '' ">and T.IMAGE_NAME = #{imageName}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND T.OCR_DATE &gt;= to_date(#{params.beginTime},'yyyy-MM-dd')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND T.OCR_DATE &lt;= to_date(#{params.endTime},'yyyy-MM-dd')
+            </if>
+        </where>
+        GROUP BY T.IMAGE_NAME order by t.IMAGE_NAME * 1 asc
+    </select>
+
+    <select id="selectOcrTotalReportList2" parameterType="OcrTotalReport" resultMap="OcrTotalReportResult">
+        <include refid="selectOcrTotalReportVo"/>
+        <where>
+            <if test="imageName != null  and imageName != '' ">and T.IMAGE_NAME = #{imageName}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND T.OCR_DATE &gt;= to_date(#{params.beginTime},'yyyy-MM-dd')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND T.OCR_DATE &lt;= to_date(#{params.endTime},'yyyy-MM-dd')
+            </if>
+        </where>
+        GROUP BY T.IMAGE_NAME order by T.IMAGE_NAME * 1 asc
+    </select>
+
+</mapper>

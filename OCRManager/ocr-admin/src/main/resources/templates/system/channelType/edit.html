@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改渠道识别类型参数')" />
+	<th:block th:include="include :: select2-css"/>
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-channelType-edit" th:object="${channelType}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>渠道名称：</label>
+				<div class="col-sm-8">
+					<select id="channelCode" name="channelCode" class="form-control m-b"
+							th:with="type=${@dict.getType('ocr_channel_name')}">
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:selected="${channelType.channelCode eq dict.dictValue}"
+								th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span style="color: red; ">*</span>识别类型名称：</label>
+				<div class="col-sm-8">
+					<select id="ocrType" name="ocrType" class="form-control m-b"
+							th:with="type=${@dict.getType('orc_channel_type')}">
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:selected="${channelType.ocrType eq dict.dictValue}"
+								th:value="${dict.dictValue}"></option>
+					</select>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/channelType";
+		$("#form-channelType-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-channelType-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
