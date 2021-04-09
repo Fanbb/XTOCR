@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('流水查询详情')"/>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #control {
+            width: 30%;
+            height: 30px;
+            padding-top: 5px;
+            position: absolute;
+            left: 50%;
+            top: 90%;
+        }
+
+        #left {
+            float: left;
+            display: block;
+        }
+
+        #right {
+            float: right;
+            display: block;
+
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div style="padding:5px;overflow-y:auto">
+    <div class="col-md-12">
+        <div class="col-sm-6">
+            <div class="box box-primary" style="height: auto">
+                <div class="box-header with-border">
+                    <div class="box-header with-border">
+                        <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
+                    </div>
+                    <div id="divPan">
+                        <img style="display: none;" th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}">
+                        <canvas id="canvas" width="1000px" height="800px"></canvas>
+                        <div id="control">
+                            <button id="left" onclick="rateImage(270)" class="btn btn-primary" style="display: inline">
+                                左旋转
+                            </button>
+                            <button id="right" onclick="rateImage(90)" class="btn btn-primary" style="display: inline">
+                                右旋转
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-content" id="div2" style="overflow-x: hidden">
+                <form style="width: 100%" id="form-user-edit" th:object="${marriageLicenseBack}">
+                    <table style="font-size: 15px;width: 100%">
+                        <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
+                        <tr><td colspan="3"><h2 class="box-title" th:align="center" style="font-weight:bold">结婚证识别信息：</h2></td></tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">结婚证号：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${marriageLicense.getMarriageNo()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;display:inline">
+                                    <input type="radio" id="marriageNo" name="marriageNo" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{marriageNo}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">配偶姓名：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${marriageLicense.getName()}}"/>
+                            </td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;display:inline">
+                                    <input type="radio" id="name" name="name" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{name}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">配偶身份证号：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${marriageLicense.getIdCardNo()}}"/></td>
+                            <td width="34%">
+                                <div class="radio-box" th:each="dict : ${@dict.getType('field_status')}"
+                                     style="left: 10px;display:inline">
+                                    <input type="radio" id="idCardNo" name="idCardNo" th:id="${dict.dictCode}"
+                                           th:value="${dict.dictValue}" th:field="*{idCardNo}">
+                                    <label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td></td>
+                            <td align="center" colspan="2">
+                                <div class="col-sm-7">
+                                    <button type="submit" th:align="center" class="btn btn-primary" onclick="submit2()">
+                                        提交
+                                    </button>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script>
+    var prefix = ctx + "system/ocrTrade";
+
+    function submit2() {
+        if ($.validate.form()) {
+            $.ajax({
+                url: prefix + "/fieldMarriageLicenseBack",
+                type: "post",
+                data: {
+                    "marriageNo": $("input[name='marriageNo']:checked").val(),
+                    "name": $("input[name='name']:checked").val(),
+                    "idCardNo": $("input[name='idCardNo']:checked").val(),
+                    "tradeId": $("input[name='tradeId']").val()
+                },
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg("保存成功,正在刷新数据请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successTabCallback(result);
+                }
+            })
+        }
+    }
+
+    var canvas = document.getElementById("canvas");
+    var divPan = document.getElementById("divPan");
+    var cxt = canvas.getContext("2d");
+    var control = document.getElementById("control");
+    var imgScale = 1;
+    var img;
+    var imgX = 0;
+    var imgY = 0;
+    var currentRate = 0;
+    /**当前的旋转角度*/
+    var mouseDownLocation;
+    var isMouseDown = false;
+    window.onload = function () {
+        var myDiv = document.getElementById("divPan");
+        var myDiv2 = document.getElementById("div2");
+        var canvas2 = document.getElementById("canvas");
+        if (window.screen.height == 768) {
+            myDiv.style.height = "500px";
+            myDiv2.style.height = "520px";
+            canvas2.style.height = "456px";
+            canvas2.style.width = "527px";
+        } else if (window.screen.height == 1080) {
+            myDiv.style.height = "800px";
+            canvas2.style.height = "700px";
+            canvas2.style.width = "807px";
+        }
+        var imageUrl = $("#divPan>img").attr("src");
+        img = new Image();
+        img.src = imageUrl;
+        img.id = "pic";
+        loadImage();
+        drawImage();
+    }
+
+    function reLoadImage() {
+        loadImage();
+    }
+
+    function loadImage() {
+        if (img.width <= canvas.width && img.height <= canvas.height) {
+            imgX = (canvas.width - img.width * imgScale) / 2
+            imgY = (canvas.height - img.height * imgScale) / 2;
+        } else {
+            var ratio = img.width / img.height;
+            widthTime = img.width / canvas.width;
+            heightTime = img.height / canvas.height;
+            if (widthTime > heightTime) {
+                img.width = canvas.width;
+                img.height = canvas.width / ratio;
+            } else {
+                img.height = canvas.height;
+                img.width = canvas.height * ratio;
+            }
+            imgX = (canvas.width - img.width * imgScale) / 2
+            imgY = (canvas.height - img.height * imgScale) / 2
+        }
+    }
+
+    function drawImage() {
+        cxt.clearRect(-200, -200, canvas.width * 2, canvas.height * 2);
+        cxt.drawImage(img, imgX, imgY, img.width * imgScale, img.height * imgScale);
+    }
+
+    function windowToCanvas(canvas, x, y) {
+        var bbox = canvas.getBoundingClientRect();
+        return {
+            x: x - bbox.left - (bbox.width - canvas.width) / 2,
+            y: y - bbox.top - (bbox.height - canvas.height) / 2
+        };
+    }
+
+    function isPointInImageArea(point) {
+        return true;
+    }
+
+    function isPointInCanvasArea(point) {
+        return true;
+    }
+
+    function isDivArea(point) {
+        return true;
+    }
+
+    canvas.onmousewheel = canvas.onwheel = function (event) {
+        var pos = windowToCanvas(canvas, event.clientX, event.clientY);
+        event.wheelDelta = event.wheelDelta ? event.wheelDelta
+            : (event.deltaY * (-40));
+        if (event.wheelDelta > 0) {
+            //alert("放大");
+            if (isPointInImageArea(pos)) {
+                imgScale *= 2;
+                imgX = (canvas.width - img.width * imgScale) / 2
+                imgY = (canvas.height - img.height * imgScale) / 2
+            } else {
+                imgScale *= 2;
+                imgX = (canvas.width - img.width * imgScale) / 2
+                imgY = (canvas.height - img.height * imgScale) / 2
+            }
+        } else {
+            //alert("缩小");
+            if (isPointInImageArea(pos)) {
+                imgScale /= 2;
+                imgX = (canvas.width - img.width * imgScale) / 2
+                imgY = (canvas.height - img.height * imgScale) / 2
+            } else {
+                imgScale /= 2;
+                imgX = (canvas.width - img.width * imgScale) / 2
+                imgY = (canvas.height - img.height * imgScale) / 2
+            }
+        }
+        drawImage();
+        return false;
+    }
+
+    /**旋转angle度*/
+    function rateImage(angle) {
+        currentRate = (currentRate + angle) % 360;
+        cxt.clearRect(0, 0, canvas.width, canvas.height);
+        cxt.translate(canvas.width / 2, canvas.height / 2);
+        cxt.save();
+        cxt.rotate(angle * Math.PI / 180);
+        cxt.translate(-canvas.width / 2, -canvas.height / 2);
+        imgScale = 1;
+        reLoadImage();
+        drawImage();
+    }
+
+    /**鼠标按下*/
+    divPan.onmousedown = function (event) {
+        mouseDownLocation = windowToCanvas(canvas, event.clientX, event.clientY);
+        if (isPointInImageArea(mouseDownLocation)) {
+            isMouseDown = true;
+            document.title = 'mouse down';
+        }
+    }
+    /**鼠标弹起*/
+    document.body.onmouseup = function () {
+        isMouseDown = false;
+        canvas.style.cursor = "default";
+        document.title = 'mouse up';
+    }
+    /**鼠标移动*/
+    divPan.onmousemove = function (event) {
+        if (isMouseDown) {
+            canvas.style.cursor = "move";
+            var newMouseLocation = windowToCanvas(canvas, event.clientX,
+                event.clientY);
+            if (isDivArea({
+                x: event.clientX,
+                y: event.clientY
+            })) {
+                var x = newMouseLocation.x - mouseDownLocation.x;
+                var y = newMouseLocation.y - mouseDownLocation.y;
+                mouseDownLocation = newMouseLocation;
+                /**根据角度，计算图片偏移*/
+                if (0 == currentRate) {
+                    imgX += x;
+                    imgY += y;
+                } else if (90 == currentRate) {
+                    imgX += y;
+                    imgY -= x;
+                } else if (180 == currentRate) {
+                    imgX -= x;
+                    imgY -= y;
+                } else if (270 == currentRate) {
+                    imgX -= y;
+                    imgY += x;
+                }
+            } else {
+                /** 鼠标移动至画布范围外，置鼠标弹起 */
+                isMouseDown = false;
+                canvas.style.cursor = "default";
+                document.title = 'mouse up';
+            }
+            drawImage();
+        }
+    }
+</script>
+
+</body>
+</html>

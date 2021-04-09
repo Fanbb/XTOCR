@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('日志文件列表')" />
+    <th:block th:include="include :: layout-latest-css" />
+    <th:block th:include="include :: ztree-css" />
+</head>
+
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" onclick="javascript:batchGenCode()" shiro:hasPermission="tool:gen:code">
+                <i class="fa fa-download"></i> 日志导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "system/logFile";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            modalName: "日志文件",
+            pageSize: 1000,
+            pageList: [1000],
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            search: false,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field : 'fileName',
+                    title : 'id',
+                    visible: false
+                },
+                {
+                    field : 'fileName',
+                    title : '文件名',
+                    sortable: true
+                }]
+        };
+        $.table.init(options);
+    });
+
+    //批量生成代码
+    function batchGenCode() {
+        var rows = $.table.selectColumns("fileName");
+        if (rows.length == 0) {
+            $.modal.alertWarning("请选择要生成的数据");
+            return;
+        }
+        $.modal.confirm("确认要生成选中的" + rows.length + "条数据吗?", function() {
+            location.href = prefix + "/batchLogFiles?tables=" + rows;
+            layer.msg('执行成功,正在生成代码请稍后…', { icon: 1 });
+        });
+    }
+</script>
+</body>
+</html>

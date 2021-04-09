@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('流水勾对统计列表')"/>
+    <th:block th:include="include :: layout-latest-css"/>
+    <th:block th:include="include :: ztree-css"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li class="select-time">
+                            <label>识别时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间"
+                                   name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间"
+                                   name="params[endTime]"/>
+                        </li>
+                        <li>
+                            渠道：<select name="channel" th:with="type=${@dict.getType('ocr_channel_name')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            影像类型：<select name="imageName" th:with="type=${@dict.getType('ocr_model_view_type')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTradeView:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var prefix = ctx + "system/ocrTradeView";
+    var channelData = [[${@dict.getType('ocr_channel_name')}]];
+    var imgData = [[${@dict.getType('ocr_model_view_type')}]];
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            exportUrl: prefix + "/export",
+            modalName: "OCR识别流水",
+            showSearch: true,
+            showRefresh: false,
+            showToggle: false,
+            showColumns: false,
+            search: false,
+            sortName: "ocrDate",
+            sortOrder: "desc",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: 'id',
+                    visible: false
+                },
+                {
+                    field: 'ocrDate',
+                    title: '识别日期',
+                    sortable: true
+                },
+                {
+                    field: 'channel',
+                    title: '渠道',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(channelData, item.channel);
+                    }
+                },
+                {
+                    field: 'imageName',
+                    title: '影像类型',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(imgData, item.imageName);
+                    }
+                },
+                {
+                    field: 'ocrTotal',
+                    title: 'OCR识别数量',
+                    align: "center",
+                    sortable: true
+                },
+                {
+                    field: 'tradeTotal',
+                    title: '识别数量',
+                    align: "center",
+                    sortable: true
+                },
+                {
+                    field: 'ocrRate',
+                    title: '识别率',
+                    align: "center",
+                    sortable: true
+                }]
+        };
+        $.table.init(options);
+    });
+
+</script>
+</body>
+</html>

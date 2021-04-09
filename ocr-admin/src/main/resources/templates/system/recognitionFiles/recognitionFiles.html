@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('上传识别图片')"/>
+    <th:block th:include="include :: bootstrap-fileinput-css"/>
+
+    <style>
+        video{
+            width: 77% !important;
+            height: 100% !important;
+            object-fit: fill;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>图片文件上传控件 </h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <label class="font-noraml">图片上传</label>
+                        <label style="margin-left: 10px;">
+                            <input type="radio" value="10000" id="optionsRadios1" name="optionsRadios" >通用文本识别
+                        </label>
+
+                        <label style="margin-left: 10px;">
+                            <input type="radio" checked="" value="0" id="0" name="optionsRadios" >其它（证件照）
+                        </label>
+                        <div class="file-loading">
+                            <input id="file" name="file" type="file" multiple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: bootstrap-fileinput-js"/>
+<script type="text/javascript">
+    var prefix = ctx + "system/recognitionFiles";
+
+    $(document).ready(function () {
+        $("#file").fileinput({
+            uploadUrl: prefix + '/fileUploadIncludeGeneralText',
+            uploadAsync: false, //默认异步上传
+            showUpload: true, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            maxFileCount: 10,
+            validateInitialCount: true,
+            allowedFileTypes: ['image'],
+            // allowedFileExtensions: ["jpg", "png", "gif"],
+            msgFilesTooMany: "选择上传的文件数量({n})超过允许的最大数值{m}!",
+            //往后台传递参数过去,通用文字识别，视频，其他的值
+            uploadExtraData: function(previewId, index) {   //额外参数的关键点
+                var data = {
+                    imgType :  $(':radio[name=optionsRadios]:checked').val() //获取radio选中的值
+                };
+                return data;
+            }
+        }).on("filebatchuploadsuccess", function (event, data, previewId, index) {
+            var result = data.response.data;
+            debugger;
+
+            if (result.tradeIds != null) {
+                var ocrTradeId = result.tradeIds;
+                var url = prefix + '/data/' + ocrTradeId;
+                console.info(url);
+                createMenuItem(url, "识别结果详情");
+            } else {
+                alert(result.msg());
+            }
+        });
+    })
+
+</script>
+</body>
+</html>

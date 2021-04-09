@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('识别流水列表')"/>
+    <th:block th:include="include :: layout-latest-css"/>
+    <th:block th:include="include :: ztree-css"/>
+</head>
+<body class="gray-bg">
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId" name="formId">
+                <div class="select-list">
+                    <ul>
+                        <li class="select-time">
+                            <label>识别时间： </label>
+                            <input type="text" class="time-input" id="startTime" placeholder="开始时间"
+                                   name="params[beginTime]"/>
+                            <span>-</span>
+                            <input type="text" class="time-input" id="endTime" placeholder="结束时间"
+                                   name="params[endTime]"/>
+                        </li>
+
+                        <li>
+                            渠道：<select id="channel" name="channel">
+                            <option value="">所有</option>
+                            <option th:each="channel:${channels}" th:value="${channel.channelCode}"
+                                    th:text="${channel.channelName}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            识别号码：<input type="text" name="ocrSeq"/>
+                        </li>
+
+
+                        <li>
+                            影像类型：<select name="imageType" th:with="type=${@dict.getType('ocr_model_type')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            OCR识别状态：<select name="ocrStatus" th:with="type=${@dict.getType('ocr_trade_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            人工勾对状态：<select name="tickStatus" th:with="type=${@dict.getType('ocr_blend_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            前端勾对状态：<select name="platStatus" th:with="type=${@dict.getType('plat_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+
+                        <li>
+                            导出状态：<select name="remark2" th:with="type=${@dict.getType('ocr_export_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            预警状态：<select name="ocrOrgan" th:with="type=${@dict.getType('risk_status')}">
+                            <option value="">所有</option>
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:ocrTrade:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-warning" onclick="javascript:batchDownload()"
+               shiro:hasPermission="system:ocrTrade:downloadImages">
+                <i class="fa fa-download"></i> 影像下载
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table" data-mobile-responsive="true"></table>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:ocrTrade:edit')}]];
+    var listFlag = [[${@permission.hasPermi('system:ocrTrade:list')}]];
+    var removeFlag = [[${@permission.hasPermi('system:ocrTrade:remove')}]];
+    var prefix = ctx + "system/ocrTrade";
+    var tradeData = [[${@dict.getType('ocr_trade_status')}]];
+    var typeData = [[${@dict.getType('ocr_model_type')}]];
+    var channelData = [[${@dict.getType('ocr_channel_name')}]];
+    var tickStatus = [[${@dict.getType('ocr_blend_status')}]];
+    var exportData = [[${@dict.getType('ocr_export_status')}]];
+    var platStatus = [[${@dict.getType('plat_status')}]];
+    var riskStatus = [[${@dict.getType('risk_status')}]];
+
+    $(function () {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "识别流水",
+            showSearch: true,
+            showRefresh: true,
+            showToggle: false,
+            showColumns: false,
+            sortName: "ocrDate desc,ocrTime",
+            sortOrder: "desc, id",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: 'id',
+                    visible: false
+                },
+                {
+                    field: 'ocrDate',
+                    title: '识别日期',
+                    sortable: true
+                },
+                {
+                    field: 'ocrTime',
+                    title: '识别时间',
+                    sortable: true
+                },
+                {
+                    field: 'channel',
+                    title: '渠道',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(channelData, item.channel);
+                    }
+                },
+                {
+                    field: 'ocrSeq',
+                    title: '识别号码',
+                    sortable: true
+                },
+                {
+                    field: 'imageId',
+                    title: '影像id',
+                    visible: false
+                },
+                {
+                    field: 'imageType',
+                    title: '影像类型',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(typeData, item.imageType);
+                    }
+                },
+                {
+                    field: 'ocrStatus',
+                    title: 'OCR识别状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(tradeData, item.ocrStatus);
+                    }
+                },
+                {
+                    field: 'tickStatus',
+                    title: '人工勾对状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(tickStatus, item.tickStatus);
+                    }
+                },
+                {
+                    field: 'platStatus',
+                    title: '前端勾对状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(platStatus, item.platStatus);
+                    }
+                },
+                {
+                    field: 'remark2',
+                    title: '影像导出状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(exportData, item.remark2);
+                    }
+                },
+                {
+                    field: 'ocrOrgan',
+                    title: '预警状态',
+                    align: "left",
+                    formatter: function (value, item, index) {
+                        return $.table.selectDictLabel(riskStatus, item.ocrOrgan);
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-info btn-xs ' + listFlag + '" href="#" onclick="detail(\'' + row.id + '\')"><i class="fa fa-list-ul"></i>识别结果</a> ');
+                        // actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        // actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+        };
+        $.table.init(options);
+    });
+
+    /*字典列表-详细*/
+    function detail(id) {
+        var url = prefix + '/detail/' + id;
+        $.modal.openTab("流水识别", url);
+    }
+
+    $(function() {
+        $('#channel').select({
+            placeholder:"请选择渠道",
+            allowClear: true
+        });
+    })
+
+    //批量影像文件导出
+    function batchDownload() {
+        var rows = $.table.selectColumns("id");
+        if (rows.length == 0) {
+            $.modal.alertWarning("请选择要生成的数据");
+            return;
+        }
+        $.modal.confirm("确认要生成选中的" + rows.length + "条数据吗?", function () {
+            location.href = prefix + "/downloadImages?ids=" + rows;
+            layer.msg('执行成功,正在生成代码请稍后…', {icon: 1});
+        });
+    }
+</script>
+</body>
+</html>

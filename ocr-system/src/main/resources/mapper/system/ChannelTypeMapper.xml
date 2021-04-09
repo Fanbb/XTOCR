@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ocr.system.mapper.ChannelTypeMapper">
+    
+    <resultMap type="ChannelType" id="ChannelTypeResult">
+        <result property="id"    column="id"    />
+        <result property="channelCode"    column="channel_code"    />
+        <result property="channelName"    column="channel_name"    />
+        <result property="channelNm"    column="channel_nm"    />
+        <result property="ocrType"    column="ocr_type"    />
+        <result property="ocrTypeNm"    column="ocr_type_nm"    />
+    </resultMap>
+	
+	<sql id="selectChannelTypeVo">
+        select id, channel_code, channel_name, channel_nm, ocr_type, ocr_type_nm from sys_channel_type
+    </sql>
+	
+    <select id="selectChannelTypeList" parameterType="ChannelType" resultMap="ChannelTypeResult">
+        <include refid="selectChannelTypeVo"/>
+        <where>  
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="channelCode != null  and channelCode != '' "> and channel_code = #{channelCode}</if>
+             <if test="channelName != null  and channelName != '' "> and channel_name = #{channelName}</if>
+             <if test="channelNm != null  and channelNm != '' "> and channel_nm = #{channelNm}</if>
+             <if test="ocrType != null  and ocrType != '' "> and ocr_type = #{ocrType}</if>
+             <if test="ocrTypeNm != null  and ocrTypeNm != '' "> and ocr_type_nm = #{ocrTypeNm}</if>
+         </where>
+    </select>
+    
+    <select id="selectChannelTypeById" parameterType="String" resultMap="ChannelTypeResult">
+        <include refid="selectChannelTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectByNoAndType" parameterType="String" resultMap="ChannelTypeResult">
+        <include refid="selectChannelTypeVo"/>
+        where channel_code = #{channelCode} and ocr_type = #{ocrType}
+    </select>
+        
+    <insert id="insertChannelType" parameterType="ChannelType">
+        insert into sys_channel_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="channelCode != null  and channelCode != ''  ">channel_code,</if>
+			<if test="channelName != null  and channelName != ''  ">channel_name,</if>
+			<if test="channelNm != null  and channelNm != ''  ">channel_nm,</if>
+			<if test="ocrType != null  and ocrType != ''  ">ocr_type,</if>
+			<if test="ocrTypeNm != null  and ocrTypeNm != ''  ">ocr_type_nm,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="channelCode != null  and channelCode != ''  ">#{channelCode},</if>
+			<if test="channelName != null  and channelName != ''  ">#{channelName},</if>
+			<if test="channelNm != null  and channelNm != ''  ">#{channelNm},</if>
+			<if test="ocrType != null  and ocrType != ''  ">#{ocrType},</if>
+			<if test="ocrTypeNm != null  and ocrTypeNm != ''  ">#{ocrTypeNm},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateChannelType" parameterType="ChannelType">
+        update sys_channel_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="channelCode != null  and channelCode != ''  ">channel_code = #{channelCode},</if>
+            <if test="channelName != null  and channelName != ''  ">channel_name = #{channelName},</if>
+            <if test="channelNm != null  and channelNm != ''  ">channel_nm = #{channelNm},</if>
+            <if test="ocrType != null  and ocrType != ''  ">ocr_type = #{ocrType},</if>
+            <if test="ocrTypeNm != null  and ocrTypeNm != ''  ">ocr_type_nm = #{ocrTypeNm},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteChannelTypeById" parameterType="String">
+        delete from sys_channel_type where id = #{id}
+    </delete>
+
+    <delete id="deleteChannelTypeByChannelCode" parameterType="String">
+        delete from sys_channel_type where channel_code = #{channelCode}
+    </delete>
+	
+    <delete id="deleteChannelTypeByIds" parameterType="String">
+        delete from sys_channel_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

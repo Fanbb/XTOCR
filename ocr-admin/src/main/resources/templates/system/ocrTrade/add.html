@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增识别流水')" />
+	<th:block th:include="include :: select2-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-ocrTrade-add">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">识别日期：</label>
+				<div class="col-sm-8">
+					<input id="ocrDate" name="ocrDate" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">渠道：</label>
+				<div class="col-sm-8">
+					<input id="channel" name="channel" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">唯一识别号码（身份证号、存单号）：</label>
+				<div class="col-sm-8">
+					<input id="ocrSeq" name="ocrSeq" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">成功标示（0 成功  1 失败）：</label>
+				<div class="col-sm-8">
+					<input id="ocrStatus" name="ocrStatus" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">识别节点（记录识别进行的节点）：</label>
+				<div class="col-sm-8">
+					<input id="ocrPoint" name="ocrPoint" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">影像id：</label>
+				<div class="col-sm-8">
+					<input id="imageId" name="imageId" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">影像类型：</label>
+				<div class="col-sm-8">
+					<input id="imageType" name="imageType" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">影像类型名称：</label>
+				<div class="col-sm-8">
+					<input id="imageName" name="imageName" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">柜员号：</label>
+				<div class="col-sm-8">
+					<input id="ocrTeller" name="ocrTeller" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">机构号：</label>
+				<div class="col-sm-8">
+					<input id="ocrOrgan" name="ocrOrgan" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">预留字段1：</label>
+				<div class="col-sm-8">
+					<input id="remark1" name="remark1" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">预留字段2：</label>
+				<div class="col-sm-8">
+					<input id="remark2" name="remark2" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">预留字段3：</label>
+				<div class="col-sm-8">
+					<input id="remark3" name="remark3" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/ocrTrade"
+		$("#form-ocrTrade-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-ocrTrade-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

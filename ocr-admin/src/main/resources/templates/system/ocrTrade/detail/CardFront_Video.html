@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('流水查询详情')"/>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #control {
+            width: 30%;
+            height: 30px;
+            padding-top: 5px;
+            position: absolute;
+            left: 50%;
+            top: 90%;
+        }
+
+        #left {
+            float: left;
+            display: block;
+        }
+
+        #right {
+            float: right;
+            display: block;
+
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div style="padding:5px;overflow-y:auto">
+    <div class="col-md-12">
+        <div class="col-sm-6">
+            <div class="box box-primary" style="height: auto">
+                <div class="box-header with-border">
+                    <div class="box-header with-border">
+                        <h4 class="box-title" th:align="center">&nbsp;&nbsp;&nbsp;影像图片</h4>
+                    </div>
+                    <div id="divPan" class="col-sm-5" style="margin-left: 23%;margin-top: 10%;">
+                        <video  controls="" >
+                            <source th:src="(${imgUrl} == '') ? @{/img/profile.jpg} : @{${imgUrl}}" type="video/mp4">
+                        </video>
+                        <div id="control" style="left: 149%;">
+                            <button id="left" th:onclick="showVideo([[${imgUrl}]]);" class="btn btn-primary" style="display: inline">
+                                放大视频
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-content" id="div2" style="overflow-x: hidden">
+                <form id="form-user-edit" th:object="${idCardFrontBack}">
+                    <table style="font-size: 15px;width: 100%">
+                        <input type="text" hidden="hidden" name="tradeId" th:field="*{tradeId}"/>
+                        <tr>
+                            <td colspan="3"><h2 class="box-title" th:align="center" style="font-weight:bold">
+                                身份证正面识别信息：</h2></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">姓名：</td>
+                            <td width="35%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${idCardFront.getName()}}"/>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">性别：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${idCardFront.getSex()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">民族：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${idCardFront.getNation()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">出生年月：</td>
+                            <td width="45%"><input type="text" class="form-control" readonly="true"
+                                                   style="font-size: 19px"
+                                                   disabled="disabled" th:value="@{${idCardFront.getBirthday()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">住址：</td>
+                            <td width="45%"><textarea style="font-size:19px;width: 100%" disabled="disabled">[[@{${idCardFront.getAddress()}}]]</textarea>
+                            </td>
+                        </tr>
+                        <tr style="height: 50px">
+                            <td width="21%" align="right">公民身份号码：</td>
+                            <td width="45%"><input type="text" class="form-control" style="font-size: 19px"
+                                                   readonly="true"
+                                                   disabled="disabled" th:value="@{${idCardFront.getIdCardNo()}}"/></td>
+                        </tr>
+                        <tr style="height: 50px">
+
+                            <td></td>
+                            <td align="center" colspan="2">
+                                <div class="col-sm-7">
+                                    <!--<button type="button" class="btn btn-success" th:onclick="showVideo2([[${imgUrl}]]);" >设置宽高</button>-->
+                                    <!--<button type="button" class="btn btn-success" th:onclick="showVideo([[${imgUrl}]]);" >设置宽高</button>-->
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script>
+    var prefix = ctx + "system/ocrTrade";
+    function submit2() {
+        if ($.validate.form()) {
+            $.ajax({
+                url: prefix + "/fieldBlendIdCardFront",
+                type: "post",
+                data: {
+                    "name": $("input[name='name']:checked").val(),
+                    "sex": $("input[name='sex']:checked").val(),
+                    "nation": $("input[name='nation']:checked").val(),
+                    "birthday": $("input[name='birthday']:checked").val(),
+                    "address": $("input[name='address']:checked").val(),
+                    "idCardNo": $("input[name='idCardNo']:checked").val(),
+                    "tradeId": $("input[name='tradeId']").val()
+                },
+                success: function (result) {
+                    if (result.code == 0) {
+                        layer.msg("保存成功,正在刷新数据请稍后……", {
+                            icon: 1,
+                            time: 500,
+                            shade: [0.1, '#8F8F8F']
+                        }, function () {
+                            location.reload();
+                        });
+                    } else {
+                        alert(result.msg);
+                    }
+
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successTabCallback(result);
+                }
+            })
+        }
+    }
+
+    /*function showVideo(videoSrc){
+        // alert(videoSrc);
+        var url = prefix + '/bigVideoShow?url='+ videoSrc;
+        $.modal.open('查看视频详情', url, '500', '800');
+    }*/
+
+    //视频放大
+    function showVideo(videoSrc){
+        //页面层-自定义
+        layer.open({
+            type: 2,
+            area: [ '500px', '800px'],
+            fix: false,
+            //不固定
+            maxmin: true,
+            shade: 0.3,
+            title: "视频",
+            content:prefix + '/bigVideoShow?url='+videoSrc,
+            btn: ['关闭'],
+            // 弹层外区域关闭
+            shadeClose: true,
+            cancel: function(index) {
+                return true;
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>
