@@ -9,22 +9,22 @@ ocr:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ocr/uploadPath，Linux配置 /u02）
-#  profile: /u02
-  profile: D:/ocr/uploadPath
+  profile: /u02
+#  profile: D:/ocr/uploadPath
   # 项目日志地址  （Windows配置D:/home/ocr/logs，Linux配置 /home/ocr/logs）
-#  logFilePath: /home/ocr/logs
-  logFilePath: D:/home/ocr/logs
+  logFilePath: /home/ocr/logs
+#  logFilePath: D:/home/ocr/logs
 # 开发环境
-  serverProfile: http://127.0.0.1:8080/OCR/profile/IMAGE/
+#  serverProfile: http://127.0.0.1:8080/OCR/profile/IMAGE/
   #测试环境
-
+  serverProfile: http://16.85.16.141:8080/OCR/profile/IMAGE/
   #生产环境
 
   #ocr服务器接口访问地址 （ocr服务器IP路径 OCR测试地址http://192.168.119.31:10002/mask）
   #开发环境
-  ocrUrl: http://127.0.0.1:10002/mask
+#  ocrUrl: http://127.0.0.1:10002/mask
   #测试环境
-
+  ocrUrl: http://16.85.16.141:10002/mask
   # 生产环境
 
   # 获取ip地址开关

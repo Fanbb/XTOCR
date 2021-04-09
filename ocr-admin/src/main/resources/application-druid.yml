@@ -6,9 +6,9 @@ spring:
     druid:
       master:
         #开发环境
-        url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+#        url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
         #测试环境
-
+        url: jdbc:oracle:thin:@16.85.16.142:1521:orcl
         #生产环境
 
         username: OCR
